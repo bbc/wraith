@@ -11,7 +11,7 @@ var url = system.args[1];
 var image_name = system.args[3];
 var view_port_width = system.args[2];
 
-page.viewportSize = { width: view_port_width, height: 4000};
+page.viewportSize = { width: view_port_width, height: 5000};
 
 page.customHeaders = {
     'X-Candy-OVERRIDE': 'https://api.live.bbc.co.uk/'
@@ -20,7 +20,7 @@ page.customHeaders = {
 page.open(url, function(status) {
   if (status === 'success') {
     window.setTimeout(function() {
-      console.log('Snapping ' + url);
+      console.log('Snapping ' + url + ' at width ' + view_port_width);
       page.render(image_name);
       phantom.exit();
     }, 3000);
