@@ -61,12 +61,17 @@ module Snappy
   def self.paths
     {
       'front_page_news' => '/news',
-      'front_page_hausa' => '/hausa'
+      'front_page_hausa' => '/hausa',
+      'story_page_news' => '/news/uk-england-london-20944431',
+      'story_page_hausa' => '/hausa/news/2013/01/130123_britain_eu',
+      'live_page_news' => '/news/uk-politics-17456712',
+      'media_page_news' => '/news/uk-21163565'
+
     }
   end
 
   def self.widths
-    [320, 600]
+    [240, 320, 600, 768, 1280]
   end
 
   def self.capture_page_image (url, width, file_name)
