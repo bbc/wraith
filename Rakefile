@@ -25,7 +25,7 @@ end
 task :save_images do
 
   base_domain = {'label' => 'live', 'host' => Snappy.domains['live']}
-  comapare_domain = {'label' => 'stage', 'host' => Snappy.domains['stage']}
+  comapare_domain = {'label' => 'sandbox', 'host' => Snappy.domains['sandbox']}
 
   Snappy.paths.each do |label, path|
 
