@@ -24,7 +24,7 @@ end
 
 task :save_images do
 
-  base_domain = {'label' => 'live', 'host' => Snappy.domains['live']}
+  base_domain = {'label' => 'stage', 'host' => Snappy.domains['stage']}
   comapare_domain = {'label' => 'sandbox', 'host' => Snappy.domains['sandbox']}
 
   Snappy.paths.each do |label, path|
@@ -61,11 +61,23 @@ module Snappy
   def self.paths
     {
       'front_page_news' => '/news',
-      'front_page_hausa' => '/hausa',
-      'story_page_news' => '/news/uk-england-london-20944431',
-      'story_page_hausa' => '/hausa/news/2013/01/130123_britain_eu',
+      'story_page_news' => '/news/uk-politics-21271670',
       'live_page_news' => '/news/uk-politics-17456712',
-      'media_page_news' => '/news/uk-21163565'
+      'story_page_news_hyper' => '/news/world-africa-21056884',
+      'media_page_news' => '/news/uk-21163565',
+      'media_page_news_index' => '/news/video_and_audio/uk/',
+      'story_page_news_images' => '/news/uk-21112189',
+
+
+      'front_page_russia' => '/russian',
+      'story_page_russia' => '/russian/russia/2013/02/130208_tsiskaridze_filin_bolshoi',  
+      'front_page_hausa' => '/hausa',
+      'story_page_hausa' => '/hausa/news/2013/01/130131_syria_israel',
+      'front_page_indonesia' => '/indonesia',
+      'story_page_indonesia' => '/indonesia/dunia/2013/02/130206_jepancina',
+     
+
+
 
     }
   end
