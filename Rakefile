@@ -24,8 +24,8 @@ end
 
 task :save_images do
 
-  base_domain = {'label' => 'stage', 'host' => Snappy.domains['stage']}
-  comapare_domain = {'label' => 'sandbox', 'host' => Snappy.domains['sandbox']}
+  base_domain = {'label' => 'sandbox', 'host' => Snappy.domains['sandbox']}
+  comapare_domain = {'label' => 'live', 'host' => Snappy.domains['live']}
 
   Snappy.paths.each do |label, path|
 
@@ -53,8 +53,11 @@ module Snappy
   def self.domains
     {
       'live' => 'http://www.live.bbc.co.uk',
+      'test' => 'http://pal.test.bbc.co.uk',
       'stage' => 'http://pal.stage.bbc.co.uk',
-      'sandbox' => 'http://pal.sandbox.dev.bbc.co.uk'
+      'sandbox' => 'http://pal.sandbox.dev.bbc.co.uk',
+      'int' => 'http://pal.int.bbc.co.uk',
+      #'other' => 'http://'putsandboxnamehere'-sandbox.t.proxylocal.com',
     }
   end
 
@@ -67,14 +70,19 @@ module Snappy
       'media_page_news' => '/news/uk-21163565',
       'media_page_news_index' => '/news/video_and_audio/uk/',
       'story_page_news_images' => '/news/uk-21112189',
+      'gallery_page_news' => '/news/in-pictures-21828015',
+      'local_page_news' => '/news/england/london',
+      'local_weather' => '/news/northern_ireland/northern_ireland_politics'
+      # 'special_reports' => '/news/uk-politics-22067257'
 
 
-      'front_page_russia' => '/russian',
-      'story_page_russia' => '/russian/russia/2013/02/130208_tsiskaridze_filin_bolshoi',  
-      'front_page_hausa' => '/hausa',
-      'story_page_hausa' => '/hausa/news/2013/01/130131_syria_israel',
-      'front_page_indonesia' => '/indonesia',
-      'story_page_indonesia' => '/indonesia/dunia/2013/02/130206_jepancina',
+
+      # 'front_page_russia' => '/russian',
+      # 'story_page_russia' => '/russian/international/2013/02/130217_nigeria_abductions',  
+      # 'front_page_hausa' => '/hausa',
+      # 'story_page_hausa' => '/hausa/news/2013/01/130131_syria_israel',
+      # 'front_page_indonesia' => '/indonesia',
+      # 'story_page_indonesia' => '/indonesia/dunia/2013/02/130206_jepancina',
      
 
 
@@ -83,7 +91,7 @@ module Snappy
   end
 
   def self.widths
-    [240, 320, 600, 768, 1280]
+    [320, 599, 600, 768, 1024, 1280]
   end
 
   def self.capture_page_image (url, width, file_name)
