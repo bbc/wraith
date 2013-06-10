@@ -1,13 +1,13 @@
 # Snappysnaps
 
 ## Requirements
-<pre><code>PhantomJS - brew install phantomjs
-imagemagick - brew install imagemagick
-or ruby gems
+You will need PhantomJS and Imagemagick
+<pre><code>
+PhantomJS - brew install phantomjs
 gem install phantomjs
-or macports
+[PhantomJS Source](http://phantomjs.org/)
+imagemagick - brew install imagemagick
 port install ImageMagick
-or
 [Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)
 </pre></code>
 ## How it works
