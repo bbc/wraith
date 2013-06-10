@@ -1,5 +1,11 @@
 # Snappysnaps
 
+## How it works
+SnappySnaps uses PhantomJS to take screenshots of two chosen environments, such as a sandbox or localhost and another environment, such as a live site.  Once the two environments have been captured, imagemagick will output a diff image with highlighted changes to show any CSS changes.  This allows for regression testing of front end changes across multiple sites using multiple resolutions.  
+Below is an example of 2 BBC News pages compared with the differences coloured blue
+
+![Example](https://github.com/BBC-News/snappysnaps/blob/master/320_diff.png)
+
 ## Requirements
 You will need PhantomJS and Imagemagick
 <pre><code>PhantomJS
@@ -11,10 +17,6 @@ Imagemagick
 brew install imagemagick
 port install ImageMagick
 [Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)</pre></code>
-## How it works
-SnappySnaps uses PhantomJS to take screenshots of two chosen environments, such as a sandbox or localhost and another environment.  Once the two environments have been captured, imagemagick will output a diff image to show any CSS changes.  This allows for regression testing of front end changes across multiple sites using multiple resolutions.  
-### Shots folder
-Once the Rakefile is run, it will remove any previous images in the shots folder, this is because images will become stale after time.  We think this is the best approach, rather than use a baseline image over many months, live environments should be considered the baseline.
 
 ## Configuration
 
@@ -23,6 +25,9 @@ SnappySnaps has several options that you can configure, these are set in the con
 
 ###Config.yaml
 The main configuration is in config.yaml, this is where the domains, folder labels, screen widths and paths are set.  The domains going to be different for most, but for most it will probably be a local instance, localhost, sandbox and a live environment.  The folder labels will set what the name of the folders are in the shots directory.  Screen widths can be any pixel width, the height is actually set in snap.js, but is set to 5000px, so should cater for most length web pages.  The more widths you set, the longer the process will take.  The paths are the URL's of the pages you want to snap, they must be the same for both domains.
+
+### Shots folder
+Once the Rakefile is run, it will remove any previous images in the shots folder, this is because images will become stale after time.  We think this is the best approach, rather than use a baseline image over many months, live environments should be considered the baseline.
 
 ## Running the test
 When you have configured your image test, run "rake" in terminal.
