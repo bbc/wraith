@@ -1,0 +1,28 @@
+#Type file labels below, here are a couple of examples
+base_domain_label: live
+comp_domain_label: sandbox
+
+#Type domain URL below, here are a couple of examples
+base_domain: http://www.live.bbc.co.uk
+compare_domain: http://pal.sandbox.dev.bbc.co.uk 
+
+#Type screen widths below, here are a couple of examples     
+screen_widths:
+  - 320
+  - 600
+  - 768
+  - 1024
+  - 1280
+
+#Type page URL paths below, here are a couple of examples
+paths:
+  front_page_news: /news
+  story_page_news: /news/uk-politics-21271670
+  live_page_news: /news/uk-politics-17456712
+  story_page_news_hyper: /news/world-africa-21056884
+  media_page_news: /news/uk-21163565
+  media_page_news_index: /news/video_and_audio/uk/
+  story_page_news_images: /news/uk-21112189
+  gallery_page_news: /news/in-pictures-21828015
+  local_page_news: /news/england/london
+  local_weather: /news/northern_ireland/northern_ireland_politics
