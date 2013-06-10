@@ -1,5 +1,4 @@
 # Snappysnaps
-===========
 
 ## Requirements
 <pre><code>PhantomJS - brew install phantomjs
@@ -15,7 +14,7 @@ Once the Rakefile is run, it will remove any previous images in the shots folder
 ### Snap.js
 SnappySnaps has several options that you can configure, these are set in the config.yaml file and snap.js.  As SnappySnaps uses PhantomJS, you can refer to the API to use any command when taking screenshots.  Javascript is on by default, but can be disabled by setting false on page.settings in snap.js.  PhantomJS has the ability to use custom page headers, I have included an example header in snap JS for our API override.
 
-##Configuration
+##Config.yaml
 The main configuration is in config.yaml, this is where the domains, folder labels, screen widths and paths are set.  The domains going to be different for most, but for most it will probably be a local instance, localhost, sandbox and a live environment.  The folder labels will set what the name of the folders are in the shots directory.  Screen widths can be any pixel width, the height is actually set in snap.js, but is set to 5000px, so should cater for most length web pages.  The more widths you set, the longer the process will take.  The paths are the URL's of the pages you want to snap, they must be the same for both domains.
 
 ## Running the test
