@@ -4,7 +4,7 @@
 SnappySnaps uses PhantomJS to take screenshots of two chosen environments, such as a sandbox or localhost and another environment, such as a live site.  Once the two environments have been captured, imagemagick will output a diff image with highlighted changes to show any CSS changes.  This allows for regression testing of front end changes across multiple sites using multiple resolutions.  
 Below is an example of 2 BBC News pages compared with the differences coloured blue
 
-![Example](https://github.com/BBC-News/snappysnaps/blob/master/320_diff.png)
+![Example](https://github.com/BBC-News/snappysnaps/raw/master/320_diff.png)
 
 ## Requirements
 You will need PhantomJS and Imagemagick
