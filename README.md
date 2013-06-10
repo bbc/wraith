@@ -10,8 +10,7 @@ gem install phantomjs
 Imagemagick
 brew install imagemagick
 port install ImageMagick
-[Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)
-</pre></code>
+[Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)</pre></code>
 ## How it works
 SnappySnaps uses PhantomJS to take screenshots of two chosen environments, such as a sandbox or localhost and another environment.  Once the two environments have been captured, imagemagick will output a diff image to show any CSS changes.  This allows for regression testing of front end changes across multiple sites using multiple resolutions.  
 ### Shots folder
