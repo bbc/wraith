@@ -3,12 +3,12 @@
 ## Requirements
 You will need PhantomJS and Imagemagick
 <pre><code>PhantomJS
-PhantomJS - brew install phantomjs
+brew install phantomjs
 gem install phantomjs
 [PhantomJS Source](http://phantomjs.org/)
 
 Imagemagick
-imagemagick - brew install imagemagick
+brew install imagemagick
 port install ImageMagick
 [Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)
 </pre></code>
