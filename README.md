@@ -34,3 +34,6 @@ When you have configured your image test, run "rake" in terminal.
 
 ## Output
 Each pages screenshots will save to an individual folder per domain, so all pages and domains will be separate for review.  Each diff will be appended with the same file name convention as the captured images.  
+
+## License
+SnappySnaps is available to everyone under the terms of the Apache 2.0 open source licence. Take a look at the LICENSE file in the code.
