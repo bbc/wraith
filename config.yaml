@@ -1,12 +1,9 @@
-#Type file labels below, here are a couple of examples
-base_domain_label: uk
-comp_domain_label: france
+# Add only 2 domains, key will act as a label
+domains:
+  uk: "http://google.com"
+  france: "http://google.fr"
 
-#Type domain URL below, here are a couple of examples
-base_domain: http://google.com
-compare_domain: http://google.fr 
-
-#Type screen widths below, here are a couple of examples     
+#Type screen widths below, here are a couple of examples
 screen_widths:
   - 320
   - 600
