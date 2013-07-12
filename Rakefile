@@ -36,9 +36,10 @@ class Snappy
     puts `phantomjs snap.js "#{url}" "#{width}" "#{file_name}"`
   end
 
-  def compare_images (base, compare, output)
-    puts `compare -fuzz 20% -highlight-color blue #{base} #{compare} #{output}`
+  def compare_images (base, compare, output, info)
+    puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
+
 end
 
 snappy = Snappy.new('config')
@@ -55,9 +56,17 @@ task :compare_images do
 
   while !files.empty?
     base, compare = files.slice!(0, 2)
-    snappy.compare_images(base, compare, base.gsub(/([a-z]+).png$/, 'diff.png'))
-    puts 'Saved diff'
-  end
+    snappy.compare_images(base, compare, base.gsub(/([a-z]+).png$/, 'diff.png'), base.gsub(/([a-z]+).png$/, 'data.txt'))
+
+    contents = ''
+    Dir.glob('shots/*/*.txt').each do |f|
+      contents += "\n#{f}\n"
+      contents += File.read(f)
+    end
+ 
+    File.write('data.txt', contents)
+      puts 'Saved diff'
+    end
 
 end
 
