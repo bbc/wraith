@@ -12,15 +12,16 @@ You will need PhantomJS or SlimmerJS and Imagemagick
 brew install phantomjs
 gem install phantomjs
 [PhantomJS Source](http://phantomjs.org/)
+</pre></code>
 
-Imagemagick
+<pre><code>Imagemagick
 brew install imagemagick
 port install ImageMagick
 sudo apt-get install imagemagick
 [Imagemagick binaries](http://www.imagemagick.org/script/binary-releases.php)
+</pre></code>
 
-SlimmerJS
-[SlimmerJS](http://slimerjs.org/)
+<pre><code>[SlimmerJS](http://slimerjs.org/)
 If you have firefox installed, all files needed are already in repo
 </pre></code>
 
