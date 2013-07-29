@@ -56,7 +56,7 @@ When you have configured your image test, run <pre><code>rake</pre></code> in te
 ## Output
 Each pages screenshots will save to an individual folder per domain, so all pages and domains will be separate for review.  Each diff will be appended with the same file name convention as the captured images.  
 
-To aid in speed, there is also a text file called data.txt in the shots folder that will show the file names and the pixel difference.  This means for every changed pixel it will increment in one.  This helps to identify the big issues first, allowing for more targeted reviewing of the diff images.
+To aid in speed, there is also a text file called data.txt that will show the file names and the pixel difference.  This means for every changed pixel it will increment in one.  This helps to identify the big issues first, allowing for more targeted reviewing of the diff images.
 
 ## License
 SnappySnaps is available to everyone under the terms of the Apache 2.0 open source licence. Take a look at the LICENSE file in the code.
