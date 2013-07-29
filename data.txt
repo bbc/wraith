@@ -1,3 +1,0 @@
-
-shots/map_page/320_data.txt
-3100

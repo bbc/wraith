@@ -36,6 +36,11 @@ class Snappy
     puts `phantomjs snap.js "#{url}" "#{width}" "#{file_name}"`
   end
 
+  # Support for slimmerjs, uncomment code below and comment out capture_page_image option above
+  # def capture_page_image (url, width, file_name)
+  #   puts `slimerjs/slimerjs snap.js "#{url}" "#{width}" "#{file_name}"`
+  # end
+
   def compare_images (base, compare, output, info)
     puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
@@ -64,7 +69,7 @@ task :compare_images do
       contents += File.read(f)
     end
  
-    File.write('data.txt', contents)
+    File.write('/shots/data.txt', contents)
       puts 'Saved diff'
     end
 

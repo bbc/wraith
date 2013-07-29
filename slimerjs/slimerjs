@@ -1,0 +1,157 @@
+#!/bin/bash
+
+#retrieve full path of the current script
+# symlinks are resolved, so application.ini could be found
+# this code comes from http://stackoverflow.com/questions/59895/
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  SLIMERDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$SLIMERDIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+SLIMERDIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+# retrieve the path of a gecko launcher
+if [ "$SLIMERJSLAUNCHER" == "" ]
+then
+    if [ -f "$SLIMERDIR/xulrunner/xulrunner" ]
+    then
+        SLIMERJSLAUNCHER="$SLIMERDIR/xulrunner/xulrunner"
+    else
+        if [ -f "$SLIMERDIR/xulrunner/xulrunner.exe" ]
+        then
+            SLIMERJSLAUNCHER="$SLIMERDIR/xulrunner/xulrunner.exe"
+        else
+            SLIMERJSLAUNCHER=`command -v firefox`
+            if [ "$SLIMERJSLAUNCHER" == "" ]
+            then
+                SLIMERJSLAUNCHER=`command -v xulrunner`
+                if [ "$SLIMERJSLAUNCHER" == "" ]
+                then
+                    echo "SLIMERJSLAUNCHER environment variable is missing. Set it with the path to Firefox or XulRunner"
+                    exit 1
+                fi
+            fi
+        fi
+    fi
+fi
+
+if [ ! -x "$SLIMERJSLAUNCHER" ]
+then
+    echo "SLIMERJSLAUNCHER environment variable does not contain an executable path. Set it with the path to Firefox"
+    exit 1
+fi
+
+function showHelp() {
+
+    #echo "                                     cookies."
+    #echo "  --config=<file>                    Load the given configuration file"
+    #echo "                                     (JSON formated)"
+    #echo "  --debug=[yes|no]                   Prints additional warning and debug message"
+    #echo "                                     (default is no)"
+    #echo "  --disk-cache=[yes|no]              Enables disk cache (default is no)."
+    echo "  --help or -h                       Show this help"
+    #echo "  --ignore-ssl-errors=[yes|no]       Ignores SSL errors (default is no)."
+    echo "  --load-images=[yes|no]             Loads all inlined images (default is yes)"
+    echo "  --local-storage-quota=<number>     Sets the maximum size of the offline"
+    echo "                                     local storage (in KB)"
+    #echo "  --local-to-remote-url-access=[yes|no] Allows local content to access remote"
+    #echo "                                        URL (default is no)"
+    #echo "  --max-disk-cache-size=<number>     Limits the size of the disk cache (in KB)"
+    #echo "  --output-encoding=<enc>            Sets the encoding for the terminal output"
+    #echo "                                     (default is 'utf8')"
+    #echo "  --remote-debugger-port=<number>    Starts the script in a debug harness and"
+    #echo "                                     listens on the specified port"
+    #echo "  --remote-debugger-autorun=[yes|no] Runs the script in the debugger immediately"
+    #echo "                                     (default is no)"
+    #echo "  --proxy=<proxy url>                Sets the proxy server"
+    #echo "  --proxy-auth=<username:password>   Provides authentication information for the"
+    #echo "                                     proxy"
+    #echo "  --proxy-type=[http|socks5|none]    Specifies the proxy type (default is http)"
+    #echo "  --script-encoding=<enc>            Sets the encoding used for the starting"
+    #echo "                                     script (default is utf8)"
+    #echo "  --web-security=[yes|no]            Enables web security (default is yes)"
+    #echo "  --ssl-protocol=[SSLv3|SSLv2|TLSv1|any]  Sets the SSL protocol"
+    echo "  --version or v                     Prints out SlimerJS version"
+    #echo "  --webdriver or --wd or -w          Starts in 'Remote WebDriver mode' (embedded"
+    #echo "                                     GhostDriver) '127.0.0.1:8910'"
+    #echo "  --webdriver=[<IP>:]<PORT>          Starts in 'Remote WebDriver mode' in the"
+    #echo "                                     specified network interface"
+    #echo "  --webdriver-logfile=<file>         File where to write the WebDriver's Log "
+    #echo "                                     (default 'none') (NOTE: needs '--webdriver')"
+    #echo "  --webdriver-loglevel=[ERROR|WARN|INFO|DEBUG] WebDriver Logging Level "
+    #echo "                                 (default is 'INFO') (NOTE: needs '--webdriver')"
+    #echo "  --webdriver-selenium-grid-hub=<url> URL to the Selenium Grid HUB (default is"
+    #echo "                                      'none') (NOTE: needs '--webdriver') "
+    echo "  --error-log-file=<file>            Log all javascript errors in a file"
+    echo "  -jsconsole                         Open a window to view all javascript errors"
+    echo "                                       during the execution"
+    echo ""
+    echo "*** About profiles: see details of these Mozilla options at"
+    echo "https://developer.mozilla.org/en-US/docs/Mozilla/Command_Line_Options#User_Profile"
+    echo ""
+    echo "  --createprofile name               Create a new profile and exit"
+    echo "  -P name                            Use the specified profile to execute the script"
+    echo "  -profile path                      Use the profile stored in the specified"
+    echo "                                     directory, to execute the script"
+    echo "By default, SlimerJS use a temporary profile"
+    echo ""
+}
+
+# retrieve list of existing environment variable, because Mozilla doesn't provide an API to get this
+# list
+LISTVAR=""
+ENVVAR=`env`;
+for v in $ENVVAR; do
+    IFS='=' read -a var <<< "$v"
+    LISTVAR="$LISTVAR,${var[0]}"
+done
+
+# check arguments.
+CREATE_TEMP='Y'
+shopt -s nocasematch
+for i in $*; do
+    case "$i" in
+        --help|-h)
+           showHelp
+           exit 0
+           ;;
+        -reset-profile|-profile|-p|-createprofile|-profilemanager)
+            CREATE_TEMP=''
+            ;;
+        --reset-profile|--profile|--p|--createprofile|--profilemanager)
+            CREATE_TEMP=''
+            ;;
+    esac
+done
+shopt -u nocasematch
+
+# If profile parameters, don't create a temporary profile
+PROFILE=""
+PROFILE_DIR=""
+if [ "$CREATE_TEMP" == "Y" ]
+then
+    PROFILE_DIR=`mktemp -d -q /tmp/slimerjs.XXXXXXXX`
+    if [ "$PROFILE_DIR" == "" ]; then
+        echo "Error: cannot generate temp profile"
+        exit 1
+    fi
+    PROFILE="--profile $PROFILE_DIR"
+else
+    PROFILE="-purgecaches"
+fi
+
+# put all arguments in a variable, to have original arguments before their transformation
+# by Mozilla
+export __SLIMER_ARGS="$@"
+
+# launch slimerjs with firefox/xulrunner
+"$SLIMERJSLAUNCHER" -app $SLIMERDIR/application.ini $PROFILE -no-remote --envs "$LISTVAR" "$@"
+
+EXITCODE=$?
+
+if [ "$PROFILE_DIR" != "" ]; then
+    rm -rf $PROFILE_DIR
+fi
+
+exit $EXITCODE

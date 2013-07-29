@@ -1,0 +1,79 @@
+The files SlimerJS are licensed under the MPL 2.0 (http://mozilla.org/MPL/2.0/),
+with the exception of the sources file listed below (zipped into the omni.ja file in the
+distributed version of SlimerJS), which are made available by
+their authors under the licenses listed alongside.
+
+* modules/addon-sdk/*
+    are released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    These files comes from Firefox source code and Mozilla Addon-SDK source code
+    http://mxr.mozilla.org/mozilla-central/source/toolkit/addon-sdk/
+    https://github.com/laurentj/addon-sdk/tree/master/lib/sdk/io
+
+* components/httpd.js
+* modules/httpUtils.jsm
+    is released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    These files comes from Mozilla source code
+    http://mxr.mozilla.org/mozilla-central/source/netwerk/test/httpserver/
+
+* components/ConsoleAPI.js
+* components/nsPrompter.js
+    is released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    This file comes originally from the source code of Firefox
+    http://mxr.mozilla.org/mozilla-central/source/dom/base/ConsoleAPI.js
+    http://mxr.mozilla.org/mozilla-central/source/toolkit/components/prompts/src/nsPrompter.js
+
+* modules/slimer-sdk/net-log.js
+    is released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    The author is Olivier Meunier and Laurent Jouanneau
+    and this file comes from https://github.com/olivier-m/jetpack-net-log/
+
+* modules/slimer-sdk/utils.js
+    is released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    The author is Olivier Meunier and this file comes from
+    https://github.com/olivier-m/jetpack-webpage/
+
+* modules/slimer-sdk/webpage.js
+    is released under the Mozilla Public License, v. 2.0
+    see http://mozilla.org/MPL/2.0/
+    Some pieces of code come from webpage.js of the
+    project https://github.com/olivier-m/jetpack-webpage/
+    The author of these pieces of code is Olivier Meunier
+
+* modules/slPhantomJSKeyCode.jsm
+
+  content of this file is a part of webpage.js from the PhantomJS
+  project from Ofi Labs.
+
+  Copyright (C) 2011 Ariya Hidayat <ariya.hidayat@gmail.com>
+  Copyright (C) 2011 Ivan De Marino <ivan.de.marino@gmail.com>
+  Copyright (C) 2011 James Roe <roejames12@hotmail.com>
+  Copyright (C) 2011 execjosh, http://execjosh.blogspot.com
+  Copyright (C) 2012 James M. Greene <james.m.greene@gmail.com>
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the <organization> nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
