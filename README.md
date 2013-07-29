@@ -51,7 +51,7 @@ The main configuration is in config.yaml, this is where the domains, folder labe
 Once the Rakefile is run, it will remove any previous images in the shots folder, this is because images will become stale after time.  We think this is the best approach, rather than use a baseline image over many months, live environments should be considered the baseline.
 
 ## Running the test
-When you have configured your image test, run "rake" in terminal.
+When you have configured your image test, run <pre><code>rake</pre></code> in terminal.
 
 ## Output
 Each pages screenshots will save to an individual folder per domain, so all pages and domains will be separate for review.  Each diff will be appended with the same file name convention as the captured images.  
