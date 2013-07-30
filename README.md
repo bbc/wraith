@@ -8,6 +8,7 @@ chiefly, [Dave Blooman](http://twitter.com/dblooman)
 
 
 ## What is it?
+
 Wraith uses either [PhantomJS](http://phantomjs.org) or
 [SlimerJS](http://slimerjs.org) to create screenshots of different environments
 and then creates a diff of the two images, the affected areas are highlighted in
@@ -16,10 +17,50 @@ blue
 ![Photo of BBC News with a
 diff](http://bbc-news.github.io/wraith/images/320_diff.png)
 
+
+## Requirements
+
+You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
+It's up to you to decide which browser engine you want to run it against.
+
+
 ## Installation
 
 ```sh
 curl -fsSL https://raw.github.com/bbc-news/wraith/go | bash
+```
+
+
+## Config
+
+All config will be placed in config.yml. You can specify domains, paths, screen
+widths & HTTP headers.
+
+```yaml
+# Add only 2 domains, key will act as a label
+domains:
+  uk: "http://google.com"
+  france: "http://google.fr"
+
+#Type screen widths below, here are a couple of examples
+screen_widths:
+  - 320
+  - 600
+  - 768
+  - 1024
+  - 1280
+
+#Type page URL paths below, here are a couple of examples
+paths:
+  search_page: /imghp
+  map_page: /maps
+```
+
+
+## Using Wraith
+
+```sh
+./wraith
 ```
 
 
