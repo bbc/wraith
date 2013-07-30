@@ -59,7 +59,7 @@ paths:
 ## Using Wraith
 
 ```sh
-./wraith
+rake
 ```
 
 
