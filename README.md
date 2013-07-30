@@ -3,8 +3,7 @@
  * Website: http://responsivenews.co.uk
  * Source: http://github.com/bbc-news/wraith
 
-Wraith is a screenshot comparison tool, created by developers at BBC News,
-chiefly, [Dave Blooman](http://twitter.com/dblooman)
+Wraith is a screenshot comparison tool, created by developers at BBC News.
 
 
 ## What is it?
