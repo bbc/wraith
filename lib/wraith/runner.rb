@@ -45,10 +45,6 @@ class Wraith::Runner
   end
 
   def compare(base, compare, output)
-     output = %x( compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} )
-
-     if output.to_i > @config.threshold
-       puts "Check diff image: #{output}"
-     end
+    diff = `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output}`
   end
 end
