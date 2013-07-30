@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby -w
+
+$: << File.expand_path("../lib/", __FILE__)
+
+require "wraith"
+
+config = Wraith::Config.parse("config/default.yml")
+
+runner = Wraith::Runner.new(config)
+runner.perform
