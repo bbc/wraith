@@ -21,6 +21,8 @@ class Wraith::Runner
       compare_uri = "#{@config.compare_domain}/#{p}"
 
       @config.screen_widths.each do |w|
+        puts "Diffing #{base_uri} to #{compare_uri}"
+
         capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
         capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
 

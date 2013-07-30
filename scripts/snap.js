@@ -22,13 +22,12 @@ page.settings = { loadImages: true, javascriptEnabled: true };
 // page.customHeaders = {
 
 //      'X-Candy-OVERRIDE': 'https://api.live.bbc.co.uk/'
- 
+
 //  };
 
 page.open(url, function(status) {
   if (status === 'success') {
     window.setTimeout(function() {
-      console.log('Snapping ' + url + ' at width ' + view_port_width);
       page.render(image_name);
       phantom.exit();
     }, 3000);
