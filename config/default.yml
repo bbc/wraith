@@ -1,4 +1,4 @@
-base_domain: "http://google.com"
+base_domain: "http://google.fr"
 compare_domain: "http://google.fr"
 
 #Type screen widths below, here are a couple of examples
@@ -15,3 +15,4 @@ paths:
   map_page: maps
 
 output: "shots"
+diff_threshold: 200

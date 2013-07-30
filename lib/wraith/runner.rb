@@ -23,6 +23,12 @@ class Wraith::Runner
       @config.screen_widths.each do |w|
         capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
         capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
+
+        compare(
+          "#{output}/#{l}/#{w.to_s}_base.png",
+          "#{output}/#{l}/#{w.to_s}_compare.png",
+          "#{output}/#{l}/#{w.to_s}_diff.png"
+        )
       end
     end
   end
@@ -34,5 +40,13 @@ class Wraith::Runner
     @phantom.run_script("scripts/snap.js", [
       uri, width, output
     ])
+  end
+
+  def compare(base, compare, output)
+     output = %x( compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} )
+
+     if output.to_i > @config.threshold
+       puts "Check diff image: #{output}"
+     end
   end
 end

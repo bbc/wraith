@@ -68,7 +68,7 @@ task :compare_images do
       contents += "\n#{f}\n"
       contents += File.read(f)
     end
- 
+
     File.write('data.txt', contents)
       puts 'Saved diff'
     end
