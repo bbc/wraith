@@ -22,6 +22,9 @@ diff](http://bbc-news.github.io/wraith/images/320_diff.png)
 You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
 It's up to you to decide which browser engine you want to run it against.
 
+On Mac OS X, the install script will install PhantomJS & ImageMagick for you, 
+assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
+you to install them.
 
 ## Installation
 
