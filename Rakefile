@@ -69,7 +69,9 @@ task :compare_images do
       contents += File.read(f)
     end
     
-    File.open("data.txt", "w") do |file| file.write(contents) end
+    File.open("data.txt", "w") {
+      |file| file.write(contents)
+    }
     puts 'Saved diff'
   end
 end
