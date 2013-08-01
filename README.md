@@ -64,7 +64,9 @@ paths:
 ```sh
 rake
 ```
+## Output
 
+After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in Wraiths root that will combine all of these values to easier view all the pixel changes.
 
 ## Contributing
 
