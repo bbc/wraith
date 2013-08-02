@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+        <style type="text/css">
+            .short-screenshot {
+                height: 200px;
+                width: 200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row page-header">
+                <h1>List of screenshots</h1>
+            </div>
+            <div class="row">
+                <!-- <%= directories.length %> -->
+                <div class="col-lg-3">
+                    <div class="panel">
+                        <div class="panel-heading">Screenshots:</div>
+                        <ul class="list-group list-group-flush">
+                            <% directories.each do |dir, files| %>
+                                <li class="list-group-item"><a href="#<%=dir%>"><%=dir%></a></li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <% directories.each do |dir, files| %>
+                        <div class="row">
+                            <a name="<%=dir%>"></a>
+                            <h2><%=dir%></h2>
+                            <% files[:variants].each do |file| %>
+                                <div class="col-lg-3">
+                                    <a href="<%=file[:filename]%>">
+                                        <img class="short-screenshot img-thumbnail" src="<%=file[:filename]%>">
+                                    </a>
+                                    <p class="text-center"><%=file[:name]%></p>
+                                </div>
+                            <% end %>
+                            <div class="col-lg-3">
+                                <a href="<%=files[:diff]%>">
+                                    <img class="short-screenshot img-thumbnail" src="<%=files[:diff]%>">
+                                </a>
+                                <p class="text-center">diff</p>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
