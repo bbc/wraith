@@ -8,7 +8,6 @@ require 'pp'
 require 'fileutils'
 
 MATCH_FILENAME = /.+_(\S+)\.\S+/
-STATIC_FILES = ["bootstrap.min.css"]
 
 def parse_directories(dirname)
     dirs = {}
@@ -52,9 +51,5 @@ end
 location = ARGV[0]
 directories = parse_directories(location)
 dest = "#{location}/gallery.html"
-
-STATIC_FILES.each do |filename|
-    FileUtils.install("gallery/#{filename}", "#{location}")
-end
 
 generate_html(directories, "#{location}/gallery.html")
