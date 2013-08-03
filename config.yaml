@@ -1,7 +1,7 @@
 # Add only 2 domains, key will act as a label
 domains:
-  uk: "http://google.com"
-  france: "http://google.fr"
+  english: "http://www.live.bbc.co.uk/news"
+  russian: "http://www.live.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
@@ -13,5 +13,5 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-  search_page: /imghp
-  map_page: /maps
+  home: /
+  uk_index: /uk
