@@ -1,55 +1,11 @@
-require "yaml"
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-class Snappy
-
-  def initialize(config_name)
-    @config = YAML::load_file(config_name + '.yaml')
-  end
-
-  def widths
-    @config['screen_widths']
-  end
-
-  def base_domain
-    hash = @config['domains']
-    hash[hash.keys[0]]
-  end
-
-  def comp_domain
-    hash = @config['domains']
-    hash[hash.keys[1]]
-  end
-
-  def base_domain_label
-    @config['domains'].keys[0]
-  end
-
-  def comp_domain_label
-    @config['domains'].keys[1]
-  end
-
-  def paths
-    @config['paths']
-  end
-
-  def capture_page_image (url, width, file_name)
-    puts `phantomjs snap.js "#{url}" "#{width}" "#{file_name}"`
-  end
-
-  # Support for slimerjs, uncomment code below and comment out capture_page_image option above
-  # def capture_page_image (url, width, file_name)
-  #   puts `slimerjs snap.js "#{url}" "#{width}" "#{file_name}"`
-  # end
-
-  def compare_images (base, compare, output, info)
-    puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
-  end
-
-end
+require 'wraith'
+require 'image_size'
 
 snappy = Snappy.new('config')
 
-task :default => [:reset_shots_folder, :save_images, :compare_images] do
+task :default => [:reset_shots_folder, :save_images, :crop_images, :compare_images] do
   puts 'Done!';
 end
 
@@ -61,7 +17,7 @@ task :compare_images do
 
   while !files.empty?
     base, compare = files.slice!(0, 2)
-    snappy.compare_images(base, compare, base.gsub(/([a-z]+).png$/, 'diff.png'), base.gsub(/([a-z]+).png$/, 'data.txt'))
+    snappy.compare_images(base, compare, base.gsub(/([a-z]+).png$/, 'diff.png'), base.gsub(/([a-z]+).png$/, 'data.txt')) 
 
     contents = ''
     Dir.glob('shots/*/*.txt').each do |f|
@@ -105,3 +61,32 @@ task :save_images do
   end
 
 end
+
+task :crop_images do
+  files = []
+  Dir.glob("shots/*/*.png") do |filename|
+    files << filename
+  end
+
+  while !files.empty?
+    base, compare = files.slice!(0, 2)
+    File.open(base, "rb") do |fh|
+      new_base_height = ImageSize.new(fh.read).get_size
+      base_height = new_base_height[1]
+    File.open(compare, "rb") do |fh| 
+      new_compare_height = ImageSize.new(fh.read).get_size
+      compare_height = new_compare_height[1]
+      
+      if base_height > compare_height
+          height = base_height
+          crop = compare
+       else
+          height = compare_height
+          crop = base
+        end
+          
+        snappy.crop_images(crop, height)
+      end
+    end
+  end
+end 

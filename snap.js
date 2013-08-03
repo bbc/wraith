@@ -12,7 +12,7 @@ var image_name = system.args[3];
 var view_port_width = system.args[2];
 
 
-page.viewportSize = { width: view_port_width, height: 5000};
+page.viewportSize = { width: view_port_width, height: 1500};
 page.settings = { loadImages: true, javascriptEnabled: true };
 
 //if you want to use additional phantomjs commands, place them here
