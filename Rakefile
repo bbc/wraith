@@ -84,7 +84,7 @@ task :crop_images do
           height = compare_height
           crop = base
         end
-          
+        puts "cropping images"  
         snappy.crop_images(crop, height)
       end
     end
