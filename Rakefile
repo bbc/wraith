@@ -111,6 +111,6 @@ task :save_images do
 end
 
 task :create_gallery do
-  puts 'Creating html gallery...'
+  puts 'Creating html gallery in shots/ ...'
   ruby "create_gallery.rb shots/"
 end
