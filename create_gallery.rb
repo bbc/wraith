@@ -7,27 +7,37 @@ require 'erb'
 require 'pp'
 require 'fileutils'
 
-MATCH_FILENAME = /.+_(\S+)\.\S+/
+MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
 
 def parse_directories(dirname)
     dirs = {}
     Dir.foreach(dirname) do |category|
         if category != '.' and category != '..' and File.directory? "#{dirname}/#{category}" then
-            dirs[category] = {:variants => []}
+            dirs[category] = {}
+
             Dir.foreach("#{dirname}/#{category}") do |filename| 
                 match = MATCH_FILENAME.match(filename)
                 if not match.nil? then
-                    group = match[1]
+                    size = match[1].to_i
+                    group = match[2]
                     filepath = category + "/" + filename
+
+                    if not dirs[category].key? size
+                        dirs[category][size] = {:variants => []}
+                    end
+                    size_dict = dirs[category][size]
+
                     case group
                     when 'diff'
-                        dirs[category][:diff] = filepath
+                        size_dict[:diff] = filepath
                     when 'data'
+                        size_dict[:data] = File.read("#{dirname}/#{filepath}")
                     else
-                        dirs[category][:variants] << {
+                        size_dict[:variants] << {
                             :name => group, :filename => filepath
                         }
                     end
+                    size_dict[:variants].sort! {|a, b| a[:name] <=> b[:name]}
                 end
             end
         end

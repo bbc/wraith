@@ -16,36 +16,43 @@
             </div>
             <div class="row">
                 <!-- <%= directories.length %> -->
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <div class="panel">
                         <div class="panel-heading">Screenshots:</div>
                         <ul class="list-group list-group-flush">
-                            <% directories.each do |dir, files| %>
+                            <% directories.keys.sort.each do |dir| %>
                                 <li class="list-group-item"><a href="#<%=dir%>"><%=dir%></a></li>
                             <% end %>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <% directories.each do |dir, files| %>
+                <div class="col-lg-10">
+                    <% directories.to_a.sort.each do |dir, sizes| %>
                         <div class="row">
-                            <a name="<%=dir%>"></a>
-                            <h2><%=dir%></h2>
-                            <% files[:variants].each do |file| %>
-                                <div class="col-lg-3">
-                                    <a href="<%=file[:filename]%>">
-                                        <img class="short-screenshot img-thumbnail" src="<%=file[:filename]%>">
-                                    </a>
-                                    <p class="text-center"><%=file[:name]%></p>
-                                </div>
-                            <% end %>
-                            <div class="col-lg-3">
-                                <a href="<%=files[:diff]%>">
-                                    <img class="short-screenshot img-thumbnail" src="<%=files[:diff]%>">
-                                </a>
-                                <p class="text-center">diff</p>
-                            </div>
+                            <a name="<%= dir %>"></a>
+                            <h2><%= dir %></h2>
                         </div>
+                        <% sizes.to_a.sort.each do |size, files| %>
+                            <div class="row">
+                                <h3 class="col-lg-1 text-muted"><%=size%></h3>
+                                <% files[:variants].each do |file| %>
+                                    <div class="col-lg-3">
+                                        <a href="<%=file[:filename]%>">
+                                            <img class="short-screenshot img-thumbnail" src="<%=file[:filename]%>">
+                                        </a>
+                                        <p class="text-center"><%=file[:name]%></p>
+                                    </div>
+                                <% end %>
+                                <div class="col-lg-3">
+                                    <a href="<%=files[:diff]%>">
+                                        <img class="short-screenshot img-thumbnail" src="<%=files[:diff]%>">
+                                    </a>
+                                    <p class="text-center">diff</p>
+                                    <p class="text-center text-muted"><%=files[:data]%> bytes</p>
+
+                                </div>
+                            </div>
+                        <% end %>
                     <% end %>
                 </div>
             </div>
