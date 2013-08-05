@@ -82,6 +82,14 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
+## Changelog
+
+    Merge pull request #15 from timabell/move-data-file
+    Merge pull request #14 from timabell/unnamed-paths
+    Merge pull request #5 from BBC-News/typekit-fix
+    Merge pull request #8 from jaredly/patch-1
+    Merge pull request #2 from Kami/fix_ruby_compatibility
+    Merge pull request #1 from BBC-News/freedom
 
 ## Licence
 
