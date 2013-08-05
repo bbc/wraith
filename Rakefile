@@ -49,7 +49,7 @@ end
 
 snappy = Snappy.new('config')
 
-task :default => [:reset_shots_folder, :save_images, :compare_images] do
+task :default => [:reset_shots_folder, :save_images, :compare_images, :create_gallery] do
   puts 'Done!';
 end
 
@@ -108,5 +108,9 @@ task :save_images do
     end
 
   end
+end
 
+task :create_gallery do
+  puts 'Creating html gallery...'
+  ruby "create_gallery.rb shots/"
 end
