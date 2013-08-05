@@ -87,6 +87,11 @@ task :save_images do
   compare_domain = {'label' => snappy.comp_domain_label, 'host' => snappy.comp_domain}
 
   snappy.paths.each do |label, path|
+    puts "processing '#{label}' '#{path}'"
+    if !path
+      path = label
+      label = path.gsub('/','_')
+    end
 
     FileUtils.mkdir("shots/#{label}")
 
