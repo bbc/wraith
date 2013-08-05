@@ -112,5 +112,6 @@ end
 
 task :create_gallery do
   puts 'Creating html gallery in shots/ ...'
+  FileUtils.cp('bootstrap.min.css', 'shots/')
   puts `ruby create_gallery.rb shots`
 end
