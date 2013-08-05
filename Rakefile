@@ -112,5 +112,5 @@ end
 
 task :create_gallery do
   puts 'Creating html gallery in shots/ ...'
-  ruby "create_gallery.rb shots/"
+  puts `ruby create_gallery.rb shots`
 end
