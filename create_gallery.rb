@@ -8,6 +8,8 @@ require 'pp'
 require 'fileutils'
 
 MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
+TEMPLATE_LOCATION = "gallery/gallery_template.erb"
+BOOTSTRAP_LOCATION = "gallery/bootstrap.min.css"
 
 def parse_directories(dirname)
     dirs = {}
@@ -45,8 +47,8 @@ def parse_directories(dirname)
     return dirs
 end
 
-def generate_html(directories, destination)
-    template = File.open('gallery_template.erb').read
+def generate_html(directories, template, destination)
+    template = File.read(template)
     html = ERB.new(template).result
     File.open(destination, 'w') do |outf|
         outf.write(html)
@@ -62,4 +64,5 @@ location = ARGV[0]
 directories = parse_directories(location)
 dest = "#{location}/gallery.html"
 
-generate_html(directories, "#{location}/gallery.html")
+generate_html(directories, TEMPLATE_LOCATION, dest)
+FileUtils.cp(BOOTSTRAP_LOCATION, "#{location}/bootstrap.min.css")
