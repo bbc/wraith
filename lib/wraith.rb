@@ -49,4 +49,8 @@ class Snappy
     puts `convert #{crop} -extent 0x#{height} #{crop}`  
   end
   
+  def thumbnail_image(png_path, output_path)
+      `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+  end
+  
 end  

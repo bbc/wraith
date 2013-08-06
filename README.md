@@ -26,6 +26,15 @@ On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
 assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
 you to install them.
 
+On Ubuntu 12.04, you will need to apt-get the following packages:
+
+* libicu-dev
+* imagemagick
+* rake
+
+And then download the PhantomJS binary package from
+[http://phantomjs.org/](http://phantomjs.org/).
+
 ## Installation
 
 ```sh
@@ -66,7 +75,7 @@ rake
 ```
 ## Output
 
-After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in Wraiths root that will combine all of these values to easier view all the pixel changes.
+After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.
 
 ## Contributing
 
@@ -82,6 +91,14 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
+## Changelog
+
+    Merge pull request #15 from timabell/move-data-file
+    Merge pull request #14 from timabell/unnamed-paths
+    Merge pull request #5 from BBC-News/typekit-fix
+    Merge pull request #8 from jaredly/patch-1
+    Merge pull request #2 from Kami/fix_ruby_compatibility
+    Merge pull request #1 from BBC-News/freedom
 
 ## Licence
 

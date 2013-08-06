@@ -15,3 +15,12 @@ screen_widths:
 paths:
   home: /
   uk_index: /uk
+
+
+# If you don't want to name the paths explicitly you can use a yaml
+# collection as follows, and names will be derived by replacing / with _
+#
+# paths:
+#  - /imghp
+#  - /maps
+
