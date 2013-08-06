@@ -15,7 +15,7 @@ class Wraith::Runner
     output = @config.output
 
     @config.paths.each do |l, p|
-      ::FileUtils.mkdir_p("#{output}_#{l}")
+      ::FileUtils.mkdir_p("#{output}/#{l}")
 
       base_uri = "#{@config.base_domain}/#{p}"
       compare_uri = "#{@config.compare_domain}/#{p}"
