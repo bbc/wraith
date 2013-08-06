@@ -4,6 +4,10 @@ $: << File.expand_path("../lib/", __FILE__)
 
 require "wraith"
 
+Dir.glob("./plugins/*.rb").each do |plugin_file|
+  require plugin_file
+end
+
 config = Wraith::Config.parse("config/default.yml")
 
 runner = Wraith::Runner.new(config)
