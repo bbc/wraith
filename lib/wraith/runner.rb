@@ -23,18 +23,23 @@ class Wraith::Runner
       @config.screen_widths.each do |w|
         puts "Diffing #{base_uri} to #{compare_uri}"
 
-        # capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
-        # capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
+        capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
+        capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
 
-        # compare(
-        #   "#{output}/#{l}/#{w.to_s}_base.png",
-        #   "#{output}/#{l}/#{w.to_s}_compare.png",
-        #   "#{output}/#{l}/#{w.to_s}_diff.png"
-        # )
+        compare(
+          "#{output}/#{l}/#{w.to_s}_base.png",
+          "#{output}/#{l}/#{w.to_s}_compare.png",
+          "#{output}/#{l}/#{w.to_s}_diff.png"
+        )
 
         @config.plugins.each do |pl|
           begin
             plugin = Wraith::Plugin.const_get("#{pl.capitalize}").new
+            plugin.perform(
+              "#{output}/#{l}/#{w.to_s}_base.png",
+              "#{output}/#{l}/#{w.to_s}_compare.png",
+              "#{output}/#{l}/#{w.to_s}_diff.png"
+            )
           rescue
             raise "Could not find plugin Wraith::Plugin::#{pl}"
           end
