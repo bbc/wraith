@@ -15,7 +15,7 @@ class Wraith::Runner
     output = @config.output
 
     @config.paths.each do |l, p|
-      ::FileUtils.mkdir_p("#{output}/#{l}")
+      ::FileUtils.mkdir_p("#{output}_#{l}")
 
       base_uri = "#{@config.base_domain}/#{p}"
       compare_uri = "#{@config.compare_domain}/#{p}"
@@ -23,14 +23,22 @@ class Wraith::Runner
       @config.screen_widths.each do |w|
         puts "Diffing #{base_uri} to #{compare_uri}"
 
-        capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
-        capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
+        # capture(base_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_base.png")
+        # capture(compare_uri, w.to_s, "#{output}/#{l}/#{w.to_s}_compare.png")
 
-        compare(
-          "#{output}/#{l}/#{w.to_s}_base.png",
-          "#{output}/#{l}/#{w.to_s}_compare.png",
-          "#{output}/#{l}/#{w.to_s}_diff.png"
-        )
+        # compare(
+        #   "#{output}/#{l}/#{w.to_s}_base.png",
+        #   "#{output}/#{l}/#{w.to_s}_compare.png",
+        #   "#{output}/#{l}/#{w.to_s}_diff.png"
+        # )
+
+        @config.plugins.each do |pl|
+          begin
+            plugin = Wraith::Plugin.const_get("#{pl.capitalize}").new
+          rescue
+            raise "Could not find plugin Wraith::Plugin::#{pl}"
+          end
+        end
       end
     end
   end
@@ -45,6 +53,6 @@ class Wraith::Runner
   end
 
   def compare(base, compare, output)
-    diff = `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output}`
+    `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output}`
   end
 end
