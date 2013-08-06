@@ -50,8 +50,8 @@ widths & HTTP headers.
 ```yaml
 # Add only 2 domains, key will act as a label
 domains:
-  uk: "http://google.com"
-  france: "http://google.fr"
+  english: "http://www.live.bbc.co.uk/news"
+  russian: "http://www.live.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
@@ -63,8 +63,8 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-  search_page: /imghp
-  map_page: /maps
+  home: /
+  uk_index: /uk
 ```
 
 
@@ -76,6 +76,10 @@ rake
 ## Output
 
 After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.
+
+## Gallery
+
+A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.  
 
 ## Contributing
 
