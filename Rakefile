@@ -5,7 +5,7 @@ require 'image_size'
 
 snappy = Snappy.new('config')
 
-task :default => [:reset_shots_folder, :save_images, :compare_images, :crop_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
