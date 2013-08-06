@@ -93,6 +93,7 @@ If you want to add functionality to this project, pull requests are welcome.
 
 ## Changelog
 
+    Merge pull request #18 from ecometrica/gallery
     Merge pull request #15 from timabell/move-data-file
     Merge pull request #14 from timabell/unnamed-paths
     Merge pull request #5 from BBC-News/typekit-fix
