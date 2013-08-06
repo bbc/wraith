@@ -13,34 +13,48 @@ BOOTSTRAP_LOCATION = "gallery/bootstrap.min.css"
 
 def parse_directories(dirname)
     dirs = {}
-    Dir.foreach(dirname) do |category|
-        if category != '.' and category != '..' and File.directory? "#{dirname}/#{category}" then
-            dirs[category] = {}
+    categories = Dir.foreach(dirname).select do |category|
+        if ['.', '..', 'thumbnails'].include? category
+            # Ignore special dirs
+            false
+        elsif File.directory? "#{dirname}/#{category}" then
+            # Ignore stray files
+            true
+        else
+            false
+        end
+    end
 
-            Dir.foreach("#{dirname}/#{category}") do |filename| 
-                match = MATCH_FILENAME.match(filename)
-                if not match.nil? then
-                    size = match[1].to_i
-                    group = match[2]
-                    filepath = category + "/" + filename
+    categories.each do |category|
+        dirs[category] = {}
+        Dir.foreach("#{dirname}/#{category}") do |filename| 
+            match = MATCH_FILENAME.match(filename)
+            if not match.nil? then
+                size = match[1].to_i
+                group = match[2]
+                filepath = category + "/" + filename
+                thumbnail = "thumbnails/#{category}/#{filename}"
 
-                    if not dirs[category].key? size
-                        dirs[category][size] = {:variants => []}
-                    end
-                    size_dict = dirs[category][size]
-
-                    case group
-                    when 'diff'
-                        size_dict[:diff] = filepath
-                    when 'data'
-                        size_dict[:data] = File.read("#{dirname}/#{filepath}")
-                    else
-                        size_dict[:variants] << {
-                            :name => group, :filename => filepath
-                        }
-                    end
-                    size_dict[:variants].sort! {|a, b| a[:name] <=> b[:name]}
+                if dirs[category][size].nil? then
+                    dirs[category][size] = {:variants => []}
                 end
+                size_dict = dirs[category][size]
+
+                case group
+                when 'diff'
+                    size_dict[:diff] = {
+                        :filename => filepath, :thumb => thumbnail
+                    }
+                when 'data'
+                    size_dict[:data] = File.read("#{dirname}/#{filepath}")
+                else
+                    size_dict[:variants] << {
+                        :name => group,
+                        :filename => filepath, 
+                        :thumb => thumbnail
+                    }
+                end
+                size_dict[:variants].sort! {|a, b| a[:name] <=> b[:name] }
             end
         end
     end

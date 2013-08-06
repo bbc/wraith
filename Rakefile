@@ -45,11 +45,14 @@ class Snappy
     puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 
+  def thumbnail_image(png_path, output_path)
+      `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+  end
 end
 
 snappy = Snappy.new('config')
 
-task :default => [:reset_shots_folder, :save_images, :compare_images] do
+task :default => [:reset_shots_folder, :save_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
@@ -61,7 +64,8 @@ task :compare_images do
 
   while !files.empty?
     base, compare = files.slice!(0, 2)
-    snappy.compare_images(base, compare, base.gsub(/([a-z]+).png$/, 'diff.png'), base.gsub(/([a-z]+).png$/, 'data.txt'))
+    diff = base.gsub(/([a-z]+).png$/, 'diff.png')
+    snappy.compare_images(base, compare, diff, base.gsub(/([a-z]+).png$/, 'data.txt'))
 
     contents = ''
     Dir.glob('shots/*/*.txt').each do |f|
@@ -89,6 +93,7 @@ task :save_images do
   snappy.paths.each do |label, path|
 
     FileUtils.mkdir("shots/#{label}")
+    FileUtils.mkdir_p("shots/thumbnails/#{label}")
 
     snappy.widths.each do |width|
       width = width.to_s
@@ -104,4 +109,15 @@ task :save_images do
 
   end
 
+end
+
+task :generate_thumbnails do
+  Dir.glob("shots/*/*.png").each do |filename|
+    new_name = filename.gsub(/^shots/, 'shots/thumbnails')
+    snappy.thumbnail_image(filename, new_name)
+  end
+end
+
+task :generate_gallery do
+  sh 'ruby create_gallery.rb shots'
 end

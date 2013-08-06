@@ -34,19 +34,21 @@
                         </div>
                         <% sizes.to_a.sort.each do |size, files| %>
                             <div class="row">
-                                <h3 class="col-lg-1 text-muted"><%=size%></h3>
+                                <h3 class="col-lg-1 text-muted"><%=size%>px</h3>
                                 <% files[:variants].each do |file| %>
                                     <div class="col-lg-3">
                                         <a href="<%=file[:filename]%>">
-                                            <img class="short-screenshot img-thumbnail" src="<%=file[:filename]%>">
+                                            <img class="short-screenshot img-thumbnail" src="<%=file[:thumb]%>">
                                         </a>
                                         <p class="text-center"><%=file[:name]%></p>
                                     </div>
                                 <% end %>
                                 <div class="col-lg-3">
-                                    <a href="<%=files[:diff]%>">
-                                        <img class="short-screenshot img-thumbnail" src="<%=files[:diff]%>">
-                                    </a>
+                                    <% if files[:diff] %>
+                                        <a href="<%=files[:diff][:filename]%>">
+                                            <img class="short-screenshot img-thumbnail" src="<%=files[:diff][:thumb]%>">
+                                        </a>
+                                    <% end %>
                                     <p class="text-center">diff</p>
                                     <p class="text-center text-muted"><%=files[:data]%> bytes</p>
 
