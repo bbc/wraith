@@ -9,6 +9,11 @@ class Wraith::Runner
     bin = ENV["WRAITH_RUNNER"] || ::Wraith::Phantom::PHANTOM_PATH
 
     @phantom = Wraith::Phantom.new(bin)
+
+    if @config.has_option?(:plugins)
+      @plugin_handler = Wraith::PluginHandler.new(@config.plugins)
+      @plugin_handler.register_plugins
+    end
   end
 
   def perform
@@ -31,19 +36,6 @@ class Wraith::Runner
           "#{output}/#{l}/#{w.to_s}_compare.png",
           "#{output}/#{l}/#{w.to_s}_diff.png"
         )
-
-        @config.plugins.each do |pl|
-          begin
-            plugin = Wraith::Plugin.const_get("#{pl.capitalize}").new
-            plugin.perform(
-              "#{output}/#{l}/#{w.to_s}_base.png",
-              "#{output}/#{l}/#{w.to_s}_compare.png",
-              "#{output}/#{l}/#{w.to_s}_diff.png"
-            )
-          rescue
-            raise "Could not find plugin Wraith::Plugin::#{pl}"
-          end
-        end
       end
     end
   end
@@ -58,6 +50,6 @@ class Wraith::Runner
   end
 
   def compare(base, compare, output)
-    `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output}`
+    `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2 >/dev/null`
   end
 end
