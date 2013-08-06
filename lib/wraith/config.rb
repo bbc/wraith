@@ -12,6 +12,10 @@ class Wraith::Config
     @parsed_config = ::YAML.load_file(file)
   end
 
+  def has_option?(sym)
+    @parsed_config.has_key?(sym.to_s)
+  end
+
   def method_missing(sym, *args, &block)
     unless args.length == 0
       raise "We never set config options on the fly"
