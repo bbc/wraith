@@ -97,6 +97,7 @@ If you want to add functionality to this project, pull requests are welcome.
 
 ## Changelog
 
+    Merge pull request #13 from BBC-News/crop-images
     Merge pull request #18 from ecometrica/gallery
     Merge pull request #15 from timabell/move-data-file
     Merge pull request #14 from timabell/unnamed-paths
