@@ -32,6 +32,9 @@ On Ubuntu 12.04, you will need to apt-get the following packages:
 * imagemagick
 * rake
 
+Also install imagesize gem
+`gem install imagesize`
+
 And then download the PhantomJS binary package from
 [http://phantomjs.org/](http://phantomjs.org/).
 
