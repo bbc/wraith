@@ -26,14 +26,15 @@ On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
 assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
 you to install them.
 
+Also install the imagesize gem 
+`gem install imagesize`
+
 On Ubuntu 12.04, you will need to apt-get the following packages:
 
 * libicu-dev
 * imagemagick
 * rake
 
-Also install imagesize gem
-`gem install imagesize`
 
 And then download the PhantomJS binary package from
 [http://phantomjs.org/](http://phantomjs.org/).
