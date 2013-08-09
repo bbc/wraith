@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
 gem "rake"
-gem "imagesize"
+gem "image_size"
