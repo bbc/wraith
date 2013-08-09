@@ -22,12 +22,12 @@ diff](http://bbc-news.github.io/wraith/images/320_diff.png)
 You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
 It's up to you to decide which browser engine you want to run it against.
 
-On Mac OS X, the install script will install PhantomJS & ImageMagick for you, 
+On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
 assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
 you to install them.
 
-Also install the imagesize gem 
-`gem install imagesize`
+Also install the image_size gem
+`gem install image_size`
 
 On Ubuntu 12.04, you will need to apt-get the following packages:
 
@@ -83,7 +83,7 @@ After each screenshot is captured, the compare task will run, this will output a
 
 ## Gallery
 
-A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.  
+A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
 
 ## Contributing
 
