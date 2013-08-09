@@ -79,25 +79,28 @@ task :crop_images do
   while !files.empty?
     base, compare = files.slice!(0, 2)
     File.open(base, "rb") do |fh|
-      new_base_height = ImageSize.new(fh.read).get_size
+      new_base_height = ImageSize.new(fh.read).size
+
       base_height = new_base_height[1]
-    File.open(compare, "rb") do |fh| 
-      new_compare_height = ImageSize.new(fh.read).get_size
-      compare_height = new_compare_height[1]
-      
-      if base_height > compare_height
+
+      File.open(compare, "rb") do |fh|
+        new_compare_height = ImageSize.new(fh.read).size
+        compare_height = new_compare_height[1]
+
+        if base_height > compare_height
           height = base_height
           crop = compare
-       else
+        else
           height = compare_height
           crop = base
         end
-        puts "cropping images"  
+
+        puts "cropping images"
         snappy.crop_images(crop, height)
       end
     end
   end
-end 
+end
 
 task :generate_thumbnails do
   Dir.glob("shots/*/*.png").each do |filename|
