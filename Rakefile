@@ -76,6 +76,7 @@ task :crop_images do
   Dir.glob("shots/*/*.png") do |filename|
     files << filename
   end
+  files.sort!
 
   while !files.empty?
     base, compare = files.slice!(0, 2)
