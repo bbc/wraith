@@ -99,6 +99,10 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
+## Running Tests
+
+    rspec
+
 ## Changelog
 
     Merge pull request #13 from BBC-News/crop-images

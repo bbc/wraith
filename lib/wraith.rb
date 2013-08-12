@@ -46,10 +46,14 @@ class Wraith
     puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 
-  def crop_images (crop, height)
+  def self.crop_images (crop, height)
     puts `convert #{crop} -extent 0x#{height} #{crop}`  
   end
-  
+
+  def crop_images(crop, height)
+    self.class.crop_images
+  end 
+ 
   def thumbnail_image(png_path, output_path)
       `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end

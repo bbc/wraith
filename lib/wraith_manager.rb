@@ -69,7 +69,7 @@ class WraithManager
     end
   end
 
-  def crop_images
+  def self.crop_images
     files = []
     Dir.glob("shots/*/*.png") do |filename|
       files << filename
@@ -95,10 +95,14 @@ class WraithManager
           end
 
           puts "cropping images"
-          wraith.crop_images(crop, height)
+          Wraith.crop_images(crop, height)
         end
       end
     end
+  end
+
+  def crop_images
+    self.class.crop_images
   end
 
   def generate_thumbnails
