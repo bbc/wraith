@@ -32,9 +32,13 @@ class SnappyManager
     end
   end
 
-  def reset_shots_folder
+  def self.reset_shots_folder
       FileUtils.rm_rf('./shots')
       FileUtils.mkdir('shots')
+  end
+
+  def reset_shots_folder
+    self.class.reset_shots_folder
   end
 
   def save_images

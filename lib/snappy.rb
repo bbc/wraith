@@ -1,6 +1,7 @@
 require "yaml"
 
 class Snappy
+  attr_accessor :config
 
   def initialize(config_name)
     @config = YAML::load_file(config_name + '.yaml')
@@ -52,5 +53,4 @@ class Snappy
   def thumbnail_image(png_path, output_path)
       `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
-  
 end  
