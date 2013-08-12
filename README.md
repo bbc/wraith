@@ -71,6 +71,13 @@ paths:
   uk_index: /uk
 ```
 
+You can also specify PantomJS command line options in config.yml.
+
+For example to tell PhantomJS to ignore SSL errors:
+
+```yaml
+phantomjs_options: "--ignore-ssl-errors=true"
+```
 
 ## Using Wraith
 
