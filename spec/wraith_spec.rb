@@ -1,7 +1,6 @@
 require 'rspec-given'
 require 'wraith'
 require 'wraith_manager'
-# require 'image_size'
 
 describe Wraith do
   Given(:config_name) { 'spec/test_config' }
