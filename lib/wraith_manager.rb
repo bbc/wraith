@@ -1,11 +1,11 @@
-require 'snappy'
+require 'wraith'
 require 'image_size'
 
-class SnappyManager
-  attr_reader :snappy
+class WraithManager
+  attr_reader :wraith
 
   def initialize(config)
-    @snappy = Snappy.new(config)
+    @wraith = Wraith.new(config)
   end
 
   def compare_images
@@ -17,7 +17,7 @@ class SnappyManager
     while !files.empty?
       base, compare = files.slice!(0, 2)
       diff = base.gsub(/([a-z]+).png$/, 'diff.png')
-      snappy.compare_images(base, compare, diff, base.gsub(/([a-z]+).png$/, 'data.txt'))
+      wraith.compare_images(base, compare, diff, base.gsub(/([a-z]+).png$/, 'data.txt'))
 
       contents = ''
       Dir.glob('shots/*/*.txt').each do |f|
@@ -42,10 +42,10 @@ class SnappyManager
   end
 
   def save_images
-    base_domain = {'label' => snappy.base_domain_label, 'host' => snappy.base_domain}
-    compare_domain = {'label' => snappy.comp_domain_label, 'host' => snappy.comp_domain}
+    base_domain = {'label' => wraith.base_domain_label, 'host' => wraith.base_domain}
+    compare_domain = {'label' => wraith.comp_domain_label, 'host' => wraith.comp_domain}
 
-    snappy.paths.each do |label, path|
+    wraith.paths.each do |label, path|
       puts "processing '#{label}' '#{path}'"
       if !path
         path = label
@@ -55,7 +55,7 @@ class SnappyManager
       FileUtils.mkdir("shots/#{label}")
       FileUtils.mkdir_p("shots/thumbnails/#{label}")
 
-      snappy.widths.each do |width|
+      wraith.widths.each do |width|
         width = width.to_s
         compare_url = compare_domain['host'] + path
         base_url = base_domain['host'] + path
@@ -63,8 +63,8 @@ class SnappyManager
         compare_file_name = "shots/#{label}/#{width}_#{compare_domain['label']}.png"
         base_file_name = "shots/#{label}/#{width}_#{base_domain['label']}.png"
 
-        snappy.capture_page_image compare_url, width, compare_file_name
-        snappy.capture_page_image base_url, width, base_file_name
+        wraith.capture_page_image compare_url, width, compare_file_name
+        wraith.capture_page_image base_url, width, base_file_name
       end
     end
   end
@@ -95,7 +95,7 @@ class SnappyManager
           end
 
           puts "cropping images"
-          snappy.crop_images(crop, height)
+          wraith.crop_images(crop, height)
         end
       end
     end
@@ -104,7 +104,7 @@ class SnappyManager
   def generate_thumbnails
     Dir.glob("shots/*/*.png").each do |filename|
       new_name = filename.gsub(/^shots/, 'shots/thumbnails')
-      snappy.thumbnail_image(filename, new_name)
+      wraith.thumbnail_image(filename, new_name)
     end
   end
 end

@@ -1,6 +1,6 @@
 require "yaml"
 
-class Snappy
+class Wraith
   attr_accessor :config
 
   def initialize(config_name)
