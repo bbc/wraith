@@ -11,7 +11,6 @@ var url = system.args[1];
 var image_name = system.args[3];
 var view_port_width = system.args[2];
 
-
 page.viewportSize = { width: view_port_width, height: 1500};
 page.settings = { loadImages: true, javascriptEnabled: true };
 
