@@ -63,8 +63,15 @@ install_brew_packages() {
   fi
 }
 
+make_data_dir() {
+  echo ""
+  green "Making shots directory"
+  mkdir $CWD/wraith/shots
+}
+
 download
 extract
+make_data_dir
 
 if is_osx; then
   if is_brew_installed; then
