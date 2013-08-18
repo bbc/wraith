@@ -11,22 +11,24 @@ class Wraith
     @config['screen_widths']
   end
 
+  def domains
+    @config['domains']
+  end
+
   def base_domain
-    hash = @config['domains']
-    hash[hash.keys[0]]
+    domains[base_domain_label]
   end
 
   def comp_domain
-    hash = @config['domains']
-    hash[hash.keys[1]]
+    domains[comp_domain_label]
   end
 
   def base_domain_label
-    @config['domains'].keys[0]
+    domains.keys[0]
   end
 
   def comp_domain_label
-    @config['domains'].keys[1]
+    domains.keys[1]
   end
 
   def paths
