@@ -103,8 +103,10 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog
-
+## Changelog - updated 18/8/13
+    Merge pull request #27 from reggieb/code_tidy
+    Merge pull request #24 from hoguej/feature/unit_tests
+    Merge pull request #21 from doryphores/sort_files_before_compare
     Merge pull request #13 from BBC-News/crop-images
     Merge pull request #18 from ecometrica/gallery
     Merge pull request #15 from timabell/move-data-file
