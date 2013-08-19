@@ -3,8 +3,8 @@ require "yaml"
 class Wraith
   attr_accessor :config
 
-  def initialize(config_name)
-    @config = YAML::load_file(config_name + '.yaml')
+  def initialize(config)
+    @config = config
   end
 
   def widths
