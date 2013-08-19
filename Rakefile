@@ -1,35 +1,17 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-require 'wraith_manager'
+namespace :wraith do
+  desc "Extracts config from file and generates Wraith output"
+  task :process_run do
+    require 'wraith_process'
+    WraithProcess.run
+    sh 'ruby create_gallery.rb shots'
+  end
 
-wraith_manager = WraithManager.new('config')
-
-task :default => [:reset_shots_folder, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
-  puts 'Done!';
 end
 
-task :compare_images do
-  wraith_manager.compare_images
+# Remove from future builds
+task :default => ['wraith:process_run'] do
+  puts 'Running Wraith via "rake" has been deprecated'
+  puts 'Instead, please use "rake wraith:process_run"'
 end
-
-task :reset_shots_folder do
-  wraith_manager.reset_shots_folder
-end
-
-task :save_images do
-  wraith_manager.save_images
-end
-
-
-task :crop_images do
-  wraith_manager.crop_images
-end
-
-task :generate_thumbnails do
-  wraith_manager.generate_thumbnails
-end
-
-task :generate_gallery do
-  sh 'ruby create_gallery.rb shots'
-end
-
