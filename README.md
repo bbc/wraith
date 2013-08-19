@@ -75,8 +75,10 @@ paths:
 ## Using Wraith
 
 ```sh
-rake
+rake wraith:process_run
 ```
+This will use the the configuration file 'config.yaml'
+
 ## Output
 
 After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.
@@ -84,6 +86,13 @@ After each screenshot is captured, the compare task will run, this will output a
 ## Gallery
 
 A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+
+## Alternative configuration file.
+To specify an alternative configuration use this form of the rake task:
+
+```sh
+rake wraith:process_run[path/to/config]
+```
 
 ## Contributing
 

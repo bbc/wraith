@@ -13,7 +13,7 @@ describe Wraith do
   Given(:diff_image) { 'shots/test/test_diff.png' }
   Given(:data_txt) { 'shots/test/test.txt' }
 
-  When(:wraith) { Wraith.new(config_name) }
+  When(:wraith) { Wraith.new(YAML::load_file(config_name + '.yaml')) }
   Then { wraith.is_a? Wraith }
 
   context "When creating a wraith worker" do
