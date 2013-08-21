@@ -1,6 +1,7 @@
 require "yaml"
 
-class Snappy
+class Wraith
+  attr_accessor :config
 
   def initialize(config_name)
     @config = YAML::load_file(config_name + '.yaml')
@@ -10,22 +11,24 @@ class Snappy
     @config['screen_widths']
   end
 
+  def domains
+    @config['domains']
+  end
+
   def base_domain
-    hash = @config['domains']
-    hash[hash.keys[0]]
+    domains[base_domain_label]
   end
 
   def comp_domain
-    hash = @config['domains']
-    hash[hash.keys[1]]
+    domains[comp_domain_label]
   end
 
   def base_domain_label
-    @config['domains'].keys[0]
+    domains.keys[0]
   end
 
   def comp_domain_label
-    @config['domains'].keys[1]
+    domains.keys[1]
   end
 
   def paths
@@ -45,12 +48,15 @@ class Snappy
     puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 
-  def crop_images (crop, height)
+  def self.crop_images (crop, height)
     puts `convert #{crop} -extent 0x#{height} #{crop}`
+  end
+
+  def crop_images(crop, height)
+    self.class.crop_images
   end
 
   def thumbnail_image(png_path, output_path)
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
-
 end
