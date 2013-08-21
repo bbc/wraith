@@ -15,7 +15,7 @@ page.viewportSize = { width: view_port_width, height: 1500};
 page.settings = { loadImages: true, javascriptEnabled: true };
 
 //if you want to use additional phantomjs commands, place them here
-page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.17',
+page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.17';
 
 //You can place custom headers here, example below.
 // page.customHeaders = {
@@ -25,6 +25,14 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 //  };
 
 page.open(url, function(status) {
+  page.evaluate(function() {
+    var style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.appendChild(document.createTextNode('body { background: #fff }'));
+
+    document.head.insertBefore(style, document.head.firstChild);
+  });
+
   if (status === 'success') {
     window.setTimeout(function() {
       console.log('Snapping ' + url + ' at width ' + view_port_width);
