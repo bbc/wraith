@@ -111,6 +111,9 @@ If you want to add functionality to this project, pull requests are welcome.
     rspec
 
 ## Changelog - updated 18/8/13
+    Merge pull request #34 from malengrin/master
+    Merge pull request #33 from hoguej/feature/point_directly_at_install_script
+    Merge pull request #22 from doryphores/phantomjs_options
     Merge pull request #27 from reggieb/code_tidy
     Merge pull request #24 from hoguej/feature/unit_tests
     Merge pull request #21 from doryphores/sort_files_before_compare
