@@ -49,7 +49,7 @@ class Wraith
   end
 
   def self.crop_images (crop, height)
-    puts `convert #{crop} -extent 0x#{height} #{crop}`  
+    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
   end
 
   def crop_images(crop, height)

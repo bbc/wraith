@@ -25,14 +25,6 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 //  };
 
 page.open(url, function(status) {
-  page.evaluate(function() {
-    var style = document.createElement('style');
-    style.setAttribute('type', 'text/css');
-    style.appendChild(document.createTextNode('body { background: #fff }'));
-
-    document.head.insertBefore(style, document.head.firstChild);
-  });
-
   if (status === 'success') {
     window.setTimeout(function() {
       console.log('Snapping ' + url + ' at width ' + view_port_width);
