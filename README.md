@@ -42,7 +42,7 @@ And then download the PhantomJS binary package from
 ## Installation
 
 ```sh
-curl -fsSL https://raw.github.com/bbc-news/wraith/go | bash
+curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
 ```
 
 
