@@ -36,7 +36,7 @@ class Wraith
   end
 
   def capture_page_image (url, width, file_name)
-    puts `phantomjs snap.js "#{url}" "#{width}" "#{file_name}"`
+    puts `phantomjs #{@config['phantomjs_options']} snap.js "#{url}" "#{width}" "#{file_name}"`
   end
 
   # Support for slimerjs, uncomment code below and comment out capture_page_image option above
@@ -54,9 +54,9 @@ class Wraith
 
   def crop_images(crop, height)
     self.class.crop_images
-  end 
- 
-  def thumbnail_image(png_path, output_path)
-      `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
-end  
+
+  def thumbnail_image(png_path, output_path)
+    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+  end
+end
