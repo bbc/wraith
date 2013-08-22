@@ -23,8 +23,7 @@ class WraithManager
   end
 
   def self.reset_shots_folder
-      FileUtils.rm_rf('./shots')
-      FileUtils.mkdir('shots')
+      FileUtils.rm_r Dir.glob('./shots/*')
   end
 
   def reset_shots_folder
