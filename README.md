@@ -48,7 +48,7 @@ curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
 
 ## Config
 
-All config will be placed in config.yml. You can specify domains, paths, screen
+All config will be placed in config.yaml. You can specify domains, paths, screen
 widths & HTTP headers.
 
 ```yaml
@@ -71,7 +71,7 @@ paths:
   uk_index: /uk
 ```
 
-You can also specify PantomJS command line options in config.yml.
+You can also specify PhantomJS command line options in config.yaml.
 
 For example to tell PhantomJS to ignore SSL errors:
 
