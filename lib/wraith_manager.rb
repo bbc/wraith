@@ -37,7 +37,11 @@ class WraithManager
       puts "processing '#{label}' '#{path}'"
       if !path
         path = label
-        label = path.gsub('/','_')
+        # Windows forbidden chars
+        label = path.gsub(/[\/\\:\*\?"<>|]/,'_')
+
+        # Specific URL chars
+        label = label.gsub(/[&=\[\]]/,'_')
       end
 
       FileUtils.mkdir("shots/#{label}")
