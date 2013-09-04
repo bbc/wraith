@@ -2,16 +2,14 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'wraith_manager'
 
-@wraith_manager = WraithManager.new('config')
-
-task :default => [:reset_shots_folder, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
-  puts 'Done!';
-end
-
 task :config, [:args] do |t, args|
   args.with_defaults(:args => "config")
   @wraith_manager = WraithManager.new("#{args[:args]}")
   Rake::Task["default"].invoke
+end
+
+task :default => [:config, :reset_shots_folder, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+  puts 'Done!';
 end
 
 task :compare_images do
