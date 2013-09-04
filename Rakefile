@@ -12,7 +12,6 @@ task :config, [:args] do |t, args|
   args.with_defaults(:args => "config")
   @wraith_manager = WraithManager.new("#{args[:args]}")
   Rake::Task["default"].invoke
-  puts 'Done!'
 end
 
 task :compare_images do
