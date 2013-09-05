@@ -88,9 +88,18 @@ phantomjs_options: "--ignore-ssl-errors=true"
 
 ## Using Wraith
 
+There are two ways of using Wraith, the fastest is to simply type rake.
+
 ```sh
 rake
 ```
+
+You may want to deal with multiple config files though, different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  The default is config.yaml, so even if you dont pass a file in, it will still run.
+
+```sh
+rake config[config_name]
+```
+
 ## Output
 
 After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.

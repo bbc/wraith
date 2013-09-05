@@ -4,7 +4,7 @@ class Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    @config = YAML::load_file(config_name + '.yaml')
+    @config = YAML::load(File.open("configs/#{config_name}.yaml"))
   end
 
   def widths

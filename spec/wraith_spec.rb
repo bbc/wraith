@@ -3,7 +3,7 @@ require 'wraith'
 require 'wraith_manager'
 
 describe Wraith do
-  Given(:config_name) { 'spec/test_config' }
+  Given(:config_name) { 'test_config' }
   Given { WraithManager.reset_shots_folder }
   Given(:test_url1) { "http://www.live.bbc.co.uk/news" }
   Given(:test_url2) { "http://www.live.bbc.co.uk/russian" }
