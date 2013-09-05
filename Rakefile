@@ -2,6 +2,8 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'wraith_manager'
 
+@wraith_manager = WraithManager.new('config')
+
 task :config, [:args] do |t, args|
   args.with_defaults(:args => "config")
   @wraith_manager = WraithManager.new("#{args[:args]}")
