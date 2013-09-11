@@ -35,18 +35,5 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh 'ruby create_gallery.rb shots'
+  sh "ruby create_gallery.rb #{@wraith_manager.directory}"
 end
-
-desc "Shots by domain."
-task :get, :domain do |t, args|
-  wraith_manager = WraithManager.new(args[:domain])
-  wraith_manager.reset_shots_folder
-  wraith_manager.save_images
-  wraith_manager.crop_images
-  wraith_manager.compare_images
-  wraith_manager.generate_thumbnails
-  sh "ruby create_gallery.rb #{wraith_manager.directory}"
-end
-
-

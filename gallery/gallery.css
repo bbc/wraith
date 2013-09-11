@@ -1,0 +1,13 @@
+body {
+  padding-top: 50px;
+}
+.galpage {
+  padding: 40px 15px;
+  text-align: left;
+}
+.navbar-header {
+	color: #fff;
+}
+.navbar-inverse {
+	background-color: rgb(204, 1, 1);
+}
