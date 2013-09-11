@@ -35,6 +35,5 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh 'ruby create_gallery.rb shots'
+  sh "ruby create_gallery.rb #{@wraith_manager.directory}"
 end
-

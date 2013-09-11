@@ -9,6 +9,7 @@ require 'fileutils'
 
 MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
 TEMPLATE_LOCATION = "gallery/gallery_template.erb"
+TEMPLATE_BY_DOMAIN_LOCATION = "gallery/gallery_template.erb"
 BOOTSTRAP_LOCATION = "gallery/bootstrap.min.css"
 
 def parse_directories(dirname)
@@ -53,15 +54,17 @@ def parse_directories(dirname)
                         :filename => filepath, 
                         :thumb => thumbnail
                     }
+
                 end
                 size_dict[:variants].sort! {|a, b| a[:name] <=> b[:name] }
             end
         end
     end
+
     return dirs
 end
 
-def generate_html(directories, template, destination)
+def generate_html(domain, directories, template, destination)
     template = File.read(template)
     html = ERB.new(template).result
     File.open(destination, 'w') do |outf|
@@ -75,8 +78,9 @@ if ARGV.length < 1 then
 end
 
 location = ARGV[0]
+domain = location
 directories = parse_directories(location)
 dest = "#{location}/gallery.html"
 
-generate_html(directories, TEMPLATE_LOCATION, dest)
+generate_html(domain, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest)
 FileUtils.cp(BOOTSTRAP_LOCATION, "#{location}/bootstrap.min.css")

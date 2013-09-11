@@ -7,6 +7,10 @@ class Wraith
     @config = YAML::load(File.open("configs/#{config_name}.yaml"))
   end
 
+  def directory
+    @config['directory'].first
+  end
+
   def widths
     @config['screen_widths']
   end

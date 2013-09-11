@@ -8,27 +8,31 @@ class WraithManager
     @wraith = Wraith.new(config)
   end
 
+  def directory
+    wraith.directory
+  end
+
   def compare_images
-    files = Dir.glob("shots/*/*.png").sort
+    files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
     while !files.empty?
       base, compare = files.slice!(0, 2)
       diff = base.gsub(/([a-z]+).png$/, 'diff.png')
       info = base.gsub(/([a-z]+).png$/, 'data.txt')
       wraith.compare_images(base, compare, diff, info)
-      contents = Dir.glob('shots/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
-      File.open("shots/data.txt", "w") { |file| file.write(contents.join)  }
+      contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
+      File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
       puts 'Saved diff'
     end
   end
 
-  def self.reset_shots_folder
-      FileUtils.rm_rf('./shots')
-      FileUtils.mkdir('shots')
+  def self.reset_shots_folder(dir)
+      FileUtils.rm_rf("./#{dir}")
+      FileUtils.mkdir("#{dir}")
   end
 
   def reset_shots_folder
-    self.class.reset_shots_folder
+    self.class.reset_shots_folder(wraith.directory)
   end
 
   def save_images
@@ -40,16 +44,16 @@ class WraithManager
         label = path.gsub('/','_')
       end
 
-      FileUtils.mkdir("shots/#{label}")
-      FileUtils.mkdir_p("shots/thumbnails/#{label}")
+      FileUtils.mkdir("#{wraith.directory}/#{label}")
+      FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")
 
       compare_url = wraith.comp_domain + path
       base_url = wraith.base_domain + path
 
       wraith.widths.each do |width|
 
-        compare_file_name = "shots/#{label}/#{width}_#{wraith.comp_domain_label}.png"
-        base_file_name = "shots/#{label}/#{width}_#{wraith.base_domain_label}.png"
+        compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{wraith.comp_domain_label}.png"
+        base_file_name = "#{wraith.directory}/#{label}/#{width}_#{wraith.base_domain_label}.png"
 
         wraith.capture_page_image compare_url, width, compare_file_name
         wraith.capture_page_image base_url, width, base_file_name
@@ -57,8 +61,8 @@ class WraithManager
     end
   end
 
-  def self.crop_images
-    files = Dir.glob("shots/*/*.png").sort
+  def self.crop_images(dir)
+    files = Dir.glob("#{dir}/*/*.png").sort
 
     while !files.empty?
       base, compare = files.slice!(0, 2)
@@ -87,12 +91,12 @@ class WraithManager
   end
 
   def crop_images
-    self.class.crop_images
+    self.class.crop_images(wraith.directory)
   end
 
   def generate_thumbnails
-    Dir.glob("shots/*/*.png").each do |filename|
-      new_name = filename.gsub(/^shots/, 'shots/thumbnails')
+    Dir.glob("#{wraith.directory}/*/*.png").each do |filename|
+      new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
       wraith.thumbnail_image(filename, new_name)
     end
   end
