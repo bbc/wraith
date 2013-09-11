@@ -4,7 +4,7 @@ directory:
 
 # Add only 2 domains, key will act as a label
 domains:
-  test: "http://m.test.bbc.co.uk/news"
+  test: "http://m.live.bbc.co.uk/news"
   live: "http://www.live.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples

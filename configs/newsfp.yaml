@@ -4,7 +4,7 @@ directory:
 
 #Type domain URL below, here are a couple of examples
 domains:
- code: http://m.test.bbc.co.uk
+ code: http://m.live.bbc.co.uk
  live: http://www.live.bbc.co.uk 
 #compare_domain: http://www.live.bbc.co.uk
 
