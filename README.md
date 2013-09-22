@@ -60,7 +60,7 @@ All config will be placed in config.yaml. You can specify the snap file name, th
 ```yaml
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "nojs.js"
+snap_file: "snap.js"
 
 # Add only 2 domains, key will act as a label
 domains:
