@@ -1,3 +1,4 @@
+# If you want to have multiple snapping files, set the file name here
 snap_file:
   - 'snap.js'
 
