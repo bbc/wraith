@@ -130,6 +130,7 @@ If you want to add functionality to this project, pull requests are welcome.
     rspec
 
 ## Changelog - updated 22/9/13
+    Merge pull request #46 from BBC-News/different_snap_file
     Merge pull request #41 from BBC-News/new-config
     Merge pull request #40 from tiemevanveen/master
     Merge pull request #36 from thingsinjars/patch-1
