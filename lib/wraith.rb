@@ -8,7 +8,7 @@ class Wraith
   end
 
   def snap_file
-    @config['snap_file'].first
+    @config['snap_file'] ? @config['snap_file'] : 'snap.js'
   end
 
   def widths
