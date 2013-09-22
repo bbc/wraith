@@ -55,7 +55,7 @@ bundle install
 
 ## Config
 
-All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.
+All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  
 
 ```yaml
 
