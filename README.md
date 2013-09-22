@@ -62,6 +62,10 @@ All config will be placed in config.yaml. You can specify the snap file name, th
 #If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
 
+# Type the name of the directory that shots will be stored in
+directory:
+  - 'shots'
+
 # Add only 2 domains, key will act as a label
 domains:
   english: "http://www.live.bbc.co.uk/news"
