@@ -1,6 +1,9 @@
+##If you want to have multiple snapping files, set the file name here
+snap_file: "snap.js"
+
 # Type the name of the directory that shots will be stored in
 directory:
-  - 'news'
+  - 'shots'
 
 # Add only 2 domains, key will act as a label
 domains:
@@ -18,7 +21,7 @@ screen_widths:
 #Type page URL paths below, here are a couple of examples
 paths:
   home: /
-  # uk_index: /uk
+  uk_index: /uk
 
 # If you don't want to name the paths explicitly you can use a yaml
 # collection as follows, and names will be derived by replacing / with _

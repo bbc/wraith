@@ -12,7 +12,7 @@ var image_name = system.args[3];
 var view_port_width = system.args[2];
 
 page.viewportSize = { width: view_port_width, height: 1500};
-page.settings = { loadImages: true, javascriptEnabled: true };
+page.settings = { loadImages: true, javascriptEnabled: false };
 
 // If you want to use additional phantomjs commands, place them here
 page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.17';
@@ -25,7 +25,7 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 //  };
 
 // If you want to set a cookie, just add your details below in the following way.
-
+ 
 // phantom.addCookie({
 //     'name': 'ckns_policy',
 //     'value': '111',

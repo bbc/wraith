@@ -8,7 +8,11 @@ class Wraith
   end
 
   def directory
-    @config['directory'].first
+    @config['snap_file'] ? @config['snap_file'] : 'snap.js'
+  end
+
+  def snap_file
+    @config['snap_file'].first
   end
 
   def widths
@@ -40,12 +44,12 @@ class Wraith
   end
 
   def capture_page_image (url, width, file_name)
-    puts `phantomjs #{@config['phantomjs_options']} snap.js "#{url}" "#{width}" "#{file_name}"`
+    puts `phantomjs #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
   # Support for slimerjs, uncomment code below and comment out capture_page_image option above
   # def capture_page_image (url, width, file_name)
-  #   puts `slimerjs snap.js "#{url}" "#{width}" "#{file_name}"`
+  #   puts `slimerjs #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   # end
 
   def compare_images (base, compare, output, info)

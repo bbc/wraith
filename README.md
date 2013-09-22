@@ -55,10 +55,13 @@ bundle install
 
 ## Config
 
-All config will be placed in config.yaml. You can specify domains, paths, screen
-widths & HTTP headers.
+All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.
 
 ```yaml
+
+#If you want to have multiple snapping files, set the file name here
+snap_file: "snap.js"
+
 # Add only 2 domains, key will act as a label
 domains:
   english: "http://www.live.bbc.co.uk/news"
@@ -126,7 +129,11 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog - updated 18/8/13
+## Changelog - updated 22/9/13
+    Merge pull request #41 from BBC-News/new-config
+    Merge pull request #40 from tiemevanveen/master
+    Merge pull request #36 from thingsinjars/patch-1
+    Merge pull request #37 from thingsinjars/patch-2
     Merge pull request #34 from malengrin/master
     Merge pull request #33 from hoguej/feature/point_directly_at_install_script
     Merge pull request #22 from doryphores/phantomjs_options
