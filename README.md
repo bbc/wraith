@@ -94,7 +94,7 @@ There are two ways of using Wraith, the fastest is to simply type rake.
 rake
 ```
 
-You may want to deal with multiple config files though, different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  Make sure you are inside the `configs` directory before running the command.  The default is config.yaml, so even if you dont pass a file in, it will still run.
+You may want to deal with multiple config files so you can compare different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  The default is config.yaml, so even if you dont pass a file in, it will still run.  If you have deleted config.yaml, make sure you are inside the `configs` directory before running the command.
 
 ```sh
 rake config[config_name]
