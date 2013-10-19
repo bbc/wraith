@@ -22,18 +22,19 @@ diff](http://bbc-news.github.io/wraith/images/320_diff.png)
 You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
 It's up to you to decide which browser engine you want to run it against.
 
-On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
-assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
-you to install them.
+### OSX
+On Mac OS X, the fast way to get going is to use [homebrew](http://brew.sh).  
 
-Also install the image_size gem:
+```sh 
+brew install phantomjs
+brew install imagemagick
+```    
+
+The final requirement is to install the image_size gem:
 
     gem install image_size
-    
-Then, to ensure gem dependencies are installed:
 
-    bundle
-
+### Ubuntu
 On Ubuntu 12.04, you will need to apt-get the following packages:
 
 * libicu-dev
@@ -47,11 +48,10 @@ And then download the PhantomJS binary package from
 ## Installation
 
 ```sh
-curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
+git clone https://github.com/BBC-News/wraith.git
 cd wraith
 bundle install
 ```
-
 
 ## Config
 
@@ -94,6 +94,9 @@ phantomjs_options: "--ignore-ssl-errors=true"
 ```
 
 ## Using Wraith
+
+[Here is a great screencast](http://www.youtube.com/watch?v=gE_19L0l2q0) about how to use Wraith by [Kevin Lamping](https://twitter.com/klamping)
+
 
 There are two ways of using Wraith, the fastest is to simply type rake.
 
