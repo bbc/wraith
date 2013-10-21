@@ -95,6 +95,8 @@ phantomjs_options: "--ignore-ssl-errors=true"
 
 ## Using Wraith
 
+If you are new to ruby, rake and PhantomJS, [here is a great screencast](http://www.youtube.com/watch?v=gE_19L0l2q0) about how to use Wraith by [Kevin Lamping](https://twitter.com/klamping)
+
 There are two ways of using Wraith, the fastest is to simply type rake.
 
 ```sh
@@ -133,7 +135,8 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog - updated 22/9/13
+## Changelog - updated 21/10/13
+    Merge pull request #44 from rupl/master
     Merge pull request #46 from BBC-News/different_snap_file
     Merge pull request #41 from BBC-News/new-config
     Merge pull request #40 from tiemevanveen/master
