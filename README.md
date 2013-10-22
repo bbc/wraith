@@ -22,8 +22,17 @@ diff](http://bbc-news.github.io/wraith/images/320_diff.png)
 You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
 It's up to you to decide which browser engine you want to run it against.
 
-On Windows it's important to install ImageMagick from the binary found here: 
-[http://www.imagemagick.org/script/binary-releases.php#windows](http://www.imagemagick.org/script/binary-releases.php#windows)
+### OSX
+On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
+assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
+you to install them.
+
+Also install the image_size gem:
+
+    gem install image_size
+    
+### Windows
+On Windows it's important to install ImageMagick from the binary found [here](http://www.imagemagick.org/script/binary-releases.php#windows). 
 This will ensure that ImageMagick is listed first in your PATH.
 
 To check your path after installing, open a command line window and type:
@@ -34,40 +43,22 @@ This will return a list of executables in you PATH separated by semi-colons ;
 
     C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
 
-If ImageMagick is in your path but not listed first you can edit you path by following the instructions here:
-[http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx](http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx)
+If ImageMagick is in your path but not listed first you can edit you path by following the instructions [here](http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx)
 
 If ImageMagick is not in you PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16; 
 Make sure the version number and location are correct for your system.
 
-
-On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
-assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
-you to install them.
-
-Also install the image_size gem:
-
-    gem install image_size
-    
-Then, to ensure gem dependencies are installed:
-
-    bundle
-
+### Ubuntu
 On Ubuntu 12.04, you will need to apt-get the following packages:
 
 * libicu-dev
 * imagemagick
 * rake
 
-
 And then download the PhantomJS binary package from
 [http://phantomjs.org/](http://phantomjs.org/).
 
 ## Installation
-
-The bundler gem is very useful, if you don't have it already you can install it with:
-
-    gem install bundler
 
 If you have curl installed you can run:
 ```sh
@@ -80,10 +71,14 @@ Alternatively you can download the zip, or if you have Git installed you can cre
 
     git clone https://github.com/BBC-News/wraith
 
-You can then run:
+You can then run the following inside the Wraith directory:
     
     bundle install
 
+If you don't have bundler installed, install it :
+
+    gem install bundler
+    
 
 ## Config
 
@@ -171,6 +166,7 @@ If you want to add functionality to this project, pull requests are welcome.
     rspec
 
 ## Changelog - updated 21/10/13
+    Merge pull request #49 from boldfacedesign/master
     Merge pull request #44 from rupl/master
     Merge pull request #46 from BBC-News/different_snap_file
     Merge pull request #41 from BBC-News/new-config
