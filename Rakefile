@@ -10,7 +10,7 @@ task :config, [:args] do |t, args|
   Rake::Task["default"].invoke
 end
 
-task :default => [:config, :reset_shots_folder, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:config, :reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
@@ -20,6 +20,10 @@ end
 
 task :reset_shots_folder do
   @wraith_manager.reset_shots_folder
+end
+
+task :check_for_paths do
+  @wraith_manager.check_for_paths
 end
 
 task :save_images do
