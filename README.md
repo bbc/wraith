@@ -43,9 +43,9 @@ This will return a list of executables in you PATH separated by semi-colons ;
 
     C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
 
-If ImageMagick is in your path but not listed first you can edit you path by following the instructions [here](http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx)
+If ImageMagick is in your path but not listed first you can edit your path by following the instructions [here](http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx)
 
-If ImageMagick is not in you PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16; 
+If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16; 
 Make sure the version number and location are correct for your system.
 
 ### Ubuntu
@@ -67,7 +67,7 @@ cd wraith
 bundle install
 ```
 
-Alternatively you can download the zip, or if you have Git installed you can create a new folder, open a command line(terminal) window in that folder and run:
+Alternatively you can download the zip, or if you have Git installed you can create a new folder, open a command line (terminal) window in that folder and run:
 
     git clone https://github.com/BBC-News/wraith
 
@@ -130,7 +130,7 @@ There are two ways of using Wraith, the fastest is to simply type rake.
 rake
 ```
 
-You may want to deal with multiple config files so you can compare different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  The default is config.yaml, so even if you dont pass a file in, it will still run.  If you have deleted config.yaml, make sure you are inside the `configs` directory before running the command.
+You may want to deal with multiple config files so you can compare different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  The default is config.yaml, so even if you don't pass a file in, it will still run.  If you have deleted config.yaml, make sure you are inside the `configs` directory before running the command.
 
 ```sh
 rake config[config_name]
