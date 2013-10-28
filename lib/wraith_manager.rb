@@ -65,7 +65,7 @@ class WraithManager
     spider_list = []
     #set the crawl domain to the base domain in the confing 
     crawl_url = wraith.base_domain
-    #igonre urls to file extensiosn such as images etc
+    #ignore urls to file extension such as images etc
     ext = %w(flv swf png jpg gif asx zip rar tar 7z gz jar js css dtd xsd ico raw mp3 mp4 wav wmv ape aac ac3 wma aiff mpg mpeg avi mov ogg mkv mka asx asf mp2 m1v m3u f4v pdf doc xls ppt pps bin exe rss xml)
     Anemone.crawl(crawl_url) do |anemone|
       anemone.skip_links_like /\.#{ext.join('|')}$/
