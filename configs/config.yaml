@@ -20,8 +20,8 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-   home: /
-   beginner: /beginner
+   # home: /
+   # beginner: /beginner
 
 #Set the number of days to keep the site spider file
 spider_days:
