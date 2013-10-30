@@ -82,9 +82,14 @@ If you don't have bundler installed, install it :
 
 ## Config
 
-All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  
+All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  
 
 ```yaml
+
+#Headless browser option
+browser:
+  webkit: "phantomjs"
+  # geeko: "./slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
@@ -110,6 +115,13 @@ screen_widths:
 paths:
   home: /
   uk_index: /uk
+
+# If you don't want to name the paths explicitly you can use a yaml
+# collection as follows, and names will be derived by replacing / with _
+#
+# paths:
+#  - /imghp
+#  - /maps
 ```
 
 You can also specify PhantomJS command line options in config.yaml.
