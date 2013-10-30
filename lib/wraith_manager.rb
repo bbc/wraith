@@ -17,12 +17,12 @@ class WraithManager
 
     while !files.empty?
       base, compare = files.slice!(0, 2)
-      diff = base.gsub(/([a-z]+).png$/, 'diff.png')
-      info = base.gsub(/([a-z]+).png$/, 'data.txt')
-      wraith.compare_images(base, compare, diff, info)
-      contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
-      File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
-      puts 'Saved diff'
+        diff = base.gsub(/([a-z]+).png$/, 'diff.png')
+        info = base.gsub(/([a-z]+).png$/, 'data.txt')
+        wraith.compare_images(base, compare, diff, info)
+        contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
+        File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
+        puts 'Saved diff'
     end
   end
 
@@ -49,14 +49,18 @@ class WraithManager
 
       compare_url = wraith.comp_domain + path
       base_url = wraith.base_domain + path
+      
 
       wraith.widths.each do |width|
 
-        compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{wraith.comp_domain_label}.png"
-        base_file_name = "#{wraith.directory}/#{label}/#{width}_#{wraith.base_domain_label}.png"
+        wraith.engine.each do |type, engine| 
+          
+          compare_file_name = "#{wraith.directory}/#{label}/#{engine}_#{width}_#{wraith.comp_domain_label}.png"
+          base_file_name = "#{wraith.directory}/#{label}/#{engine}_#{width}_#{wraith.base_domain_label}.png"
 
-        wraith.capture_page_image compare_url, width, compare_file_name
-        wraith.capture_page_image base_url, width, base_file_name
+          wraith.capture_page_image engine, compare_url, width, compare_file_name
+          wraith.capture_page_image engine, base_url, width, base_file_name
+        end
       end
     end
   end
