@@ -89,7 +89,7 @@ All config will be placed in config.yaml. You can specify the snap file name, th
 #Headless browser option
 browser:
   webkit: "phantomjs"
-  # geeko: "./slimerjs"
+  # gecko: "./slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
