@@ -82,11 +82,11 @@ If you don't have bundler installed, install it :
 
 ## Config
 
-All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  
+All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website.
 
 ```yaml
 
-#Headless browser option
+Headless browser option
 browser:
   webkit: "phantomjs"
   # gecko: "./slimerjs"
@@ -122,6 +122,11 @@ paths:
 # paths:
 #  - /imghp
 #  - /maps
+
+#Set the number of days to keep the site spider file
+spider_days:
+  - 10
+
 ```
 
 You can also specify PhantomJS command line options in config.yaml.
@@ -177,7 +182,10 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog - updated 21/10/13
+## Changelog - updated 05/11/13
+    Merge pull request #51 from boldfacedesign/master
+    Merge pull request #53 from BBC-News/browser_option
+    Merge pull request #50 from nikai3d/patch-1
     Merge pull request #49 from boldfacedesign/master
     Merge pull request #44 from rupl/master
     Merge pull request #46 from BBC-News/different_snap_file
