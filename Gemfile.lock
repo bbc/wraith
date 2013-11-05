@@ -25,6 +25,7 @@ GEM
     rspec-mocks (2.14.3)
     slop (3.4.6)
     sorcerer (1.0.2)
+    anemone (0.7.2)
 
 PLATFORMS
   ruby
@@ -34,3 +35,4 @@ DEPENDENCIES
   pry
   rake
   rspec-given
+  anemone

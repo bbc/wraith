@@ -39,6 +39,10 @@ class Wraith
     domains.keys[1]
   end
 
+  def spider_days
+    @config['spider_days']
+  end
+
   def paths
     @config['paths']
   end

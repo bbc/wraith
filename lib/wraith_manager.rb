@@ -1,5 +1,7 @@
 require 'wraith'
 require 'image_size'
+require 'anemone'
+require 'uri'
 
 class WraithManager
   attr_reader :wraith
@@ -35,10 +37,77 @@ class WraithManager
     self.class.reset_shots_folder(wraith.directory)
   end
 
+  def check_for_paths
+
+    if !wraith.paths
+      puts "no paths defined"
+      #check to see if there is an existing spider.txt file
+      if File.exist?("spider.txt")
+        #check that its within the use-by date set in the config
+        if (Time.now - File.ctime("spider.txt"))/(24*3600) < wraith.spider_days[0]
+          puts "using existing spider file"
+        else 
+          #if spider.txt files is out of date create a new one
+          puts "creating new spider file"
+          self.spider_base_domain()
+        end
+      else
+        #create new spider.txt file
+        puts "creating new spider file"
+        self.spider_base_domain()
+      end
+
+    end
+  end
+
+  def spider_base_domain
+
+    spider_list = []
+    #set the crawl domain to the base domain in the confing 
+    crawl_url = wraith.base_domain
+    #ignore urls to file extension such as images etc
+    ext = %w(flv swf png jpg gif asx zip rar tar 7z gz jar js css dtd xsd ico raw mp3 mp4 wav wmv ape aac ac3 wma aiff mpg mpeg avi mov ogg mkv mka asx asf mp2 m1v m3u f4v pdf doc xls ppt pps bin exe rss xml)
+    Anemone.crawl(crawl_url) do |anemone|
+      anemone.skip_links_like /\.#{ext.join('|')}$/
+      anemone.on_every_page do |page|
+          #puts page.url
+          #add the urls to the array
+          spider_list << page.url.path
+      end
+    end
+
+    $i = 0
+    h = Hash.new{ |h,k| h[k] = [] }
+    #loop through the array and create the hash for the label => path pairs
+    while $i < spider_list.length do
+      lab = spider_list[$i].to_s.split('/').last
+      if
+        #correct label for home page
+        spider_list[$i] == '/'
+        lab ='home'
+      end
+      h[lab] = spider_list[$i]
+
+      $i +=1
+    end
+    #creat the spider.txt file containing the hash
+    File.open("spider.txt", "w+") { |file| file.write(h) }
+  end
+
   def save_images
 
-    wraith.paths.each do |label, path|
+    if !wraith.paths
+      #if there are no path defined in the config use the spider.txt file
+      p = File.read("spider.txt")
+      p = eval(p)
+    else
+      #else use path from config
+      p = wraith.paths
+    end
+
+    p.each do |label, path|
       puts "processing '#{label}' '#{path}'"
+      
       if !path
         path = label
         label = path.gsub('/','_')
