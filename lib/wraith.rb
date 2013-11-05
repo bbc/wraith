@@ -43,14 +43,13 @@ class Wraith
     @config['paths']
   end
 
-  def capture_page_image (url, width, file_name)
-    puts `phantomjs #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  def engine
+    @config['browser']
   end
 
-  # Support for slimerjs, uncomment code below and comment out capture_page_image option above
-  # def capture_page_image (url, width, file_name)
-  #   puts `slimerjs #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
-  # end
+  def capture_page_image (browser, url, width, file_name)
+    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  end
 
   def compare_images (base, compare, output, info)
     puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
