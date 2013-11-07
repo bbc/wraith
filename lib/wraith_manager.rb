@@ -124,8 +124,8 @@ class WraithManager
 
         wraith.engine.each do |type, engine| 
           
-          compare_file_name = "#{wraith.directory}/#{label}/#{engine}_#{width}_#{wraith.comp_domain_label}.png"
-          base_file_name = "#{wraith.directory}/#{label}/#{engine}_#{width}_#{wraith.base_domain_label}.png"
+          compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label}.png"
+          base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label}.png"
 
           wraith.capture_page_image engine, compare_url, width, compare_file_name
           wraith.capture_page_image engine, base_url, width, base_file_name
