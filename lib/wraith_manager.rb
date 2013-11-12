@@ -2,6 +2,8 @@ require 'wraith'
 require 'image_size'
 require 'anemone'
 require 'uri'
+require 'selenium-webdriver'
+
 
 class WraithManager
   attr_reader :wraith

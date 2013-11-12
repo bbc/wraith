@@ -1,8 +1,10 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'wraith_manager'
+require 'selenium'
 
 @wraith_manager = WraithManager.new('config')
+@run = Browsers.new('config')
 
 task :config, [:args] do |t, args|
   args.with_defaults(:args => "config")
@@ -40,4 +42,16 @@ end
 
 task :generate_gallery do
   sh "ruby create_gallery.rb #{@wraith_manager.directory}"
+end
+
+task :run_webdriver do
+  @run.webdriver
+end
+
+task :cropping do
+  @run.crop_images
+end
+
+task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :cropping, :compare_images, :generate_thumbnails, :generate_gallery] do
+  puts "done"
 end
