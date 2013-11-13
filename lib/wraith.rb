@@ -85,6 +85,7 @@ class Wraith
 
   def web_awesome(browser, url, file_name)
     driver = Selenium::WebDriver.for :"#{browser}"
+    # driver.manage.window.resize_to(800, 10000)
     driver.get "#{url}"
     sleep 2
     driver.save_screenshot("#{file_name}")

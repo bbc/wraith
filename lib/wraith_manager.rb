@@ -24,7 +24,7 @@ class WraithManager
         diff = base.gsub(/([a-z]+).png$/, 'diff.png')
         info = base.gsub(/([a-z]+).png$/, 'data.txt')
         wraith.compare_images(base, compare, diff, info)
-        contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
+        contents = Dir.glob("#{wraith.directory}/*/*.txt").collect{|f| "\n#{f}\n#{File.read(f)}"}
         File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
         puts 'Saved diff'
     end

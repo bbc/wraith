@@ -48,10 +48,6 @@ task :run_webdriver do
   @run.webdriver
 end
 
-task :cropping do
-  @run.crop_images
-end
-
-task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :cropping, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts "done"
 end
