@@ -9,7 +9,7 @@ Wraith is a screenshot comparison tool, created by developers at BBC News.
 ## What is it?
 
 Wraith uses either [PhantomJS](http://phantomjs.org) or
-[SlimerJS](http://slimerjs.org) to create screenshots of different environments
+[SlimerJS](http://slimerjs.org) to create screen-shots of different environments
 and then creates a diff of the two images, the affected areas are highlighted in
 blue
 
@@ -23,13 +23,10 @@ You'll need either PhantomJS or SlimerJS, ImageMagick & Ruby 1.9.3 or greater.
 It's up to you to decide which browser engine you want to run it against.
 
 ### OSX
-On Mac OS X, the install script will install PhantomJS & ImageMagick for you,
-assuming you have [homebrew](http://brew.sh) installed, otherwise it'll tell
-you to install them.
+On Mac OS X, the best way to install dependencies is if you have [homebrew](http://brew.sh).  It is the quickest way to install PhantomJS & ImageMagick.
 
-Also install the image_size gem:
-
-    gem install image_size
+    brew install imagemagick
+    brew install phantomjs
     
 ### Windows
 On Windows it's important to install ImageMagick from the binary found [here](http://www.imagemagick.org/script/binary-releases.php#windows). 
@@ -60,14 +57,7 @@ And then download the PhantomJS binary package from
 
 ## Installation
 
-If you have curl installed you can run:
-```sh
-curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
-cd wraith
-bundle install
-```
-
-Alternatively you can download the zip, or if you have Git installed you can create a new folder, open a command line (terminal) window in that folder and run:
+Open terminal and run
 
     git clone https://github.com/BBC-News/wraith
 
@@ -78,11 +68,17 @@ You can then run the following inside the Wraith directory:
 If you don't have bundler installed, install it :
 
     gem install bundler
+
+
+Alternatively you can download the install script via curl, this will not create a git repo though.    
     
+    curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
+    cd wraith
+    bundle install    
 
 ## Config
 
-All config will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website.
+All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website.
 
 ```yaml
 
@@ -182,7 +178,9 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog - updated 05/11/13
+## Changelog - updated 13/11/13
+    Merge pull request #59 from lewisnyman/master
+    Merge pull request #55 from BBC-News/gallery_fix
     Merge pull request #51 from boldfacedesign/master
     Merge pull request #53 from BBC-News/browser_option
     Merge pull request #50 from nikai3d/patch-1
@@ -210,7 +208,7 @@ If you want to add functionality to this project, pull requests are welcome.
 
 ## License
 
-Wraith is available to everyone under the terms of the Apache 2.0 open source licence. 
+Wraith is available to everyone under the terms of the Apache 2.0 open source license. 
 Take a look at the LICENSE file in the code.
 
 ## Credits
