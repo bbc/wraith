@@ -35,3 +35,10 @@ paths:
 #  - /imghp
 #  - /maps
 
+#Set the number of days to keep the site spider file
+spider_days:
+  - 10
+
+device:
+  base: android
+  compare: android
