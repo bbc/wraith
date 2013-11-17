@@ -40,5 +40,5 @@ spider_days:
   - 10
 
 device:
-  base: android
-  compare: android
+  base: firefox
+  compare: firefox

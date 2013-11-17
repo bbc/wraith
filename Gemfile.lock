@@ -17,6 +17,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rake (10.1.0)
+    robotex (1.0.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -46,5 +47,6 @@ DEPENDENCIES
   image_size
   pry
   rake
+  robotex
   rspec-given
   selenium-webdriver

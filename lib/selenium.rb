@@ -42,15 +42,14 @@ class Browsers
 
       base_browser = wraith.browser1
       compare_browser = wraith.browser2
-      
 
       wraith.widths.each do |width|
           
           compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{base_browser}_#{wraith.comp_domain_label}.png"
           base_file_name = "#{wraith.directory}/#{label}/#{width}_#{compare_browser}_#{wraith.base_domain_label}.png"
 
-          wraith.web_awesome base_browser, compare_url, compare_file_name
-          wraith.web_awesome compare_browser, base_url, base_file_name
+          wraith.web_awesome base_browser, width, compare_url, compare_file_name
+          wraith.web_awesome compare_browser, width, base_url, base_file_name
       
       end
     end
