@@ -16,7 +16,7 @@ Use the following commands on android, make sure to enable USB debugging and to 
     
 This will show you the device ID
 
-    adb -s "deviceID" -e install -r android-server-2.21.0.apk    
+    adb -s "deviceID" -e install -r android-server-2.xxxxx.apk    
 
 link to [apk](http://code.google.com/p/selenium/downloads/list) 
   
