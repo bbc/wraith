@@ -159,7 +159,7 @@ Locate lines 60 and 70 and switch the commenting as described.
 ## Real devices and browsers
 
 If you want to run Wraith against Android and iOS browsers, as well as Firefox/Chrome, you can with WebDriver.  By setting the device name to the correct driver, e.g Firefox, then running the WebDriver task, you have the option to see images from real browsers.  This works well on real devices, so will enable realistic testing instead of headless.
-There is a short getting started guide here.  In order to use WebDriver, you must use the WebDriver task
+There is a short getting started guide [here](https://github.com/BBC-News/wraith/blob/master/webdriver.md).  In order to use WebDriver, you must use the WebDriver task
 
       rake webdriver
 

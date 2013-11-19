@@ -85,7 +85,7 @@ class Wraith
 
   def web_runner(browser, width, url, file_name)
     driver = Selenium::WebDriver.for :"#{browser}"
-    # If you want to use firefox/chrome, uncomment browser sizing
+    # If you want to use android devices, comment out browser sizing
     driver.manage.window.resize_to("#{width}", 10000)
     driver.get "#{url}"
     sleep 1
