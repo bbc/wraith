@@ -190,6 +190,8 @@ If you want to add functionality to this project, pull requests are welcome.
     rspec
 
 ## Changelog - updated 13/11/13
+    Merge pull request #57 from BBC-News/on_devices
+    Merge pull request #61 from jaikdean/allow-numbers-in-domain-names
     Merge pull request #59 from lewisnyman/master
     Merge pull request #55 from BBC-News/gallery_fix
     Merge pull request #51 from boldfacedesign/master
