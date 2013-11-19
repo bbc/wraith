@@ -2,6 +2,8 @@ require 'wraith'
 require 'image_size'
 require 'anemone'
 require 'uri'
+require 'selenium-webdriver'
+
 
 class WraithManager
   attr_reader :wraith
@@ -22,7 +24,7 @@ class WraithManager
         diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
         info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
         wraith.compare_images(base, compare, diff, info)
-        contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
+        contents = Dir.glob("#{wraith.directory}/*/*.txt").collect{|f| "\n#{f}\n#{File.read(f)}"}
         File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
         puts 'Saved diff'
     end
@@ -117,19 +119,50 @@ class WraithManager
       FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")
 
       compare_url = wraith.comp_domain + path
-      base_url = wraith.base_domain + path
-      
+      base_url = wraith.base_domain + path   
 
       wraith.widths.each do |width|
 
         wraith.engine.each do |type, engine| 
           
+          # Used for headless browsers
           compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label}.png"
           base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label}.png"
 
           wraith.capture_page_image engine, compare_url, width, compare_file_name
           wraith.capture_page_image engine, base_url, width, base_file_name
+
         end
+      end
+    end
+  end
+
+  def run_webdriver
+
+    wraith.paths.each do |label, path|
+      puts "processing '#{label}' '#{path}'"
+      if !path
+        path = label
+        label = path.gsub('/','_')
+      end
+
+      FileUtils.mkdir("#{wraith.directory}/#{label}")
+      FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")
+
+      compare_url = wraith.comp_domain + path
+      base_url = wraith.base_domain + path
+
+      base_browser = wraith.browser1
+      compare_browser = wraith.browser2   
+
+      wraith.widths.each do |width|
+
+          # Used for devices/real browsers
+          compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{base_browser}_#{wraith.comp_domain_label}.png"
+          base_file_name = "#{wraith.directory}/#{label}/#{width}_#{compare_browser}_#{wraith.base_domain_label}.png"
+
+          wraith.web_runner base_browser, width, compare_url, compare_file_name
+          wraith.web_runner compare_browser, width, base_url, base_file_name
       end
     end
   end

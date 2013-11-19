@@ -41,3 +41,11 @@ end
 task :generate_gallery do
   sh "ruby create_gallery.rb #{@wraith_manager.directory}"
 end
+
+task :run_webdriver do
+  @wraith_manager.run_webdriver
+end
+
+task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+  puts "done"
+end

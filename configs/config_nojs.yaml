@@ -3,6 +3,10 @@ browser:
   webkit: "phantomjs"
   # gecko: "./slimerjs"
 
+device:
+  base: firefox
+  compare: firefox  
+
 #If you want to have multiple snapping files, set the file name here
 snap_file: "nojs.js"
 
@@ -35,3 +39,6 @@ paths:
 #  - /imghp
 #  - /maps
 
+#Set the number of days to keep the site spider file
+spider_days:
+  - 10

@@ -1,7 +1,11 @@
 #Headless browser option
 browser:
   webkit: "phantomjs"
-  # gecko: "./slimerjs"
+  # gecko: "slimerjs"
+
+device:
+  base: firefox
+  compare: firefox
 
 #If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
