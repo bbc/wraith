@@ -19,8 +19,8 @@ class WraithManager
 
     while !files.empty?
       base, compare = files.slice!(0, 2)
-        diff = base.gsub(/([a-z]+).png$/, 'diff.png')
-        info = base.gsub(/([a-z]+).png$/, 'data.txt')
+        diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
+        info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
         wraith.compare_images(base, compare, diff, info)
         contents = Dir.glob('#{wraith.directory}/*/*.txt').collect{|f| "\n#{f}\n#{File.read(f)}"}
         File.open("#{wraith.directory}/data.txt", "w") { |file| file.write(contents.join)  }
