@@ -78,7 +78,7 @@ Alternatively you can download the install script via curl, this will not create
 
 ## Config
 
-All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website.
+All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website.  We use ImageMagick to process the images, we set a fuzz on the images to handle anti aliasing, this can be lowered or increased in the config.
 
 ```yaml
 
@@ -122,6 +122,9 @@ paths:
 # paths:
 #  - /imghp
 #  - /maps
+
+#Amount of fuzz ImageMagick will use 
+fuzz: '20%' 
 
 #Set the number of days to keep the site spider file
 spider_days:

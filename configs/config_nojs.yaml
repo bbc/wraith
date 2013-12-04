@@ -39,6 +39,9 @@ paths:
 #  - /imghp
 #  - /maps
 
+#Amount of fuzz ImageMagick will use 
+fuzz: '20%' 
+
 #Set the number of days to keep the site spider file
 spider_days:
   - 10

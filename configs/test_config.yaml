@@ -39,3 +39,6 @@ paths:
 #  - /imghp
 #  - /maps
 
+#Amount of fuzz ImageMagick will use 
+fuzz: '20%' 
+

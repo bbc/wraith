@@ -59,12 +59,16 @@ class Wraith
      @config['device']['compare']
   end
 
+  def fuzz
+    @config['fuzz']
+  end
+
   def capture_page_image (browser, url, width, file_name)
     puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
   def compare_images (base, compare, output, info)
-    puts `compare -fuzz 20% -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
+    puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 
   def self.crop_images (crop, height)
