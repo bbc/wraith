@@ -116,7 +116,7 @@ class WraithManager
       end
 
       FileUtils.mkdir("#{wraith.directory}/#{label}")
-      FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")  
+      FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")
 
       unless wraith.comp_domain.nil?
         compare_url = wraith.comp_domain + path
