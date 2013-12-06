@@ -118,13 +118,8 @@ class WraithManager
       FileUtils.mkdir("#{wraith.directory}/#{label}")
       FileUtils.mkdir_p("#{wraith.directory}/thumbnails/#{label}")
 
-      unless wraith.comp_domain.nil?
-        compare_url = wraith.comp_domain + path
-      end
-
-      unless wraith.base_domain.nil?
-        base_url = wraith.base_domain + path 
-      end
+      if !wraith.comp_domain.nil? then compare_url = wraith.comp_domain + path end
+      if !wraith.base_domain.nil? then base_url = wraith.base_domain + path end
 
       wraith.widths.each do |width|
 
@@ -134,8 +129,8 @@ class WraithManager
           compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label}.png"
           base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label}.png"
 
-          wraith.capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
-          wraith.capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
+          if !compare_url.nil? then wraith.capture_page_image engine, compare_url, width, compare_file_name end
+          if !base_url.nil? then wraith.capture_page_image engine, base_url, width, base_file_name end
 
         end
       end
