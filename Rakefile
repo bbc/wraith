@@ -10,7 +10,7 @@ task :config, [:args] do |t, args|
   Rake::Task["default"].invoke
 end
 
-task :default => [:config, :reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
@@ -48,4 +48,14 @@ end
 
 task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts "done"
+end
+
+task :grabber, [:args] do |t, args|
+  args.with_defaults(:args => "config")
+  @wraith_manager = WraithManager.new("#{args[:args]}")
+  Rake::Task["grab"].invoke
+end
+
+task :grab => [:reset_shots_folder, :check_for_paths, :save_images, :generate_thumbnails, :generate_gallery] do
+  puts 'Done!';
 end
