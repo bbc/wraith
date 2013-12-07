@@ -82,16 +82,17 @@ All config options will be placed in config.yaml. You can specify the snap file 
 
 ```yaml
 
-Headless browser option
+# Headless browser option
 browser:
   webkit: "phantomjs"
   # gecko: "slimerjs"
 
+# Only used for webdriver
 device:
   base: firefox
   compare: firefox
 
-#If you want to have multiple snapping files, set the file name here
+# If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
 
 # Type the name of the directory that shots will be stored in
