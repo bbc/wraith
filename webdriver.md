@@ -24,6 +24,8 @@ Use the following commands on android, make sure to enable USB debugging and to 
 
 4.Set both devices in config to android
 
-5.Run webdriver command
+5.Edit wraith.rb and comment out window sizing in web_runner task
+
+6.Run webdriver command
 
     rake webdriver
