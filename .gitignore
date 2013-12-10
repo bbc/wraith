@@ -2,3 +2,5 @@ shots/
 data.txt
 .DS_Store
 *.swp
+
+configs/config.yaml
