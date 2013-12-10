@@ -10,6 +10,10 @@ if (system.args.length === 3) {
 var url = system.args[1];
 var image_name = system.args[3];
 var view_port_width = system.args[2];
+var current_requests = 0;
+var last_request_timeout;
+var final_timeout;
+
 
 page.viewportSize = { width: view_port_width, height: 1500};
 page.settings = { loadImages: true, javascriptEnabled: true };
@@ -37,15 +41,45 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 //     'domain': '.bbc.co.uk'
 // });
 
+page.onResourceRequested = function(req) {
+  current_requests += 1;
+};
+
+page.onResourceReceived = function(res) {
+  if (res.stage === 'end') {
+    current_requests -= 1;
+    debounced_render();
+  }
+};
+
 page.open(url, function(status) {
-  if (status === 'success') {
-    window.setTimeout(function() {
-      console.log('Snapping ' + url + ' at width ' + view_port_width);
-      page.render(image_name);
-      phantom.exit();
-    }, 3000);
-  } else {
+  if (status !== 'success') {
     console.log('Error with page ' + url);
     phantom.exit();
   }
 });
+
+
+function debounced_render() {
+  clearTimeout(last_request_timeout);
+  clearTimeout(final_timeout);
+
+  // If there's no more ongoing resource requests, wait for 1 second before
+  // rendering, just in case the page kicks off another request
+  if (current_requests < 1) {
+      clearTimeout(final_timeout);
+      last_request_timeout = setTimeout(function() {
+          console.log('Snapping ' + url + ' at width ' + view_port_width);
+          page.render(image_name);
+          phantom.exit();
+      }, 1000);
+  }
+
+  // Sometimes, straggling requests never make it back, in which
+  // case, timeout after 5 seconds and render the page anyway
+  final_timeout = setTimeout(function() {
+    console.log('Snapping ' + url + ' at width ' + view_port_width);
+    page.render(image_name);
+    phantom.exit();
+  }, 5000);
+}
