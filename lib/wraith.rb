@@ -72,7 +72,7 @@ class Wraith
   end
 
   def self.crop_images (crop, height)
-    #For compatibility with windows file structures switch commenting on the following 2 lines 
+    #For compatibility with windows file structures switch commenting on the following 2 lines
     puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
     #puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
   end
