@@ -126,8 +126,8 @@ class WraithManager
         wraith.engine.each do |type, engine| 
           
           # Used for headless browsers
-          compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label}.png"
-          base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label}.png"
+          compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label.downcase}.png"
+          base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label.downcase}.png"
 
           wraith.capture_page_image engine, compare_url, width, compare_file_name if !compare_url.nil?
           wraith.capture_page_image engine, base_url, width, base_file_name if !base_url.nil?
