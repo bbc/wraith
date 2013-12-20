@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - "1.8.7"
+  - "1.9.2"
+  - "2.0.0"
+notifications:
+  email:
+    recipients:
+      - david.blooman@bbc.co.uk
+    on_failure: change
+    on_success: never
