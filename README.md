@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
+
 # Wraith
 
  * Website: http://responsivenews.co.uk
