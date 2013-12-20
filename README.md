@@ -199,37 +199,13 @@ If you want to add functionality to this project, pull requests are welcome.
 
     rspec
 
-## Changelog - updated 6/12/13
-    Merge pull request #64 from BBC-News/fuzz
-    Merge pull request #63 from shuynh/add-nokogiri
-    Merge pull request #57 from BBC-News/on_devices
-    Merge pull request #61 from jaikdean/allow-numbers-in-domain-names
-    Merge pull request #59 from lewisnyman/master
-    Merge pull request #55 from BBC-News/gallery_fix
-    Merge pull request #51 from boldfacedesign/master
-    Merge pull request #53 from BBC-News/browser_option
-    Merge pull request #50 from nikai3d/patch-1
-    Merge pull request #49 from boldfacedesign/master
-    Merge pull request #44 from rupl/master
-    Merge pull request #46 from BBC-News/different_snap_file
-    Merge pull request #41 from BBC-News/new-config
-    Merge pull request #40 from tiemevanveen/master
-    Merge pull request #36 from thingsinjars/patch-1
-    Merge pull request #37 from thingsinjars/patch-2
-    Merge pull request #34 from malengrin/master
-    Merge pull request #33 from hoguej/feature/point_directly_at_install_script
-    Merge pull request #22 from doryphores/phantomjs_options
-    Merge pull request #27 from reggieb/code_tidy
-    Merge pull request #24 from hoguej/feature/unit_tests
-    Merge pull request #21 from doryphores/sort_files_before_compare
-    Merge pull request #13 from BBC-News/crop-images
-    Merge pull request #18 from ecometrica/gallery
-    Merge pull request #15 from timabell/move-data-file
-    Merge pull request #14 from timabell/unnamed-paths
-    Merge pull request #5 from BBC-News/typekit-fix
-    Merge pull request #8 from jaredly/patch-1
-    Merge pull request #2 from Kami/fix_ruby_compatibility
-    Merge pull request #1 from BBC-News/freedom
+## Changelog - updated 20/12/13
+New features include the ability to grab a bunch of pages using the grabber task and view them.  Updated pageload wait timing to ensure a full page load, updates to README and a bug fix for capped labels.
+
+    Merge pull request #67 from plukevdh/master
+    Merge pull request #70 from BBC-News/capsfix
+    Merge pull request #66 from BBC-News/pageload-wait
+    Merge pull request #65 from BBC-News/grabber
 
 ## License
 
