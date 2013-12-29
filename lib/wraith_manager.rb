@@ -186,7 +186,7 @@ class WraithManager
           end
 
           puts 'cropping images'
-          Wraith.crop_images(crop, height)
+          Wraith::Wraith.crop_images(crop, height)
         end
       end
     end
