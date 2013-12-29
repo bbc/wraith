@@ -59,6 +59,12 @@ page.open(url, function(status) {
   }
 });
 
+function render() {
+  console.log('Snapping ' + url + ' at width ' + view_port_width);
+  page.render(image_name);
+  phantom.exit();
+}
+
 function debounced_render() {
   clearTimeout(last_request_timeout);
   clearTimeout(final_timeout);
@@ -67,17 +73,13 @@ function debounced_render() {
   // rendering, just in case the page kicks off another request
   last_request_timeout = setTimeout(function () {
     if (current_requests < 1) {
-      console.log('Snapping ' + url + ' at width ' + view_port_width);
-      page.render(image_name);
-      phantom.exit();
+      render();
     }
   }, 2000);
 
   // Sometimes, straggling requests never make it back, in which
   // case, timeout after 5 seconds and render the page anyway
   final_timeout = setTimeout(function() {
-    console.log('Snapping ' + url + ' at width ' + view_port_width);
-    page.render(image_name);
-    phantom.exit();
+    render();
   }, 5000);
 }
