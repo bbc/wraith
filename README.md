@@ -1,5 +1,7 @@
-# Wraith[![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
+# Wraith 
 
+[![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
+[![Code Climate](https://codeclimate.com/github/BBC-News/wraith.png)](https://codeclimate.com/github/BBC-News/wraith)
 
  * Website: http://responsivenews.co.uk
  * Source: http://github.com/bbc-news/wraith
