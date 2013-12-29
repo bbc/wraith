@@ -71,11 +71,11 @@ class Wraith
     @config['xvfb']['location']
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    if (browser.include? "slimerjs") && xvfb_on
-      puts `"#{xvfb_location}"xvfb-run "#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  def capture_page_image(options)
+    if :xvfb
+      puts `"#{xvfb_location}"xvfb-run "#{options[:browser]}" #{@config['phantomjs_options']} "#{snap_file}" "#{options[:url]}" "#{options[:width]}" "#{options[:file_name]}"`
     else
-      puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+      puts `"#{options[:browser]}" #{@config['phantomjs_options']} "#{snap_file}" "#{options[:url]}" "#{options[:width]}" "#{options[:file_name]}"`
     end
   end
 
