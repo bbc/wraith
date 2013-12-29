@@ -39,7 +39,7 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh "ruby create_gallery.rb #{@wraith_manager.directory}"
+  sh "ruby lib/create_gallery.rb #{@wraith_manager.directory}"
 end
 
 task :run_webdriver do
