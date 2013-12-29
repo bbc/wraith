@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'bundler/gem_tasks'
-require 'wraith_manager'
+require 'wraith/manager'
 
 @wraith_manager = WraithManager.new('config')
 
