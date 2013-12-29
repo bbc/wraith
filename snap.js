@@ -25,7 +25,7 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 // page.customHeaders = {
 
 //      'X-Candy-OVERRIDE': 'https://api.live.bbc.co.uk/'
- 
+
 //  };
 
 // If you want to set a cookie, just add your details below in the following way.
@@ -59,21 +59,19 @@ page.open(url, function(status) {
   }
 });
 
-
 function debounced_render() {
   clearTimeout(last_request_timeout);
   clearTimeout(final_timeout);
 
   // If there's no more ongoing resource requests, wait for 1 second before
   // rendering, just in case the page kicks off another request
-  if (current_requests < 1) {
-      clearTimeout(final_timeout);
-      last_request_timeout = setTimeout(function() {
-          console.log('Snapping ' + url + ' at width ' + view_port_width);
-          page.render(image_name);
-          phantom.exit();
-      }, 1000);
-  }
+  last_request_timeout = setTimeout(function () {
+    if (current_requests < 1) {
+      console.log('Snapping ' + url + ' at width ' + view_port_width);
+      page.render(image_name);
+      phantom.exit();
+    }
+  }, 2000);
 
   // Sometimes, straggling requests never make it back, in which
   // case, timeout after 5 seconds and render the page anyway
