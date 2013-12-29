@@ -4,11 +4,13 @@ require 'anemone'
 require 'uri'
 require 'selenium-webdriver'
 
+require 'wraith/wraith'
+
 class WraithManager
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith.new(config)
+    @wraith = Wraith::Wraith.new(config)
   end
 
   def directory
@@ -46,7 +48,7 @@ class WraithManager
         # check that its within the use-by date set in the config
         if (Time.now - File.ctime('spider.txt')) / (24 * 3600) < wraith.spider_days[0]
           puts 'using existing spider file'
-        else 
+        else
           # if spider.txt files is out of date create a new one
           puts 'creating new spider file'
           spider_base_domain
@@ -184,7 +186,7 @@ class WraithManager
           end
 
           puts 'cropping images'
-          Wraith.crop_images(crop, height)
+          Wraith::Wraith.crop_images(crop, height)
         end
       end
     end

@@ -1,13 +1,13 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'version'
+require 'wraith/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "wraith"
   spec.version       = Wraith::VERSION
   spec.authors       = ["Dave Blooman", "Simon Thulbourn"]
-  spec.email         = ["dblooman+wraith@gmail.com", "simon+github@thulbourn.com"]
+  spec.email         = ["david.blooman+wraith@gmail.com", "simon+github@thulbourn.com"]
   spec.summary       = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.description   = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.homepage      = "http://responsivenews.co.uk"
