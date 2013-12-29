@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Wraith
+class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
@@ -12,7 +12,7 @@ class Wraith
   end
 
   def snap_file
-    @config['snap_file'] ? @config['snap_file'] : 'snap.js'
+    @config['snap_file'] ? @config['snap_file'] : File.expand_path('lib/wraith/javascript/snap.js')
   end
 
   def widths
