@@ -28,9 +28,9 @@ On Mac OS X, the best way to install dependencies is if you have [homebrew](http
 
     brew install imagemagick
     brew install phantomjs or brew install slimerjs
-    
+
 ### Windows
-On Windows it's important to install ImageMagick from the binary found [here](http://www.imagemagick.org/script/binary-releases.php#windows). 
+On Windows it's important to install ImageMagick from the binary found [here](http://www.imagemagick.org/script/binary-releases.php#windows).
 This will ensure that ImageMagick is listed first in your PATH.
 
 To check your path after installing, open a command line window and type:
@@ -43,7 +43,7 @@ This will return a list of executables in you PATH separated by semi-colons ;
 
 If ImageMagick is in your path but not listed first you can edit your path by following the instructions [here](http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx)
 
-If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16; 
+If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16;
 Make sure the version number and location are correct for your system.
 
 ### Ubuntu
@@ -63,7 +63,7 @@ Open terminal and run
     git clone https://github.com/BBC-News/wraith
 
 You can then run the following inside the Wraith directory:
-    
+
     bundle install
 
 If you don't have bundler installed, install it :
@@ -71,17 +71,21 @@ If you don't have bundler installed, install it :
     gem install bundler
 
 
-Alternatively you can download the install script via curl, this will not create a git repo though.    
-    
+Alternatively you can download the install script via curl, this will not create a git repo though.
+
     curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
     cd wraith
-    bundle install    
+    bundle install
 
 ## Config
 
 All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files.  You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers.  If you don't want to set paths, you can use the spidering option to check your entire website  Remove/comment out the `path:` entries in `config.yaml`.
 
 ```yaml
+# Using a virtual display for slimerjs?
+xvfb:
+  on: true
+  location: "usr/bin/"
 
 # Headless browser option
 browser:
@@ -125,8 +129,8 @@ paths:
 #  - /imghp
 #  - /maps
 
-#Amount of fuzz ImageMagick will use 
-fuzz: '20%' 
+#Amount of fuzz ImageMagick will use
+fuzz: '20%'
 
 #Set the number of days to keep the site spider file
 spider_days:
@@ -158,6 +162,20 @@ You may want to deal with multiple config files so you can compare different pag
 rake config[config_name]
 ```
 
+If you want to use SlimerJS on a machine without a GUI you will need to install Xvfb and then set up a display server like so.
+
+``` sh
+Xvfb :99 -ac -screen 0 1024x720x16
+```
+
+Then run firefox using the new display server.
+
+``` sh
+xvfb-run firefox
+```
+
+Now you can use wraith just like normal.
+
 On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
 Locate lines 60 and 70 and switch the commenting as described.
 
@@ -178,7 +196,7 @@ A gallery is available to view each of the images and the respective diff images
 
 ## Grabber
 
-If you just want to see a single domains images and not compare them, perhaps for archiving, remove a domain and run the new rake task.   For default config, use grab, or specify a config using grabber. 
+If you just want to see a single domains images and not compare them, perhaps for archiving, remove a domain and run the new rake task.   For default config, use grab, or specify a config using grabber.
 
 `rake grab` and `rake grabber[config]`
 
@@ -210,7 +228,7 @@ New features include the ability to grab a bunch of pages using the grabber task
 
 ## License
 
-Wraith is available to everyone under the terms of the Apache 2.0 open source license. 
+Wraith is available to everyone under the terms of the Apache 2.0 open source license.
 Take a look at the LICENSE file in the code.
 
 ## Credits
