@@ -64,7 +64,7 @@ class Wraith
   end
 
   def xvfb_on
-    @config['xvfb']['use']
+    @config['xvfb']['use'] if !@config['xvfb'].nil?
   end
 
   def xvfb_location

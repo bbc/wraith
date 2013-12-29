@@ -46,7 +46,7 @@ class WraithManager
         # check that its within the use-by date set in the config
         if (Time.now - File.ctime('spider.txt')) / (24 * 3600) < wraith.spider_days[0]
           puts 'using existing spider file'
-        else 
+        else
           # if spider.txt files is out of date create a new one
           puts 'creating new spider file'
           spider_base_domain
