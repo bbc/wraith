@@ -63,8 +63,24 @@ class Wraith
     @config['fuzz']
   end
 
+  def xvfb_on
+    @config['xvfb']['use']
+  end
+
+  def xvfb_location
+    @config['xvfb']['location']
+  end
+
+  def xvfb_resolution
+    @config['xvfb']['screen']
+  end
+
   def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    if xvfb_on
+      puts `"#{xvfb_location}"xvfb-run "#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    else
+      puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    end
   end
 
   def compare_images(base, compare, output, info)
