@@ -71,10 +71,6 @@ class Wraith
     @config['xvfb']['location']
   end
 
-  def xvfb_resolution
-    @config['xvfb']['screen']
-  end
-
   def capture_page_image(browser, url, width, file_name)
     if (browser.include? "slimerjs") && xvfb_on
       puts `"#{xvfb_location}"xvfb-run "#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
