@@ -1,3 +1,7 @@
+xvfb:
+  use: true
+  location: "/usr/bin/"
+
 #Headless browser option
 browser:
   webkit: "phantomjs"
