@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "."
+  spec.name          = "wraith"
   spec.version       = Wraith::VERSION
   spec.authors       = ["Dave Blooman", "Simon Thulbourn"]
   spec.email         = ["dblooman+wraith@gmail.com", "simon+github@thulbourn.com"]
