@@ -1,3 +1,3 @@
-module Wraith
+class Wraith
   VERSION = "0.0.1"
 end
