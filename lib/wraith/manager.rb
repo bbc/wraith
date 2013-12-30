@@ -126,15 +126,12 @@ class WraithManager
           compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label.downcase}.png"
           base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label.downcase}.png"
 
-          xvfb = []
-          if (engine.include? 'slimerjs')
-            xvfb = ENV['PATH'].split(':').select {
-              |p| File.exist?("#{p}/xvfb-run")
-            }
-            if xvfb != []
-              xvfb = xvfb[0]
-              xvfb = "#{xvfb}/xvfb-run"
-            end
+          xvfb = ENV['PATH'].split(':').select {
+            |p| File.exist?("#{p}/xvfb-run")
+          }
+          if xvfb != []
+            xvfb = xvfb[0]
+            xvfb = "#{xvfb}/xvfb-run"
           end
 
           wraith.capture_page_image xvfb, engine, compare_url, width, compare_file_name if !compare_url.nil?

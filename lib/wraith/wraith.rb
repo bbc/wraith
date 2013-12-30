@@ -64,7 +64,7 @@ class Wraith::Wraith
   end
 
   def capture_page_image(xvfb, browser, url, width, file_name)
-    if xvfb != []
+    if browser == 'slimerjs'
       puts `"#{xvfb}" "#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
     else
       puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
