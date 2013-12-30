@@ -63,8 +63,8 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  def capture_page_image(xvfb, browser, url, width, file_name)
+    puts `"#{xvfb}" "#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
   def compare_images(base, compare, output, info)
