@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# Given all the screenshots in the shots/ directory, produces a nice looking 
+# Given all the screenshots in the shots/ directory, produces a nice looking
 # gallery
 
 require 'erb'
@@ -8,9 +8,9 @@ require 'pp'
 require 'fileutils'
 
 MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
-TEMPLATE_LOCATION = "gallery/gallery_template.erb"
-TEMPLATE_BY_DOMAIN_LOCATION = "gallery/gallery_template.erb"
-BOOTSTRAP_LOCATION = "gallery/bootstrap.min.css"
+TEMPLATE_LOCATION = "lib/wraith/gallery_template/gallery_template.erb"
+TEMPLATE_BY_DOMAIN_LOCATION = "lib/wraith/gallery_template/gallery_template.erb"
+BOOTSTRAP_LOCATION = "lib/wraith/gallery_template/bootstrap.min.css"
 
 def parse_directories(dirname)
     dirs = {}
@@ -28,7 +28,7 @@ def parse_directories(dirname)
 
     categories.each do |category|
         dirs[category] = {}
-        Dir.foreach("#{dirname}/#{category}") do |filename| 
+        Dir.foreach("#{dirname}/#{category}") do |filename|
             match = MATCH_FILENAME.match(filename)
             if not match.nil? then
                 size = match[1].to_i
@@ -51,7 +51,7 @@ def parse_directories(dirname)
                 else
                     size_dict[:variants] << {
                         :name => group,
-                        :filename => filepath, 
+                        :filename => filepath,
                         :thumb => thumbnail
                     }
 

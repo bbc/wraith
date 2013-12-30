@@ -4,11 +4,13 @@ require 'anemone'
 require 'uri'
 require 'selenium-webdriver'
 
+require 'wraith/wraith'
+
 class WraithManager
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith.new(config)
+    @wraith = Wraith::Wraith.new(config)
   end
 
   def directory
@@ -191,7 +193,7 @@ class WraithManager
           end
 
           puts 'cropping images'
-          Wraith.crop_images(crop, height)
+          Wraith::Wraith.crop_images(crop, height)
         end
       end
     end

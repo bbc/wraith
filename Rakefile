@@ -1,6 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-require 'wraith_manager'
+require 'bundler/gem_tasks'
+require 'wraith/manager'
 
 @wraith_manager = WraithManager.new('config')
 
@@ -39,7 +40,7 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh "ruby create_gallery.rb #{@wraith_manager.directory}"
+  sh "ruby lib/wraith/gallery.rb #{@wraith_manager.directory}"
 end
 
 task :run_webdriver do
