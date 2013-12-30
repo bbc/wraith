@@ -20,7 +20,6 @@ require 'log4r'
 require 'wraith'
 
 logger = Log4r::Logger.new('wraith::bin::wraith')
-logger.add Log4r::Outputter.stderr if ENV['WRAITH_LOG'] == 'debug'
 logger.info("`wraith` started with: #{ARGV.inspect}")
 
 # stdout/stderr should not buffer output
