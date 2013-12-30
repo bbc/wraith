@@ -130,8 +130,7 @@ class WraithManager
             |p| File.exist?("#{p}/xvfb-run")
           }
           if xvfb != []
-            xvfb = xvfb[0]
-            xvfb = "#{xvfb}/xvfb-run"
+            xvfb = "#{xvfb[0]}/xvfb-run"
           end
 
           wraith.capture_page_image xvfb, engine, compare_url, width, compare_file_name if !compare_url.nil?
