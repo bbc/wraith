@@ -126,9 +126,32 @@ class WraithManager
           compare_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.comp_domain_label.downcase}.png"
           base_file_name = "#{wraith.directory}/#{label}/#{width}_#{engine}_#{wraith.base_domain_label.downcase}.png"
 
-          wraith.capture_page_image engine, compare_url, width, compare_file_name if !compare_url.nil?
-          wraith.capture_page_image engine, base_url, width, base_file_name if !base_url.nil?
+<<<<<<< Updated upstream
+          compare_options = { :browser => engine, :url => compare_url, :width => width, :file_name => compare_file_name, :xvfb => false }
+=======
+          if (engine.include? 'slimerjs')
+            xvfb = ENV['PATH'].split(':').select {
+              |p| File.exist?("#{p}/xvfb-run")
+            }
+            if xvfb != []
+              puts "xvfb biatch"
+              xvfb = xvfb[0]
+              xvfb = "#{xvfb}/xvfb-run"
+            end
+          end
 
+          wraith.capture_page_image xvfb, engine, compare_url, width, compare_file_name if !compare_url.nil?
+          wraith.capture_page_image xvfb, engine, base_url, width, base_file_name if !base_url.nil?
+>>>>>>> Stashed changes
+
+          base_options = { :browser => engine, :url => base_url, :width => width, :file_name => base_file_name, :xvfb => false }
+
+          if (engine.include? "slimerjs") && wraith.xvfb_on
+            compare_options[:xvfb] = true
+          end
+
+          wraith.capture_page_image(compare_options)
+          wraith.capture_page_image(base_options)
         end
       end
     end
