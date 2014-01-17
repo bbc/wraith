@@ -2,6 +2,8 @@ $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'bundler/gem_tasks'
 require 'wraith/manager'
+require 'wraith/crop'
+require 'wraith/spider'
 
 @wraith_manager = WraithManager.new('config')
 
@@ -24,7 +26,8 @@ task :reset_shots_folder do
 end
 
 task :check_for_paths do
-  @wraith_manager.check_for_paths
+  spider = Wraith::Spidering.new('config')
+  spider.check_for_paths
 end
 
 task :save_images do
@@ -32,7 +35,8 @@ task :save_images do
 end
 
 task :crop_images do
-  @wraith_manager.crop_images
+  crop = Wraith::CropImages.new('config')
+  crop.crop_images
 end
 
 task :generate_thumbnails do
@@ -41,14 +45,6 @@ end
 
 task :generate_gallery do
   sh "ruby lib/wraith/gallery.rb #{@wraith_manager.directory}"
-end
-
-task :run_webdriver do
-  @wraith_manager.run_webdriver
-end
-
-task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
-  puts "done"
 end
 
 task :grabber, [:args] do |t, args|
