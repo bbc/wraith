@@ -14,8 +14,7 @@ class WraithManager
 
   def compare_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
-
-    until !files.empty?
+    until files.empty?
       base, compare = files.slice!(0, 2)
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')

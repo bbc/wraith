@@ -12,23 +12,16 @@ class Wraith::CropImages
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
     until files.empty?
       @base, @compare = files.slice!(0, 2)
-      base
-    end
-  end
-
-  def base
-    File.open(@base, 'rb') do |fh|
-      new_base_height = ImageSize.new(fh.read).size
-      @base_height = new_base_height[1]
-      compare
-    end
-  end
-
-  def compare
-    File.open(@compare, 'rb') do |fh|
-      new_compare_height = ImageSize.new(fh.read).size
-      @compare_height = new_compare_height[1]
+      @base_height = find_heights(@base)
+      @compare_height = find_heights(@compare)
       cropping
+    end
+  end
+
+  def find_heights(height)
+    File.open(height, 'rb') do |fh|
+      size = ImageSize.new(fh.read).size
+      height = size[1]
     end
   end
 
