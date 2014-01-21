@@ -15,7 +15,7 @@ task :config, [:args] do |t, args|
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :setup_images, :define_paths, :file_name, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
@@ -34,20 +34,10 @@ task :check_for_paths do
   spider.check_for_paths
 end
 
-task :setup_images do
-  @save_images.setup_images
-end
-
 task :save_images do
-  @save_images.save_images
-end
-
-task :define_paths do
+  @save_images.setup_images
   @save_images.define_paths
-end
-
-task :file_name do
-  @save_images.file_name
+  # @save_images.save_images
 end
 
 task :crop_images do

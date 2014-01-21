@@ -11,6 +11,7 @@ class Wraith::SaveImages
     @wraith = Wraith::Wraith.new(config)
     @paths = paths
     @labels = labels
+    @url_path = url_path
   end
 
   def directory
@@ -24,11 +25,10 @@ class Wraith::SaveImages
     else
       url_path = wraith.paths
     end
-    @url_path = url_path
   end
 
   def define_paths
-    @url_path.each do |label, path|
+    setup_images.each do |label, path|
       unless path
         path = label
         label = path.gsub('/', '_')
@@ -39,7 +39,6 @@ class Wraith::SaveImages
       puts "processing '#{labels}' '#{paths}'"
 
       FileUtils.mkdir_p("#{directory}/thumbnails/#{labels}")
-      file_name
       save_images
     end
   end
@@ -48,22 +47,22 @@ class Wraith::SaveImages
     wraith.engine.each { |label, browser| return browser }
   end
 
-  def file_name
-    @compare_url = wraith.comp_domain + "#{paths}" unless wraith.comp_domain.nil?
-    @base_url = wraith.base_domain + "#{paths}" unless wraith.base_domain.nil?
+  def compare_url
+    wraith.comp_domain + "#{paths}" unless wraith.comp_domain.nil?
+  end
+
+  def base_url
+    wraith.base_domain + "#{paths}" unless wraith.base_domain.nil?
   end
 
   def save_images
     wraith.widths.each do |widths|
       base_file_name = "#{directory}/#{labels}/#{widths}_#{engine}_#{wraith.base_domain_label}.png"
       compare_file_name = "#{directory}/#{labels}/#{widths}_#{engine}_#{wraith.comp_domain_label}.png"
-      capture_page_image(base_file_name, compare_file_name, widths)
+    
+      wraith.capture_page_image engine, base_url, widths, base_file_name unless base_url.nil?
+      wraith.capture_page_image engine, compare_url, widths, compare_file_name unless compare_url.nil?
     end
-  end
-
-  def capture_page_image(base_file_name, compare_file_name, widths)
-    wraith.capture_page_image engine, @base_url, widths, base_file_name unless @base_url.nil?
-    wraith.capture_page_image engine, @compare_url, widths, compare_file_name unless @compare_url.nil?
   end
 
   def generate_thumbnails
