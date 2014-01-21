@@ -5,6 +5,7 @@ require 'wraith/save_images'
 require 'wraith/crop'
 require 'wraith/spider'
 require 'wraith/folder'
+require 'wraith/thumbnails'
 require 'wraith/compare_images'
 
 @save_images = Wraith::SaveImages.new('config')
@@ -20,7 +21,7 @@ task :default => [:reset_shots_folder, :check_for_paths, :save_images, :crop_ima
 end
 
 task :reset_shots_folder do
-  reset = Wraith::ClearShots.new('config')
+  reset = Wraith::ClearShots.new(@save_images.directory)
   reset.clear_shots_folder
 end
 
@@ -37,16 +38,16 @@ end
 task :save_images do
   @save_images.setup_images
   @save_images.define_paths
-  # @save_images.save_images
 end
 
 task :crop_images do
-  crop = Wraith::CropImages.new('config')
+  crop = Wraith::CropImages.new(@save_images.directory)
   crop.crop_images
 end
 
 task :generate_thumbnails do
-  @save_images.generate_thumbnails
+  thumbs = Wraith::Thumbnails.new('config')
+  thumbs.generate_thumbnails
 end
 
 task :generate_gallery do

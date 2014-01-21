@@ -1,14 +1,14 @@
 require 'wraith'
 
 class Wraith::ClearShots
-  attr_reader :wraith
+  attr_reader :dir
 
-  def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+  def initialize(dir)
+    @dir = dir
   end
 
   def clear_shots_folder
-    FileUtils.rm_rf("./#{wraith.directory}")
-    FileUtils.mkdir("#{wraith.directory}")
+    FileUtils.rm_rf("./#{dir}")
+    FileUtils.mkdir("#{dir}")
   end
 end

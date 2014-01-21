@@ -3,15 +3,12 @@ require 'wraith/wraith'
 
 class Wraith::SaveImages
   attr_reader :wraith
-  attr_accessor :paths
-  attr_accessor :labels
-  attr_accessor :url_path
+  attr_accessor :paths, :labels
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
     @paths = paths
     @labels = labels
-    @url_path = url_path
   end
 
   def directory
@@ -20,10 +17,10 @@ class Wraith::SaveImages
 
   def setup_images
     if !wraith.paths
-      url_path = File.read('spider.txt')
-      url_path = eval(paths)
+      path = File.read('spider.txt')
+      eval(path)
     else
-      url_path = wraith.paths
+      wraith.paths
     end
   end
 
@@ -62,13 +59,6 @@ class Wraith::SaveImages
     
       wraith.capture_page_image engine, base_url, widths, base_file_name unless base_url.nil?
       wraith.capture_page_image engine, compare_url, widths, compare_file_name unless compare_url.nil?
-    end
-  end
-
-  def generate_thumbnails
-    Dir.glob("#{directory}/*/*.png").each do |filename|
-      new_name = filename.gsub(/^#{directory}/, "#{directory}/thumbnails")
-      wraith.thumbnail_image(filename, new_name)
     end
   end
 end
