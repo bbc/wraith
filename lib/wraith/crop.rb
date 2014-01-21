@@ -8,13 +8,36 @@ class Wraith::CropImages
     @wraith = Wraith::Wraith.new(config)
   end
 
+  def crop
+    crop_value(base_height, compare_height, @compare, @base)
+  end
+
+  def height
+    crop_value(base_height, compare_height, base_height, compare_height)
+  end
+
+  def base_height
+    find_heights(@base)
+  end
+
+  def compare_height
+    find_heights(@compare)
+  end
+
   def crop_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
     until files.empty?
       @base, @compare = files.slice!(0, 2)
-      @base_height = find_heights(@base)
-      @compare_height = find_heights(@compare)
-      cropping
+      puts 'cropping images'
+      Wraith::Wraith.crop_images(crop, height)
+    end
+  end
+
+  def crop_value(base_height, compare_height, arg3, arg4)
+    if base_height > compare_height
+      arg3
+    else
+      arg4
     end
   end
 
@@ -23,18 +46,5 @@ class Wraith::CropImages
       size = ImageSize.new(fh.read).size
       height = size[1]
     end
-  end
-
-  def cropping
-    if @base_height > @compare_height
-      height = @base_height
-      crop = @compare
-    else
-      height = @compare_height
-      crop = @base
-    end
-
-    puts 'cropping images'
-    Wraith::Wraith.crop_images(crop, height)
   end
 end
