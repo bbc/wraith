@@ -7,15 +7,13 @@ class Wraith::SaveImages
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
-    @paths = paths
-    @labels = labels
   end
 
   def directory
     wraith.directory
   end
 
-  def setup_images
+  def check_paths
     if !wraith.paths
       path = File.read('spider.txt')
       eval(path)
@@ -24,19 +22,15 @@ class Wraith::SaveImages
     end
   end
 
-  def define_paths
-    setup_images.each do |label, path|
+  def labels_paths
+    check_paths.each do |label, path|
       unless path
-        path = label
-        label = path.gsub('/', '_')
+        @paths = label
+        @labels = path.gsub('/', '_')
+      else
+        @paths = path
+        @labels = label
       end
-
-      @paths = path
-      @labels = label
-      puts "processing '#{labels}' '#{paths}'"
-
-      FileUtils.mkdir_p("#{directory}/thumbnails/#{labels}")
-      save_images
     end
   end
 
@@ -52,13 +46,19 @@ class Wraith::SaveImages
     wraith.base_domain + "#{paths}" unless wraith.base_domain.nil?
   end
 
+  def file_names(width, label, domain_label)
+    "#{directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
+  end
+
   def save_images
-    wraith.widths.each do |widths|
-      base_file_name = "#{directory}/#{labels}/#{widths}_#{engine}_#{wraith.base_domain_label}.png"
-      compare_file_name = "#{directory}/#{labels}/#{widths}_#{engine}_#{wraith.comp_domain_label}.png"
+    labels_paths.each do |label, path|
+      wraith.widths.each do |width|
+        base_file_name = file_names(width, label, wraith.base_domain_label)
+        compare_file_name = file_names(width, label, wraith.comp_domain_label)
     
-      wraith.capture_page_image engine, base_url, widths, base_file_name unless base_url.nil?
-      wraith.capture_page_image engine, compare_url, widths, compare_file_name unless compare_url.nil?
+        wraith.capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
+        wraith.capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
+      end
     end
   end
 end

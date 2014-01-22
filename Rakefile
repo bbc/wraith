@@ -16,13 +16,18 @@ task :config, [:args] do |t, args|
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
 task :reset_shots_folder do
-  reset = Wraith::ClearShots.new(@save_images.directory)
+  reset = Wraith::Folders.new('config')
   reset.clear_shots_folder
+end
+
+task :setup_folders do
+  create = Wraith::Folders.new('config')
+  create.create_folders
 end
 
 task :compare_images do
@@ -36,8 +41,7 @@ task :check_for_paths do
 end
 
 task :save_images do
-  @save_images.setup_images
-  @save_images.define_paths
+  @save_images.save_images
 end
 
 task :crop_images do
