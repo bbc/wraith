@@ -51,14 +51,6 @@ class Wraith::Wraith
     @config['browser']
   end
 
-  def browser1
-    @config['device']['base']
-  end
-
-  def browser2
-    @config['device']['compare']
-  end
-
   def fuzz
     @config['fuzz']
   end
