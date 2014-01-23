@@ -27,7 +27,6 @@ cookies:
 #Type screen widths below, here are a couple of examples
 screen_widths:
   - 320
-  - 640
 
 #Type page URL paths below, here are a couple of examples
 paths:
