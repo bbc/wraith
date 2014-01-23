@@ -1,4 +1,5 @@
 require 'yaml'
+require 'json'
 
 class Wraith::Wraith
   attr_accessor :config
@@ -64,7 +65,13 @@ class Wraith::Wraith
   end
 
   def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    # Convert YAML config to JSON
+    json = JSON.dump(@config['cookies'])
+
+    # Put a command to snap.js
+    # Because the JSON string is double quoted, it needs to be
+    # single quoted.
+    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}" '#{json}'`
   end
 
   def compare_images(base, compare, output, info)
