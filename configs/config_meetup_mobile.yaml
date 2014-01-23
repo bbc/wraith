@@ -17,18 +17,22 @@ directory:
 # Add only 2 domains, key will act as a label
 domains:
   live: "http://www.meetup.com"
-  dev: "http://www.meetup.com"
+  dev: "http://www.dev.meetup.com"
+
+# Cookies following PhantomJS format, via YAML.
+cookies:
+  - { name: "_mobile", value: "on", domain: ".meetup.com" }
+
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
   - 320
-  - 420
   - 640
-  - 786
 
 #Type page URL paths below, here are a couple of examples
 paths:
   home: /
+  activity: /find/?activity=true
 
 # If you don't want to name the paths explicitly you can use a yaml
 # collection as follows, and names will be derived by replacing / with _
