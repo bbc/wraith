@@ -12,7 +12,7 @@ snap_file: "lib/wraith/javascript/snap_meetup_mobile.js"
 
 # Type the name of the directory that shots will be stored in
 directory:
-  - 'shots'
+  - "shots"
 
 # Add only 2 domains, key will act as a label
 domains:
@@ -31,8 +31,8 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-  home: /
-  activity: /find/?activity=true
+  home: "/"
+  activity: "/find/?activity=true"
 
 # If you don't want to name the paths explicitly you can use a yaml
 # collection as follows, and names will be derived by replacing / with _
@@ -42,7 +42,7 @@ paths:
 #  - /maps
 
 #Amount of fuzz ImageMagick will use
-fuzz: '20%'
+fuzz: "20%"
 
 #Set the number of days to keep the site spider file
 spider_days:
