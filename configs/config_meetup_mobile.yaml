@@ -22,7 +22,7 @@ domains:
 # Cookies following PhantomJS format, via YAML.
 cookies:
   - { name: "_mobile", value: "on", domain: ".meetup.com" }
-
+  - { name: "__nodump", value: "true", domain: ".meetup.com" }
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
