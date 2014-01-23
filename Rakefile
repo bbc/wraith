@@ -46,7 +46,7 @@ task :save_images do
 end
 
 task :crop_images do
-  crop = Wraith::CropImages.new(@config)
+  crop = Wraith::CropImages.new(@save_images.directory)
   crop.crop_images
 end
 
