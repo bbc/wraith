@@ -8,11 +8,11 @@ require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
 
-@save_images = Wraith::SaveImages.new('config')
+@config = ('config')
 
 task :config, [:args] do |t, args|
   args.with_defaults(:args => "config")
-  @save_images = Wraith::SaveImages.new("#{args[:args]}")
+  @config = "#{args[:args]}"
   Rake::Task["default"].invoke
 end
 
@@ -21,36 +21,37 @@ task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_i
 end
 
 task :reset_shots_folder do
-  reset = Wraith::Folders.new('config')
+  reset = Wraith::Folders.new(@config)
   reset.clear_shots_folder
 end
 
 task :setup_folders do
-  create = Wraith::Folders.new('config')
+  create = Wraith::Folders.new(@config)
   create.create_folders
 end
 
 task :compare_images do
-  compare = Wraith::CompareImages.new('config')
+  compare = Wraith::CompareImages.new(@config)
   compare.compare_images
 end
 
 task :check_for_paths do
-  spider = Wraith::Spidering.new('config')
+  spider = Wraith::Spidering.new(@config)
   spider.check_for_paths
 end
 
 task :save_images do
+  @save_images = Wraith::SaveImages.new(@config)
   @save_images.save_images
 end
 
 task :crop_images do
-  crop = Wraith::CropImages.new(@save_images.directory)
+  crop = Wraith::CropImages.new(@config)
   crop.crop_images
 end
 
 task :generate_thumbnails do
-  thumbs = Wraith::Thumbnails.new('config')
+  thumbs = Wraith::Thumbnails.new(@config)
   thumbs.generate_thumbnails
 end
 
@@ -60,7 +61,7 @@ end
 
 task :grabber, [:args] do |t, args|
   args.with_defaults(:args => "config")
-  @save_images = WraithManager.new("#{args[:args]}")
+  @config = "#{args[:args]}"
   Rake::Task["grab"].invoke
 end
 

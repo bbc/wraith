@@ -25,11 +25,11 @@ class Wraith::SaveImages
   def labels_paths
     check_paths.each do |label, path|
       unless path
-        @paths = label
-        @labels = path.gsub('/', '_')
+        path = label
+        label = path.gsub('/', '_')
       else
-        @paths = path
-        @labels = label
+        path = path
+        label = label
       end
     end
   end
@@ -38,12 +38,12 @@ class Wraith::SaveImages
     wraith.engine.each { |label, browser| return browser }
   end
 
-  def compare_url
-    wraith.comp_domain + "#{paths}" unless wraith.comp_domain.nil?
+  def base_urls(path)
+    wraith.base_domain + path unless wraith.base_domain.nil?
   end
 
-  def base_url
-    wraith.base_domain + "#{paths}" unless wraith.base_domain.nil?
+  def compare_urls(path)
+    wraith.comp_domain + path unless wraith.comp_domain.nil?
   end
 
   def file_names(width, label, domain_label)
@@ -52,6 +52,9 @@ class Wraith::SaveImages
 
   def save_images
     labels_paths.each do |label, path|
+      base_url = base_urls(path)
+      compare_url = compare_urls(path)
+
       wraith.widths.each do |width|
         base_file_name = file_names(width, label, wraith.base_domain_label)
         compare_file_name = file_names(width, label, wraith.comp_domain_label)
