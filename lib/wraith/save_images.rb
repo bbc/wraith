@@ -24,12 +24,12 @@ class Wraith::SaveImages
 
   def labels_paths
     check_paths.each do |label, path|
-      unless path
+      if !path
         path = label
         label = path.gsub('/', '_')
       else
-        path = path
-        label = label
+        path
+        label
       end
     end
   end
