@@ -1,0 +1,3 @@
+module Wraith::Error
+
+end

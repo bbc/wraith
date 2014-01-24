@@ -3,10 +3,6 @@ browser:
   webkit: "phantomjs"
   # gecko: "slimerjs"
 
-device:
-  base: firefox
-  compare: firefox  
-
 #If you want to have multiple snapping files, set the file name here
 snap_file: "lib/wraith/javascript/nojs.js"
 

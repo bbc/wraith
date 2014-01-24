@@ -51,14 +51,6 @@ class Wraith::Wraith
     @config['browser']
   end
 
-  def browser1
-    @config['device']['base']
-  end
-
-  def browser2
-    @config['device']['compare']
-  end
-
   def fuzz
     @config['fuzz']
   end
@@ -85,15 +77,5 @@ class Wraith::Wraith
     # For compatibility with windows file structures switch commenting on the following 2 lines
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
     #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-  end
-
-  def web_runner(browser, width, url, file_name)
-    driver = Selenium::WebDriver.for :"#{browser}"
-    # If you want to use android devices, comment out browser sizing
-    driver.manage.window.resize_to("#{width}", 10000)
-    driver.get "#{url}"
-    sleep 1
-    driver.save_screenshot "#{file_name}"
-    driver.close
   end
 end
