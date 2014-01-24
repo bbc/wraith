@@ -10,9 +10,9 @@ require 'wraith/compare_images'
 
 @config = ('config')
 
-task :config, [:args] do |t, args|
-  args.with_defaults(:args => "config")
-  @config = "#{args[:args]}"
+task :config, [:yaml] do |t, custom|
+  custom.with_defaults(:yaml => "config")
+  @config = "#{custom[:yaml]}"
   Rake::Task["default"].invoke
 end
 
@@ -21,12 +21,12 @@ task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_i
 end
 
 task :reset_shots_folder do
-  reset = Wraith::Folders.new(@config)
+  reset = Wraith::FolderManager.new(@config)
   reset.clear_shots_folder
 end
 
 task :setup_folders do
-  create = Wraith::Folders.new(@config)
+  create = Wraith::FolderManager.new(@config)
   create.create_folders
 end
 
@@ -59,12 +59,12 @@ task :generate_gallery do
   sh "ruby lib/wraith/gallery.rb #{@save_images.directory}"
 end
 
-task :grabber, [:args] do |t, args|
-  args.with_defaults(:args => "config")
-  @config = "#{args[:args]}"
+task :grabber, [:yaml] do |t, custom|
+  custom.with_defaults(:yaml => "config")
+  @config = "#{custom[:yaml]}"
   Rake::Task["grab"].invoke
 end
 
-task :grab => [:reset_shots_folder, :check_for_paths, :save_images, :generate_thumbnails, :generate_gallery] do
+task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end

@@ -1,6 +1,6 @@
 require 'wraith'
 
-class Wraith::Folders
+class Wraith::FolderManager
   attr_reader :wraith
 
   def initialize(config)
