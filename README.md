@@ -90,11 +90,6 @@ browser:
   webkit: "phantomjs"
   # gecko: "slimerjs"
 
-# Only used for webdriver
-device:
-  base: firefox
-  compare: firefox
-
 # If you want to have multiple snapping files, set the file name here
 snap_file: "snap.js"
 
@@ -163,12 +158,6 @@ rake config[config_name]
 On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
 Locate lines 60 and 70 and switch the commenting as described.
 
-## Real devices and browsers
-
-If you want to run Wraith against Android and iOS browsers, as well as Firefox/Chrome, you can with WebDriver.  By setting the device name to the correct driver, e.g Firefox, then running the WebDriver task, you have the option to see images from real browsers.  This works well on real devices, so will enable realistic testing instead of headless.
-There is a short getting started guide [here](https://github.com/BBC-News/wraith/blob/master/webdriver.md).  In order to use WebDriver, you must use the WebDriver task
-
-      rake webdriver
 
 ## Output
 
@@ -198,17 +187,8 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Running Tests
-
-    rspec
-
-## Changelog - updated 20/12/13
-New features include the ability to grab a bunch of pages using the grabber task and view them.  Updated pageload wait timing to ensure a full page load, updates to README and a bug fix for capped labels.
-
-    Merge pull request #67 from plukevdh/master
-    Merge pull request #70 from BBC-News/capsfix
-    Merge pull request #66 from BBC-News/pageload-wait
-    Merge pull request #65 from BBC-News/grabber
+## Changelog - updated 24/01/14
+New features include some refactoring and the start of additional cli work.  We have removed the webdriver features for the time being, this will return in a more capable and fully feature state.
 
 ## License
 
