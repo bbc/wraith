@@ -1,62 +1,70 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'bundler/gem_tasks'
-require 'wraith/manager'
+require 'wraith/save_images'
+require 'wraith/crop'
+require 'wraith/spider'
+require 'wraith/folder'
+require 'wraith/thumbnails'
+require 'wraith/compare_images'
 
-@wraith_manager = WraithManager.new('config')
+@config = ('config')
 
-task :config, [:args] do |t, args|
-  args.with_defaults(:args => "config")
-  @wraith_manager = WraithManager.new("#{args[:args]}")
+task :config, [:yaml] do |t, custom|
+  custom.with_defaults(:yaml => "config")
+  @config = "#{custom[:yaml]}"
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
-task :compare_images do
-  @wraith_manager.compare_images
+task :reset_shots_folder do
+  reset = Wraith::FolderManager.new(@config)
+  reset.clear_shots_folder
 end
 
-task :reset_shots_folder do
-  @wraith_manager.reset_shots_folder
+task :setup_folders do
+  create = Wraith::FolderManager.new(@config)
+  create.create_folders
+end
+
+task :compare_images do
+  compare = Wraith::CompareImages.new(@config)
+  compare.compare_images
 end
 
 task :check_for_paths do
-  @wraith_manager.check_for_paths
+  spider = Wraith::Spidering.new(@config)
+  spider.check_for_paths
 end
 
 task :save_images do
-  @wraith_manager.save_images
+  @save_images = Wraith::SaveImages.new(@config)
+  @save_images.save_images
 end
 
 task :crop_images do
-  @wraith_manager.crop_images
+  crop = Wraith::CropImages.new(@save_images.directory)
+  crop.crop_images
 end
 
 task :generate_thumbnails do
-  @wraith_manager.generate_thumbnails
+  thumbs = Wraith::Thumbnails.new(@config)
+  thumbs.generate_thumbnails
 end
 
 task :generate_gallery do
-  sh "ruby lib/wraith/gallery.rb #{@wraith_manager.directory}"
+  sh "ruby lib/wraith/gallery.rb #{@save_images.directory}"
 end
 
-task :run_webdriver do
-  @wraith_manager.run_webdriver
-end
-
-task :webdriver  => [:reset_shots_folder, :check_for_paths, :run_webdriver, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
-  puts "done"
-end
-
-task :grabber, [:args] do |t, args|
-  args.with_defaults(:args => "config")
-  @wraith_manager = WraithManager.new("#{args[:args]}")
+task :grabber, [:yaml] do |t, custom|
+  custom.with_defaults(:yaml => "config")
+  @config = "#{custom[:yaml]}"
   Rake::Task["grab"].invoke
 end
 
-task :grab => [:reset_shots_folder, :check_for_paths, :save_images, :generate_thumbnails, :generate_gallery] do
+task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
