@@ -1,6 +1,9 @@
 require 'yaml'
+require 'RMagick'
 
 class Wraith::Wraith
+  include Magick
+
   attr_accessor :config
 
   def initialize(config_name)
@@ -60,12 +63,28 @@ class Wraith::Wraith
   end
 
   def compare_images(base, compare, output, info)
-    puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
+
+    puts "Diffing #{base} to #{compare} and saving it to #{output}"
+    img = Image.read(base).first
+    comp = Image.read(compare).first
+    diff, float = comp.compare_channel(img, Magick::MeanAbsoluteErrorMetric, DefaultChannels) {
+      self.color='blue'
+    }
+
+    diff.write(output)
+    File.open(info, 'w') { |file| file.write(float) }
+
+    #puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 
   def self.crop_images(crop, height)
     # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
+
+    img = Image.read(crop).first
+    img.crop_resized(height)
+    img.write(crop)
+
+    #puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
     # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
   end
 
@@ -74,8 +93,14 @@ class Wraith::Wraith
   end
 
   def thumbnail_image(png_path, output_path)
+
+    img = Image.read(png_path).first
+    img.crop_resized(200, 200);
+    thumb = img.scale(200, 200)
+    thumb.write(output_path)
+
     # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    # `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
     #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
 end
