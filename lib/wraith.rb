@@ -26,6 +26,7 @@ module Wraith
   require 'wraith/thumbnails'
   require 'wraith/compare_images'
   require 'wraith/gallery_generator'
+  require 'wraith/command_line_image_tool'
 
   autoload :Environment, 'wraith/environment'
   autoload :CLI, 'wraith/cli'

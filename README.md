@@ -77,7 +77,11 @@ Alternatively you can download the install script via curl, this will not create
     
     curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
     cd wraith
-    bundle install    
+    bundle install
+
+### Installing via bundler
+Add this to your ```Gemfile```
+```gem 'wraith', "1.1.0", :git=>"git://github.com/meza/wraith.git"```
 
 ## Config
 
@@ -157,6 +161,33 @@ rake config[config_name]
 
 On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
 Locate lines 60 and 70 and switch the commenting as described.
+
+
+### Using as a gem
+
+Install the gem as described above.
+Then:
+
+```ruby
+def run_wraith
+	@config = ('config')
+	folders = Wraith::FolderManager.new(@config)
+    folders.clear_shots_folder
+    folders.create_folders
+    spider = Wraith::Spidering.new(@config)
+    spider.check_for_paths
+    @save_images = Wraith::SaveImages.new(@config)
+    @save_images.save_images
+    crop = Wraith::CropImages.new(@save_images.directory, @config)
+    crop.crop_images
+    compare = Wraith::CompareImages.new(@config)
+    compare.compare_images
+    thumbs = Wraith::Thumbnails.new(@config)
+    thumbs.generate_thumbnails
+    gallery = Wraith::GalleryGenerator.new(@save_images.directory)
+    gallery.generate_gallery
+end
+```
 
 
 ## Output

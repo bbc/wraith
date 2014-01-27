@@ -1,18 +1,20 @@
 require 'yaml'
-require 'wraith/command_line_image_tool'
 
 class Wraith::Wraith
-
-  include CommandLineImageTool
 
   attr_accessor :config
 
   def initialize(config_name)
     @config = YAML::load(File.open("configs/#{config_name}.yaml"))
+    @image_tool = Wraith::CommandLineImageTool.new(phantomjs_options, snap_file, fuzz)
   end
 
   def directory
     @config['directory'].first
+  end
+
+  def phantomjs_options
+    @config['phantomjs_options']
   end
 
   def snap_file
@@ -59,9 +61,22 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
-  def crop_images(crop, height)
-    self.class.crop_images
+  def capture_page_image(browser, url, width, file_name)
+    @image_tool.capture_page_image(browser, url, width, file_name)
   end
+
+  def compare_images(base, compare, output, info)
+    @image_tool.compare_images(base, compare, output, info)
+  end
+
+  def crop_images(crop, height)
+    @image_tool.crop_images(crop, height)
+  end
+
+  def thumbnail_image(png_path, output_path)
+    @image_tool.thumbnail_image(png_path, output_path)
+  end
+
 
 
 end
