@@ -4,9 +4,9 @@ require 'image_size'
 class Wraith::CropImages
   attr_reader :dir
 
-  def initialize(dir, config)
-    @dir = dir
+  def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @dir = @wraith.directory
   end
 
   def crop

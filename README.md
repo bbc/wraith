@@ -181,7 +181,7 @@ def run_wraith
     spider.check_for_paths
     @save_images = Wraith::SaveImages.new(@config)
     @save_images.save_images
-    crop = Wraith::CropImages.new(@save_images.directory, @config)
+    crop = Wraith::CropImages.new(@config)
     crop.crop_images
     compare = Wraith::CompareImages.new(@config)
     compare.compare_images

@@ -1,8 +1,8 @@
 require 'os'
 class Wraith::CommandLineImageTool
 
-  def initialize(pahtnomjs_options, snap_file, fuzz)
-    @phantomjs_options = pahtnomjs_options
+  def initialize(phantomjs_options, snap_file, fuzz)
+    @phantomjs_options = phantomjs_options
     @snap_file = snap_file
     @fuzz = fuzz
   end
@@ -16,9 +16,8 @@ class Wraith::CommandLineImageTool
   end
 
   def crop_images(crop, height)
-    path=path(crop)
+    path = path(crop)
     puts `convert #{path} -background none -extent 0x#{height} #{path}`
-
   end
 
   def thumbnail_image(png_path, output_path)
@@ -29,9 +28,7 @@ class Wraith::CommandLineImageTool
     if OS.windows?
       return orig.gsub('/', '\\')
     end
-
     orig
-
   end
 
 end
