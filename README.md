@@ -81,6 +81,7 @@ Alternatively you can download the install script via curl, this will not create
 
 ### Installing via bundler
 Add this to your ```Gemfile```
+
 ```gem 'wraith', "1.1.0", :git=>"git://github.com/meza/wraith.git"```
 
 ## Config
