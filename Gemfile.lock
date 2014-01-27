@@ -1,12 +1,13 @@
 PATH
   remote: .
   specs:
-    wraith (1.0.0)
+    wraith (1.1.0)
       anemone
       image_size
       log4r
       nokogiri
       rake
+      rmagick
       robotex
       selenium-webdriver
 
@@ -35,6 +36,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rake (10.1.1)
+    rmagick (2.13.2)
     robotex (1.0.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)

@@ -56,7 +56,8 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh "ruby lib/wraith/gallery.rb #{@save_images.directory}"
+  gallery = Wraith::GalleryGenerator.new(@save_images.directory)
+  gallery.generate_gallery
 end
 
 task :grabber, [:yaml] do |t, custom|

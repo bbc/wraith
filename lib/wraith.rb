@@ -19,6 +19,14 @@ if ENV['WRAITH_LOG'] && !ENV['WRAITH_LOG'].nil?
 end
 
 module Wraith
+  require 'wraith/save_images'
+  require 'wraith/crop'
+  require 'wraith/spider'
+  require 'wraith/folder'
+  require 'wraith/thumbnails'
+  require 'wraith/compare_images'
+  require 'wraith/gallery_generator'
+
   autoload :Environment, 'wraith/environment'
   autoload :CLI, 'wraith/cli'
   autoload :Error, 'wraith/error'

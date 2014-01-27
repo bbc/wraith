@@ -29,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "selenium-webdriver"
   spec.add_runtime_dependency "nokogiri"
   spec.add_runtime_dependency "log4r"
+  spec.add_runtime_dependency "rmagick"
 end
