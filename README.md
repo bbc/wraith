@@ -170,6 +170,8 @@ Install the gem as described above.
 Then:
 
 ```ruby
+require 'wraith'
+
 def run_wraith
 	@config = ('config')
 	folders = Wraith::FolderManager.new(@config)
