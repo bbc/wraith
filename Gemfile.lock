@@ -52,6 +52,5 @@ PLATFORMS
 
 DEPENDENCIES
   pry
-  rake
   rspec-given
   wraith!
