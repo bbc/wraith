@@ -64,9 +64,11 @@ class Wraith::Wraith
   end
 
   def self.crop_images(crop, height)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
-    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
+    if Gem::Platform.local.os == "mingw32"
+      puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
+    else
+      puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
+    end
   end
 
   def crop_images(crop, height)
@@ -74,8 +76,10 @@ class Wraith::Wraith
   end
 
   def thumbnail_image(png_path, output_path)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    if Gem::Platform.local.os == "mingw32"
+      `convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    else
+      `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    end
   end
 end
