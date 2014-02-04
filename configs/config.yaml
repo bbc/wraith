@@ -1,7 +1,19 @@
+#This config file will be responsible for acting as our baseline -- runs against production, on main pages used for regression
+
+#TODO
+#how to get to Step 2
+#how to compare visitors/members
+#
+
+
 #Headless browser option
 browser:
   webkit: "phantomjs"
   # gecko: "slimerjs"
+
+device:
+  base: firefox
+  compare: firefox
 
 #If you want to have multiple snapping files, set the file name here
 snap_file: "lib/wraith/javascript/snap.js"
@@ -12,21 +24,27 @@ directory:
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://www.live.bbc.co.uk/news"
-  russian: "http://www.live.bbc.co.uk/russian"
+  production: "http://www.lessonplanet.com"
+  staging: "http://staging.lessonplanet.com"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
-  - 320
-  - 600
-  - 768
+#  - 320
+#  - 600
+#  - 768
   - 1024
-  - 1280
+#  - 1280
 
 #Type page URL paths below, here are a couple of examples
 paths:
   home: /
-  uk_index: /uk
+  search: /search?keywords=math
+  apps: /apps
+  edtech: /professional-development
+  school_edition: /schooledition
+  standards: /state-standards
+  articles: /articles
+  step-1: /register/step-1
 
 # If you don't want to name the paths explicitly you can use a yaml
 # collection as follows, and names will be derived by replacing / with _
@@ -41,3 +59,6 @@ fuzz: '20%'
 #Set the number of days to keep the site spider file
 spider_days:
   - 10
+
+#Tell PhantomJS to ignore SSL errors: 
+phantomjs_options: "--ignore-ssl-errors=true"
