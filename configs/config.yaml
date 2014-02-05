@@ -40,7 +40,7 @@ paths:
   home: /
   search: /search?keywords=math
   apps: /apps
-  edtech: /professional-development
+  # edtech: /professional-development
   school_edition: /schooledition
   standards: /state-standards
   articles: /articles
