@@ -38,3 +38,5 @@ paths:
 #Amount of fuzz ImageMagick will use 
 fuzz: '20%' 
 
+#Logging
+#log_directory: '/var/log/wraith'

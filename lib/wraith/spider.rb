@@ -9,11 +9,12 @@ class Wraith::Spidering
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def check_for_paths
     unless wraith.paths
-      puts 'no paths defined'
+      @logger.debug 'no paths defined'
       spider
     end
   end
@@ -22,16 +23,16 @@ class Wraith::Spidering
     if File.exist?('spider.txt')
       check_file
     else
-      puts 'creating new spider file'
+      @logger.debug 'creating new spider file'
       spider_base_domain
     end
   end
 
   def check_file
     if (Time.now - File.ctime('spider.txt')) / (24 * 3600) < wraith.spider_days[0]
-      puts 'using existing spider file'
+      @logger.debug 'using existing spider file'
     else
-      puts 'creating new spider file'
+      @logger.debug 'creating new spider file'
       spider_base_domain
     end
   end

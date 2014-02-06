@@ -6,6 +6,7 @@ class Wraith::FolderManager
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def dir

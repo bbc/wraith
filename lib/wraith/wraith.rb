@@ -5,8 +5,13 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
+    @logger = Wraith::Logger.new
     @config = YAML::load(File.open("configs/#{config_name}.yaml"))
     @image_tool = Wraith::CommandLineImageTool.new(phantomjs_options, snap_file, fuzz)
+  end
+
+  def logger
+    @logger
   end
 
   def directory
@@ -76,7 +81,6 @@ class Wraith::Wraith
   def thumbnail_image(png_path, output_path)
     @image_tool.thumbnail_image(png_path, output_path)
   end
-
 
 
 end
