@@ -7,7 +7,7 @@ require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
-require 'wraith/gallery'
+# require 'wraith/gallery'
 
 class Wraith::CLI < Thor
   include Thor::Actions
@@ -72,11 +72,11 @@ class Wraith::CLI < Thor
     thumbs.generate_thumbnails
   end
 
-  desc "generate_gallery", "create page for viewing images"
-  def generate_gallery(config_name)
-    gallery = Wraith::Gallery.new(config_name)
-    gallery.create
-  end
+  # desc "generate_gallery", "create page for viewing images"
+  # def generate_gallery(config_name)
+  #   gallery = Wraith::Gallery.new(config_name)
+  #   gallery.create
+  # end
 
   desc "capture config_name", "A full Wraith job"
   def capture(config)
@@ -88,6 +88,6 @@ class Wraith::CLI < Thor
   	crop_images(config)
   	compare_images(config)
   	generate_thumbnails(config)
-  	generate_gallery(config)
+  	# generate_gallery(config)
   end
 end
