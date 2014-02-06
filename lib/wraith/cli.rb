@@ -9,12 +9,21 @@ require 'wraith/compare_images'
 require 'wraith/images'
 
 class Wraith::CLI < Thor
+  include Thor::Actions
 
   attr_accessor :config_name
 
+  def self.source_root
+    File.expand_path('../../../templates',__FILE__)
+  end
+
   desc "setup", "creates config folder and default config"
   def setup
-  	FileUtils.mkdir('configs')
+    template('configs/config.yaml', 'configs/config.yaml')
+  	# FileUtils.mkdir('configs')
+    # FileUtils.mkdir -p('lib/wraith/javascript/')
+    # copy_file "configs/config.yaml", "configs/config.yaml"
+    # copy_file "lib/javascript/snap.js", "lib/javascript/snap.js"
   end
 
   desc "reset_shots", "removes all the files in the shots folder"
