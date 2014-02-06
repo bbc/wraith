@@ -1,0 +1,1 @@
+compare: image widths or heights differ `production-vs-staging/search/768_phantomjs_production.png' @ error/compare.c/CompareImageCommand/962.
