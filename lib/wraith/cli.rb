@@ -1,5 +1,4 @@
 require 'thor'
-require 'thor/group'
 require 'wraith'
 require 'wraith/save_images'
 require 'wraith/crop'
@@ -9,63 +8,80 @@ require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
 
-class Wraith::CLI < Thor::Group
-  include Thor::Actions
+class Wraith::CLI < Thor
 
+  attr_accessor :config_name
+
+  desc "setup", "creates config folder and default config"
   def setup
-    @config = ('config')
+  	FileUtils.mkdir('configs')
   end
 
-  desc "reset shots"
-  def reset_shots
-    reset = Wraith::FolderManager.new(@config)
+  desc "reset_shots", "removes all the files in the shots folder"
+  def reset_shots(config_name)
+    reset = Wraith::FolderManager.new(config_name)
     reset.clear_shots_folder
   end
 
-  desc "setup folders"
-  def setup_folders
-    create = Wraith::FolderManager.new(@config)
+  desc "folders", "create folders for images"
+  def setup_folders(config_name)
+    create = Wraith::FolderManager.new(config_name)
     create.create_folders
   end
 
-  desc "check paths"
-  def check_for_paths
-    spider = Wraith::Spidering.new(@config)
-    spider.check_for_paths
+  no_commands do  
+    def check_for_paths(config_name)
+      spider = Wraith::Spidering.new(config_name)
+      spider.check_for_paths
+    end
+
+    def check_images(config_name)
+      image = Wraith::Images.new(config_name)
+      image.files
+    end
   end
 
-  desc "save images"
-  def save_images
-    save_images = Wraith::SaveImages.new(@config)
+  desc "save_images", "captures screenshots"
+  def save_images(config_name)
+    save_images = Wraith::SaveImages.new(config_name)
     save_images.save_images
   end
 
-  desc "check images"
-  def check_images
-    image = Wraith::Images.new(@config)
-    image.files
-  end
-
-  desc "crop images"
-  def crop_images
-    crop = Wraith::CropImages.new(@config)
+  desc "crop_images", "crops images to the same height"
+  def crop_images(config_name)
+    crop = Wraith::CropImages.new(config_name)
     crop.crop_images
   end
 
-  desc "compare images"
-  def compare_images
-    compare = Wraith::CompareImages.new(@config)
+  desc "compare_images", "compares images to generate diffs"
+  def compare_images(config_name)
+    compare = Wraith::CompareImages.new(config_name)
     compare.compare_images
   end
 
-  def generate_thumbnails
-    thumbs = Wraith::Thumbnails.new(@config)
+  desc "generate_thumbnails", "create thumbnails for gallery"
+  def generate_thumbnails(config_name)
+    thumbs = Wraith::Thumbnails.new(config_name)
     thumbs.generate_thumbnails
   end
 
-  def generate_gallery
-    dir = Wraith::Wraith.new(@config)
+  desc "generate_gallery", "create page for viewing images"
+  def generate_gallery(config_name)
+    dir = Wraith::Wraith.new(config_name)
     puts 'Generating gallery'
     `ruby lib/wraith/gallery.rb "#{dir.directory}"`
+  end
+
+  desc "capture config_name", "A full Wraith job"
+  def capture(config)
+  	reset_shots(config)
+  	setup_folders(config)
+  	check_for_paths(config)
+  	save_images(config)
+  	check_images(config)
+  	crop_images(config)
+  	compare_images(config)
+  	generate_thumbnails(config)
+  	generate_gallery(config)
   end
 end
