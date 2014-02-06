@@ -5,12 +5,14 @@ require 'log4r/yamlconfigurator'
 
 class Wraith::Logger
 
+  LOGGER_CONFIG_FILE_PATH = 'config/wraith_logger.yaml'
+
   def initialize(name='wraith')
     @logger = Log4r::Logger.new(name)
 
-    if File.exist? 'config/logger.yaml'
+    if File.exist? LOGGER_CONFIG_FILE_PATH
       config = YamlConfigurator
-      config.load_yaml_file('configs/logger.yaml')
+      config.load_yaml_file(LOGGER_CONFIG_FILE_PATH)
     end
 
     set_runtime_level

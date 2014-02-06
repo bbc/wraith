@@ -194,11 +194,11 @@ end
 
 ##Logging
 [Log4r](http://log4r.rubyforge.org/) is used for logging.
-By default, all logs will be silent To switch on logging, create a file ```configs/logger.yaml``` with the Log4r configuration of your choice.
-You can see an example in the [logger.example.yaml](configs/logger.example.yaml)
+By default, all logs will be silent To switch on logging, create a file ```configs/wraith_logger.yaml``` with the Log4r configuration of your choice.
+You can see an example in the [wraith_logger.example.yaml](configs/wraith_logger.example.yaml)
 
 ###Controlling logging when used as a gem
-The same applies as above. The location of the ```logger.yaml``` should be in your host app's ```configs``` directory
+The same applies as above. The location of the ```wraith_logger.yaml``` should be in your host app's ```configs``` directory
 
 ## Output
 
