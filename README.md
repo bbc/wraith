@@ -62,20 +62,16 @@ And then download the PhantomJS binary package from
 
 Open terminal and run
 
-    git clone https://github.com/BBC-News/wraith
+    gem install wraith
 
-You can then run the following inside the Wraith directory:
+You can then run the following inside the Wraith directory to create a template snap.js and config file:
     
-    bundle install
-
-If you don't have bundler installed, install it :
-
-    gem install bundler
+    gem setup
 
 
 Alternatively you can download the install script via curl, this will not create a git repo though.    
     
-    curl -fsSL https://raw.github.com/bbc-news/wraith/go/install | bash
+    git clone https://github.com/BBC-News/wraith
     cd wraith
     bundle install    
 

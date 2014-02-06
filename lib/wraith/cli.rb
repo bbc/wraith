@@ -7,6 +7,7 @@ require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
+require 'wraith/gallery'
 
 class Wraith::CLI < Thor
   include Thor::Actions
@@ -20,7 +21,7 @@ class Wraith::CLI < Thor
   desc "setup", "creates config folder and default config"
   def setup
     template('configs/config.yaml', 'configs/config.yaml')
-    template('javascript/snap.js', 'lib/javascript/snap.js'
+    template('javascript/snap.js', 'lib/wraith/javascript/snap.js')
   end
 
   desc "reset_shots", "removes all the files in the shots folder"
@@ -73,9 +74,8 @@ class Wraith::CLI < Thor
 
   desc "generate_gallery", "create page for viewing images"
   def generate_gallery(config_name)
-    dir = Wraith::Wraith.new(config_name)
-    puts 'Generating gallery'
-    `ruby lib/wraith/gallery.rb "#{dir.directory}"`
+    gallery = Wraith::Gallery.new(config_name)
+    gallery.create
   end
 
   desc "capture config_name", "A full Wraith job"

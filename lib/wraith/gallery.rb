@@ -72,12 +72,15 @@ def generate_html(domain, directories, template, destination)
     end
 end
 
-if ARGV.length < 1 then
-    puts "USAGE: create_gallery.rb <directory>"
-    exit 1
-end
+class Wraith::Gallery
+  attr_reader :wraith
 
-location = ARGV[0]
+  def initialize(config)
+    @wraith = Wraith::Wraith.new(config)
+  end
+
+
+location = wraith.directory
 domain = location
 directories = parse_directories(location)
 dest = "#{location}/gallery.html"
