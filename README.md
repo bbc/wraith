@@ -64,11 +64,11 @@ Open terminal and run
 
     gem install wraith
 
-You can then run the following inside the Wraith directory to create a template snap.js and config file:
+You can then run the following to create a template snap.js and config file:
     
-    gem setup
+    wraith setup
 
-Alternatively you can download the install script via curl, this will not create a git repo though.    
+Alternatively you can clone the repo.    
     
     git clone https://github.com/BBC-News/wraith
     cd wraith
@@ -145,7 +145,7 @@ wraith capture config_name
 This assumes that your snap.js and config.yaml are in the folders that were created on setup.  There are other commands also available, these all expect a config_name to be passed as an option.  
 
 ```sh
-wraith capture config_name  # A full Wraith job
+  wraith capture config_name  # A full Wraith job
   wraith compare_images       # compares images to generate diffs
   wraith crop_images          # crops images to the same height
   wraith folders              # create folders for images
