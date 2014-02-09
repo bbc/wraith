@@ -1,17 +1,17 @@
 require 'wraith'
 
 class Wraith::Images
-  attr_reader :dir
+  attr_reader :wraith
 
-  def initialize(dir)
-    @dir = dir
+  def initialize(config)
+    @wraith = Wraith::Wraith.new(config)
   end
 
   def files
-    files = Dir.glob("#{dir}/*/*.png").sort
+    files = Dir.glob("#{wraith.directory}/*/*.png").sort
     files.each do |filename|
       if File.stat("#{filename}").size == 0
-        FileUtils.cp 'lib/wraith/assets/invalid.jpg', "#{filename}"
+        FileUtils.cp 'assets/invalid.jpg', "#{filename}"
         puts "#{filename} is invalid"
       end
     end

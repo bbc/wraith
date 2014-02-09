@@ -35,5 +35,6 @@ class Wraith::FolderManager
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
       FileUtils.mkdir("#{dir}/#{folder_label}")
     end
+    puts "Creating Folders"
   end
 end

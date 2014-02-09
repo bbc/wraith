@@ -8,6 +8,7 @@ require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
+require 'wraith/gallery'
 
 @config = ('config')
 
@@ -47,12 +48,12 @@ task :save_images do
 end
 
 task :crop_images do
-  crop = Wraith::CropImages.new(@save_images.directory)
+  crop = Wraith::CropImages.new(@config)
   crop.crop_images
 end
 
 task :check_images do
-  image = Wraith::Images.new(@save_images.directory)
+  image = Wraith::Images.new(@config)
   image.files
 end
 
@@ -62,7 +63,8 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  sh "ruby lib/wraith/gallery.rb #{@save_images.directory}"
+  gallery = Wraith::GalleryGenerator.new(@config)
+  gallery.generate_gallery
 end
 
 task :grabber, [:yaml] do |t, custom|
