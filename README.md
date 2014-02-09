@@ -68,7 +68,6 @@ You can then run the following inside the Wraith directory to create a template 
     
     gem setup
 
-
 Alternatively you can download the install script via curl, this will not create a git repo though.    
     
     git clone https://github.com/BBC-News/wraith
@@ -87,7 +86,7 @@ browser:
   # gecko: "slimerjs"
 
 # If you want to have multiple snapping files, set the file name here
-snap_file: "snap.js"
+snap_file: "path/to/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory:
@@ -136,8 +135,30 @@ phantomjs_options: "--ignore-ssl-errors=true"
 ```
 
 ## Using Wraith
+### Wraith Gem
+You can type `wraith` into terminal to bring up the list of commands, but the one to start Wraith is 
 
-If you are new to ruby, rake and PhantomJS, [here is a great screencast](http://www.youtube.com/watch?v=gE_19L0l2q0) about how to use Wraith by [Kevin Lamping](https://twitter.com/klamping)
+```sh
+wraith capture config_name
+```
+
+This assumes that your snap.js and config.yaml are in the folders that were created on setup.  There are other commands also available, these all expect a config_name to be passed as an option.  
+
+```sh
+wraith capture config_name  # A full Wraith job
+  wraith compare_images       # compares images to generate diffs
+  wraith crop_images          # crops images to the same height
+  wraith folders              # create folders for images
+  wraith generate_gallery     # create page for viewing images
+  wraith generate_thumbnails  # create thumbnails for gallery
+  wraith reset_shots          # removes all the files in the shots folder
+  wraith save_images          # captures screenshots
+  wraith setup                # creates config folder and default config
+```
+
+### Wraith Rake tasks
+
+If you want to use the rake task instead of the gem, you can use the following.
 
 There are two ways of using Wraith, the fastest is to simply type rake.
 
@@ -154,6 +175,7 @@ rake config[config_name]
 On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
 Locate lines 60 and 70 and switch the commenting as described.
 
+If you are new to ruby, rake and PhantomJS, [here is a great screencast](http://www.youtube.com/watch?v=gE_19L0l2q0) about how to use Wraith by [Kevin Lamping](https://twitter.com/klamping)
 
 ## Output
 
@@ -183,8 +205,8 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Changelog - updated 24/01/14
-New features include some refactoring and the start of additional cli work.  We have removed the webdriver features for the time being, this will return in a more capable and fully feature state.
+## Changelog - updated 2014-02-09
+We have released Wraith as a Ruby Gem!!  There is a new CLI to better interact with Wraith and it's commands.
 
 ## License
 
