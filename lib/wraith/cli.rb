@@ -15,7 +15,7 @@ class Wraith::CLI < Thor
   attr_accessor :config_name
 
   def self.source_root
-    File.expand_path('../../../templates/',__FILE__)
+    File.expand_path('../../../templates/', __FILE__)
   end
 
   desc "setup", "creates config folder and default config"
@@ -37,7 +37,7 @@ class Wraith::CLI < Thor
     create.create_folders
   end
 
-  no_commands do  
+  no_commands do
     def check_for_paths(config_name)
       spider = Wraith::Spidering.new(config_name)
       spider.check_for_paths
@@ -82,14 +82,14 @@ class Wraith::CLI < Thor
 
   desc "capture config_name", "A full Wraith job"
   def capture(config)
-  	reset_shots(config)
-  	setup_folders(config)
-  	check_for_paths(config)
-  	save_images(config)
-  	check_images(config)
-  	crop_images(config)
-  	compare_images(config)
-  	generate_thumbnails(config)
-  	generate_gallery(config)
+    reset_shots(config)
+    check_for_paths(config)
+    setup_folders(config)
+    save_images(config)
+    check_images(config)
+    crop_images(config)
+    compare_images(config)
+    generate_thumbnails(config)
+    generate_gallery(config)
   end
 end

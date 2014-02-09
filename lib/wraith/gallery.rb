@@ -4,7 +4,7 @@ require 'fileutils'
 require 'wraith/wraith'
 
 class Wraith::GalleryGenerator
-   attr_reader :wraith
+  attr_reader :wraith
 
   MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
 
@@ -35,29 +35,29 @@ class Wraith::GalleryGenerator
       dirs[category] = {}
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
-        if not match.nil? then
+        if !match.nil?
           size = match[1].to_i
           group = match[2]
           filepath = category + "/" + filename
           thumbnail = "thumbnails/#{category}/#{filename}"
 
-          if dirs[category][size].nil? then
-            dirs[category][size] = {:variants => []}
+          unless !dirs[category][size].nil?
+            dirs[category][size] = { variants: [] }
           end
           size_dict = dirs[category][size]
 
           case group
-            when 'diff'
-              size_dict[:diff] = {
-                  :filename => filepath, :thumb => thumbnail
-              }
-            when 'data'
-              size_dict[:data] = File.read("#{dirname}/#{filepath}")
-            else
-              size_dict[:variants] << {
-                  :name => group,
-                  :filename => filepath,
-                  :thumb => thumbnail
+          when 'diff'
+            size_dict[:diff] = {
+                filename: filepath, thumb: thumbnail
+            }
+          when 'data'
+            size_dict[:data] = File.read("#{dirname}/#{filepath}")
+          else
+            size_dict[:variants] << {
+                name: group,
+                filename: filepath,
+                thumb: thumbnail
               }
 
           end
@@ -65,16 +65,15 @@ class Wraith::GalleryGenerator
         end
       end
     end
-
-    return dirs
+   dirs
   end
 
   def generate_html(location, directories, template, destination, path)
     template = File.read(template)
     locals = {
-        :location => location,
-        :directories => directories,
-        :path => path
+        location: location,
+        directories: directories,
+        path: path
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, 'w') do |outf|
@@ -82,19 +81,16 @@ class Wraith::GalleryGenerator
     end
   end
 
-
   def generate_gallery(withPath="")
     dest = "#{@location}/gallery.html"
-    directories = parse_directories(@location);
+    directories = parse_directories(@location)
     generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, withPath)
     FileUtils.cp(BOOTSTRAP_LOCATION, "#{@location}/bootstrap.min.css")
-
   end
 
   class ErbBinding < OpenStruct
     def get_binding
-      return binding()
+      binding
     end
   end
-
 end
