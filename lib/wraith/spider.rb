@@ -19,7 +19,7 @@ class Wraith::Spidering
   end
 
   def spider
-    if File.exist?('spider.txt')
+    if File.exist?(wraith.spider_file)
       check_file
     else
       puts 'creating new spider file'
@@ -28,7 +28,7 @@ class Wraith::Spidering
   end
 
   def check_file
-    if (Time.now - File.ctime('spider.txt')) / (24 * 3600) < wraith.spider_days[0]
+    if (Time.now - File.ctime(wraith.spider_file)) / (24 * 3600) < wraith.spider_days[0]
       puts 'using existing spider file'
     else
       puts 'creating new spider file'
@@ -61,6 +61,6 @@ class Wraith::Spidering
       spider[lab] = @spider_list[@i]
       @i += 1
     end
-    File.open('spider.txt', 'w+') { |file| file.write(spider) }
+    File.open(wraith.spider_file, 'w+') { |file| file.write(spider) }
   end
 end
