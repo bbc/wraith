@@ -17,7 +17,7 @@ and then creates a diff of the two images, the affected areas are highlighted in
 blue
 
 ![Photo of BBC News with a
-diff](http://bbc-news.github.io/wraith/images/320_diff.png)
+diff](http://bbc-news.github.io/wraith/img/320_diff.png)
 
 
 ## Requirements
