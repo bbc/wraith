@@ -1,0 +1,41 @@
+@background: #22282A;
+
+pre {
+    padding: 0;
+    
+    font-family: 'Monaco', 'Source Code Pro', monospace;
+    font-size: 1em;
+}
+
+.rainbow {
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    .line {
+        &:hover {
+            background-color: darken(@background, 5%);
+
+            .line-number {
+                background-color: darken(@background, 8%);
+            }
+        }
+
+        .line-number {
+            text-align: right;
+
+            background-color: darken(@background, 3%);
+
+            padding-left: 0.8em;
+            padding-right: 0.8em;
+            
+            &:before {
+                content: attr(data-line-number);
+            }
+        }
+
+        .line-code {
+            padding-left: 1em;
+            width: 100%;
+        }
+    }
+}

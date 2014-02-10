@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Wraith Documentation</title>
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Mobile Internet Explorer allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+
+    <!-- Le styles -->
+    <link href="css/bootswatch/Cosmo/bootstrap.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery.tocify.css" rel="stylesheet">
+    <link href="css/prettify.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="css/rainbow/themes/tomorrow-night.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/rainbowlines/theme.css" media="screen" />
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link href="../assets/ico/favicon.ico" rel="shortcut icon">
+    <link href="../assets/ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="../assets/ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="../assets/ico/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="../assets/ico/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
+  </head>
+
+  <body>
+   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom:120px;">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+    <a class="navbar-brand" href="index.html">Wraith</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="os-install.html">Requirements Installtion</a></li>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+     
+
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="tocify col-sm-3 col-md-3">
+          <div id="toc">
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="col-sm-9 col-md-9">
+          <div class="jumbotron">
+            <h1>Wraith</h1>
+            <p>A responsive screenshot comparison tool</p>
+            <br>
+            <p>The project is hosted on <a class="projectLinks" href="https://github.com/BBC-News/wraith" target="_blank">Github</a> and is available for use under the <a class="projectLinks" href="https://github.com/BBC-News/wraith/blob/master/LICENSE" target="_blank">Apache 2.0 open source license</a>.  You can report bugs and discuss features on the <a href="https://github.com/BBC-News/wraith/issues?state=open" target="_blank">GitHub issues page</a>, or send tweets to <a href="https://twitter.com/ResponsiveNews" target="_blank">@ResponsiveNews</a>.
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="https://github.com/BBC-News/wraith" target="_blank">Fork on Github »</a></p>
+          </div>
+          <h2>Requirements</h2>
+          <!-- <br> -->
+          <p class="well">
+          <a href="http://phantomjs.org" target="_blank">PhantomJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a> 
+          <br>Installation instructions for different Operating systems <a href="os-install.html">here</a>
+          </p>
+          <br>
+          <h2>Installation</h2>
+          <!-- <br> -->
+          <pre>
+          <code data-language="ruby">
+gem install wraith
+          </code>
+          </pre>
+          <br>
+          <h2>Getting Started</h2>
+          <p class="well note">
+          To create template javascript and config files for use, use the setup command in terminal.  This will create folders in the directory you are in.
+          </p>
+          <pre>
+          <code data-language="ruby">
+wraith setup
+          </code>
+          </pre>
+          <p class="well note">
+          To start Wraith, use the capture command, passing the name of your config as an option.  With the default config.yaml, the command would be 
+          </p>
+          <pre>
+          <code data-language="ruby">
+wraith capture config
+          </code>
+          </pre>
+          <br>
+          <h3>Config options</h3>
+          <p></p>
+          <p class="well note">
+          All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files. You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers. If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml.
+          </p>
+          <pre>
+		  <code data-language="yaml">	
+ # Headless browser option
+browser:
+  webkit: "phantomjs"
+  # gecko: "slimerjs"
+
+# If you want to have multiple snapping files, set the file name here
+snap_file: "path/to/snap.js"
+
+# Type the name of the directory that shots will be stored in
+directory:
+  - 'shots'
+
+# Add only 2 domains, key will act as a label
+domains:
+  english: "http://www.live.bbc.co.uk/news"
+  russian: "http://www.live.bbc.co.uk/russian"
+
+#Type screen widths below, here are a couple of examples
+screen_widths:
+  - 320
+  - 600
+  - 768
+  - 1024
+  - 1280
+
+#Type page URL paths below, here are a couple of examples
+paths:
+  home: /
+  uk_index: /uk
+
+# If you don't want to name the paths explicitly you can use a yaml
+# collection as follows, and names will be derived by replacing / with _
+#
+# paths:
+#  - /imghp
+#  - /maps
+
+#Amount of fuzz ImageMagick will use 
+fuzz: '20%' 
+
+#Set the number of days to keep the site spider file
+spider_days:
+  - 10
+
+		  </code>
+          </pre>
+          <p>
+          <br>
+          <h3>Command line options</h3>
+          <p></p>
+          <p class="well note">
+Wraith allows for most of the commands to be used individually, allowing you perform tasks as you see fit.  This assumes that your snap.js and config.yaml are in the folders that were created on setup.  There are other commands also available, these all expect a config_name to be passed as an option.
+          </p>
+          <pre>          
+		  <code data-language="shell">
+  wraith capture config_name  # A full Wraith job
+  wraith compare_images       # compares images to generate diffs
+  wraith crop_images          # crops images to the same height
+  wraith folders              # create folders for images
+  wraith generate_gallery     # create page for viewing images
+  wraith generate_thumbnails  # create thumbnails for gallery
+  wraith reset_shots          # removes all the files in the shots folder
+  wraith save_images          # captures screenshots
+  wraith setup                # creates config folder and default config
+		  </code>
+          </pre>
+          <h2>Gallery & Output</h2>
+          <p class="well">
+          After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.
+          <br>
+          <br>
+          A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+          </p>
+          <br>
+          <h2>Rake Tasks</h2>
+          <br>
+          <h3>Wraith Rake</h3>
+          <p class="well">
+          If you want to use the rake task instead of the gem, after cloning the repo, you can use the following.
+
+          There are two ways of using Wraith, the fastest is to simply type rake in the Wraith directory.
+         </p>
+          <pre>
+          <code data-language="sh">
+rake
+          </code>
+          </pre>
+          <p class="well"> 
+          You may want to deal with multiple config files so you can compare different pages, different sites or different viewports.  In order to handle this, you can pass in a different config file by typing the following into terminal.  The default is config.yaml, so even if you don't pass a file in, it will still run.  If you have deleted config.yaml, make sure you are inside the `configs` directory before running the command.  You must use brackets without spaces.
+          </p>
+          <pre>
+          <code data-language="sh">
+rake config[config_name]
+          </code>
+          </pre>
+          <p class="well"> 
+          On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
+          Locate lines 60 and 70 and switch the commenting as described.
+          </p>
+          <br>
+          <h3>Grabber</h3>
+          <p class="well">
+          If you just want to see a single domains images and not compare them, perhaps for archiving, remove a domain and run the new rake task.   For default config, use grab, or specify a config using grabber. 
+          </p>
+          <pre>
+          <code data-language="sh">
+rake grab 
+rake grabber[config]
+          </code>
+          </pre>
+          <p class="well">
+          If you are new to ruby, rake and PhantomJS, <a href="http://www.youtube.com/watch?v=gE_19L0l2q0" target="_blank">here is a great screencast</a> about how to use Wraith by <a href="https://twitter.com/klamping" target="_blank">Kevin Lamping</a>
+          </p>
+          <h2>Contributing</h2>
+          <p class="well">
+          If you want to add functionality to this project, pull requests are welcome.
+          <br>
+          <br>
+          - Create a branch based off master and do all of your changes with in it
+          <br>
+          - If you have to pause to add a 'and' anywhere in the title, it should be two pull requests.
+          <br>
+          - Make commits of logical units and describe them properly
+          <br>
+          - Check for unnecessary whitespace with git diff --check before committing.
+          <br>
+          - If possible, submit tests to your patch / new feature so it can be tested easily.
+          <br>
+          - Assure nothing is broken by running all the test
+          <br>
+          - Please make sure that it complies with coding standards.
+          </p>
+		<h2>Copyright</h2>
+        <p class="well">
+            Copyright © BBC
+        </p>
+      </div>
+      </div><!--/row-->
+          
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/rainbow/rainbow.min.js"></script>
+    <script src="js/rainbow/language/generic.js"></script>
+    <script src="js/rainbow/language/html.js"></script>
+    <script src="js/rainbow/language/css.js"></script>
+    <script src="js/rainbow/language/javascript.js"></script>
+    <script src="js/rainbowlines/rainbow.linenumbers.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+
+    <script>
+        $(function() {
+
+          $("#toc").tocify({ selectors: "h2, h3, h4", scrollTo: 60, highlightOffset: 60, extendPage: true });
+
+          prettyPrint();
+
+          $(".optionName").popover({ trigger: "hover", container: "body" });
+
+          $("a[href='#']").click(function(event) {
+
+              event.preventDefault();
+
+          });
+
+          Rainbow.color();
+        });
+    </script>
+  
+</div></body></html>

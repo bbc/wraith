@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Wraith Documentation</title>
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Mobile Internet Explorer allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
+
+    <!-- Le styles -->
+    <link href="css/bootswatch/Cosmo/bootstrap.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery.tocify.css" rel="stylesheet">
+    <link href="css/prettify.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="css/rainbow/themes/tomorrow-night.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/rainbowlines/theme.css" media="screen" />
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link href="../assets/ico/favicon.ico" rel="shortcut icon">
+    <link href="../assets/ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="../assets/ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="../assets/ico/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="../assets/ico/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
+  </head>
+
+  <body>
+   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom:120px;">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+    <a class="navbar-brand" href="index.html">Wraith</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="index.html">Main Documentation</a></li>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+     
+
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row">
+        <div class="tocify col-sm-3 col-md-3">
+          <div id="toc">
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="col-sm-9 col-md-9">
+          <h2>Installation</h2>
+          <!-- <br> -->
+          <p class="well">
+          <a href="http://phantomjs.org" target="_blank">PhantomJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a>
+          <br>
+          <br> 
+          It's up to you to decide which browser engine you want to run it against, PhantomJS is a more widely used option as it runs headlessly.
+          </p>
+          <br>
+          <h2>OSX</h2>
+          <p class="well">
+          On Mac OS X, the best way to install dependencies is if you have <a href="http://brew.sh" target="_blank">Homebrew</a>
+          It is the quickest way to install PhantomJS & ImageMagick.
+          <pre>
+          <code data-language="ruby">
+brew install imagemagick
+brew install phantomjs or brew install slimerjs
+          </code>
+          </pre>
+          <br>
+          <h2>Windows</h2>
+          <p class="well">
+  
+          On Windows it's important to install ImageMagick from the binary found <a href="http://www.imagemagick.org/script/binary-releases.php#windows" target="_blank">here.</a> 
+          <br>
+          <br>
+          This will ensure that ImageMagick is listed first in your PATH.
+
+          To check your path after installing, open a command line window and type:
+          <pre>
+          <code data-language="sh">
+path
+          </code>
+          </pre>
+          <p class="well">
+This will return a list of executables in you PATH separated by semi-colons ;
+          </p>
+          <pre>
+          <code data-language="sh">
+C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
+          </code>
+          </pre>
+          <p class="well">
+If ImageMagick is in your path but not listed first you can edit your path by following the instructions <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx" target="_blank">here.</a>
+
+If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16; 
+Make sure the version number and location are correct for your system.
+          </p>
+          <br>
+          <h2>Ubuntu</h2>
+          <p class="well">
+          On Ubuntu 12.04, you will need to apt-get the following packages:
+          <pre>
+          <code data-language="sh">
+libicu-dev
+imagemagick
+rake
+          </code>
+          </pre>
+
+          <p class="well">
+          And then download the PhantomJS binary package from
+          <a href="http://phantomjs.org/" target="_blank">http://phantomjs.org/</a>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/rainbow/rainbow.min.js"></script>
+    <script src="js/rainbow/language/generic.js"></script>
+    <script src="js/rainbow/language/html.js"></script>
+    <script src="js/rainbow/language/css.js"></script>
+    <script src="js/rainbow/language/javascript.js"></script>
+    <script src="js/rainbowlines/rainbow.linenumbers.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+
+    <script>
+        $(function() {
+
+          $("#toc").tocify({ selectors: "h2, h3, h4", scrollTo: 60, highlightOffset: 60, extendPage: true });
+
+          prettyPrint();
+
+          $(".optionName").popover({ trigger: "hover", container: "body" });
+
+          $("a[href='#']").click(function(event) {
+
+              event.preventDefault();
+
+          });
+
+          Rainbow.color();
+        });
+    </script>
+  
+</div></body></html>
