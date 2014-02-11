@@ -27,5 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "robotex"
   spec.add_runtime_dependency "nokogiri"
   spec.add_runtime_dependency "log4r"
+  spec.add_runtime_dependency "os"
   spec.add_runtime_dependency "thor"
 end
