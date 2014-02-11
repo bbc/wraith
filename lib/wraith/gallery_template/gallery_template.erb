@@ -45,8 +45,8 @@
                                 <% end %>
                                 <div class="col-lg-3">
                                     <% if files[:diff] %>
-                                        <a href="<%=path%>/<%=files[:diff][:filename]%>">
-                                            <img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
+										<a href="<%= path %><%= files[:diff][:filename] %>">
+										<img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
                                         </a>
                                     <% end %>
                                     <p class="text-center">diff</p>
