@@ -15,6 +15,10 @@ class Wraith::Wraith
     @config['snap_file'] ? @config['snap_file'] : File.expand_path('lib/wraith/javascript/snap.js')
   end
 
+  def compare_snap_file
+    @config['compare_snap_file'] ? @config['compare_snap_file'] : @config['snap_file']
+  end
+
   def widths
     @config['screen_widths']
   end
@@ -38,7 +42,7 @@ class Wraith::Wraith
   def comp_domain_label
     domains.keys[1]
   end
-  
+
   def spider_file
     @config['spider_file'] ? @config['spider_file'] : 'spider.txt'
   end
@@ -55,11 +59,15 @@ class Wraith::Wraith
     @config['browser']
   end
 
+  def compare_engine
+    @config['compare_browser']
+  end
+
   def fuzz
     @config['fuzz']
   end
 
-  def capture_page_image(browser, url, width, file_name)
+  def capture_page_image(browser, url, width, file_name, snap_file)
     puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
