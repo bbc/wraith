@@ -5,11 +5,12 @@ browser:
 #If you want to have multiple snapping files, set the file name here
 snap_file: "lib/wraith/javascript/snap.js"
 
+#Specify the engine that should be used to compare again the main engine
 compare_browser:
   gecko: "slimerjs"
 
-#If you want to have multiple snapping files, set the file name here
-compare_snap_file: "lib/wraith/javascript/snap.js"
+#If you want to have a different snapping files from the main snap file for the comparison engine set the file name here. This will fallback to the snap_file above if not specified
+#compare_snap_file: "lib/wraith/javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory:
