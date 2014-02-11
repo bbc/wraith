@@ -37,8 +37,8 @@
                                 <h3 class="col-lg-1 text-muted"><%=size%>px</h3>
                                 <% files[:variants].each do |file| %>
                                     <div class="col-lg-3">
-                                        <a href="<%=path%>/<%=file[:filename]%>">
-                                            <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
+										<a href="<%= path %><%= file[:filename] %>">
+										<img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
                                         </a>
                                         <p class="text-center"><%=file[:name]%></p>
                                     </div>
