@@ -37,16 +37,16 @@
                                 <h3 class="col-lg-1 text-muted"><%=size%>px</h3>
                                 <% files[:variants].each do |file| %>
                                     <div class="col-lg-3">
-										<a href="<%= path %><%= file[:filename] %>">
-										<img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
+                                        <a href="<%=file[:filename]%>">
+                                            <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
                                         </a>
                                         <p class="text-center"><%=file[:name]%></p>
                                     </div>
                                 <% end %>
                                 <div class="col-lg-3">
                                     <% if files[:diff] %>
-										<a href="<%= path %><%= files[:diff][:filename] %>">
-										<img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
+                                        <a href="<%=files[:diff][:filename]%>">
+                                            <img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
                                         </a>
                                     <% end %>
                                     <p class="text-center">diff</p>

@@ -18,7 +18,7 @@ class Wraith::FolderManager
 
   def spider_paths
     if !paths
-      paths = File.read('spider.txt')
+      paths = File.read(wraith.spider_file)
       eval(paths)
     else
       wraith.paths
@@ -31,9 +31,10 @@ class Wraith::FolderManager
   end
 
   def create_folders
-    spider_paths.each do |folder_label, path| 
+    spider_paths.each do |folder_label, path|
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
       FileUtils.mkdir("#{dir}/#{folder_label}")
     end
+    puts 'Creating Folders'
   end
 end

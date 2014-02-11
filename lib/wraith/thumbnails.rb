@@ -12,5 +12,6 @@ class Wraith::Thumbnails
       new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
       wraith.thumbnail_image(filename, new_name)
     end
+    puts 'Generating thumbnails'
   end
 end

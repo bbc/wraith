@@ -2,11 +2,10 @@ require 'wraith'
 require 'image_size'
 
 class Wraith::CropImages
-  attr_reader :dir
+  attr_reader :wraith
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
-    @dir = @wraith.directory
   end
 
   def crop
@@ -26,7 +25,7 @@ class Wraith::CropImages
   end
 
   def crop_images
-    files = Dir.glob("#{dir}/*/*.png").sort
+    files = Dir.glob("#{wraith.directory}/*/*.png").sort
     until files.empty?
       @base, @compare = files.slice!(0, 2)
       puts 'cropping images'
