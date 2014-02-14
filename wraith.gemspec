@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "wraith"
   spec.version       = Wraith::VERSION
   spec.authors       = ["Dave Blooman", "Simon Thulbourn"]
-  spec.email         = ["david.blooman+wraith@gmail.com", "simon+github@thulbourn.com"]
+  spec.email         = ["david.blooman@gmail.com", "simon+github@thulbourn.com"]
   spec.summary       = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.description   = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.homepage      = "http://responsivenews.co.uk"
@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "nokogiri"
   spec.add_runtime_dependency "log4r"
   spec.add_runtime_dependency "os"
+  spec.add_runtime_dependency "thor"
 end

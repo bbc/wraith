@@ -49,6 +49,10 @@ class Wraith::Wraith
   def comp_domain_label
     domains.keys[1]
   end
+  
+  def spider_file
+    @config['spider_file'] ? @config['spider_file'] : 'spider.txt'
+  end
 
   def spider_days
     @config['spider_days']

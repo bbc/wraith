@@ -4,7 +4,7 @@ browser:
   # gecko: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "lib/wraith/javascript/snap.js"
+snap_file: "javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory:
@@ -38,12 +38,6 @@ paths:
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
 
-#Set the filename of the spider file to use, if not specified it will fallback to spider.txt
-# spider_file: bbc_co_uk_spider.txt
-
 #Set the number of days to keep the site spider file
 spider_days:
   - 10
-
-#Logging
-#log_directory: '/var/log/wraith'

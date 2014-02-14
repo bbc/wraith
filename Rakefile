@@ -7,6 +7,8 @@ require 'wraith/spider'
 require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
+require 'wraith/images'
+require 'wraith/gallery'
 
 @config = ('config')
 
@@ -16,7 +18,7 @@ task :config, [:yaml] do |t, custom|
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
@@ -50,13 +52,18 @@ task :crop_images do
   crop.crop_images
 end
 
+task :check_images do
+  image = Wraith::Images.new(@config)
+  image.files
+end
+
 task :generate_thumbnails do
   thumbs = Wraith::Thumbnails.new(@config)
   thumbs.generate_thumbnails
 end
 
 task :generate_gallery do
-  gallery = Wraith::GalleryGenerator.new(@save_images.directory)
+  gallery = Wraith::GalleryGenerator.new(@config)
   gallery.generate_gallery
 end
 

@@ -1,3 +1,5 @@
+require "wraith/version"
+
 module Wraith
   require 'wraith/wraith_logger'
   require 'wraith/save_images'
@@ -6,7 +8,7 @@ module Wraith
   require 'wraith/folder'
   require 'wraith/thumbnails'
   require 'wraith/compare_images'
-  require 'wraith/gallery_generator'
+  require 'wraith/gallery'
   require 'wraith/command_line_image_tool'
 
   autoload :Environment, 'wraith/environment'

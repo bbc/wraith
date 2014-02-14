@@ -15,7 +15,7 @@ class Wraith::SaveImages
 
   def check_paths
     if !wraith.paths
-      path = File.read('spider.txt')
+      path = File.read(wraith.spider_file)
       eval(path)
     else
       wraith.paths

@@ -1,38 +1,13 @@
 #!/usr/bin/env ruby
-
-Signal.trap("INT") { exit 1 }
-
-# Split arguments by "--" if its there, we'll recombine them later
-argv = ARGV.dup
-argv_extra = []
-if idx = argv.index("--")
-  argv_extra = argv.slice(idx+1, argv.length-2)
-  argv = argv.slice(0, idx)
-end
-
-# Find out if we're meant to be in debug mode
-if argv.include?('--debug')
-  argv.delete('--debug')
-  ENV['WRAITH_LOG'] = 'debug'
-end
-
-require 'log4r'
-require 'wraith'
-
-logger = Log4r::Logger.new('wraith::bin::wraith')
-logger.info("`wraith` started with: #{ARGV.inspect}")
-
-# stdout/stderr should not buffer output
-$stdout.sync = true
-$stderr.sync = true
+require 'rubygems'
+require 'bundler/setup'
 
 begin
-  env = Wraith::Environment.new
-  cli = env.cli(argv)
-
-# rescue Wraith::Error::WraithError => e
-rescue => e
-  logger.error('Wraith could not start')
-  logger.error(e.inspect)
-  logger.error(e.message)
+  require 'wraith/cli'
+  Wraith::CLI.start
+rescue Interrupt => e
+  puts "\nQuitting..."
+  exit 1
+rescue SystemExit => e
+  exit e.status
 end
