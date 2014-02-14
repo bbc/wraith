@@ -25,13 +25,13 @@ class Wraith::CLI < Thor
     template('assets/invalid.jpg', 'assets/invalid.jpg')
   end
 
-  desc "reset_shots", "removes all the files in the shots folder"
+  desc "reset_shots [config_name]", "removes all the files in the shots folder"
   def reset_shots(config_name)
     reset = Wraith::FolderManager.new(config_name)
     reset.clear_shots_folder
   end
 
-  desc "folders", "create folders for images"
+  desc "folders [config_name]", "create folders for images"
   def setup_folders(config_name)
     create = Wraith::FolderManager.new(config_name)
     create.create_folders
@@ -49,38 +49,38 @@ class Wraith::CLI < Thor
     end
   end
 
-  desc "save_images", "captures screenshots"
+  desc "save_images [config_name]", "captures screenshots"
   def save_images(config_name)
     save_images = Wraith::SaveImages.new(config_name)
     save_images.save_images
   end
 
-  desc "crop_images", "crops images to the same height"
+  desc "crop_images [config_name]", "crops images to the same height"
   def crop_images(config_name)
     crop = Wraith::CropImages.new(config_name)
     crop.crop_images
   end
 
-  desc "compare_images", "compares images to generate diffs"
+  desc "compare_images [config_name]", "compares images to generate diffs"
   def compare_images(config_name)
     compare = Wraith::CompareImages.new(config_name)
     compare.compare_images
   end
 
-  desc "generate_thumbnails", "create thumbnails for gallery"
+  desc "generate_thumbnails [config_name]", "create thumbnails for gallery"
   def generate_thumbnails(config_name)
     thumbs = Wraith::Thumbnails.new(config_name)
     thumbs.generate_thumbnails
   end
 
-  desc "generate_gallery", "create page for viewing images"
+  desc "generate_gallery [config_name]", "create page for viewing images"
   def generate_gallery(config_name)
     gallery = Wraith::GalleryGenerator.new(config_name)
     gallery.generate_gallery
     puts "Gallery generated"
   end
 
-  desc "capture config_name", "A full Wraith job"
+  desc "capture [config_name]", "A full Wraith job"
   def capture(config)
     reset_shots(config)
     check_for_paths(config)
