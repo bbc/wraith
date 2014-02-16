@@ -18,7 +18,7 @@ class Wraith::GalleryGenerator
   end
 
   def parse_directories(dirname)
-    dirs = {}
+    @dirs = {}
     categories = Dir.foreach(dirname).select do |category|
       if ['.', '..', 'thumbnails'].include? category
         # Ignore special dirs
@@ -30,9 +30,12 @@ class Wraith::GalleryGenerator
         false
       end
     end
+    match(categories, dirname)
+  end
 
+  def match(categories, dirname)
     categories.each do |category|
-      dirs[category] = {}
+      @dirs[category] = {}
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
         if !match.nil?
@@ -41,10 +44,10 @@ class Wraith::GalleryGenerator
           filepath = category + "/" + filename
           thumbnail = "thumbnails/#{category}/#{filename}"
 
-          unless !dirs[category][size].nil?
-            dirs[category][size] = { variants: [] }
+          unless !@dirs[category][size].nil?
+            @dirs[category][size] = { variants: [] }
           end
-          size_dict = dirs[category][size]
+          size_dict = @dirs[category][size]
 
           case group
           when 'diff'
@@ -65,7 +68,7 @@ class Wraith::GalleryGenerator
         end
       end
     end
-   dirs
+   @dirs
   end
 
   def generate_html(location, directories, template, destination, path)
