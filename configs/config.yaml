@@ -32,8 +32,8 @@ paths:
 # collection as follows, and names will be derived by replacing / with _
 #
 # paths:
-#  - /imghp
-#  - /maps
+#  - /
+#  - /uk
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'

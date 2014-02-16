@@ -2,8 +2,6 @@ require 'wraith'
 require 'anemone'
 require 'uri'
 
-require 'wraith/wraith'
-
 class Wraith::Spidering
   attr_reader :wraith
 

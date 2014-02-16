@@ -22,7 +22,6 @@ class Wraith::CLI < Thor
   def setup
     template('configs/config.yaml', 'configs/config.yaml')
     template('javascript/snap.js', 'javascript/snap.js')
-    template('assets/invalid.jpg', 'assets/invalid.jpg')
   end
 
   desc "reset_shots", "removes all the files in the shots folder"
