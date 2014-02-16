@@ -17,7 +17,7 @@ class Wraith::FolderManager
 
   def spider_paths
     if !paths
-      paths = File.read('spider.txt')
+      paths = File.read(wraith.spider_file)
       eval(paths)
     else
       wraith.paths

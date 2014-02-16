@@ -1,4 +1,4 @@
-# Wraith 
+# Wraith
 
 [![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
 [![Code Climate](https://codeclimate.com/github/BBC-News/wraith.png)](https://codeclimate.com/github/BBC-News/wraith)
@@ -22,7 +22,7 @@ diff](http://bbc-news.github.io/wraith/img/320_diff.png)
 
 ## Requirements
 
-To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html) 
+To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
 
 ## Installation
 
@@ -31,34 +31,34 @@ Open terminal and run
     gem install wraith
 
 You can then run the following to create a template snap.js and config file:
-    
+
     wraith setup
 
-Alternatively you can clone the repo.    
-    
+Alternatively you can clone the repo.
+
     git clone https://github.com/BBC-News/wraith
     cd wraith
-    bundle install    
+    bundle install
 
 ## Using Wraith
-You can type `wraith` into terminal to bring up the list of commands, but the one to start Wraith is 
+You can type `wraith` into terminal to bring up the list of commands, but the one to start Wraith is
 
 ```sh
 wraith capture config_name
 ```
 
-This assumes that your snap.js and config.yaml are in the folders that were created on setup.  There are other commands also available, these all expect a config_name to be passed as an option.  
+This assumes that your snap.js and config.yaml are in the folders that were created on setup. There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.
 
 ```sh
-  wraith capture config_name  # A full Wraith job
-  wraith compare_images       # compares images to generate diffs
-  wraith crop_images          # crops images to the same height
-  wraith folders              # create folders for images
-  wraith generate_gallery     # create page for viewing images
-  wraith generate_thumbnails  # create thumbnails for gallery
-  wraith reset_shots          # removes all the files in the shots folder
-  wraith save_images          # captures screenshots
-  wraith setup                # creates config folder and default config
+  wraith capture config_name             # A full Wraith job
+  wraith compare_images config_name      # compares images to generate diffs
+  wraith crop_images config_name         # crops images to the same height
+  wraith folders config_name             # create folders for images
+  wraith generate_gallery config_name    # create page for viewing images
+  wraith generate_thumbnails config_name # create thumbnails for gallery
+  wraith reset_shots config_name         # removes all the files in the shots folder
+  wraith save_images config_name         # captures screenshots
+  wraith setup                           # creates config folder and default config
 ```
 
 ## Output
@@ -83,12 +83,12 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Changelog - updated 2014-02-09
+## Changelog - updated 2014-02-09
 We have released Wraith as a Ruby Gem!!  There is a new CLI to better interact with Wraith and it's commands.
 
 ## License
 
-Wraith is available to everyone under the terms of the Apache 2.0 open source license. 
+Wraith is available to everyone under the terms of the Apache 2.0 open source license.
 Take a look at the LICENSE file in the code.
 
 ## Credits
