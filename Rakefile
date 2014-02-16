@@ -12,6 +12,7 @@ require 'wraith/gallery'
 
 @config = ('config')
 
+desc "Execute wraith on two sites with a config you specify"
 task :config, [:yaml] do |t, custom|
   custom.with_defaults(:yaml => "config")
   @config = "#{custom[:yaml]}"
@@ -67,12 +68,14 @@ task :generate_gallery do
   gallery.generate_gallery
 end
 
+desc "Execute wraith on a single site, no image diffs, with a config you specify"
 task :grabber, [:yaml] do |t, custom|
   custom.with_defaults(:yaml => "config")
   @config = "#{custom[:yaml]}"
   Rake::Task["grab"].invoke
 end
 
+desc "Execute wraith on a single site, no image diffs"
 task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
