@@ -9,14 +9,13 @@ class Wraith::Logger
 
   def initialize(name='wraith')
 
+    @logger = Log4r::Logger.new(name)
+    @name = name
+
     if File.exist? LOGGER_CONFIG_FILE_PATH
       config = Log4r::YamlConfigurator
       config.load_yaml_file(LOGGER_CONFIG_FILE_PATH)
     end
-
-    @logger = Log4r::Logger.new(name)
-    @name = name
-
 
 #    set_runtime_level
   end
