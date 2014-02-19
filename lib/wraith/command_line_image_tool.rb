@@ -3,7 +3,7 @@ require 'wraith/wraith_logger'
 class Wraith::CommandLineImageTool
 
   def initialize(phantomjs_options, snap_file, fuzz)
-    @logger = Wraith::Logger.new('wraith_image_tool')
+    @logger = Wraith::Logger.new('wraith')
     @phantomjs_options = phantomjs_options
     @snap_file = snap_file
     @fuzz = fuzz

@@ -5,21 +5,24 @@ require 'log4r/yamlconfigurator'
 
 class Wraith::Logger
 
-  LOGGER_CONFIG_FILE_PATH = 'config/wraith_logger.yaml'
+  LOGGER_CONFIG_FILE_PATH = 'configs/wraith_logger.yaml'
 
   def initialize(name='wraith')
-    @logger = Log4r::Logger.new(name)
 
     if File.exist? LOGGER_CONFIG_FILE_PATH
-      config = YamlConfigurator
+      config = Log4r::YamlConfigurator
       config.load_yaml_file(LOGGER_CONFIG_FILE_PATH)
     end
 
-    set_runtime_level
+    @logger = Log4r::Logger.new(name)
+    @name = name
+
+
+#    set_runtime_level
   end
 
   def method_missing(method, *args, &block)
-    @logger.send(method, *args, &block)
+    Log4r::Logger.get(@name).send(method, *args, &block)
   end
 
 
@@ -31,11 +34,12 @@ class Wraith::Logger
 
       begin
         level = Log4r.const_get(ENV["WRAITH_LOG"].upcase)
+        @logger.level = level
       rescue NameError
         $stderr.puts "Invalid WRAITH_LOG: #{ENV['WRAITH_LOG']}"
         exit 1
       end
-      @logger.level = level
+
     end
 
   end
