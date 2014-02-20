@@ -56,7 +56,8 @@ class Wraith::Wraith
   end
 
   def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    width, height = width.split('x')
+    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}" "#{height}"`
   end
 
   def compare_images(base, compare, output, info)

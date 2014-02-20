@@ -29,10 +29,15 @@ domains:
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
-  - 320
-  - 768
-  - 1024
-  - 1280
+  - 1440x900
+  - 1280x1024
+  - 1024x768
+  - 768x1024
+  - 320x480
+#  - 320
+#  - 768
+#  - 1024
+#  - 1280
 
 #Type page URL paths below, here are a couple of examples
 paths:
@@ -59,5 +64,5 @@ fuzz: '20%'
 spider_days:
   - 10
 
-#Tell PhantomJS to ignore SSL errors: 
+#Tell PhantomJS to ignore SSL errors:
 phantomjs_options: "--ignore-ssl-errors=true"
