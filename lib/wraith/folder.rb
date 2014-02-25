@@ -28,13 +28,13 @@ class Wraith::FolderManager
 
   def clear_shots_folder
     FileUtils.rm_rf("./#{dir}")
-    FileUtils.mkdir("#{dir}")
+    FileUtils.mkdir_p("#{dir}")
   end
 
   def create_folders
     spider_paths.each do |folder_label, path|
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
-      FileUtils.mkdir("#{dir}/#{folder_label}")
+      FileUtils.mkdir_p("#{dir}/#{folder_label}")
     end
     @logger.debug 'Creating Folders'
   end
