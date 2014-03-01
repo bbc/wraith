@@ -13,8 +13,8 @@ class Wraith::Difference
     until files.empty?
       array = []
       array = files.slice!(0, 4)
-      @txt = array[0]
-      image = array[1]
+      @txt = array.grep(/^*.txt/).first
+      image = array.grep(/^*.png/).first
       find_size(image)
       percentage
     end
@@ -24,6 +24,7 @@ class Wraith::Difference
     file = File.open(@txt, 'r+')
     change = file.read.to_i
     file.close
+    puts change
     pixel_count = (change / (@height * @width.to_f)) * 100
     rounded = pixel_count.round(2)
     file = File.open(@txt, 'w')
