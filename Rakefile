@@ -9,7 +9,6 @@ require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
 require 'wraith/gallery'
-require 'wraith/difference'
 
 @config = ('config')
 
@@ -60,7 +59,7 @@ task :check_images do
 end
 
 task :check_difference do
-  diff = Wraith::Difference.new(@config_name)
+  diff = Wraith::CompareImages.new(@config)
   diff.difference
 end
 

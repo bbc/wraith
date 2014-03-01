@@ -8,7 +8,6 @@ require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
 require 'wraith/gallery'
-require 'wraith/difference'
 
 class Wraith::CLI < Thor
   include Thor::Actions
@@ -49,7 +48,7 @@ class Wraith::CLI < Thor
     end
 
     def percentage(config_name)
-      diff = Wraith::Difference.new(config_name)
+      diff = Wraith::CompareImages.new(config_name)
       diff.difference
     end
   end
