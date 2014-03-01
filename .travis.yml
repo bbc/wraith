@@ -3,7 +3,7 @@ rvm:
   - "1.9.2"
   - "2.0.0"
 
-script: "./bin/wraith capture config"
+script: "./bin/wraith capture test_config"
 
 notifications:
   email:
