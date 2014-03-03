@@ -22,9 +22,9 @@ class Wraith::CompareImages
   def difference
     files = Dir.glob("#{wraith.directory}/*/*.*").sort
     until files.empty?
-      array = files.slice!(0, 4)
-      @txt = array.grep(/^*.txt/).first
-      image = array.grep(/^*.png/).first
+      search = files.slice!(0, 4)
+      @txt = search.grep(/^*.txt/).first
+      image = search.grep(/^*.png/).first
       find_size(image)
       percentage
     end
