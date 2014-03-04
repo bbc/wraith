@@ -17,7 +17,7 @@ task :config, [:yaml] do |t, custom|
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery, :build_history] do
   puts 'Done!';
 end
 
@@ -62,7 +62,19 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
+  @save_images = Wraith::SaveImages.new(@config)
   sh "ruby lib/wraith/gallery.rb #{@save_images.directory}"
+end
+ 
+task :build_history do
+  dir_name = "snap_history/#{Time.now.strftime("%F-%H%M%S")}"
+  FileUtils.mkdir_p(dir_name, :verbose => true) unless Dir.exists?(dir_name) 
+  @save_images = Wraith::SaveImages.new(@config)
+  FileUtils.cp_r "#{@save_images.directory}/.", dir_name, :noop => false, :verbose => true
+  # Want to generate a page that links to all galleries inside snap_history folder
+  # Step 1 - Iterate all directories under snap_history and get dir name
+  # Step 2 - For each dir, create a html snippet for a link tag to dir name / gallery.html
+  # Step 3 - Combine all snippets, stuff into an index.html inside snap_history
 end
 
 task :grabber, [:yaml] do |t, custom|
@@ -71,6 +83,6 @@ task :grabber, [:yaml] do |t, custom|
   Rake::Task["grab"].invoke
 end
 
-task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
+task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery, :build_history] do
   puts 'Done!';
 end
