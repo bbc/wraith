@@ -2,7 +2,6 @@ require 'wraith'
 
 class Wraith::FolderManager
   attr_reader :wraith
-  attr_accessor :paths
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
@@ -33,6 +32,11 @@ class Wraith::FolderManager
 
   def create_folders
     spider_paths.each do |folder_label, path|
+      if !path
+        path = folder_label 
+        folder_label = path.gsub('/', '_') 
+      end
+
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
       FileUtils.mkdir_p("#{dir}/#{folder_label}")
     end
