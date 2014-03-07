@@ -1,9 +1,7 @@
 require 'wraith'
-require 'wraith/wraith'
 
 class Wraith::SaveImages
   attr_reader :wraith
-  attr_accessor :paths, :labels
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
@@ -19,18 +17,6 @@ class Wraith::SaveImages
       eval(path)
     else
       wraith.paths
-    end
-  end
-
-  def labels_paths
-    check_paths.each do |label, path|
-      if !path
-        path = label
-        label = path.gsub('/', '_')
-      else
-        path
-        label
-      end
     end
   end
 
@@ -51,7 +37,12 @@ class Wraith::SaveImages
   end
 
   def save_images
-    labels_paths.each do |label, path|
+    check_paths.each do |label, path|
+      if !path
+        path = label 
+        label = path.gsub('/', '_') 
+      end
+
       base_url = base_urls(path)
       compare_url = compare_urls(path)
 
