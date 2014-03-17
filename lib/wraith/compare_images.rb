@@ -14,20 +14,22 @@ class Wraith::CompareImages
       base, compare = files.slice!(0, 2)
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
-      wraith.compare_images(base, compare, diff, info)
+      puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
       puts 'Saved diff'
+      difference(info)
     end
   end
 
-  def difference
-    files = Dir.glob("#{wraith.directory}/*/*.*").sort
-    until files.empty?
-      search = files.slice!(0, 4)
-      @txt = search.grep(/^*.txt/).first
-      image = search.grep(/^*.png/).first
-      find_size(image)
-      percentage
-    end
+  def difference(info)
+    puts "this is #{info}"
+    # files = Dir.glob("#{wraith.directory}/*/*.*").sort
+    # until files.empty?
+    #   search = files.slice!(0, 4)
+    #   @txt = search.grep(/^*.txt/).first
+    #   image = search.grep(/^*.png/).first
+    #   find_size(image)
+    #   percentage
+    # end
   end
 
   def percentage

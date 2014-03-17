@@ -18,7 +18,7 @@ task :config, [:yaml] do |t, custom|
   Rake::Task["default"].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :check_difference, :generate_thumbnails, :generate_gallery] do
+task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
 
