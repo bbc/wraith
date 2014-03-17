@@ -6,7 +6,11 @@ class Wraith::Wraith
 
   def initialize(config_name)
     @logger = Wraith::Logger.new
-    @config = YAML::load(File.open("configs/#{config_name}.yaml"))
+    if File.exists? config_name
+      @config = YAML::load(File.open(config_name))
+    else
+      @config = YAML::load(File.open("configs/#{config_name}.yaml"))
+    end
     @image_tool = Wraith::CommandLineImageTool.new(phantomjs_options, snap_file, fuzz)
   end
 
