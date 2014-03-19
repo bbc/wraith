@@ -73,7 +73,7 @@ class Wraith::CLI < Thor
   end
 
   desc "archive", "create archive"
-  def achive(config_name)
+  def archive(config_name)
     create_archive = Wraith::FolderManager.new(config_name)
     create_archive.archive
   end

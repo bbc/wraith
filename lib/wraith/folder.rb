@@ -27,7 +27,7 @@ class Wraith::FolderManager
   def archive
     archive_dir = "#{dir}_archive/#{Time.now.strftime("%F-%H%M%S")}"
     FileUtils.mkdir_p(archive_dir) unless Dir.exists?(archive_dir)
-    FileUtils.cp_r "#{dir.directory}/.", archive_dir
+    FileUtils.cp_r "#{dir}/.", archive_dir
   end
 
   def clear_shots_folder
