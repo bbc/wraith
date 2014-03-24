@@ -72,6 +72,12 @@ class Wraith::CLI < Thor
     thumbs.generate_thumbnails
   end
 
+  desc "archive", "create archive"
+  def archive(config_name)
+    create_archive = Wraith::FolderManager.new(config_name)
+    create_archive.archive
+  end
+
   desc "generate_gallery [config_name]", "create page for viewing images"
   def generate_gallery(config_name)
     gallery = Wraith::GalleryGenerator.new(config_name)
