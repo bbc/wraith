@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require 'bundler/setup'
 
 begin
   require 'wraith/cli'
