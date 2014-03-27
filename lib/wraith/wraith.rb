@@ -18,6 +18,7 @@ class Wraith::Wraith
   end
 
   def snap_file
+    puts @snap_path
     file = @config['snap_file'] ? @config['snap_file'] : 'javascript/snap.js'
     File.expand_path(file, @snap_path)
   end
