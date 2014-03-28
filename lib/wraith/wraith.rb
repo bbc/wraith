@@ -11,7 +11,7 @@ class Wraith::Wraith
       @snap_path = File.expand_path(File.dirname("#{config_name}"))
     else
       @config = YAML::load(File.open("configs/#{config_name}.yaml"))
-      @snap_path = File.dirname(__FILE__)
+      @snap_path = ''
     end
     @image_tool = Wraith::CommandLineImageTool.new(phantomjs_options, snap_file, fuzz)
   end
@@ -29,8 +29,8 @@ class Wraith::Wraith
   end
 
   def snap_file
-    file = @config['snap_file'] ? @config['snap_file'] : 'javascript/snap.js'
-    File.expand_path(file, @snap_path)
+    default_snap = File.expand_path('javascript/snap.js', File.dirname(__FILE__))
+    return @config['snap_file'] ? File.expand_path(@config['snap_file'], @snap_path) : default_snap
   end
 
   def widths
