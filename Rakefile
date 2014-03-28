@@ -56,6 +56,7 @@ end
 task :check_images do
   image = Wraith::Images.new(@config)
   image.files
+  image.even_images
 end
 
 task :generate_thumbnails do
