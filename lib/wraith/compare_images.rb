@@ -1,6 +1,7 @@
 require 'wraith'
 require 'image_size'
 require 'open3'
+require 'parallel'
 
 class Wraith::CompareImages
   attr_reader :wraith
@@ -11,8 +12,7 @@ class Wraith::CompareImages
 
   def compare_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
-    until files.empty?
-      base, compare = files.slice!(0, 2)
+    Parallel.each(files.each_slice(2)) do |base, compare|
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
       compare_task(base, compare, diff, info)
