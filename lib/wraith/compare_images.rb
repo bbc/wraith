@@ -12,7 +12,7 @@ class Wraith::CompareImages
 
   def compare_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
-    Parallel.each(files.each_slice(2)) do |base, compare|
+    Parallel.each(files.each_slice(2), :in_processes => 8) do |base, compare|
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
       compare_task(base, compare, diff, info)

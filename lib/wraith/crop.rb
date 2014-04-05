@@ -28,7 +28,7 @@ class Wraith::CropImages
   def crop_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
-    Parallel.each(files.each_slice(2)) do |base, compare|
+    Parallel.each(files.each_slice(2), :in_processes => 8) do |base, compare|
       puts 'cropping images'
       Wraith::Wraith.crop_images(crop(base, compare), height(base, compare))
     end

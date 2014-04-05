@@ -53,7 +53,7 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs) do |label, path, width, base_url, compare_url|
+    Parallel.each(jobs, :in_processes => 8) do |label, path, width, base_url, compare_url|
       base_file_name    = file_names(width, label, wraith.base_domain_label)
       compare_file_name = file_names(width, label, wraith.comp_domain_label)
 
