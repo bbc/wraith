@@ -38,7 +38,8 @@ class Wraith::SaveImages
   end
 
   def save_images
-    Parallel.map(check_paths, :in_processes=>8) do |label, path|
+    jobs = []
+    check_paths.each do |label, path|
       if !path
         path = label
         label = path.gsub('/', '_')
@@ -48,12 +49,21 @@ class Wraith::SaveImages
       compare_url = compare_urls(path)
 
       wraith.widths.each do |width|
-        base_file_name = file_names(width, label, wraith.base_domain_label)
+        base_file_name    = file_names(width, label, wraith.base_domain_label)
         compare_file_name = file_names(width, label, wraith.comp_domain_label)
 
-        wraith.capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
-        wraith.capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
+        jobs << [label, path, width, base_url,    base_file_name]
+        jobs << [label, path, width, compare_url, compare_file_name]
       end
+    end
+
+    Parallel.each(jobs, :in_processes => 16) do |label, path, width, url, filename|
+      wraith.capture_page_image engine, url, width, filename unless url.nil?
     end
   end
 end
+
+# class WraithParallel
+#
+#
+# end
