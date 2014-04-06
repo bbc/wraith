@@ -57,7 +57,7 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs, :in_processes => 8) do |label, path, width, url, filename|
+    Parallel.each(jobs, :in_processes => 16) do |label, path, width, url, filename|
       wraith.capture_page_image engine, url, width, filename unless url.nil?
     end
   end
