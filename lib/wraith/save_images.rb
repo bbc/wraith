@@ -12,6 +12,10 @@ class Wraith::SaveImages
     wraith.directory
   end
 
+  def threads
+    Parallel.processor_count
+  end
+
   def check_paths
     if !wraith.paths
       path = File.read(wraith.spider_file)
@@ -57,13 +61,15 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs, :in_processes => 16) do |label, path, width, url, filename|
+    Parallel.each(jobs, :in_processes => threads) do |label, path, width, url, filename|
       wraith.capture_page_image engine, url, width, filename unless url.nil?
+      check_completion(engine, url, width, filename)
+    end
+  end
+
+  def check_completion(engine, url, width, filename)
+    unless File.exist? filename
+      wraith.capture_page_image engine, url, width, filename
     end
   end
 end
-
-# class WraithParallel
-#
-#
-# end
