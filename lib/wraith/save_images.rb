@@ -37,6 +37,18 @@ class Wraith::SaveImages
     "#{directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 
+  def attempt_image_capture(width, url, filename, max_attempts)
+    max_attempts.times do |i|
+      wraith.capture_page_image engine, url, width, filename
+
+      return if File.exist? filename
+
+      puts "Failed to capture image #{filename} on attempt number #{i+1} of #{max_attempts}"
+    end
+
+    raise "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
+  end
+
   def save_images
     jobs = []
     check_paths.each do |label, path|
@@ -57,8 +69,14 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs, :in_processes => 16) do |label, path, width, url, filename|
-      wraith.capture_page_image engine, url, width, filename unless url.nil?
+    Parallel.each(jobs, :in_threads => 16) do |label, path, width, url, filename|
+      begin
+        attempt_image_capture(width, url, filename, 5)
+      rescue Exception => e
+        #TODO Use fallback image?
+
+        raise Parallel::Break
+      end
     end
   end
 end
