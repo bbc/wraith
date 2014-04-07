@@ -1,5 +1,6 @@
 require 'wraith'
 require 'image_size'
+require 'parallel'
 
 class Wraith::CropImages
   attr_reader :wraith
@@ -8,28 +9,28 @@ class Wraith::CropImages
     @wraith = Wraith::Wraith.new(config)
   end
 
-  def crop
-    crop_value(base_height, compare_height, @compare, @base)
+  def crop(base, compare)
+    crop_value(base_height(base), compare_height(compare), compare, base)
   end
 
-  def height
-    crop_value(base_height, compare_height, base_height, compare_height)
+  def height(base, compare)
+    crop_value(base_height(base), compare_height(compare), base_height(base), compare_height(compare))
   end
 
-  def base_height
-    find_heights(@base)
+  def base_height(base)
+    find_heights(base)
   end
 
-  def compare_height
-    find_heights(@compare)
+  def compare_height(compare)
+    find_heights(compare)
   end
 
   def crop_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
-    until files.empty?
-      @base, @compare = files.slice!(0, 2)
+
+    Parallel.each(files.each_slice(2), :in_processes => 8) do |base, compare|
       puts 'cropping images'
-      Wraith::Wraith.crop_images(crop, height)
+      Wraith::Wraith.crop_images(crop(base, compare), height(base, compare))
     end
   end
 

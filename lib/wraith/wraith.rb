@@ -1,4 +1,5 @@
 require 'yaml'
+require 'parallel'
 
 class Wraith::Wraith
   attr_accessor :config
