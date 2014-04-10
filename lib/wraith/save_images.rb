@@ -69,7 +69,7 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs, :in_threads => 16) do |label, path, width, url, filename|
+    Parallel.each(jobs, :in_threads => 8) do |label, path, width, url, filename|
       begin
         attempt_image_capture(width, url, filename, 5)
       rescue Exception => e
