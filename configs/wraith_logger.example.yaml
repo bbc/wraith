@@ -1,0 +1,13 @@
+log4r_config:
+  loggers:
+    - name      : "wraith"
+      level: DEBUG
+      outputters : 
+        - console
+
+  outputters:
+  - type: StdoutOutputter
+    name: console
+    formatter:
+      pattern     : '%d %l: %m '
+      type        : PatternFormatter

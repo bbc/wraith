@@ -6,6 +6,7 @@ class Wraith::CropImages
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def crop
@@ -28,8 +29,8 @@ class Wraith::CropImages
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
     until files.empty?
       @base, @compare = files.slice!(0, 2)
-      puts 'cropping images'
-      Wraith::Wraith.crop_images(crop, height)
+      @logger.debug 'cropping images'
+      @wraith.crop_images(crop, height)
     end
   end
 

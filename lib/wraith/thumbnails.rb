@@ -5,6 +5,7 @@ class Wraith::Thumbnails
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def generate_thumbnails
@@ -12,6 +13,6 @@ class Wraith::Thumbnails
       new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
       wraith.thumbnail_image(filename, new_name)
     end
-    puts 'Generating thumbnails'
+    @logger.debug 'Generating thumbnails'
   end
 end

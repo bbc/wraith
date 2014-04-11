@@ -8,9 +8,11 @@ require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
 require 'wraith/gallery'
+require 'wraith/wraith_logger'
 
 class Wraith::CLI < Thor
   include Thor::Actions
+
 
   attr_accessor :config_name
 

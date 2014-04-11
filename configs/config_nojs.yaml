@@ -4,7 +4,7 @@ browser:
   # gecko: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "javascript/nojs.js"
+snap_file: "lib/wraith/javascript/nojs.js"
 
 # Type the name of the directory that shots will be stored in
 directory:
@@ -41,3 +41,6 @@ fuzz: '20%'
 #Set the number of days to keep the site spider file
 spider_days:
   - 10
+
+#Logging
+#log_directory: '/var/log/wraith'

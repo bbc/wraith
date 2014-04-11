@@ -5,6 +5,7 @@ class Wraith::Images
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def files
@@ -13,7 +14,7 @@ class Wraith::Images
     files.each do |filename|
       if File.stat("#{filename}").size == 0
         FileUtils.cp invalid, filename
-        puts "#{filename} is invalid"
+        @logger.warn "#{filename} is invalid"
       end
     end
   end

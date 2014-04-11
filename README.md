@@ -61,6 +61,33 @@ This assumes that your snap.js and config.yaml are in the folders that were crea
   wraith setup                           # creates config folder and default config
 ```
 
+On Windows before running the rake command you will need to make a small edit to the wraith.rb file.
+Locate lines 60 and 70 and switch the commenting as described.
+
+
+### Using as a gem
+
+Install the gem as described above.
+Then:
+
+```ruby
+require 'wraith'
+
+def run_wraith
+	@config = ('config')
+	start = Wraith::CLI.new
+    start.capture(@config)
+end
+```
+
+##Logging
+[Log4r](http://log4r.rubyforge.org/) is used for logging.
+By default, all logs will be silent To switch on logging, create a file ```configs/wraith_logger.yaml``` with the Log4r configuration of your choice.
+You can see an example in the [wraith_logger.example.yaml](configs/wraith_logger.example.yaml)
+
+###Controlling logging when used as a gem
+The same applies as above. The location of the ```wraith_logger.yaml``` should be in your host app's ```configs``` directory
+
 ## Output
 
 After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.

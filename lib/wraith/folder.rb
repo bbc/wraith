@@ -5,6 +5,7 @@ class Wraith::FolderManager
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def dir
@@ -26,7 +27,7 @@ class Wraith::FolderManager
 
   def clear_shots_folder
     FileUtils.rm_rf("./#{dir}")
-    FileUtils.mkdir("#{dir}")
+    FileUtils.mkdir_p("#{dir}")
   end
 
   def create_folders
@@ -37,8 +38,8 @@ class Wraith::FolderManager
       end
 
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
-      FileUtils.mkdir("#{dir}/#{folder_label}")
+      FileUtils.mkdir_p("#{dir}/#{folder_label}")
     end
-    puts 'Creating Folders'
+    @logger.debug 'Creating Folders'
   end
 end

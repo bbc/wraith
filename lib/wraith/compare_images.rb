@@ -5,6 +5,7 @@ class Wraith::CompareImages
 
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
+    @logger = @wraith.logger
   end
 
   def compare_images
@@ -15,7 +16,7 @@ class Wraith::CompareImages
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
       wraith.compare_images(base, compare, diff, info)
       Dir.glob("#{wraith.directory}/*/*.txt").map { |f| "\n#{f}\n#{File.read(f)}" }
-      puts 'Saved diff'
+      @logger.debug 'Saved diff'
     end
   end
 end

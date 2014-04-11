@@ -1,25 +1,36 @@
 require 'yaml'
 
 class Wraith::Wraith
+
   attr_accessor :config
 
   def initialize(config_name)
+    @logger = Wraith::Logger.new
     if File.exists? config_name
       @config = YAML::load(File.open(config_name))
       @snap_path = File.expand_path(File.dirname("#{config_name}"))
     else
       @config = YAML::load(File.open("configs/#{config_name}.yaml"))
-      @snap_path = File.dirname(__FILE__)
+      @snap_path = ''
     end
+    @image_tool = Wraith::CommandLineImageTool.new(phantomjs_options, snap_file, fuzz)
+  end
+
+  def logger
+    @logger
   end
 
   def directory
     @config['directory'].first
   end
 
+  def phantomjs_options
+    @config['phantomjs_options']
+  end
+
   def snap_file
-    file = @config['snap_file'] ? @config['snap_file'] : 'javascript/snap.js'
-    File.expand_path(file, @snap_path)
+    default_snap = File.expand_path('javascript/snap.js', File.dirname(__FILE__))
+    return @config['snap_file'] ? File.expand_path(@config['snap_file'], @snap_path) : default_snap
   end
 
   def widths
@@ -67,26 +78,20 @@ class Wraith::Wraith
   end
 
   def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+    @image_tool.capture_page_image(browser, url, width, file_name)
   end
 
   def compare_images(base, compare, output, info)
-    puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
-  end
-
-  def self.crop_images(crop, height)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
-    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
+    @image_tool.compare_images(base, compare, output, info)
   end
 
   def crop_images(crop, height)
-    self.class.crop_images
+    @image_tool.crop_images(crop, height)
   end
 
   def thumbnail_image(png_path, output_path)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    @image_tool.thumbnail_image(png_path, output_path)
   end
+
+
 end
