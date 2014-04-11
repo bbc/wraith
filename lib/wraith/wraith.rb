@@ -1,4 +1,5 @@
 require 'yaml'
+require 'image_size'
 
 class Wraith::Wraith
   attr_accessor :config
@@ -66,12 +67,21 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
+  def percentage(pixel, info)
+    diff = File.read(info).to_f
+    pixel_count = (diff / pixel) * 100
+    rounded = pixel_count.round(2)
+    File.open(info, 'w') { |file| file.write(rounded) }
+  end
+
   def capture_page_image(browser, url, width, file_name)
     puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
   def compare_images(base, compare, output, info)
     puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
+    img_size = ImageSize.path(output).size.inject(:*)
+    percentage(img_size, info)
   end
 
   def self.crop_images(crop, height)
