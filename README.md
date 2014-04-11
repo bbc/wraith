@@ -53,7 +53,7 @@ This assumes that your snap.js and config.yaml are in the folders that were crea
   wraith capture config_name             # A full Wraith job
   wraith compare_images config_name      # compares images to generate diffs
   wraith crop_images config_name         # crops images to the same height
-  wraith folders config_name             # create folders for images
+  wraith setup_folders config_name       # create folders for images
   wraith generate_gallery config_name    # create page for viewing images
   wraith generate_thumbnails config_name # create thumbnails for gallery
   wraith reset_shots config_name         # removes all the files in the shots folder

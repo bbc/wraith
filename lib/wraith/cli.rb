@@ -30,7 +30,7 @@ class Wraith::CLI < Thor
     reset.clear_shots_folder
   end
 
-  desc "folders [config_name]", "create folders for images"
+  desc "setup_folders [config_name]", "create folders for images"
   def setup_folders(config_name)
     create = Wraith::FolderManager.new(config_name)
     create.create_folders
