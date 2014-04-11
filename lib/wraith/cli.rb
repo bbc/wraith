@@ -46,6 +46,11 @@ class Wraith::CLI < Thor
       image = Wraith::Images.new(config_name)
       image.files
     end
+
+    def percentage(config_name)
+      diff = Wraith::CompareImages.new(config_name)
+      diff.difference
+    end
   end
 
   desc "save_images [config_name]", "captures screenshots"
@@ -88,6 +93,7 @@ class Wraith::CLI < Thor
     check_images(config)
     crop_images(config)
     compare_images(config)
+    percentage(config)
     generate_thumbnails(config)
     generate_gallery(config)
   end

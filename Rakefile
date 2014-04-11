@@ -1,6 +1,5 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-require 'bundler/gem_tasks'
 require 'wraith/save_images'
 require 'wraith/crop'
 require 'wraith/spider'
@@ -56,6 +55,11 @@ end
 task :check_images do
   image = Wraith::Images.new(@config)
   image.files
+end
+
+task :check_difference do
+  diff = Wraith::CompareImages.new(@config)
+  diff.difference
 end
 
 task :generate_thumbnails do
