@@ -59,7 +59,7 @@ task :check_images do
 end
 
 task :generate_thumbnails do
-  thumbs = Wraith::Thumbnails.new(@config)
+  thumbs = Wraith::Images.new(@config)
   thumbs.generate_thumbnails
 end
 
