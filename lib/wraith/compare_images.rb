@@ -1,5 +1,6 @@
 require 'wraith/config'
 require 'image_size'
+require 'open3'
 
 class CompareImages
   attr_reader :wraith
@@ -28,8 +29,7 @@ class CompareImages
 
   def compare_task(base, compare, output, info)
     cmdline = "compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
-    capture = IO.popen(cmdline + " 2>&1", "w+")
-    px_value = capture.readlines.join('').to_f
+    px_value = Open3.popen3(cmdline) { |stdin, stdout, stderr, wait_thr| stderr.read }.to_f
     img_size = ImageSize.path(output).size.inject(:*)
     percentage(img_size, px_value, info)
   end
