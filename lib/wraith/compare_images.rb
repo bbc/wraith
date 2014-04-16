@@ -20,17 +20,17 @@ class CompareImages
     end
   end
 
-  def percentage(pixel, info)
-    diff = File.read(info).to_f
-    pixel_count = (diff / pixel) * 100
+  def percentage(img_size, px_value, info)
+    pixel_count = (px_value / img_size) * 100
     rounded = pixel_count.round(2)
     File.open(info, 'w') { |file| file.write(rounded) }
   end
 
   def compare_task(base, compare, output, info)
-    puts `compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
-    puts Dir.glob('**/*.png')
+    cmdline = "compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
+    capture = IO.popen(cmdline + " 2>&1", "w+")
+    px_value = capture.readlines.join('').to_f
     img_size = ImageSize.path(output).size.inject(:*)
-    percentage(img_size, info)
+    percentage(img_size, px_value, info)
   end
 end
