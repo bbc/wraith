@@ -12,8 +12,8 @@ directory:
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://pal.bbc.com/news"
-  russian: "http://pal.bbc.com/russian"
+  english: "http://pal.live/bbc.com/news"
+  russian: "http://pal.live.bbc.com/russian"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
