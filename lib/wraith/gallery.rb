@@ -13,7 +13,7 @@ class Wraith::GalleryGenerator
   BOOTSTRAP_LOCATION = File.expand_path('gallery_template/bootstrap.min.css', File.dirname(__FILE__))
 
   def initialize(config)
-    @wraith = WraithConfig.new(config)
+    @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
   end
 
