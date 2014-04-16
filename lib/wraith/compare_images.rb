@@ -15,8 +15,6 @@ class CompareImages
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
       compare_task(base, compare, diff, info)
-      img_size = ImageSize.path(diff).size.inject(:*)
-      percentage(img_size, info) if File.exists? info
       Dir.glob("#{wraith.directory}/*/*.txt").map { |f| "\n#{f}\n#{File.read(f)}" }
       puts 'Saved diff'
     end
@@ -31,5 +29,8 @@ class CompareImages
 
   def compare_task(base, compare, output, info)
     puts `compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
+    puts Dir.glob('**/*.png')
+    img_size = ImageSize.path(output).size.inject(:*)
+    percentage(img_size, info)
   end
 end
