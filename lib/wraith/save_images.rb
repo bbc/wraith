@@ -1,10 +1,10 @@
-require 'wraith'
+require 'wraith/config'
 
-class Wraith::SaveImages
+class SaveImages
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def directory
@@ -39,8 +39,8 @@ class Wraith::SaveImages
   def save_images
     check_paths.each do |label, path|
       if !path
-        path = label 
-        label = path.gsub('/', '_') 
+        path = label
+        label = path.gsub('/', '_')
       end
 
       base_url = base_urls(path)
@@ -49,10 +49,14 @@ class Wraith::SaveImages
       wraith.widths.each do |width|
         base_file_name = file_names(width, label, wraith.base_domain_label)
         compare_file_name = file_names(width, label, wraith.comp_domain_label)
-    
-        wraith.capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
-        wraith.capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
+
+        capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
+        capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
       end
     end
+  end
+
+  def capture_page_image(browser, url, width, file_name)
+    puts `"#{browser}" #{wraith.phantom_ops} "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 end

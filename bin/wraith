@@ -2,7 +2,7 @@
 
 begin
   require 'wraith/cli'
-  Wraith::CLI.start
+  CLI.start
 rescue Interrupt => e
   puts "\nQuitting..."
   exit 1

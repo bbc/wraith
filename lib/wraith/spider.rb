@@ -1,12 +1,12 @@
-require 'wraith'
+require 'wraith/config'
 require 'anemone'
 require 'uri'
 
-class Wraith::Spidering
+class Spidering
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def check_for_paths

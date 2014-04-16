@@ -1,5 +1,5 @@
 require 'rspec-given'
-require 'wraith'
+require 'wraith/config'
 require 'wraith_manager'
 
 describe Wraith do

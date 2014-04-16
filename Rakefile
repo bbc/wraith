@@ -24,47 +24,47 @@ task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_i
 end
 
 task :reset_shots_folder do
-  reset = Wraith::FolderManager.new(@config)
+  reset = FolderManager.new(@config)
   reset.clear_shots_folder
 end
 
 task :setup_folders do
-  create = Wraith::FolderManager.new(@config)
+  create = FolderManager.new(@config)
   create.create_folders
 end
 
 task :compare_images do
-  compare = Wraith::CompareImages.new(@config)
+  compare = CompareImages.new(@config)
   compare.compare_images
 end
 
 task :check_for_paths do
-  spider = Wraith::Spidering.new(@config)
+  spider = Spidering.new(@config)
   spider.check_for_paths
 end
 
 task :save_images do
-  @save_images = Wraith::SaveImages.new(@config)
-  @save_images.save_images
+  capture_images = SaveImages.new(@config)
+  capture_images.save_images
 end
 
 task :crop_images do
-  crop = Wraith::CropImages.new(@config)
+  crop = CropImages.new(@config)
   crop.crop_images
 end
 
 task :check_images do
-  image = Wraith::Images.new(@config)
+  image = Images.new(@config)
   image.files
 end
 
 task :generate_thumbnails do
-  thumbs = Wraith::Thumbnails.new(@config)
+  thumbs = Images.new(@config)
   thumbs.generate_thumbnails
 end
 
 task :generate_gallery do
-  gallery = Wraith::GalleryGenerator.new(@config)
+  gallery = GalleryGenerator.new(@config)
   gallery.generate_gallery
 end
 
