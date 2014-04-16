@@ -47,7 +47,7 @@ You can type `wraith` into terminal to bring up the list of commands, but the on
 wraith capture config_name
 ```
 
-This assumes that your snap.js and config.yaml are in the folders that were created on setup. There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  If you want to use a config from outside the setup folders, you can pass a path to a config where the config name would usually be set.  This will assume that the config and snap file are in the same directory.
+This assumes that your snap.js and config.yaml are in the folders that were created on setup. There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
 
 ```sh
   wraith capture config_name             # A full Wraith job
@@ -83,8 +83,8 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Changelog - updated 2014-04-16
-In this release we have changed the way the gallery shows the difference between images.  A long standing request for the percentage has been fulfilled and is now showing in the same place as the pixel difference used to be.  This release also includes some minor bug fixes that have been merged into master.
+## Changelog - updated 2014-02-09
+We have released Wraith as a Ruby Gem!!  There is a new CLI to better interact with Wraith and it's commands.
 
 ## License
 
