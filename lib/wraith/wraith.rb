@@ -70,10 +70,6 @@ class Wraith::Wraith
     puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 
-  def compare_images(base, compare, output, info)
-    puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
-  end
-
   def self.crop_images(crop, height)
     # For compatibility with windows file structures switch commenting on the following 2 lines
     puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
