@@ -13,9 +13,13 @@ class Wraith::CompareImages
       base, compare = files.slice!(0, 2)
       diff = base.gsub(/([a-z0-9]+).png$/, 'diff.png')
       info = base.gsub(/([a-z0-9]+).png$/, 'data.txt')
-      wraith.compare_images(base, compare, diff, info)
+      compare_task(base, compare, diff, info)
       Dir.glob("#{wraith.directory}/*/*.txt").map { |f| "\n#{f}\n#{File.read(f)}" }
       puts 'Saved diff'
     end
+  end
+
+  def compare_task(base, compare, output, info)
+    puts `compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
   end
 end

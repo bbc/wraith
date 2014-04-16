@@ -69,24 +69,4 @@ class Wraith::Config
   def phantom_ops
     @config['phantomjs_options']
   end
-
-  def compare_images(base, compare, output, info)
-    puts `compare -fuzz #{fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
-  end
-
-  def self.crop_images(crop, height)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
-    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
-  end
-
-  def crop_images(crop, height)
-    self.class.crop_images
-  end
-
-  def thumbnail_image(png_path, output_path)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-  end
 end
