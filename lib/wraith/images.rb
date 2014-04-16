@@ -1,10 +1,10 @@
 require 'wraith/config'
 
-class Wraith::Images
+class Images
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Config.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def files

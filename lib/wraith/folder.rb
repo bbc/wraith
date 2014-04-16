@@ -1,10 +1,10 @@
 require 'wraith/config'
 
-class Wraith::FolderManager
+class FolderManager
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Config.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def dir

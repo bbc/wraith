@@ -1,11 +1,11 @@
 require 'wraith/config'
 require 'image_size'
 
-class Wraith::CropImages
+class CropImages
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Config.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def crop

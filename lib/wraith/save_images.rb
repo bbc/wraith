@@ -1,10 +1,10 @@
 require 'wraith/config'
 
-class Wraith::SaveImages
+class SaveImages
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Config.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def directory

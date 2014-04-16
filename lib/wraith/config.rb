@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Wraith::Config
+class WraithConfig
   attr_accessor :config
 
   def initialize(config_name)

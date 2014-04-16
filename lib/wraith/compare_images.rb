@@ -1,11 +1,11 @@
 require 'wraith/config'
 require 'image_size'
 
-class Wraith::CompareImages
+class CompareImages
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Config.new(config)
+    @wraith = WraithConfig.new(config)
   end
 
   def compare_images
