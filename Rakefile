@@ -44,8 +44,8 @@ task :check_for_paths do
 end
 
 task :save_images do
-  @save_images = Wraith::SaveImages.new(@config)
-  @save_images.save_images
+  capture_images = Wraith::SaveImages.new(@config)
+  capture_images.save_images
 end
 
 task :crop_images do
@@ -59,7 +59,7 @@ task :check_images do
 end
 
 task :generate_thumbnails do
-  thumbs = Wraith::Thumbnails.new(@config)
+  thumbs = Wraith::Images.new(@config)
   thumbs.generate_thumbnails
 end
 
