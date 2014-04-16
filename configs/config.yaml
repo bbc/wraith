@@ -12,8 +12,8 @@ directory:
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://pal.live.bbc.com/news"
-  russian: "http://pal.live.bbc.com/russian"
+  english: "http://www.live.bbc.co.uk/news"
+  russian: "http://www.live.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
@@ -29,7 +29,7 @@ paths:
   uk_index: /uk
 
 # If you don't want to name the paths explicitly you can use a yaml
-# collection as follows, and nam§es will be derived by replacing / with _
+# collection as follows, and names will be derived by replacing / with _
 #
 # paths:
 #  - /
