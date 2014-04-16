@@ -21,6 +21,7 @@ class CompareImages
   end
 
   def percentage(pixel, info)
+    puts Dir.pwd
     diff = File.read(info).to_f
     pixel_count = (diff / pixel) * 100
     rounded = pixel_count.round(2)
