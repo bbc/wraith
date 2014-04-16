@@ -1,4 +1,6 @@
 require 'wraith'
+require 'image_size'
+require 'open3'
 
 class Wraith::CompareImages
   attr_reader :wraith
@@ -19,7 +21,16 @@ class Wraith::CompareImages
     end
   end
 
+  def percentage(img_size, px_value, info)
+    pixel_count = (px_value / img_size) * 100
+    rounded = pixel_count.round(2)
+    File.open(info, 'w') { |file| file.write(rounded) }
+  end
+
   def compare_task(base, compare, output, info)
-    puts `compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output} 2>#{info}`
+    cmdline = "compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
+    px_value = Open3.popen3(cmdline) { |stdin, stdout, stderr, wait_thr| stderr.read }.to_f
+    img_size = ImageSize.path(output).size.inject(:*)
+    percentage(img_size, px_value, info)
   end
 end
