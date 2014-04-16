@@ -1,7 +1,7 @@
 require 'erb'
 require 'pp'
 require 'fileutils'
-require 'wraith/wraith'
+require 'wraith/config'
 
 class Wraith::GalleryGenerator
   attr_reader :wraith
@@ -13,7 +13,7 @@ class Wraith::GalleryGenerator
   BOOTSTRAP_LOCATION = File.expand_path('gallery_template/bootstrap.min.css', File.dirname(__FILE__))
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = Wraith::Config.new(config)
     @location = wraith.directory
   end
 

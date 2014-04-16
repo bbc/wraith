@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Wraith::Wraith
+class Wraith::Config
   attr_accessor :config
 
   def initialize(config_name)
@@ -66,8 +66,8 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  def phantom_ops
+    @config['phantomjs_options']
   end
 
   def compare_images(base, compare, output, info)

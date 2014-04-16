@@ -4,7 +4,7 @@ class Wraith::Thumbnails
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = Wraith::Config.new(config)
   end
 
   def generate_thumbnails
