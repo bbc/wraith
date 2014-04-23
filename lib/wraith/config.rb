@@ -4,13 +4,7 @@ class Wraith::Config
   attr_accessor :config
 
   def initialize(config_name)
-    if File.exists? config_name
-      @config = YAML::load(File.open(config_name))
-      @snap_path = File.expand_path(File.dirname("#{config_name}"))
-    else
-      @config = YAML::load(File.open("configs/#{config_name}.yaml"))
-      @snap_path = File.dirname(__FILE__)
-    end
+    @config = YAML::load(File.open("configs/#{config_name}.yaml"))
   end
 
   def directory
@@ -18,8 +12,7 @@ class Wraith::Config
   end
 
   def snap_file
-    file = @config['snap_file'] ? @config['snap_file'] : 'javascript/snap.js'
-    File.expand_path(file, @snap_path)
+    @config['snap_file'] ? @config['snap_file'] : File.expand_path('lib/wraith/javascript/snap.js')
   end
 
   def widths
