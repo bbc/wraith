@@ -79,3 +79,13 @@ desc "Execute wraith on a single site, no image diffs"
 task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
   puts 'Done!';
 end
+
+task :comparer, [:yaml] do |t, custom|
+  custom.with_defaults(:yaml => "config")
+  @config = "#{custom[:yaml]}"
+  Rake::Task["compare"].invoke
+end
+
+task :compare => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+  puts 'Done!';
+end
