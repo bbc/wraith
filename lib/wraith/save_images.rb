@@ -73,9 +73,14 @@ class Wraith::SaveImages
       begin
         attempt_image_capture(width, url, filename, 5)
       rescue Exception => e
-        #TODO Use fallback image?
+        puts e
 
-        raise Parallel::Break
+        puts "Using fallback image instead"
+        invalid = File.expand_path('../../assets/invalid.jpg', File.dirname(__FILE__))
+        FileUtils.cp invalid, filename
+
+        # Set width of fallback image
+        wraith.set_image_width(filename, width)
       end
     end
   end

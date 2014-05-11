@@ -73,6 +73,12 @@ class Wraith::Wraith
     self.class.crop_images
   end
 
+  def set_image_width(image, width)
+    # For compatibility with windows file structures switch commenting on the following 2 lines
+    puts `convert #{image} -background none -extent #{width}x0 #{image}`
+    # puts `convert #{image.gsub('/', '\\')} -background none -extent #{width}x0 #{image.gsub('/', '\\')}`
+  end
+
   def thumbnail_image(png_path, output_path)
     # For compatibility with windows file structures switch commenting on the following 2 lines
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
