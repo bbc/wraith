@@ -1,6 +1,6 @@
 require 'yaml'
 
-class Wraith::Wraith
+class Wraith::Config
   attr_accessor :config
 
   def initialize(config_name)
@@ -59,23 +59,7 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
-  end
-
-  def self.crop_images(crop, height)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
-    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
-  end
-
-  def crop_images(crop, height)
-    self.class.crop_images
-  end
-
-  def thumbnail_image(png_path, output_path)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+  def phantom_ops
+    @config['phantomjs_options']
   end
 end

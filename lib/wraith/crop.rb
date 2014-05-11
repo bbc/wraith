@@ -5,7 +5,7 @@ class Wraith::CropImages
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = Wraith::Config.new(config)
   end
 
   def crop
@@ -29,7 +29,7 @@ class Wraith::CropImages
     until files.empty?
       @base, @compare = files.slice!(0, 2)
       puts 'cropping images'
-      Wraith::Wraith.crop_images(crop, height)
+      crop_task(crop, height)
     end
   end
 
@@ -46,5 +46,11 @@ class Wraith::CropImages
       size = ImageSize.new(fh.read).size
       height = size[1]
     end
+  end
+
+  def crop_task(crop, height)
+    # For compatibility with windows file structures switch commenting on the following 2 lines
+    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
+    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
   end
 end

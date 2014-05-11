@@ -4,7 +4,6 @@ require 'wraith/save_images'
 require 'wraith/crop'
 require 'wraith/spider'
 require 'wraith/folder'
-require 'wraith/thumbnails'
 require 'wraith/compare_images'
 require 'wraith/images'
 require 'wraith/gallery'
@@ -68,7 +67,7 @@ class Wraith::CLI < Thor
 
   desc "generate_thumbnails [config_name]", "create thumbnails for gallery"
   def generate_thumbnails(config_name)
-    thumbs = Wraith::Thumbnails.new(config_name)
+    thumbs = Wraith::Images.new(config_name)
     thumbs.generate_thumbnails
   end
 
