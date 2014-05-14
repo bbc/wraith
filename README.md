@@ -22,7 +22,7 @@ diff](http://bbc-news.github.io/wraith/img/320_diff.png)
 
 ## Requirements
 
-To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
+Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager.  To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
 
 ## Installation
 
@@ -83,8 +83,8 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Changelog - updated 2014-02-09
-We have released Wraith as a Ruby Gem!!  There is a new CLI to better interact with Wraith and it's commands.
+## Changelog - updated 2014-05-14
+We have updated Wraith some bug fixes and more importantly, parallel support.  This will now enable use of all your CPU cores for faster Wraith runs.  There is error handling in place to ensure if an image fails to capture, it will try again 5 times, if that fails, it will put an holding image in place.  This should solve all the issues with images not capturing and failing to crop/compare.  Big thanks to [Matt Senior](https://github.com/mattsenior) for doing the work.
 
 ## License
 
