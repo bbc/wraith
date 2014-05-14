@@ -1,4 +1,5 @@
 require 'wraith'
+require 'parallel'
 
 class Wraith::SaveImages
   attr_reader :wraith
@@ -36,22 +37,50 @@ class Wraith::SaveImages
     "#{directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 
+  def attempt_image_capture(width, url, filename, max_attempts)
+    max_attempts.times do |i|
+      wraith.capture_page_image engine, url, width, filename
+
+      return if File.exist? filename
+
+      puts "Failed to capture image #{filename} on attempt number #{i+1} of #{max_attempts}"
+    end
+
+    raise "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
+  end
+
   def save_images
+    jobs = []
     check_paths.each do |label, path|
       if !path
-        path = label 
-        label = path.gsub('/', '_') 
+        path = label
+        label = path.gsub('/', '_')
       end
 
       base_url = base_urls(path)
       compare_url = compare_urls(path)
 
       wraith.widths.each do |width|
-        base_file_name = file_names(width, label, wraith.base_domain_label)
+        base_file_name    = file_names(width, label, wraith.base_domain_label)
         compare_file_name = file_names(width, label, wraith.comp_domain_label)
-    
-        wraith.capture_page_image engine, base_url, width, base_file_name unless base_url.nil?
-        wraith.capture_page_image engine, compare_url, width, compare_file_name unless compare_url.nil?
+
+        jobs << [label, path, width, base_url,    base_file_name]
+        jobs << [label, path, width, compare_url, compare_file_name]
+      end
+    end
+
+    Parallel.each(jobs, :in_threads => 8) do |label, path, width, url, filename|
+      begin
+        attempt_image_capture(width, url, filename, 5)
+      rescue Exception => e
+        puts e
+
+        puts "Using fallback image instead"
+        invalid = File.expand_path('../../assets/invalid.jpg', File.dirname(__FILE__))
+        FileUtils.cp invalid, filename
+
+        # Set width of fallback image
+        wraith.set_image_width(filename, width)
       end
     end
   end
