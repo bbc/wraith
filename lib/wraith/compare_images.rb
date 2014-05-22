@@ -28,7 +28,7 @@ class Wraith::CompareImages
   end
 
   def compare_task(base, compare, output, info)
-    cmdline = "compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
+    cmdline = "compare -dissimilarity-threshold 1 -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
     px_value = Open3.popen3(cmdline) { |stdin, stdout, stderr, wait_thr| stderr.read }.to_f
     img_size = ImageSize.path(output).size.inject(:*)
     percentage(img_size, px_value, info)
