@@ -30,8 +30,11 @@ class Wraith::CompareImages
   def compare_task(base, compare, output, info)
     cmdline = "compare -fuzz #{wraith.fuzz} -metric AE -highlight-color blue #{base} #{compare} #{output}"
     px_value = Open3.popen3(cmdline) { |stdin, stdout, stderr, wait_thr| stderr.read }.to_f
-    return File.open(info, 'w') { |file| file.write("invalid") } unless File.exists?(output)
-    img_size = ImageSize.path(output).size.inject(:*)
-    percentage(img_size, px_value, info)
+    begin
+      img_size = ImageSize.path(output).size.inject(:*)
+      percentage(img_size, px_value, info)
+    rescue
+      File.open(info, 'w') { |file| file.write("invalid") } unless File.exists?(output)
+    end
   end
 end
