@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["david.blooman@gmail.com", "simon+github@thulbourn.com"]
   spec.summary       = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.description   = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
-  spec.homepage      = "http://responsivenews.co.uk"
+  spec.homepage      = "https://github.com/BBC-News/wraith"
   spec.license       = "Apache 2"
 
   spec.files         = `git ls-files`.split($/)
