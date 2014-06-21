@@ -12,7 +12,7 @@ class Wraith::CropImages
   def crop_images
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
-    Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
+    Parallel.each(files.each_slice(2), in_processes: Parallel.processor_count) do |base, compare|
       puts 'cropping images'
 
       base_height    = image_height(base)
@@ -33,7 +33,7 @@ class Wraith::CropImages
   def image_height(image)
     File.open(image, 'rb') do |fh|
       size = ImageSize.new(fh.read).size
-      height = size[1]
+      size[1]
     end
   end
 end

@@ -1,4 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'lib')
 
 require 'bundler/gem_tasks'
 require 'wraith/save_images'
@@ -12,15 +12,15 @@ require 'wraith/gallery'
 
 @config = ('config')
 
-desc "Execute wraith on two sites with a config you specify"
-task :config, [:yaml] do |t, custom|
-  custom.with_defaults(:yaml => "config")
+desc 'Execute wraith on two sites with a config you specify'
+task :config, [:yaml] do |_t, custom|
+  custom.with_defaults(yaml: 'config')
   @config = "#{custom[:yaml]}"
-  Rake::Task["default"].invoke
+  Rake::Task['default'].invoke
 end
 
-task :default => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
-  puts 'Done!';
+task default: [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :check_images, :crop_images, :compare_images, :generate_thumbnails, :generate_gallery] do
+  puts 'Done!'
 end
 
 task :reset_shots_folder do
@@ -68,14 +68,14 @@ task :generate_gallery do
   gallery.generate_gallery
 end
 
-desc "Execute wraith on a single site, no image diffs, with a config you specify"
-task :grabber, [:yaml] do |t, custom|
-  custom.with_defaults(:yaml => "config")
+desc 'Execute wraith on a single site, no image diffs, with a config you specify'
+task :grabber, [:yaml] do |_t, custom|
+  custom.with_defaults(yaml: 'config')
   @config = "#{custom[:yaml]}"
-  Rake::Task["grab"].invoke
+  Rake::Task['grab'].invoke
 end
 
-desc "Execute wraith on a single site, no image diffs"
-task :grab => [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
-  puts 'Done!';
+desc 'Execute wraith on a single site, no image diffs'
+task grab: [:reset_shots_folder, :check_for_paths, :setup_folders, :save_images, :generate_thumbnails, :generate_gallery] do
+  puts 'Done!'
 end

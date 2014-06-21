@@ -22,7 +22,7 @@ class Wraith::SaveImages
   end
 
   def engine
-    wraith.engine.each { |label, browser| return browser }
+    wraith.engine.each { |_label, browser| return browser }
   end
 
   def base_urls(path)
@@ -43,16 +43,16 @@ class Wraith::SaveImages
 
       return if File.exist? filename
 
-      puts "Failed to capture image #{filename} on attempt number #{i+1} of #{max_attempts}"
+      puts "Failed to capture image #{filename} on attempt number #{i + 1} of #{max_attempts}"
     end
 
-    raise "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
+    fail "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
   end
 
   def save_images
     jobs = []
     check_paths.each do |label, path|
-      if !path
+      unless path
         path = label
         label = path.gsub('/', '_')
       end
@@ -69,13 +69,13 @@ class Wraith::SaveImages
       end
     end
 
-    Parallel.each(jobs, :in_threads => 8) do |label, path, width, url, filename|
+    Parallel.each(jobs, in_threads: 8) do |_label, _path, width, url, filename|
       begin
         attempt_image_capture(width, url, filename, 5)
-      rescue Exception => e
+      rescue => e
         puts e
 
-        puts "Using fallback image instead"
+        puts 'Using fallback image instead'
         invalid = File.expand_path('../../assets/invalid.jpg', File.dirname(__FILE__))
         FileUtils.cp invalid, filename
 

@@ -13,7 +13,7 @@ class Wraith::Thumbnails
 
     files = Dir.glob("#{wraith.directory}/*/*.png")
 
-    Parallel.each(files, :in_processes => Parallel.processor_count) do |filename|
+    Parallel.each(files, in_processes: Parallel.processor_count) do |filename|
       new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
       wraith.thumbnail_image(filename, new_name)
     end
