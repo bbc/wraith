@@ -31,9 +31,9 @@ class Wraith::FolderManager
 
   def create_folders
     spider_paths.each do |folder_label, path|
-      if !path
-        path = folder_label 
-        folder_label = path.gsub('/', '_') 
+      unless path
+        path = folder_label
+        folder_label = path.gsub('/', '_')
       end
 
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")

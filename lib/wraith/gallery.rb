@@ -38,13 +38,13 @@ class Wraith::GalleryGenerator
       @dirs[category] = {}
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
-        if !match.nil?
+        unless match.nil?
           size = match[1].to_i
           group = match[2]
-          filepath = category + "/" + filename
+          filepath = category + '/' + filename
           thumbnail = "thumbnails/#{category}/#{filename}"
 
-          unless !@dirs[category][size].nil?
+          if @dirs[category][size].nil?
             @dirs[category][size] = { variants: [] }
           end
           size_dict = @dirs[category][size]
@@ -52,31 +52,31 @@ class Wraith::GalleryGenerator
           case group
           when 'diff'
             size_dict[:diff] = {
-                filename: filepath, thumb: thumbnail
+              filename: filepath, thumb: thumbnail
             }
           when 'data'
             size_dict[:data] = File.read("#{dirname}/#{filepath}")
           else
             size_dict[:variants] << {
-                name: group,
-                filename: filepath,
-                thumb: thumbnail
-              }
+              name: group,
+              filename: filepath,
+              thumb: thumbnail
+            }
 
           end
           size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
         end
       end
     end
-   @dirs
+    @dirs
   end
 
   def generate_html(location, directories, template, destination, path)
     template = File.read(template)
     locals = {
-        location: location,
-        directories: directories,
-        path: path
+      location: location,
+      directories: directories,
+      path: path
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, 'w') do |outf|
@@ -84,7 +84,7 @@ class Wraith::GalleryGenerator
     end
   end
 
-  def generate_gallery(withPath="")
+  def generate_gallery(withPath = '')
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
     generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, withPath)

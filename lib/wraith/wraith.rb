@@ -4,7 +4,7 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    @config = YAML::load(File.open("configs/#{config_name}.yaml"))
+    @config = YAML.load(File.open("configs/#{config_name}.yaml"))
   end
 
   def directory
@@ -69,7 +69,7 @@ class Wraith::Wraith
     # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
   end
 
-  def crop_images(crop, height)
+  def crop_images(_crop, _height)
     self.class.crop_images
   end
 
@@ -82,6 +82,6 @@ class Wraith::Wraith
   def thumbnail_image(png_path, output_path)
     # For compatibility with windows file structures switch commenting on the following 2 lines
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    #`convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    # `convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
 end
