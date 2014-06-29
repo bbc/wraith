@@ -47,6 +47,10 @@ class Wraith::Wraith
     @config['spider_days']
   end
 
+  def sitemap
+    @config['sitemap']
+  end
+
   def paths
     @config['paths']
   end
