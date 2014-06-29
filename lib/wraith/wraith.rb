@@ -51,6 +51,10 @@ class Wraith::Wraith
     @config['sitemap']
   end
 
+  def spider_skips
+    @config['spider_skips']
+  end
+
   def paths
     @config['paths']
   end
