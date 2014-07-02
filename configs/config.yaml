@@ -52,3 +52,9 @@ spider_days:
 # spider_skips:
 #   - /foo/bar.html # Matches /foo/bar.html explcitly
 #   - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz
+
+#Choose how results are displayed, by default alphanumeric. Different screen widths are always grouped.
+#alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
+#diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
+#diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+#mode: diffs_first

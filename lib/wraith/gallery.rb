@@ -55,7 +55,7 @@ class Wraith::GalleryGenerator
               filename: filepath, thumb: thumbnail
             }
           when 'data'
-            size_dict[:data] = File.read("#{dirname}/#{filepath}")
+            size_dict[:data] = File.read("#{dirname}/#{filepath}").to_f
           else
             size_dict[:variants] << {
               name: group,
@@ -67,8 +67,20 @@ class Wraith::GalleryGenerator
           size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
         end
       end
+      # If we are running in "diffs_only mode, and none of the variants show a difference
+      # we remove the file from the output
+      if wraith.mode == 'diffs_only' && @dirs[category].none? {|k, v| v[:data] > 0}
+        FileUtils.rm_rf("#{dirname}/#{category}")
+        @dirs.delete(category)
+      end
     end
-    @dirs
+    if [ 'diffs_only', 'diffs_first' ].include?(wraith.mode)
+      @sorted = @dirs.sort_by { |category, sizes| -1 * sizes.max_by { |size, dict| dict[:data]}[1][:data] }
+    else
+      @sorted = @dirs.sort_by { |category, sizes| category }
+    end
+    # The sort has made this into an enumerable, convert it back to a Hash
+    Hash[@sorted]
   end
 
   def generate_html(location, directories, template, destination, path)

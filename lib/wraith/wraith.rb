@@ -67,6 +67,14 @@ class Wraith::Wraith
     @config['fuzz']
   end
 
+  def mode
+    if ['diffs_only', 'diffs_first', 'alphanumeric'].include?(@config['mode'])
+      @config['mode']
+    else
+      'alphanumeric'
+    end
+  end
+
   def capture_page_image(browser, url, width, file_name)
     puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
