@@ -35,7 +35,7 @@ class Wraith::Spidering
   end
 
   def spider_base_domain
-    @spider_list = []
+    spider_list = []
     crawl_url = wraith.base_domain
     ext = %w(flv swf png jpg gif asx zip rar tar 7z \
              gz jar js css dtd xsd ico raw mp3 mp4 \
@@ -45,20 +45,13 @@ class Wraith::Spidering
 
     Anemone.crawl(crawl_url) do |anemone|
       anemone.skip_links_like(/\.#{ext.join('|')}$/)
-      anemone.on_every_page { |page| @spider_list << page.url.path }
+      anemone.on_every_page { |page| spider_list << page.url.path }
     end
-    create_spider_file
+    create_spider_file(spider_list)
   end
 
-  def create_spider_file
-    @i = 0
-    spider = Hash.new { |h, k| h[k] = [] }
-    while @i < @spider_list.length
-      lab = @spider_list[@i].to_s.split('/').last
-      lab = 'home' if @spider_list[@i] == '/'
-      spider[lab] = @spider_list[@i]
-      @i += 1
-    end
+  def create_spider_file(spider_list)
+    spider = Hash[ spider_list.map{ |v| [ v == '/' ? 'home' : v.tr('/', '_').chomp('_').downcase, v.downcase] } ]
     File.open(wraith.spider_file, 'w+') { |file| file.write(spider) }
   end
 end
