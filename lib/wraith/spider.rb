@@ -42,7 +42,7 @@ class Wraith::Spider
   end
   
   def add_path(path)
-    @paths[path == '/' ? 'home' : path.tr('/', '_').chomp('_').downcase] = path.downcase
+    @paths[path == '/' ? 'home' : path.gsub('/', '__').chomp('__').downcase] = path.downcase
   end
 
   def spider
