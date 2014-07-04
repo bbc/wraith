@@ -73,7 +73,7 @@ class Wraith::Wraith
 
   def self.crop_images(crop, height)
     # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{crop} -background none -extent 0x#{height} #{crop}`
+    `convert #{crop} -background none -extent 0x#{height} #{crop}`
     # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
   end
 
@@ -83,7 +83,7 @@ class Wraith::Wraith
 
   def set_image_width(image, width)
     # For compatibility with windows file structures switch commenting on the following 2 lines
-    puts `convert #{image} -background none -extent #{width}x0 #{image}`
+    `convert #{image} -background none -extent #{width}x0 #{image}`
     # puts `convert #{image.gsub('/', '\\')} -background none -extent #{width}x0 #{image.gsub('/', '\\')}`
   end
 
