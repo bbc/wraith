@@ -67,6 +67,8 @@ class Wraith::Crawler < Wraith::Spider
       spider_list = []
       Anemone.crawl(@wraith.base_domain) do |anemone|
         anemone.skip_links_like(/\.#{EXT.join('|')}$/)
+        # Add user specified skips
+        anemone.skip_links_like(@wraith.spider_skips)
         anemone.on_every_page { |page| add_path(page.url.path) }
       end
     end
@@ -95,7 +97,9 @@ class Wraith::Sitemap < Wraith::Spider
         @wraith.domains.each do |k, v|
           path.sub!(v, '')
         end
-        add_path(path)
+        if @wraith.spider_skips.nil? || @wraith.spider_skips.none? { |regex| regex.match(path) }
+          add_path(path)
+        end
       end
     end
   end
