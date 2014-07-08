@@ -20,7 +20,7 @@
                     <div class="panel">
                         <div class="panel-heading">Screenshots:</div>
                         <ul class="list-group list-group-flush">
-                            <% directories.keys.sort.each do |dir| %>
+                            <% directories.keys.each do |dir| %>
                                 <li class="list-group-item"><a href="#<%=path%><%=dir%>"><%=dir%></a></li>
                             <% end %>
                         </ul>
