@@ -54,7 +54,7 @@ class Wraith::SaveImages
     check_paths.each do |label, path|
       unless path
         path = label
-        label = path.gsub('/', '_')
+        label = path.gsub('/', '__')
       end
 
       base_url = base_urls(path)

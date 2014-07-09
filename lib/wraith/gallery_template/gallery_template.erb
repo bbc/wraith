@@ -21,7 +21,7 @@
                         <div class="panel-heading">Screenshots:</div>
                         <ul class="list-group list-group-flush">
                             <% directories.keys.each do |dir| %>
-                                <li class="list-group-item"><a href="#<%=path%><%=dir%>"><%=dir%></a></li>
+                                <li class="list-group-item"><a href="#<%=path%><%=dir%>"><%=dir.gsub('__', '/')%></a></li>
                             <% end %>
                         </ul>
                     </div>
@@ -30,7 +30,7 @@
                     <% directories.to_a.sort.each do |dir, sizes| %>
                         <div class="row">
                             <a name="<%= dir %>"></a>
-                            <h2><%= dir %></h2>
+                            <h2><%= dir.gsub('__', '/') %></h2>
                         </div>
                         <% sizes.to_a.sort.each do |size, files| %>
                             <div class="row">
