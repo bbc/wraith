@@ -15,6 +15,7 @@ class Wraith::GalleryGenerator
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
+    @folder_manager = Wraith::FolderManager.new(config)
   end
 
   def parse_directories(dirname)
@@ -67,13 +68,8 @@ class Wraith::GalleryGenerator
           size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
         end
       end
-      # If we are running in "diffs_only mode, and none of the variants show a difference
-      # we remove the file from the output
-      if wraith.mode == 'diffs_only' && @dirs[category].none? {|k, v| v[:data] > 0}
-        FileUtils.rm_rf("#{dirname}/#{category}")
-        @dirs.delete(category)
-      end
     end
+    @folder_manager.tidy_shots_folder(@dirs)
     if [ 'diffs_only', 'diffs_first' ].include?(wraith.mode)
       @sorted = @dirs.sort_by { |category, sizes| -1 * sizes.max_by { |size, dict| dict[:data]}[1][:data] }
     else
