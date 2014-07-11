@@ -15,6 +15,7 @@ class Wraith::GalleryGenerator
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
+    @folder_manager = Wraith::FolderManager.new(config)
   end
 
   def parse_directories(dirname)
@@ -55,7 +56,7 @@ class Wraith::GalleryGenerator
               filename: filepath, thumb: thumbnail
             }
           when 'data'
-            size_dict[:data] = File.read("#{dirname}/#{filepath}")
+            size_dict[:data] = File.read("#{dirname}/#{filepath}").to_f
           else
             size_dict[:variants] << {
               name: group,
@@ -68,7 +69,14 @@ class Wraith::GalleryGenerator
         end
       end
     end
-    @dirs
+    @folder_manager.tidy_shots_folder(@dirs)
+    if [ 'diffs_only', 'diffs_first' ].include?(wraith.mode)
+      @sorted = @dirs.sort_by { |category, sizes| -1 * sizes.max_by { |size, dict| dict[:data]}[1][:data] }
+    else
+      @sorted = @dirs.sort_by { |category, sizes| category }
+    end
+    # The sort has made this into an enumerable, convert it back to a Hash
+    Hash[@sorted]
   end
 
   def generate_html(location, directories, template, destination, path)

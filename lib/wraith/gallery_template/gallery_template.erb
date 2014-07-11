@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
-                    <% directories.to_a.sort.each do |dir, sizes| %>
+                    <% directories.each do |dir, sizes| %>
                         <div class="row">
                             <a name="<%= dir %>"></a>
                             <h2><%= dir.gsub('__', '/') %></h2>
