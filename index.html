@@ -103,7 +103,7 @@ wraith capture config
           <h3>Config options</h3>
           <p></p>
           <p class="well note">
-          All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files. You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers. If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml.
+          All config options will be placed in config.yaml. You can specify the snap file name, this could be used in a situation where you have a large amount of config files. You can set the headless browser, domains of the 2 sites you are comparing, URL paths, screen widths & HTTP headers. If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml. By default all results are shown, sorted by path, however you can also choose to sort by difference size, or only show results which differ.
           </p>
           <pre>
 		  <code data-language="yaml">	
@@ -157,6 +157,12 @@ spider_days:
 # spider_skips:
 #   - /foo/bar.html # Matches /foo/bar.html explcitly
 #   - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz
+
+#Choose how results are displayed, by default alphanumeric. Different screen widths are always grouped.
+#alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
+#diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
+#diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+#mode: diffs_first
 
 		  </code>
           </pre>
