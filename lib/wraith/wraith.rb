@@ -4,7 +4,16 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    @config = YAML.load(File.open("configs/#{config_name}.yaml"))
+    begin
+      if File.exist?(config_name)
+        @config = YAML.load(File.open(config_name))
+      else
+        @config = YAML.load(File.open("configs/#{config_name}.yaml"))
+      end
+    rescue
+      puts 'unable to find config'
+      exit 1
+    end
   end
 
   def directory
