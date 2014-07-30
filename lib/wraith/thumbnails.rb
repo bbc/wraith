@@ -15,7 +15,11 @@ class Wraith::Thumbnails
 
     Parallel.each(files, in_processes: Parallel.processor_count) do |filename|
       new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
-      wraith.thumbnail_image(filename, new_name)
+      thumbnail_image(filename, new_name)
     end
+  end
+
+  def thumbnail_image(png_path, output_path)
+    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
 end

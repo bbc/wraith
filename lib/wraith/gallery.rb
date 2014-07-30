@@ -70,10 +70,10 @@ class Wraith::GalleryGenerator
       end
     end
     @folder_manager.tidy_shots_folder(@dirs)
-    if [ 'diffs_only', 'diffs_first' ].include?(wraith.mode)
-      @sorted = @dirs.sort_by { |category, sizes| -1 * sizes.max_by { |size, dict| dict[:data]}[1][:data] }
+    if %w(diffs_only diffs_first).include?(wraith.mode)
+      @sorted = @dirs.sort_by { |_category, sizes| -1 * sizes.max_by { |_size, dict| dict[:data] }[1][:data] }
     else
-      @sorted = @dirs.sort_by { |category, sizes| category }
+      @sorted = @dirs.sort_by { |category, _sizes| category }
     end
     # The sort has made this into an enumerable, convert it back to a Hash
     Hash[@sorted]
