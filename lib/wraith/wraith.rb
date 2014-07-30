@@ -4,7 +4,7 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    if File.exist?(config_name)
+    if File.exist?(config_name) && File.extname(config_name) == '.yaml'
       @config = YAML.load(File.open(config_name))
     else
       @config = YAML.load(File.open("configs/#{config_name}.yaml"))
