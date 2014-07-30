@@ -39,7 +39,7 @@ class Wraith::SaveImages
 
   def attempt_image_capture(width, url, filename, max_attempts)
     max_attempts.times do |i|
-      wraith.capture_page_image engine, url, width, filename
+      capture_page_image engine, url, width, filename
 
       return if File.exist? filename
 
@@ -80,8 +80,16 @@ class Wraith::SaveImages
         FileUtils.cp invalid, filename
 
         # Set width of fallback image
-        wraith.set_image_width(filename, width)
+        set_image_width(filename, width)
       end
     end
+  end
+
+  def set_image_width(image, width)
+    `convert #{image} -background none -extent #{width}x0 #{image}`
+  end
+
+  def capture_page_image(browser, url, width, file_name)
+    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}"`
   end
 end
