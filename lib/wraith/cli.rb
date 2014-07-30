@@ -6,7 +6,6 @@ require 'wraith/spider'
 require 'wraith/folder'
 require 'wraith/thumbnails'
 require 'wraith/compare_images'
-require 'wraith/images'
 require 'wraith/gallery'
 
 class Wraith::CLI < Thor
@@ -40,11 +39,6 @@ class Wraith::CLI < Thor
     def check_for_paths(config_name)
       spider = Wraith::Spidering.new(config_name)
       spider.check_for_paths
-    end
-
-    def check_images(config_name)
-      image = Wraith::Images.new(config_name)
-      image.files
     end
   end
 
@@ -85,7 +79,6 @@ class Wraith::CLI < Thor
     check_for_paths(config)
     setup_folders(config)
     save_images(config)
-    check_images(config)
     crop_images(config)
     compare_images(config)
     generate_thumbnails(config)

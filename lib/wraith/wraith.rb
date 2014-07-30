@@ -4,7 +4,14 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    @config = YAML.load(File.open("configs/#{config_name}.yaml"))
+    if File.exist?(config_name) && File.extname(config_name) == '.yaml'
+      @config = YAML.load(File.open(config_name))
+    else
+      @config = YAML.load(File.open("configs/#{config_name}.yaml"))
+    end
+  rescue
+    puts 'unable to find config'
+    exit 1
   end
 
   def directory
@@ -68,36 +75,14 @@ class Wraith::Wraith
   end
 
   def mode
-    if ['diffs_only', 'diffs_first', 'alphanumeric'].include?(@config['mode'])
+    if %w(diffs_only diffs_first alphanumeric).include?(@config['mode'])
       @config['mode']
     else
       'alphanumeric'
     end
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" #{@config['phantomjs_options']} "#{snap_file}" "#{url}" "#{width}" "#{file_name}"`
-  end
-
-  def self.crop_images(crop, height)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{crop} -background none -extent 0x#{height} #{crop}`
-    # puts `convert #{crop.gsub('/', '\\')} -background none -extent 0x#{height} #{crop.gsub('/', '\\')}`
-  end
-
-  def crop_images(_crop, _height)
-    self.class.crop_images
-  end
-
-  def set_image_width(image, width)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{image} -background none -extent #{width}x0 #{image}`
-    # puts `convert #{image.gsub('/', '\\')} -background none -extent #{width}x0 #{image.gsub('/', '\\')}`
-  end
-
-  def thumbnail_image(png_path, output_path)
-    # For compatibility with windows file structures switch commenting on the following 2 lines
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
-    # `convert #{png_path.gsub('/', '\\')} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+  def phantomjs_options
+    @config['phantomjs_options']
   end
 end
