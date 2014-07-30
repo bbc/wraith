@@ -4,16 +4,14 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    begin
-      if File.exist?(config_name)
-        @config = YAML.load(File.open(config_name))
-      else
-        @config = YAML.load(File.open("configs/#{config_name}.yaml"))
-      end
-    rescue
-      puts 'unable to find config'
-      exit 1
+    if File.exist?(config_name)
+      @config = YAML.load(File.open(config_name))
+    else
+      @config = YAML.load(File.open("configs/#{config_name}.yaml"))
     end
+  rescue
+    puts 'unable to find config'
+    exit 1
   end
 
   def directory
@@ -77,7 +75,7 @@ class Wraith::Wraith
   end
 
   def mode
-    if ['diffs_only', 'diffs_first', 'alphanumeric'].include?(@config['mode'])
+    if %w(diffs_only diffs_first alphanumeric).include?(@config['mode'])
       @config['mode']
     else
       'alphanumeric'

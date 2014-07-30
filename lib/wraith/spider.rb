@@ -4,7 +4,6 @@ require 'nokogiri'
 require 'uri'
 
 class Wraith::Spidering
-
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
   end
@@ -24,7 +23,6 @@ class Wraith::Spidering
 end
 
 class Wraith::Spider
-
   def initialize(wraith)
     @wraith = wraith
     @paths = {}
@@ -40,19 +38,16 @@ class Wraith::Spider
   def write_file
     File.open(@wraith.spider_file, 'w+') { |file| file.write(@paths) }
   end
-  
+
   def add_path(path)
     @paths[path == '/' ? 'home' : path.gsub('/', '__').chomp('__').downcase] = path.downcase
   end
 
   def spider
-
   end
-
 end
 
 class Wraith::Crawler < Wraith::Spider
-
   EXT = %w(flv swf png jpg gif asx zip rar tar 7z \
            gz jar js css dtd xsd ico raw mp3 mp4 \
            wav wmv ape aac ac3 wma aiff mpg mpeg \
@@ -77,15 +72,13 @@ class Wraith::Crawler < Wraith::Spider
   def modified_since(file, since)
     (Time.now - File.ctime(file)) / (24 * 3600) < since
   end
-
 end
 
 class Wraith::Sitemap < Wraith::Spider
-
   def spider
     unless @wraith.sitemap.nil?
       puts "reading sitemap.xml from #{@wraith.sitemap}"
-      if @wraith.sitemap =~ URI::regexp
+      if @wraith.sitemap =~ URI.regexp
         sitemap = Nokogiri::XML(open(@wraith.sitemap))
       else
         sitemap = Nokogiri::XML(File.open(@wraith.sitemap))
@@ -94,7 +87,7 @@ class Wraith::Sitemap < Wraith::Spider
       sitemap.css('loc').each do |loc|
         path = loc.content
         # Allow use of either domain in the sitemap.xml
-        @wraith.domains.each do |k, v|
+        @wraith.domains.each do |_k, v|
           path.sub!(v, '')
         end
         if @wraith.spider_skips.nil? || @wraith.spider_skips.none? { |regex| regex.match(path) }
@@ -103,6 +96,4 @@ class Wraith::Sitemap < Wraith::Spider
       end
     end
   end
-
 end
-
