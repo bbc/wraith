@@ -85,11 +85,11 @@ class Wraith::CLI < Thor
     generate_gallery(config)
   end
 
-  desc 'multi-capture [filelist]', 'A Batch of Wraith Jobs'
+  desc 'multi_capture [filelist]', 'A Batch of Wraith Jobs'
   def multi_capture(filelist)
-    config_array = IO.readlines filelist
+    config_array = IO.readlines(filelist)
     config_array.each do |config|
-      capture(config)
+      capture(config.chomp)
     end
   end
 end
