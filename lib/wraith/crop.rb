@@ -26,8 +26,12 @@ class Wraith::CropImages
         height_to_crop_to = compare_height
       end
 
-      Wraith::Wraith.crop_images(image_to_crop, height_to_crop_to)
+      crop_task(image_to_crop, height_to_crop_to)
     end
+  end
+
+  def crop_task(crop, height)
+    `convert #{crop} -background none -extent 0x#{height} #{crop}`
   end
 
   def image_height(image)

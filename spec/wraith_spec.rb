@@ -12,6 +12,7 @@ describe Wraith do
   Given(:test_image2) { 'shots/test/test2.png' }
   Given(:diff_image) { 'shots/test/test_diff.png' }
   Given(:data_txt) { 'shots/test/test.txt' }
+  Given(:saving) { Wraith::SaveImages.new(config_name) }
 
   When(:wraith) { Wraith::Wraith.new(config_name) }
   Then { wraith.is_a? Wraith::Wraith }
@@ -31,7 +32,7 @@ describe Wraith do
     # capture_page_image
     When do
       wraith.engine.each do |_type, engine|
-        wraith.capture_page_image(engine, test_url1, 320, test_image1)
+        saving.capture_page_image(engine, test_url1, 320, test_image1)
       end
     end
     When(:image_size) { ImageSize.path(test_image1).size }
@@ -41,8 +42,8 @@ describe Wraith do
   context 'When comparing images' do
     When(:diff_image_size) do
       wraith.engine.each do |_type, engine|
-        wraith.capture_page_image(engine, test_url1, 320, test_image1)
-        wraith.capture_page_image(engine, test_url2, 320, test_image2)
+        saving.capture_page_image(engine, test_url1, 320, test_image1)
+        saving.capture_page_image(engine, test_url2, 320, test_image2)
       end
       Wraith::CropImages.new(config_name).crop_images
       Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
