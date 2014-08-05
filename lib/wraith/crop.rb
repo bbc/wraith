@@ -36,6 +36,8 @@ class Wraith::CropImages
   end
 
   def image_dimensions(image)
-    File.open(image, 'rb') do { |fh| ImageSize.new(fh.read).size }
+    File.open(image, 'rb') do |fh|
+      ImageSize.new(fh.read).size
+    end
   end
 end
