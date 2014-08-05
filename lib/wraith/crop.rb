@@ -15,8 +15,9 @@ class Wraith::CropImages
     Parallel.each(files.each_slice(2), in_processes: Parallel.processor_count) do |base, compare|
       puts 'cropping images'
 
-      base_height    = image_height(base)
-      compare_height = image_height(compare)
+      width          = image_dimensions(base)[0]
+      base_height    = image_dimensions(base)[1]
+      compare_height = image_dimensions(compare)[1]
 
       if base_height > compare_height
         image_to_crop     = compare
@@ -26,18 +27,15 @@ class Wraith::CropImages
         height_to_crop_to = compare_height
       end
 
-      crop_task(image_to_crop, height_to_crop_to)
+      crop_task(image_to_crop, height_to_crop_to, width)
     end
   end
 
-  def crop_task(crop, height)
-    `convert #{crop} -background none -extent 0x#{height} #{crop}`
+  def crop_task(crop, height, width)
+    `convert #{crop} -background none -extent #{width}x#{height} #{crop}`
   end
 
-  def image_height(image)
-    File.open(image, 'rb') do |fh|
-      size = ImageSize.new(fh.read).size
-      size[1]
-    end
+  def image_dimensions(image)
+    File.open(image, 'rb') do { |fh| ImageSize.new(fh.read).size }
   end
 end
