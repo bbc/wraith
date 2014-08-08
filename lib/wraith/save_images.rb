@@ -65,7 +65,7 @@ class Wraith::SaveImages
         compare_file_name = file_names(width, label, wraith.comp_domain_label)
 
         jobs << [label, path, width, base_url,    base_file_name]
-        jobs << [label, path, width, compare_url, compare_file_name]
+        jobs << [label, path, width, compare_url, compare_file_name] unless compare_url.nil?
       end
     end
 
