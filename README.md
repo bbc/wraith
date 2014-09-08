@@ -96,3 +96,18 @@ Take a look at the LICENSE file in the code.
  * [Dave Blooman](http://twitter.com/dblooman)
  * [John Cleveley](http://twitter.com/jcleveley)
  * [Simon Thulbourn](http://twitter.com/sthulbourn)
+ 
+## Selenium-Wraith
+
+Anyone interested in integrating selenium capability with Wraith should check out 
+Selenium-Wraith by Andrew Tekle-Cadman of Future Visible.
+
+Selenium-Wraith was forked from the BBC repo on 16/04/14 and adds the following capabilities to Wraith
+
+1. Selenium integration, both running locally on a desktop or on a selenium grid
+2. Browser to browser screenshot comparison
+3. Page component-based comparison
+
+You can check out Andrew's Project on GitHub here:
+
+https://github.com/andrewccadman/wraith-selenium
