@@ -5,8 +5,6 @@ require 'parallel'
 class Wraith::CropImages
   attr_reader :wraith
 
-  WATERMARK = File.expand_path('../../assets/watermark.png', File.dirname(__FILE__))
-
   def initialize(config)
     @wraith = Wraith::Wraith.new(config)
   end
@@ -34,8 +32,7 @@ class Wraith::CropImages
   end
 
   def crop_task(crop, height, width)
-    `convert #{crop} -background none -extent #{width}x#{height} #{crop}`
-    `composite -compose Dst_Over -tile "#{WATERMARK}" #{crop} #{crop}`
+    `convert #{crop} -background "#ff00ff" -extent #{width}x#{height} #{crop}`
   end
 
   def image_dimensions(image)
