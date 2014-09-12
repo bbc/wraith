@@ -51,4 +51,17 @@ describe Wraith do
     end
     Then { diff_image_size[0] == 320 }
   end
+
+  context 'When generating tumbnails' do
+    When do
+      wraith.engine.each do |_type, engine|
+        saving.capture_page_image(engine, test_url1, 320, test_image1)
+        saving.capture_page_image(engine, test_url2, 320, test_image2)
+      end
+      Wraith::CropImages.new(config_name).crop_images
+      Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
+      Wraith::Thumbnails.new(config_name).generate_thumbnails()
+	end
+    Then { File.exists?('shots/thumbnails/test/test1.png') && File.exists?('shots/thumbnails/test/test2.png') && File.exists?('shots/thumbnails/test/test_diff.png') }
+  end
 end

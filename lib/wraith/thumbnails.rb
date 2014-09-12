@@ -1,5 +1,6 @@
 require 'wraith'
 require 'parallel'
+require 'fileutils'
 
 class Wraith::Thumbnails
   attr_reader :wraith
@@ -20,6 +21,10 @@ class Wraith::Thumbnails
   end
 
   def thumbnail_image(png_path, output_path)
+    unless File.directory?(File.dirname(output_path))
+        FileUtils.mkdir_p(File.dirname(output_path));
+    end
+
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
   end
 end
