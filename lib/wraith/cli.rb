@@ -92,4 +92,20 @@ class Wraith::CLI < Thor
       capture(config.chomp)
     end
   end
+
+  desc 'history [config_name]', 'Setup a baseline set of shots'
+  def history(config)
+    reset_shots(config)
+    setup_folders(config)
+    save_images(config)
+  end
+
+  desc 'latest [config_name]', 'Capture new shots to compare with baseline'
+  def latest(config)
+    save_images(config)
+    crop_images(config)
+    compare_images(config)
+    generate_thumbnails(config)
+    generate_gallery(config)
+  end
 end
