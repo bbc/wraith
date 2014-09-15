@@ -7,7 +7,9 @@ browser:
 snap_file: "lib/wraith/javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
-directory: 'shots_latest'
+directory:
+  - 'shots_latest'
+  
 history_dir: 'shots'
 
 # Add only 2 domains, key will act as a label
