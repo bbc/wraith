@@ -15,7 +15,7 @@ class Wraith::Wraith
   end
 
   def directory
-    @config['directory']
+    @config['directory'].first
   end
 
   def history_dir
