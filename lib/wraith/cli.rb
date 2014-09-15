@@ -40,6 +40,11 @@ class Wraith::CLI < Thor
       spider = Wraith::Spidering.new(config_name)
       spider.check_for_paths
     end
+
+    def copy_old_shots(config_name)
+      create = Wraith::FolderManager.new(config_name)
+      create.copy_old_shots
+    end
   end
 
   desc 'save_images [config_name]', 'captures screenshots'
@@ -102,6 +107,7 @@ class Wraith::CLI < Thor
 
   desc 'latest [config_name]', 'Capture new shots to compare with baseline'
   def latest(config)
+    copy_old_shots(config)
     save_images(config)
     crop_images(config)
     compare_images(config)

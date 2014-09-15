@@ -37,43 +37,68 @@ class Wraith::GalleryGenerator
   def match(categories, dirname)
     categories.each do |category|
       @dirs[category] = {}
+
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
         unless match.nil?
-          size = match[1].to_i
-          group = match[2]
-          filepath = category + '/' + filename
-          thumbnail = "thumbnails/#{category}/#{filename}"
-
-          if @dirs[category][size].nil?
-            @dirs[category][size] = { variants: [] }
-          end
-          size_dict = @dirs[category][size]
-
-          case group
-          when 'diff'
-            size_dict[:diff] = {
-              filename: filepath, thumb: thumbnail
-            }
-          when 'data'
-            size_dict[:data] = File.read("#{dirname}/#{filepath}").to_f
-          else
-            size_dict[:variants] << {
-              name: group,
-              filename: filepath,
-              thumb: thumbnail
-            }
-
-          end
-          size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
+          matcher(match, filename, dirname, category)
         end
       end
     end
     @folder_manager.tidy_shots_folder(@dirs)
-    if %w(diffs_only diffs_first).include?(wraith.mode)
-      @sorted = @dirs.sort_by { |_category, sizes| -1 * sizes.max_by { |_size, dict| dict[:data] }[1][:data] }
+    sorting_dirs(@dirs)
+  end
+
+  def matcher(match, filename, dirname, category)
+    @size = match[1].to_i
+    @group = match[2]
+    @filepath = category + '/' + filename
+    @thumbnail = "thumbnails/#{category}/#{filename}"
+
+    if @dirs[category][@size].nil?
+      @dirs[category][@size] = { variants: [] }
+    end
+
+    size_dict = @dirs[category][@size]
+
+    data_group(@group, size_dict, dirname, @filepath)
+  end
+
+  def data_group(group, size_dict, dirname, filepath)
+    case group
+    when 'diff'
+      diff_check(size_dict, filepath)
+    when 'data'
+      data_check(size_dict, dirname, filepath)
     else
-      @sorted = @dirs.sort_by { |category, _sizes| category }
+      variant_check(size_dict, group)
+    end
+  end
+
+  def variant_check(size_dict, group)
+    size_dict[:variants] << {
+      name: group,
+      filename: @filepath,
+      thumb: @thumbnail
+    }
+    size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
+  end
+
+  def diff_check(size_dict, filepath)
+    size_dict[:diff] = {
+      filename: filepath, thumb: @thumbnail
+    }
+  end
+
+  def data_check(size_dict, dirname, filepath)
+    size_dict[:data] = File.read("#{dirname}/#{filepath}").to_f
+  end
+
+  def sorting_dirs(dirs)
+    if %w(diffs_only diffs_first).include?(wraith.mode)
+      @sorted = dirs.sort_by { |_category, sizes| -1 * sizes.max_by { |_size, dict| dict[:data] }[1][:data] }
+    else
+      @sorted = dirs.sort_by { |category, _sizes| category }
     end
     # The sort has made this into an enumerable, convert it back to a Hash
     Hash[@sorted]

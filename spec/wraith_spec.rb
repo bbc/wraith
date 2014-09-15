@@ -60,8 +60,8 @@ describe Wraith do
       end
       Wraith::CropImages.new(config_name).crop_images
       Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
-      Wraith::Thumbnails.new(config_name).generate_thumbnails()
-	end
-    Then { File.exists?('shots/thumbnails/test/test1.png') && File.exists?('shots/thumbnails/test/test2.png') && File.exists?('shots/thumbnails/test/test_diff.png') }
+      Wraith::Thumbnails.new(config_name).generate_thumbnails
+	   end
+    Then { File.exist?('shots/thumbnails/test/test1.png') && File.exist?('shots/thumbnails/test/test2.png') && File.exist?('shots/thumbnails/test/test_diff.png') }
   end
 end
