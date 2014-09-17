@@ -47,18 +47,29 @@ You can type `wraith` into terminal to bring up the list of commands, but the on
 wraith capture config_name
 ```
 
-This assumes that your snap.js and config.yaml are in the folders that were created on setup. There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
+This assumes that your snap.js and config.yaml are in the folders that were created on setup. To run the setup, create a directory and inside run
 
 ```sh
-  wraith capture config_name             # A full Wraith job
-  wraith compare_images config_name      # compares images to generate diffs
-  wraith crop_images config_name         # crops images to the same height
-  wraith setup_folders config_name       # create folders for images
-  wraith generate_gallery config_name    # create page for viewing images
-  wraith generate_thumbnails config_name # create thumbnails for gallery
-  wraith reset_shots config_name         # removes all the files in the shots folder
-  wraith save_images config_name         # captures screenshots
-  wraith setup                           # creates config folder and default config
+wraith setup
+```
+
+### CLI
+
+There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
+
+```sh
+  wraith capture [config_name]              # A full Wraith job
+  wraith compare_images [config_name]       # compares images to generate diffs
+  wraith crop_images [config_name]          # crops images to the same height
+  wraith generate_gallery [config_name]     # create page for viewing images
+  wraith generate_thumbnails [config_name]  # create thumbnails for gallery
+  wraith history [config_name]              # Setup a baseline set of shots
+  wraith latest [config_name]               # Capture new shots to compare with baseline
+  wraith multi_capture [filelist]           # A Batch of Wraith Jobs
+  wraith reset_shots [config_name]          # removes all the files in the shots folder
+  wraith save_images [config_name]          # captures screenshots
+  wraith setup                              # creates config folder and default config
+  wraith setup_folders [config_name]        # create folders for images
 ```
 
 ## Output
@@ -68,6 +79,21 @@ After each screenshot is captured, the compare task will run, this will output a
 ## Gallery
 
 A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+
+## History usage
+
+In Wraith 1.4, we introduced a new way for using Wraith in development and testing, historical shots.  Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare.  This makes working against an isolated dev environment much easier as you wont need an internet connection.  
+
+The usage is different in that you need 2 config files with unique labels for the domains, examples can be found in the configs repo on Github.  You will also need to set a new directory in your 'latest shots' config as all the original shots taken will be copied into this folder.  Finally, setting the name of the original shots folder in the latest config will be needed to compare against.
+
+```sh
+wraith history history_shots.yaml
+```
+After some development, run the latest command
+```sh
+wraith latest latest_shots.yaml
+```
+You will now be able to run the latest command over and over without having to do clear up.
 
 ## Contributing
 
@@ -96,10 +122,10 @@ Take a look at the LICENSE file in the code.
  * [Dave Blooman](http://twitter.com/dblooman)
  * [John Cleveley](http://twitter.com/jcleveley)
  * [Simon Thulbourn](http://twitter.com/sthulbourn)
- 
+
 ## Selenium-Wraith
 
-Anyone interested in integrating selenium capability with Wraith should check out 
+Anyone interested in integrating selenium capability with Wraith should check out
 Selenium-Wraith by Andrew Tekle-Cadman of Future Visible.
 
 Selenium-Wraith was forked from the BBC repo on 16/04/14 and adds the following capabilities to Wraith
