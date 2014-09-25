@@ -45,11 +45,16 @@ class Wraith::CLI < Thor
       create = Wraith::FolderManager.new(config_name)
       create.copy_old_shots
     end
+
+    def restore_shots(config_name)
+      create = Wraith::FolderManager.new(config_name)
+      create.restore_shots
+    end
   end
 
   desc 'save_images [config_name]', 'captures screenshots'
-  def save_images(config_name)
-    save_images = Wraith::SaveImages.new(config_name)
+  def save_images(config_name, history = false)
+    save_images = Wraith::SaveImages.new(config_name, history)
     save_images.save_images
   end
 
@@ -103,12 +108,14 @@ class Wraith::CLI < Thor
     reset_shots(config)
     setup_folders(config)
     save_images(config)
+    copy_old_shots(config)
   end
 
   desc 'latest [config_name]', 'Capture new shots to compare with baseline'
   def latest(config)
-    copy_old_shots(config)
-    save_images(config)
+    reset_shots(config)
+    restore_shots(config)
+    save_images(config, true)
     crop_images(config)
     compare_images(config)
     generate_thumbnails(config)
