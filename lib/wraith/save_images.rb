@@ -73,7 +73,10 @@ class Wraith::SaveImages
         jobs << [label, path, width, compare_url, compare_file_name] unless compare_url.nil?
       end
     end
+    parallel_task(jobs)
+  end
 
+  def parallel_task(jobs)
     Parallel.each(jobs, in_threads: 8) do |_label, _path, width, url, filename|
       begin
         attempt_image_capture(width, url, filename, 5)
