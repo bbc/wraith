@@ -47,7 +47,7 @@ You can type `wraith` into terminal to bring up the list of commands, but the on
 wraith capture config_name
 ```
 
-This assumes that your snap.js and config.yaml are in the folders that were created on setup. To run the setup, create a directory and inside run
+This assumes that your snap.js and config.yaml are in the folders that were created on setup. To run the setup, create a folder and inside run
 
 ```sh
 wraith setup
@@ -82,18 +82,22 @@ A gallery is available to view each of the images and the respective diff images
 
 ## History usage
 
-In Wraith 1.4, we introduced a new way for using Wraith in development and testing, historical shots.  Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare.  This makes working against an isolated dev environment much easier as you wont need an internet connection.  
+In Wraith 2.0 we introduced a new way for using Wraith in development and testing, historical shots.  Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare.  This makes working against an isolated dev environment much easier as you wont need an internet connection.  
 
-The usage is different in that you need 2 config files with unique labels for the domains, examples can be found in the configs repo on Github.  You will also need to set a new directory in your 'latest shots' config as all the original shots taken will be copied into this folder.  Finally, setting the name of the original shots folder in the latest config will be needed to compare against.
+The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder.  An example of this can be found on Github.  The way this works is that shots are captured as normal with the history command below.  This will create 2 folders with the labels you have specified in the config file, for example, shots and shots_history.  The original shots will be copied into your 'history' folder, then copied back into the shots folder once you have run your latest job.  This workflow will essentially mean your history folder is your baseline, being copied back into the shots folder every time you run the 'latest command'
 
 ```sh
-wraith history history_shots.yaml
+wraith history history.yaml
 ```
 After some development, run the latest command
 ```sh
-wraith latest latest_shots.yaml
+wraith latest history.yaml
 ```
 You will now be able to run the latest command over and over without having to do clear up.
+
+## Changelog - updated 2014-09-25
+Wraith 2.0 with new history support, this is a big change for the usage of Wraith, with less dependency on having an Internet connection and capturing two domains.
+A large change in the way file names are made has been introduced into 2.0, with the label of the engine now being used instead of the engine string itself.  This has been updated in all the included configs for reference, but will mean a change to the filenames and urls.  We have also changed the way that folders are loaded from the config, dropping the use of arrays.  This is backward compatible.  
 
 ## Contributing
 
@@ -108,9 +112,6 @@ If you want to add functionality to this project, pull requests are welcome.
  * Please ensure that it complies with coding standards.
 
 **Please raise any issues with this project as a GitHub issue.**
-
-## Changelog - updated 2014-05-14
-We have updated Wraith some bug fixes and more importantly, parallel support.  This will now enable use of all your CPU cores for faster Wraith runs.  There is error handling in place to ensure if an image fails to capture, it will try again 5 times, if that fails, it will put an holding image in place.  This should solve all the issues with images not capturing and failing to crop/compare.  Big thanks to [Matt Senior](https://github.com/mattsenior) for doing the work.
 
 ## License
 

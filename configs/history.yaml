@@ -1,14 +1,14 @@
 #Headless browser option
 browser:
-  webkit: "phantomjs"
-  # gecko: "slimerjs"
+  phantomjs: "phantomjs"
+  # slimerjs: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
 snap_file: "lib/wraith/javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
-history_dir: 'shots_latest'
+history_dir: 'shots_history'
 
 # Add only 2 domains, key will act as a label
 domains:
@@ -26,13 +26,6 @@ screen_widths:
 paths:
   home: /
   uk_index: /uk
-
-# If you don't want to name the paths explicitly you can use a yaml
-# collection as follows, and names will be derived by replacing / with _
-#
-# paths:
-#  - /
-#  - /uk
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'

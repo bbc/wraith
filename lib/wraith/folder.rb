@@ -40,7 +40,6 @@ class Wraith::FolderManager
   def restore_shots
     puts 'restoring'
     FileUtils.cp_r(Dir.glob("#{history_dir}/*"), dir)
-    FileUtils.rm_rf(history_dir)
   end
 
   def create_folders
