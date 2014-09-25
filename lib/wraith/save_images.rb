@@ -25,6 +25,10 @@ class Wraith::SaveImages
     wraith.engine.each { |_label, browser| return browser }
   end
 
+  def engine_label
+    wraith.engine.key(engine)
+  end
+
   def base_urls(path)
     wraith.base_domain + path unless wraith.base_domain.nil?
   end
@@ -34,7 +38,7 @@ class Wraith::SaveImages
   end
 
   def file_names(width, label, domain_label)
-    "#{directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
+    "#{directory}/#{label}/#{width}_#{engine_label}_#{domain_label}.png"
   end
 
   def attempt_image_capture(width, url, filename, max_attempts)
