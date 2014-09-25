@@ -15,7 +15,12 @@ class Wraith::Wraith
   end
 
   def directory
-    @config['directory'].first
+    # Legacy support for those using array configs
+    @config['directory'].is_a?(Array) ? @config['directory'].first : @config['directory']
+  end
+
+  def history_dir
+    @config['history_dir']
   end
 
   def snap_file

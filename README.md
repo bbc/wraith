@@ -47,18 +47,29 @@ You can type `wraith` into terminal to bring up the list of commands, but the on
 wraith capture config_name
 ```
 
-This assumes that your snap.js and config.yaml are in the folders that were created on setup. There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
+This assumes that your snap.js and config.yaml are in the folders that were created on setup. To run the setup, create a folder and inside run
 
 ```sh
-  wraith capture config_name             # A full Wraith job
-  wraith compare_images config_name      # compares images to generate diffs
-  wraith crop_images config_name         # crops images to the same height
-  wraith setup_folders config_name       # create folders for images
-  wraith generate_gallery config_name    # create page for viewing images
-  wraith generate_thumbnails config_name # create thumbnails for gallery
-  wraith reset_shots config_name         # removes all the files in the shots folder
-  wraith save_images config_name         # captures screenshots
-  wraith setup                           # creates config folder and default config
+wraith setup
+```
+
+### CLI
+
+There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
+
+```sh
+  wraith capture [config_name]              # A full Wraith job
+  wraith compare_images [config_name]       # compares images to generate diffs
+  wraith crop_images [config_name]          # crops images to the same height
+  wraith generate_gallery [config_name]     # create page for viewing images
+  wraith generate_thumbnails [config_name]  # create thumbnails for gallery
+  wraith history [config_name]              # Setup a baseline set of shots
+  wraith latest [config_name]               # Capture new shots to compare with baseline
+  wraith multi_capture [filelist]           # A Batch of Wraith Jobs
+  wraith reset_shots [config_name]          # removes all the files in the shots folder
+  wraith save_images [config_name]          # captures screenshots
+  wraith setup                              # creates config folder and default config
+  wraith setup_folders [config_name]        # create folders for images
 ```
 
 ## Output
@@ -68,6 +79,25 @@ After each screenshot is captured, the compare task will run, this will output a
 ## Gallery
 
 A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+
+## History usage
+
+In Wraith 2.0 we introduced a new way for using Wraith in development and testing, historical shots.  Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare.  This makes working against an isolated dev environment much easier as you wont need an internet connection.  
+
+The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder.  An example of this can be found on Github.  The way this works is that shots are captured as normal with the history command below.  This will create 2 folders with the labels you have specified in the config file, for example, shots and shots_history.  The original shots will be copied into your 'history' folder, then copied back into the shots folder once you have run your latest job.  This workflow will essentially mean your history folder is your baseline, being copied back into the shots folder every time you run the 'latest command'
+
+```sh
+wraith history history.yaml
+```
+After some development, run the latest command
+```sh
+wraith latest history.yaml
+```
+You will now be able to run the latest command over and over without having to do clear up.
+
+## Changelog - updated 2014-09-25
+Wraith 2.0 with new history support, this is a big change for the usage of Wraith, with less dependency on having an Internet connection and capturing two domains.
+A large change in the way file names are made has been introduced into 2.0, with the label of the engine now being used instead of the engine string itself.  This has been updated in all the included configs for reference, but will mean a change to the filenames and urls.  We have also changed the way that folders are loaded from the config, dropping the use of arrays.  This is backward compatible.  
 
 ## Contributing
 
@@ -83,9 +113,6 @@ If you want to add functionality to this project, pull requests are welcome.
 
 **Please raise any issues with this project as a GitHub issue.**
 
-## Changelog - updated 2014-05-14
-We have updated Wraith some bug fixes and more importantly, parallel support.  This will now enable use of all your CPU cores for faster Wraith runs.  There is error handling in place to ensure if an image fails to capture, it will try again 5 times, if that fails, it will put an holding image in place.  This should solve all the issues with images not capturing and failing to crop/compare.  Big thanks to [Matt Senior](https://github.com/mattsenior) for doing the work.
-
 ## License
 
 Wraith is available to everyone under the terms of the Apache 2.0 open source license.
@@ -96,10 +123,10 @@ Take a look at the LICENSE file in the code.
  * [Dave Blooman](http://twitter.com/dblooman)
  * [John Cleveley](http://twitter.com/jcleveley)
  * [Simon Thulbourn](http://twitter.com/sthulbourn)
- 
+
 ## Selenium-Wraith
 
-Anyone interested in integrating selenium capability with Wraith should check out 
+Anyone interested in integrating selenium capability with Wraith should check out
 Selenium-Wraith by Andrew Tekle-Cadman of Future Visible.
 
 Selenium-Wraith was forked from the BBC repo on 16/04/14 and adds the following capabilities to Wraith

@@ -22,7 +22,7 @@ class Wraith::Thumbnails
 
   def thumbnail_image(png_path, output_path)
     unless File.directory?(File.dirname(output_path))
-        FileUtils.mkdir_p(File.dirname(output_path));
+      FileUtils.mkdir_p(File.dirname(output_path))
     end
 
     `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`

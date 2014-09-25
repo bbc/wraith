@@ -11,6 +11,10 @@ class Wraith::FolderManager
     wraith.directory
   end
 
+  def history_dir
+    wraith.history_dir
+  end
+
   def paths
     wraith.paths
   end
@@ -27,6 +31,15 @@ class Wraith::FolderManager
   def clear_shots_folder
     FileUtils.rm_rf("./#{dir}")
     FileUtils.mkdir_p("#{dir}")
+  end
+
+  def copy_old_shots
+    FileUtils.cp_r(dir, history_dir)
+  end
+
+  def restore_shots
+    puts 'restoring'
+    FileUtils.cp_r(Dir.glob("#{history_dir}/*"), dir)
   end
 
   def create_folders

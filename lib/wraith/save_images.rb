@@ -2,10 +2,11 @@ require 'wraith'
 require 'parallel'
 
 class Wraith::SaveImages
-  attr_reader :wraith
+  attr_reader :wraith, :history
 
-  def initialize(config)
+  def initialize(config, history = false)
     @wraith = Wraith::Wraith.new(config)
+    @history = history
   end
 
   def directory
@@ -19,6 +20,10 @@ class Wraith::SaveImages
     else
       wraith.paths
     end
+  end
+
+  def history_label
+    history ? '_latest' : ''
   end
 
   def engine
@@ -65,14 +70,17 @@ class Wraith::SaveImages
       compare_url = compare_urls(path)
 
       wraith.widths.each do |width|
-        base_file_name    = file_names(width, label, wraith.base_domain_label)
-        compare_file_name = file_names(width, label, wraith.comp_domain_label)
+        base_file_name    = file_names(width, label, "#{wraith.base_domain_label}#{history_label}")
+        compare_file_name = file_names(width, label, "#{wraith.comp_domain_label}#{history_label}")
 
         jobs << [label, path, width, base_url,    base_file_name]
         jobs << [label, path, width, compare_url, compare_file_name] unless compare_url.nil?
       end
     end
+    parallel_task(jobs)
+  end
 
+  def parallel_task(jobs)
     Parallel.each(jobs, in_threads: 8) do |_label, _path, width, url, filename|
       begin
         attempt_image_capture(width, url, filename, 5)
