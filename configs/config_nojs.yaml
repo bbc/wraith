@@ -30,6 +30,9 @@ paths:
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
 
+#Diff highlight color
+highlight: 'blue'
+
 #Set the number of days to keep the site spider file
 spider_days:
   - 10

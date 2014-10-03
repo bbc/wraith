@@ -30,6 +30,9 @@ paths:
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
 
+#Diff highlight color
+highlight: 'blue'
+
 #Set the filename of the spider file to use, if not specified it will fallback to spider.txt
 # spider_file: bbc_co_uk_spider.txt
 
