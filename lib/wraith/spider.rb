@@ -57,6 +57,7 @@ class Wraith::Crawler < Wraith::Spider
   def spider
     if File.exist?(@wraith.spider_file) && modified_since(@wraith.spider_file, @wraith.spider_days[0])
       puts 'using existing spider file'
+      @paths = eval(File.read(@wraith.spider_file))
     else
       puts 'creating new spider file'
       spider_list = []
