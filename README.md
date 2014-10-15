@@ -24,6 +24,11 @@ diff](http://bbc-news.github.io/wraith/img/320_diff.png)
 
 Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager.  To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
 
+```sh
+brew install phantomjs  
+brew install imagemagick
+```
+
 ## Installation
 
 Open terminal and run
@@ -95,9 +100,15 @@ wraith latest history.yaml
 ```
 You will now be able to run the latest command over and over without having to do clear up.
 
-## Changelog - updated 2014-09-25
-Wraith 2.0 with new history support, this is a big change for the usage of Wraith, with less dependency on having an Internet connection and capturing two domains.
-A large change in the way file names are made has been introduced into 2.0, with the label of the engine now being used instead of the engine string itself.  This has been updated in all the included configs for reference, but will mean a change to the filenames and urls.  We have also changed the way that folders are loaded from the config, dropping the use of arrays.  This is backward compatible.  
+## Docker
+At BBC, we use Docker and AWS in our workflow.  The Dockerfile is in the repo, but you can pull from the registry here`docker pull bbcnews/wraith`.  There is no quick way to get up and running with OSX and no way to use it on Windows.  For a CI environment, it has a really good use case though.  To run, specify your workspace and the command you want.  If you want to use the Ruby AWS-SDK gem to upload your images to s3, it is built into the container.  I recommend writing a simple ruby script that runs once you have completed a Wraith run.
+
+```sh
+docker run -d bbcnews/wraith -w /wraith -v path/to/dir:/wraith capture configs/config.yaml
+```
+
+## Changelog - updated 2014-10-15
+Added Dockerfile and updated Readme with example usage.
 
 ## Contributing
 
