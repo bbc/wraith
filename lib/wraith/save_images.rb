@@ -46,9 +46,9 @@ class Wraith::SaveImages
     "#{directory}/#{label}/#{width}_#{engine_label}_#{domain_label}.png"
   end
 
-  def attempt_image_capture(width, url, filename, max_attempts)
+  def attempt_image_capture(width, url, filename, selector, max_attempts)
     max_attempts.times do |i|
-      capture_page_image engine, url, width, filename
+      capture_page_image engine, url, width, filename, selector
 
       return if File.exist? filename
 
@@ -60,11 +60,9 @@ class Wraith::SaveImages
 
   def save_images
     jobs = []
-    check_paths.each do |label, path|
-      unless path
-        path = label
-        label = path.gsub('/', '__')
-      end
+    check_paths.each do |label, options|
+      path = options['path'] ? options['path'] : options
+      selector = options['selector'] ? options['selector'] : ' '
 
       base_url = base_urls(path)
       compare_url = compare_urls(path)
@@ -73,17 +71,17 @@ class Wraith::SaveImages
         base_file_name    = file_names(width, label, "#{wraith.base_domain_label}#{history_label}")
         compare_file_name = file_names(width, label, "#{wraith.comp_domain_label}#{history_label}")
 
-        jobs << [label, path, width, base_url,    base_file_name]
-        jobs << [label, path, width, compare_url, compare_file_name] unless compare_url.nil?
+        jobs << [label, path, width, base_url,    base_file_name, selector]
+        jobs << [label, path, width, compare_url, compare_file_name, selector] unless compare_url.nil?
       end
     end
     parallel_task(jobs)
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, in_threads: 8) do |_label, _path, width, url, filename|
+    Parallel.each(jobs, in_threads: 8) do |_label, _path, width, url, filename, selector|
       begin
-        attempt_image_capture(width, url, filename, 5)
+        attempt_image_capture(width, url, filename, selector, 5)
       rescue => e
         puts e
 
@@ -101,7 +99,7 @@ class Wraith::SaveImages
     `convert #{image} -background none -extent #{width}x0 #{image}`
   end
 
-  def capture_page_image(browser, url, width, file_name)
-    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}"`
+  def capture_page_image(browser, url, width, file_name, selector)
+    puts `"#{browser}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
   end
 end
