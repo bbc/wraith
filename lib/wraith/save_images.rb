@@ -61,7 +61,7 @@ class Wraith::SaveImages
   def save_images
     jobs = []
     check_paths.each do |label, options|
-      path = options['path']
+      path = options['path'] ? options['path'] : options
       selector = options['selector'] ? options['selector'] : ' '
 
       base_url = base_urls(path)
