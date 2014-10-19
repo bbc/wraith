@@ -3,16 +3,17 @@ require 'image_size'
 require './lib/wraith/cli'
 
 describe Wraith do
-  Given(:config_name) { 'test_config' }
   Given { Wraith::FolderManager.new(config_name).clear_shots_folder }
-  Given(:test_url1) { 'http://www.live.bbc.co.uk/news' }
-  Given(:test_url2) { 'http://www.live.bbc.co.uk/russian' }
   Given { Dir.mkdir('shots/test') }
-  Given(:test_image1) { 'shots/test/test1.png' }
-  Given(:test_image2) { 'shots/test/test2.png' }
-  Given(:diff_image) { 'shots/test/test_diff.png' }
-  Given(:data_txt) { 'shots/test/test.txt' }
-  Given(:saving) { Wraith::SaveImages.new(config_name) }
+  let(:config_name) { 'test_config' }
+  let(:test_url1) { 'http://www.live.bbc.co.uk/news' }
+  let(:test_url2) { 'http://www.live.bbc.co.uk/russian' }
+  let(:test_image1) { 'shots/test/test1.png' }
+  let(:test_image2) { 'shots/test/test2.png' }
+  let(:diff_image) { 'shots/test/test_diff.png' }
+  let(:data_txt) { 'shots/test/test.txt' }
+  let(:selector) { ''}
+  let(:saving) { Wraith::SaveImages.new(config_name) }
 
   When(:wraith) { Wraith::Wraith.new(config_name) }
   Then { wraith.is_a? Wraith::Wraith }
@@ -32,7 +33,7 @@ describe Wraith do
     # capture_page_image
     When do
       wraith.engine.each do |_type, engine|
-        saving.capture_page_image(engine, test_url1, 320, test_image1)
+        saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
       end
     end
     When(:image_size) { ImageSize.path(test_image1).size }
@@ -42,8 +43,8 @@ describe Wraith do
   context 'When comparing images' do
     When(:diff_image_size) do
       wraith.engine.each do |_type, engine|
-        saving.capture_page_image(engine, test_url1, 320, test_image1)
-        saving.capture_page_image(engine, test_url2, 320, test_image2)
+        saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
+        saving.capture_page_image(engine, test_url2, 320, test_image2, selector)
       end
       Wraith::CropImages.new(config_name).crop_images
       Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
@@ -55,8 +56,8 @@ describe Wraith do
   context 'When generating tumbnails' do
     When do
       wraith.engine.each do |_type, engine|
-        saving.capture_page_image(engine, test_url1, 320, test_image1)
-        saving.capture_page_image(engine, test_url2, 320, test_image2)
+        saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
+        saving.capture_page_image(engine, test_url2, 320, test_image2, selector)
       end
       Wraith::CropImages.new(config_name).crop_images
       Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
