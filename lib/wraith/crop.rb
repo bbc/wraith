@@ -32,7 +32,7 @@ class Wraith::CropImages
   end
 
   def crop_task(crop, height, width)
-    `convert #{crop} -background none -extent #{width}x#{height} #{crop}`
+    `convert #{crop} -background "#ff00ff" -extent #{width}x#{height} #{crop}`
   end
 
   def image_dimensions(image)
