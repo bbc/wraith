@@ -23,6 +23,12 @@ class Wraith::CLI < Thor
     template('javascript/snap.js', 'javascript/snap.js')
   end
 
+  desc 'setup_casper', 'creates config folder and default config for casper'
+  def setup_casper
+    template('configs/component.yaml', 'configs/component.yaml')
+    template('javascript/casper.js', 'javascript/casper.js')
+  end
+
   desc 'reset_shots [config_name]', 'removes all the files in the shots folder'
   def reset_shots(config_name)
     reset = Wraith::FolderManager.new(config_name)
