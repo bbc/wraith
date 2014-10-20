@@ -11,8 +11,8 @@ Wraith is a screenshot comparison tool, created by developers at BBC News.
 
 ## What is it?
 
-Wraith uses either [PhantomJS](http://phantomjs.org) or
-[SlimerJS](http://slimerjs.org) to create screen-shots of different environments
+Wraith uses either [PhantomJS](http://phantomjs.org), [CasperJS](http://casperjs.org/) or
+[SlimerJS](http://slimerjs.org) to create screen-shots of webpages on different environments
 and then creates a diff of the two images, the affected areas are highlighted in
 blue
 
@@ -22,7 +22,7 @@ diff](http://bbc-news.github.io/wraith/img/320_diff.png)
 
 ## Requirements
 
-Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager.  To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
+Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager. You can also use SlimerJS and CasperJS, CasperJS can be used to target specific selectors. To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
 
 ```sh
 brew install phantomjs  
@@ -74,6 +74,7 @@ There are other commands also available, these all expect a config_name to be pa
   wraith reset_shots [config_name]          # removes all the files in the shots folder
   wraith save_images [config_name]          # captures screenshots
   wraith setup                              # creates config folder and default config
+  wraith setup_casper                       # creates config folder and default config for casper
   wraith setup_folders [config_name]        # create folders for images
 ```
 
@@ -84,6 +85,16 @@ After each screenshot is captured, the compare task will run, this will output a
 ## Gallery
 
 A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+
+## CasperJS
+
+There is an example [component config file](https://github.com/BBC-News/wraith/blob/master/configs/component.yaml) which indicates how to target a specific selector on a page.  Pass in a label for the shot, path and selector.  This will be handed to CasperJS and will only screenshot that component on the page.  This is faster way to verify smaller changes to specific components during development.  You must install [CasperJS](http://casperjs.org/) to use.
+
+For a quick setup for CasperJS, you can run :
+
+```sh
+wraith setup_casper
+```
 
 ## History usage
 
@@ -107,8 +118,11 @@ At BBC, we use Docker and AWS in our workflow.  The Dockerfile is in the repo, b
 docker run -d bbcnews/wraith -w /wraith -v path/to/dir:/wraith capture configs/config.yaml
 ```
 
-## Changelog - updated 2014-10-15
-Added Dockerfile and updated Readme with example usage.
+## Changelog - updated 2014-10-20
+We have combined CasperJS with Wraith to enable component screen shots and comparison.  This allows for developers to check only a small part of a page for regressions allowing for quicker and smaller screenshots.
+
+
+Notice : We have deprecated the ability to not use labels on URLs in config files and have Wraith create them for you.  Ensure that you update your config with labels before running again.
 
 ## Contributing
 
