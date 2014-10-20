@@ -11,8 +11,8 @@ directory: 'shots'
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://www.bbc.co.uk/arabic"
   russian: "http://www.bbc.co.uk/russian"
+  arabic: "http://www.bbc.co.uk/arabic"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
@@ -24,7 +24,7 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-  home:
+  brand:
     path: /
     selector: '.site-brand'
 
@@ -42,4 +42,4 @@ spider_days:
 #alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
 #diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
 #diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
-mode: diffs_only
+mode: diffs_first

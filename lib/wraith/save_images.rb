@@ -58,11 +58,19 @@ class Wraith::SaveImages
     fail "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
   end
 
+  def has_casper(options)
+    options['path'] ? options['path'] : options
+  end
+
+  def casper_selector(options)
+    options['selector'] ? options['selector'] : ' '
+  end
+
   def save_images
     jobs = []
     check_paths.each do |label, options|
-      path = options['path'] ? options['path'] : options
-      selector = options['selector'] ? options['selector'] : ' '
+      path = has_casper(options)
+      selector = casper_selector(options)
 
       base_url = base_urls(path)
       compare_url = compare_urls(path)
@@ -100,6 +108,6 @@ class Wraith::SaveImages
   end
 
   def capture_page_image(browser, url, width, file_name, selector)
-    puts `"#{browser}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
+    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
   end
 end
