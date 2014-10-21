@@ -471,7 +471,7 @@ h1,
 
 h2,
 .h2 {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 h3,
@@ -5259,7 +5259,7 @@ a.list-group-item.active > .badge,
   }
   .jumbotron h1,
   .jumbotron .h1 {
-    font-size: 33px;
+    font-size: 63px;
   }
 }
 

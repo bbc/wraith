@@ -45,8 +45,8 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li class><a href="index.html">Main Documentation</a></li>
-      <li class="active"><a href="os-install.html">Requirements Installation</a></li>
+      <li class="active"><a href="index.html">Main Documentation</a></li>
+      <li class><a href="os-install.html">Requirements Installation</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -58,73 +58,55 @@
           <div id="toc">
           </div><!--/.well -->
         </div><!--/span-->
-        <div class="col-sm-9 col-md-9">
-          <h2>Installation</h2>
-          <!-- <br> -->
-          <p class="well">
-          <a href="http://phantomjs.org" target="_blank">PhantomJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a>
-          <br>
-          <br>
-          It's up to you to decide which browser engine you want to run it against, PhantomJS is a more widely used option as it runs headlessly.
-          </p>
-          <br>
-          <h2>OSX</h2>
-          <p class="well">
-          On Mac OS X, the best way to install dependencies is if you have <a href="http://brew.sh" target="_blank">Homebrew</a>
-          It is the quickest way to install PhantomJS & ImageMagick.
           <pre>
-          <code data-language="ruby">
-brew install imagemagick
-brew install phantomjs or brew install slimerjs
+          <code data-language="yaml">
+#Headless browser option
+browser:
+  phantomjs: "phantomjs"
+  # slimerjs: "slimerjs"
+
+#If you want to have multiple snapping files, set the file name here
+snap_file: "javascript/snap.js"
+
+# Type the name of the directory that shots will be stored in
+directory: 'shots'
+history_dir: 'shots_history'
+
+# Add only 2 domains, key will act as a label
+domains:
+  news: "http://www.live.bbc.co.uk/news"
+
+#Type screen widths below, here are a couple of examples
+screen_widths:
+  - 320
+  - 600
+  - 768
+  - 1024
+  - 1280
+
+#Type page URL paths below, here are a couple of examples
+paths:
+  home: /
+  uk_index: /uk
+
+#Amount of fuzz ImageMagick will use
+fuzz: '20%'
+
+#Choose how results are displayed, by default alphanumeric. Different screen widths are always grouped.
+#alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
+#diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
+#diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+mode: diffs_first
           </code>
           </pre>
-          <br>
-          <h2>Windows</h2>
-          <p class="well">
+    <h4>Copyright</h4>
+        <p class="well">
+            Copyright © BBC
+        </p>
+      </div>
+      </div><!--/row-->
 
-          On Windows it's important to install ImageMagick from the binary found <a href="http://www.imagemagick.org/script/binary-releases.php#windows" target="_blank">here.</a>
-          <br>
-          <br>
-          This will ensure that ImageMagick is listed first in your PATH.
-
-          To check your path after installing, open a command line window and type:
-          <pre>
-          <code data-language="sh">
-path
-          </code>
-          </pre>
-          <p class="well">
-This will return a list of executables in you PATH separated by semi-colons ;
-          </p>
-          <pre>
-          <code data-language="sh">
-C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
-          </code>
-          </pre>
-          <p class="well">
-If ImageMagick is in your path but not listed first you can edit your path by following the instructions <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx" target="_blank">here.</a>
-
-If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16;
-Make sure the version number and location are correct for your system.
-          </p>
-          <br>
-          <h2>Ubuntu</h2>
-          <p class="well">
-          On Ubuntu 12.04, you will need to apt-get the following packages:
-          <pre>
-          <code data-language="sh">
-libicu-dev
-imagemagick
-rake
-          </code>
-          </pre>
-
-          <p class="well">
-          And then download the PhantomJS binary package from
-          <a href="http://phantomjs.org/" target="_blank">http://phantomjs.org/</a>.</p>
-		  <p class="well">
-		  If your Windows machine uses Nvidia's Optimus drivers, PhantomJS will hang.  The Optimus driver fails to automatically determine which video card should be used for the program.  You will need to force the graphics driver to use one of your video cards (<a href="https://code.google.com/p/phantomjs/issues/detail?id=845#c26">details and instructions</a>).
-		  </p>
+    </div><!--/.fluid-container-->
 
     <!-- Le javascript
     ================================================== -->
