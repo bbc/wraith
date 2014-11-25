@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - "1.9.2"
+  - "1.9.3"
   - "2.0.0"
 
 script: ruby -Ilib bin/wraith capture test_config
