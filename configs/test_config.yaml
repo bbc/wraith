@@ -11,15 +11,13 @@ directory: 'shots'
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://pal.live.bbc.com/news"
-  russian: "http://pal.live.bbc.co.uk/russian"
+  english: "http://www.bbc.co.uk/russian"
+  russian: "http://www.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
   - 320
   - 600
-  - 768
-  - 1024
   - 1280
 
 #Type page URL paths below, here are a couple of examples
