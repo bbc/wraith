@@ -6,8 +6,8 @@ describe Wraith do
   Given { Wraith::FolderManager.new(config_name).clear_shots_folder }
   Given { Dir.mkdir('shots/test') }
   let(:config_name) { 'test_config' }
-  let(:test_url1) { 'http://www.live.bbc.co.uk/news' }
-  let(:test_url2) { 'http://www.live.bbc.co.uk/russian' }
+  let(:test_url1) { 'http://www.bbc.co.uk/russian' }
+  let(:test_url2) { 'http://www.bbc.co.uk/russian' }
   let(:test_image1) { 'shots/test/test1.png' }
   let(:test_image2) { 'shots/test/test2.png' }
   let(:diff_image) { 'shots/test/test_diff.png' }
