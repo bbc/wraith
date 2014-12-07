@@ -12,7 +12,7 @@ describe Wraith do
   let(:test_image2) { 'shots/test/test2.png' }
   let(:diff_image) { 'shots/test/test_diff.png' }
   let(:data_txt) { 'shots/test/test.txt' }
-  let(:selector) { ''}
+  let(:selector) { '' }
   let(:saving) { Wraith::SaveImages.new(config_name) }
 
   When(:wraith) { Wraith::Wraith.new(config_name) }
@@ -62,7 +62,7 @@ describe Wraith do
       Wraith::CropImages.new(config_name).crop_images
       Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
       Wraith::Thumbnails.new(config_name).generate_thumbnails
-	   end
+    end
     Then { File.exist?('shots/thumbnails/test/test1.png') && File.exist?('shots/thumbnails/test/test2.png') && File.exist?('shots/thumbnails/test/test_diff.png') }
   end
 end
