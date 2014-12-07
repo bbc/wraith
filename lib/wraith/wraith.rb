@@ -36,11 +36,11 @@ class Wraith::Wraith
   end
 
   def base_domain
-    domains[base_domain_label]
+    ENV['WRAITH_BASE'] ? ENV['WRAITH_BASE'] : domains[base_domain_label]
   end
 
   def comp_domain
-    domains[comp_domain_label]
+    ENV['WRAITH_COMP'] ? ENV['WRAITH_COMP'] : domains[comp_domain_label]
   end
 
   def base_domain_label
