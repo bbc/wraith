@@ -27,5 +27,3 @@ paths:
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
-
-mode: diffs_only

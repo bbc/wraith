@@ -21,9 +21,9 @@ describe Wraith do
   context 'When creating a wraith worker' do
 
     Then { wraith.config.keys.size == 7 }
-    Then { wraith.widths == [320, 600, 768, 1024, 1280] }
-    Then { wraith.base_domain == 'http://pal.live.bbc.com/news' }
-    Then { wraith.comp_domain == 'http://pal.live.bbc.co.uk/russian' }
+    Then { wraith.widths == [320, 600, 1280] }
+    Then { wraith.base_domain == 'http://www.bbc.co.uk/russian' }
+    Then { wraith.comp_domain == 'http://www.bbc.co.uk/russian' }
     Then { wraith.base_domain_label == 'english' }
     Then { wraith.comp_domain_label == 'russian' }
     Then { wraith.paths == { 'home' => '/', 'uk_index' => '/uk' } }
