@@ -86,7 +86,6 @@ class Wraith::CLI < Thor
   def generate_gallery(config_name)
     gallery = Wraith::GalleryGenerator.new(config_name)
     gallery.generate_gallery
-    puts 'Gallery generated'
   end
 
   desc 'capture [config_name]', 'A full Wraith job'
