@@ -16,8 +16,7 @@ Wraith uses either [PhantomJS](http://phantomjs.org), [CasperJS](http://casperjs
 and then creates a diff of the two images, the affected areas are highlighted in
 blue
 
-![Photo of BBC News with a
-diff](http://bbc-news.github.io/wraith/img/320_diff.png)
+![Photo of BBC News with a diff](example.png)
 
 
 ## Requirements
