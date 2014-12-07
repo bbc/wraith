@@ -45,7 +45,7 @@ class Wraith::GalleryGenerator
         end
       end
     end
-    @folder_manager.tidy_shots_folder(@dirs)
+    @failed_shots = @folder_manager.tidy_shots_folder(@dirs)
     sorting_dirs(@dirs)
   end
 
@@ -122,6 +122,15 @@ class Wraith::GalleryGenerator
     directories = parse_directories(@location)
     generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, withPath)
     FileUtils.cp(BOOTSTRAP_LOCATION, "#{@location}/bootstrap.min.css")
+    puts 'Gallery generated'
+    check_failed_shots
+  end
+
+  def check_failed_shots
+    if @failed_shots == false
+      puts 'Failures detected'
+      exit 1
+    end
   end
 
   class ErbBinding < OpenStruct
