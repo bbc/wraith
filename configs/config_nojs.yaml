@@ -34,7 +34,7 @@ fuzz: '20%'
 spider_days:
   - 10
 
-    #A list of URLs to skip when spidering. Ruby regular expressions can be
+#A list of URLs to skip when spidering. Ruby regular expressions can be
 #used, if prefixed with !ruby/regexp as defined in the YAML Cookbook
 #http://www.yaml.org/YAML_for_ruby.html#regexps
 #

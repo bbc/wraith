@@ -30,20 +30,9 @@ paths:
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
 
-#Set the filename of the spider file to use, if not specified it will fallback to spider.txt
-# spider_file: bbc_co_uk_spider.txt
-
 #Set the number of days to keep the site spider file
 spider_days:
   - 10
-
-#A list of URLs to skip when spidering. Ruby regular expressions can be
-#used, if prefixed with !ruby/regexp as defined in the YAML Cookbook
-#http://www.yaml.org/YAML_for_ruby.html#regexps
-#
-# spider_skips:
-#   - /foo/bar.html # Matches /foo/bar.html explcitly
-#   - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz
 
 #Choose how results are displayed, by default alphanumeric. Different screen widths are always grouped.
 #alphanumeric - all paths (with, and without, a difference) are shown, sorted by path

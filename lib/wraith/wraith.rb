@@ -87,6 +87,10 @@ class Wraith::Wraith
     end
   end
 
+  def threshold
+    @config['threshold'] ? @config['threshold'] : 0
+  end
+
   def phantomjs_options
     @config['phantomjs_options']
   end

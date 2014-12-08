@@ -43,3 +43,5 @@ spider_days:
 #diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
 #diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
 mode: diffs_first
+
+threshold: 15

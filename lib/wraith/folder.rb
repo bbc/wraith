@@ -56,16 +56,22 @@ class Wraith::FolderManager
   end
 
   def tidy_shots_folder(dirs)
-    dirs.each do |folder_name, shot_info|
-      if shot_info.none? { |_k, v| v[:data] > 0 }
-        if wraith.mode == 'diffs_only'
+    if wraith.mode == 'diffs_only'
+      dirs.each do |folder_name, shot_info|
+        if shot_info.none? { |_k, v| v[:data] > 0 }
           FileUtils.rm_rf("#{wraith.directory}/#{folder_name}")
           dirs.delete(folder_name)
-        else
-          return true
         end
-      else
-        return false
+      end
+    end
+  end
+
+  def threshold_rate(dirs)
+    dirs.each do |_folder_name, shot_info|
+      shot_info.each do |_k, v|
+        if v[:data] > wraith.threshold
+          return false
+        end
       end
     end
   end
