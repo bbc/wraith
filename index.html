@@ -104,7 +104,16 @@ wraith capture configs/config.yaml
           <br>
           <h3>Config options</h3>
           There are few different ways to use Wraith, comparison of 2 domains, capturing a specific component on a page, comparing the same domain over and over and spidering 2 domains for changes.  These all have slightly different configs, which you can see below, but there are some constants across the different usages.
-          All config options will be placed in a config.yaml. You specify the snap file name, this could be used in a situation where you have a large amount of JS files. You set the headless browser, diff mode, fuzz amount and screen widths.
+          All config options will be placed in a config.yaml. You specify the snap file name, this could be used in a situation where you have a large amount of JS files. You set the headless browser, diff mode, threshold, fuzz amount and screen widths.
+          <br>
+          <br>
+          <b>Headless browser</b> : This is typically PhantomJS or CasperJS, this is a browser that doesn't have a user interface, it runs in the backround.
+          <br>
+          <b>Diff Mode</b> : How you would like the gallery to be presented, you can set ordering and for the unchanged images to be removed.
+          <br>
+          <b>Threshold</b> : This is the minimal level of change you that want to present a failure.  The metric is percentage change of the page and set globally for a Wraith run.
+          <br>
+          <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
           <h3>Standard Mode</h3>
             Standard mode is the simplest to get going with.  Specify 2 domains as shown in this <a href="standard.html" target="_blank">this example config</a>, some paths on that domain and then run the config. Once set, run the config using the capture command.
           <h3>Casper Mode</h3>
