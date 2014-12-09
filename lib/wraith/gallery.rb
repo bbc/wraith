@@ -45,7 +45,8 @@ class Wraith::GalleryGenerator
         end
       end
     end
-    @failed_shots = @folder_manager.tidy_shots_folder(@dirs)
+    @folder_manager.tidy_shots_folder(@dirs)
+    @failed_shots = @folder_manager.threshold_rate(@dirs)
     sorting_dirs(@dirs)
   end
 
@@ -109,7 +110,8 @@ class Wraith::GalleryGenerator
     locals = {
       location: location,
       directories: directories,
-      path: path
+      path: path,
+      threshold: wraith.threshold
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, 'w') do |outf|

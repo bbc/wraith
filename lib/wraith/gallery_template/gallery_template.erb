@@ -28,11 +28,16 @@
                 </div>
                 <div class="col-lg-10">
                     <% directories.each do |dir, sizes| %>
+                      <% sizes.to_a.sort.each do |size, files| %>
                         <div class="row">
-                            <a name="<%= dir %>"></a>
-                            <h2><%= dir.gsub('__', '/') %></h2>
+                          <a name="<%= dir %>"></a>
+                            <% if files[:data] > threshold %>
+                              <h2 style="color:#CC0101"><%= dir.gsub('__', '/') %> <span class="glyphicon glyphicon-remove"></span></h2>
+                            <% else %>
+                              <h2><%= dir.gsub('__', '/') %></h2>
+                            <% end %>
                         </div>
-                        <% sizes.to_a.sort.each do |size, files| %>
+
                             <div class="row">
                                 <h3 class="col-lg-1 text-muted"><%=size%>px</h3>
                                 <% files[:variants].each do |file| %>
