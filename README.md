@@ -19,6 +19,10 @@ blue
 ![Photo of BBC News with a
 diff](http://bbc-news.github.io/wraith/img/wraith.png)
 
+## Documentation
+
+[The main documentation can be found here, this will cover all the features and options for Wraith as well as sample configs.](http://bbc-news.github.io/wraith/index.html)
+
 
 ## Requirements
 
@@ -38,12 +42,6 @@ Open terminal and run
 You can then run the following to create a template snap.js and config file:
 
     wraith setup
-
-Alternatively you can clone the repo.
-
-    git clone https://github.com/BBC-News/wraith
-    cd wraith
-    bundle install
 
 ## Using Wraith
 You can type `wraith` into terminal to bring up the list of commands, but the one to start Wraith is
@@ -84,45 +82,10 @@ After each screenshot is captured, the compare task will run, this will output a
 
 ## Gallery
 
-A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.  You can set thresholds in the config file, if above this value, the gallery will indicate the shots above the threshold.
 
-## CasperJS
-
-There is an example [component config file](https://github.com/BBC-News/wraith/blob/master/configs/component.yaml) which indicates how to target a specific selector on a page.  Pass in a label for the shot, path and selector.  This will be handed to CasperJS and will only screenshot that component on the page.  This is faster way to verify smaller changes to specific components during development.  You must install [CasperJS](http://casperjs.org/) to use.
-
-For a quick setup for CasperJS, you can run :
-
-```sh
-wraith setup_casper
-```
-
-## History usage
-
-In Wraith 2.0 we introduced a new way for using Wraith in development and testing, historical shots.  Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare.  This makes working against an isolated dev environment much easier as you wont need an internet connection.  
-
-The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder.  You will need to specify a `history_dir` in addition to the `directory` key in your `config.yml` file. An example of this can be found in the [`history.yaml`](https://github.com/BBC-News/wraith/blob/31406956bfc465d087f1d40304630e18dc0f857e/configs/history.yaml#L9-L11) file of the `configs` directory of this repository.  The way this works is that shots are captured as normal with the history command below.  This will create 2 folders with the labels you have specified in the config file, for example, shots and shots_history.  The original shots will be copied into your 'history' folder, then copied back into the shots folder once you have run your latest job.  This workflow will essentially mean your history folder is your baseline, being copied back into the shots folder every time you run the 'latest command'
-
-```sh
-wraith history history.yaml
-```
-After some development, run the latest command
-```sh
-wraith latest history.yaml
-```
-You will now be able to run the latest command over and over without having to do clear up.
-
-## Docker
-At BBC, we use Docker and AWS in our workflow.  The Dockerfile is in the repo, but you can pull from the registry here`docker pull bbcnews/wraith`.  There is no quick way to get up and running with OSX and no way to use it on Windows.  For a CI environment, it has a really good use case though.  To run, specify your workspace and the command you want.  If you want to use the Ruby AWS-SDK gem to upload your images to s3, it is built into the container.  I recommend writing a simple ruby script that runs once you have completed a Wraith run.
-
-```sh
-docker run -d bbcnews/wraith -w /wraith -v path/to/dir:/wraith capture configs/config.yaml
-```
-
-## Changelog - updated 2014-10-20
-We have combined CasperJS with Wraith to enable component screen shots and comparison.  This allows for developers to check only a small part of a page for regressions allowing for quicker and smaller screenshots.
-
-
-Notice : We have deprecated the ability to not use labels on URLs in config files and have Wraith create them for you.  Ensure that you update your config with labels before running again.
+## Changelog - updated 2014-12-09
+In the latest release I have implemented thresholds for Wraith, this makes finding failed shots easier.  Set the threshold value in the config to a value you want, by default it is 0.  When a failure is detected, the terminal will show a failure message and the gallery will have a red cross next to the set of shots.
 
 ## Contributing
 
