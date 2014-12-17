@@ -89,7 +89,7 @@ class Wraith::CLI < Thor
   end
 
   desc 'capture [config_name]', 'A full Wraith job'
-  def capture(config)
+  def capture(config, multi = false)
     reset_shots(config)
     check_for_paths(config)
     setup_folders(config)
@@ -97,14 +97,14 @@ class Wraith::CLI < Thor
     crop_images(config)
     compare_images(config)
     generate_thumbnails(config)
-    generate_gallery(config)
+    generate_gallery(config, multi)
   end
 
   desc 'multi_capture [filelist]', 'A Batch of Wraith Jobs'
   def multi_capture(filelist)
     config_array = IO.readlines(filelist)
     config_array.each do |config|
-      capture(config.chomp)
+      capture(config.chomp, true)
     end
   end
 
