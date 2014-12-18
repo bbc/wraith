@@ -12,9 +12,10 @@ class Wraith::GalleryGenerator
   TEMPLATE_BY_DOMAIN_LOCATION = File.expand_path('gallery_template/gallery_template.erb', File.dirname(__FILE__))
   BOOTSTRAP_LOCATION = File.expand_path('gallery_template/bootstrap.min.css', File.dirname(__FILE__))
 
-  def initialize(config)
+  def initialize(config, multi)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
+    @mutli = multi
     @folder_manager = Wraith::FolderManager.new(config)
   end
 
@@ -129,9 +130,13 @@ class Wraith::GalleryGenerator
   end
 
   def check_failed_shots
-    if @failed_shots == false
+    if @mutli
+      return true
+    elsif @failed_shots == false
       puts 'Failures detected'
       exit 1
+    else
+      true
     end
   end
 
