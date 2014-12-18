@@ -83,8 +83,8 @@ class Wraith::CLI < Thor
   end
 
   desc 'generate_gallery [config_name]', 'create page for viewing images'
-  def generate_gallery(config_name)
-    gallery = Wraith::GalleryGenerator.new(config_name)
+  def generate_gallery(config_name, multi)
+    gallery = Wraith::GalleryGenerator.new(config_name, multi)
     gallery.generate_gallery
   end
 
