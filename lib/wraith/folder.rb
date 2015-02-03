@@ -34,7 +34,7 @@ class Wraith::FolderManager
   end
 
   def copy_old_shots
-    FileUtils.cp_r(dir, history_dir)
+    FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
   end
 
   def restore_shots
