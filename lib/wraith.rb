@@ -1,5 +1,5 @@
-require 'wraith/version'
+require "wraith/version"
 
 module Wraith
-  autoload :CLI, 'wraith/cli'
+  autoload :CLI, "wraith/cli"
 end

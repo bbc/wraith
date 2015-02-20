@@ -1,7 +1,7 @@
-require 'wraith'
-require 'anemone'
-require 'nokogiri'
-require 'uri'
+require "wraith"
+require "anemone"
+require "nokogiri"
+require "uri"
 
 class Wraith::Spidering
   def initialize(config)
@@ -11,10 +11,10 @@ class Wraith::Spidering
   def check_for_paths
     if @wraith.paths.nil?
       unless @wraith.sitemap.nil?
-        puts 'no paths defined in config, loading paths from sitemap'
+        puts "no paths defined in config, loading paths from sitemap"
         spider = Wraith::Sitemap.new(@wraith)
       else
-        puts 'no paths defined in config, crawling from site root'
+        puts "no paths defined in config, crawling from site root"
         spider = Wraith::Crawler.new(@wraith)
       end
       spider.determine_paths
@@ -36,11 +36,11 @@ class Wraith::Spider
   private
 
   def write_file
-    File.open(@wraith.spider_file, 'w+') { |file| file.write(@paths) }
+    File.open(@wraith.spider_file, "w+") { |file| file.write(@paths) }
   end
 
   def add_path(path)
-    @paths[path == '/' ? 'home' : path.gsub('/', '__').chomp('__').downcase] = path.downcase
+    @paths[path == "/" ? "home" : path.gsub("/", "__").chomp("__").downcase] = path.downcase
   end
 
   def spider
@@ -56,10 +56,10 @@ class Wraith::Crawler < Wraith::Spider
 
   def spider
     if File.exist?(@wraith.spider_file) && modified_since(@wraith.spider_file, @wraith.spider_days[0])
-      puts 'using existing spider file'
+      puts "using existing spider file"
       @paths = eval(File.read(@wraith.spider_file))
     else
-      puts 'creating new spider file'
+      puts "creating new spider file"
       spider_list = []
       Anemone.crawl(@wraith.base_domain) do |anemone|
         anemone.skip_links_like(/\.#{EXT.join('|')}$/)
@@ -85,11 +85,11 @@ class Wraith::Sitemap < Wraith::Spider
         sitemap = Nokogiri::XML(File.open(@wraith.sitemap))
       end
       urls = {}
-      sitemap.css('loc').each do |loc|
+      sitemap.css("loc").each do |loc|
         path = loc.content
         # Allow use of either domain in the sitemap.xml
         @wraith.domains.each do |_k, v|
-          path.sub!(v, '')
+          path.sub!(v, "")
         end
         if @wraith.spider_skips.nil? || @wraith.spider_skips.none? { |regex| regex.match(path) }
           add_path(path)

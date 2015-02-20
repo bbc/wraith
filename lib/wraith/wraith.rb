@@ -1,38 +1,38 @@
-require 'yaml'
+require "yaml"
 
 class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config_name)
-    if File.exist?(config_name) && File.extname(config_name) == '.yaml'
+    if File.exist?(config_name) && File.extname(config_name) == ".yaml"
       @config = YAML.load(File.open(config_name))
     else
       @config = YAML.load(File.open("configs/#{config_name}.yaml"))
     end
   rescue
-    puts 'unable to find config'
+    puts "unable to find config"
     exit 1
   end
 
   def directory
     # Legacy support for those using array configs
-    @config['directory'].is_a?(Array) ? @config['directory'].first : @config['directory']
+    @config["directory"].is_a?(Array) ? @config["directory"].first : @config["directory"]
   end
 
   def history_dir
-    @config['history_dir']
+    @config["history_dir"]
   end
 
   def snap_file
-    @config['snap_file'] ? @config['snap_file'] : File.expand_path('lib/wraith/javascript/snap.js')
+    @config["snap_file"] ? @config["snap_file"] : File.expand_path("lib/wraith/javascript/snap.js")
   end
 
   def widths
-    @config['screen_widths']
+    @config["screen_widths"]
   end
 
   def domains
-    @config['domains']
+    @config["domains"]
   end
 
   def base_domain
@@ -52,46 +52,46 @@ class Wraith::Wraith
   end
 
   def spider_file
-    @config['spider_file'] ? @config['spider_file'] : 'spider.txt'
+    @config["spider_file"] ? @config["spider_file"] : "spider.txt"
   end
 
   def spider_days
-    @config['spider_days']
+    @config["spider_days"]
   end
 
   def sitemap
-    @config['sitemap']
+    @config["sitemap"]
   end
 
   def spider_skips
-    @config['spider_skips']
+    @config["spider_skips"]
   end
 
   def paths
-    @config['paths']
+    @config["paths"]
   end
 
   def engine
-    @config['browser']
+    @config["browser"]
   end
 
   def fuzz
-    @config['fuzz']
+    @config["fuzz"]
   end
 
   def mode
-    if %w(diffs_only diffs_first alphanumeric).include?(@config['mode'])
-      @config['mode']
+    if %w(diffs_only diffs_first alphanumeric).include?(@config["mode"])
+      @config["mode"]
     else
-      'alphanumeric'
+      "alphanumeric"
     end
   end
 
   def threshold
-    @config['threshold'] ? @config['threshold'] : 0
+    @config["threshold"] ? @config["threshold"] : 0
   end
 
   def phantomjs_options
-    @config['phantomjs_options']
+    @config["phantomjs_options"]
   end
 end

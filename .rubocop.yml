@@ -1,0 +1,120 @@
+AllCops:
+  Exclude:
+    - "**/*.gemspec"
+
+Lint/SpaceBeforeFirstArg:
+  Severity: fatal
+  Enabled: true
+
+Lint/RescueException:
+  Severity: fatal
+  Enabled: true
+
+Lint/UnusedBlockArgument:
+  Severity: fatal
+  Enabled: true
+
+Metrics/LineLength:
+  Severity: fatal
+  Enabled: true
+
+Metrics/MethodLength:
+  Severity: convention
+  Enabled: true
+  Max: 5
+
+Style/AlignHash:
+  Severity: fatal
+  Enabled: true
+  EnforcedHashRocketStyle: table
+
+Style/AlignParameters:
+  Severity: fatal
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Style/BracesAroundHashParameters:
+  Severity: fatal
+  Enabled: true
+
+ClassAndModuleChildren:
+  Severity: fatal
+  Enabled: true
+
+Style/ConstantName:
+  Severity: fatal
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Severity: fatal
+  Enabled: true
+
+Style/ExtraSpacing:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Style/HashSyntax:
+  Severity: fatal
+  Enabled: true
+  EnforcedStyle: hash_rockets
+
+Style/IndentationConsistency:
+  Severity: fatal
+  Enabled: true
+
+Style/IndentationWidth:
+  Severity: fatal
+  Enabled: true
+
+Style/IndentHash:
+  Severity: fatal
+  Enabled: true
+
+Style/InlineComment:
+  Severity: fatal
+  Enabled: true
+
+Style/LineEndConcatenation:
+  Severity: fatal
+  Enabled: true
+
+Style/MethodName:
+  Severity: fatal
+  Enabled: true
+
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+Style/NegatedIf:
+  Severity: fatal
+  Enabled: true
+
+Style/Not:
+  Severity: fatal
+  Enabled: true
+
+Style/SpaceInsideHashLiteralBraces:
+  Severity: fatal
+  Enabled: true
+
+Style/StringLiterals:
+  Severity: fatal
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/TrailingBlankLines:
+  Severity: fatal
+  Enabled: true
+
+Style/TrailingWhitespace:
+  Severity: fatal
+  Enabled: true
+
+Style/VariableName:
+  Severity: fatal
+  Enabled: true
