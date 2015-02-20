@@ -1,6 +1,6 @@
-require 'wraith'
-require 'parallel'
-require 'fileutils'
+require "wraith"
+require "parallel"
+require "fileutils"
 
 class Wraith::Thumbnails
   attr_reader :wraith
@@ -10,11 +10,11 @@ class Wraith::Thumbnails
   end
 
   def generate_thumbnails
-    puts 'Generating thumbnails'
+    puts "Generating thumbnails"
 
     files = Dir.glob("#{wraith.directory}/*/*.png")
 
-    Parallel.each(files, in_processes: Parallel.processor_count) do |filename|
+    Parallel.each(files, :in_processes => Parallel.processor_count) do |filename|
       new_name = filename.gsub(/^#{wraith.directory}/, "#{wraith.directory}/thumbnails")
       thumbnail_image(filename, new_name)
     end

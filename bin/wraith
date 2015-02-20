@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 begin
-  require 'wraith/cli'
+  require "wraith/cli"
   Wraith::CLI.start
 rescue Interrupt
   puts "\nQuitting..."

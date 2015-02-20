@@ -1,4 +1,4 @@
-require 'wraith'
+require "wraith"
 
 class Wraith::FolderManager
   attr_reader :wraith
@@ -38,7 +38,7 @@ class Wraith::FolderManager
   end
 
   def restore_shots
-    puts 'restoring'
+    puts "restoring"
     FileUtils.cp_r(Dir.glob("#{history_dir}/*"), dir)
   end
 
@@ -46,17 +46,17 @@ class Wraith::FolderManager
     spider_paths.each do |folder_label, path|
       unless path
         path = folder_label
-        folder_label = path.gsub('/', '__')
+        folder_label = path.gsub("/", "__")
       end
 
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
       FileUtils.mkdir_p("#{dir}/#{folder_label}")
     end
-    puts 'Creating Folders'
+    puts "Creating Folders"
   end
 
   def tidy_shots_folder(dirs)
-    if wraith.mode == 'diffs_only'
+    if wraith.mode == "diffs_only"
       dirs.each do |folder_name, shot_info|
         if shot_info.none? { |_k, v| v[:data] > 0 }
           FileUtils.rm_rf("#{wraith.directory}/#{folder_name}")
