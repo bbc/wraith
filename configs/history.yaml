@@ -12,7 +12,7 @@ history_dir: 'shots_history'
 
 # Add only 2 domains, key will act as a label
 domains:
-  news: "http://www.live.bbc.co.uk/news"
+  news: "http://www.bbc.co.uk/arabic"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
