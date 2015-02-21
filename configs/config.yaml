@@ -4,7 +4,7 @@ browser:
   # slimerjs: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "lib/wraith/javascript/snap.js"
+snap_file: "javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
@@ -38,4 +38,6 @@ spider_days:
 #alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
 #diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
 #diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
-#mode: diffs_first
+mode: diffs_first
+
+threshold: 5

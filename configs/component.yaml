@@ -4,7 +4,7 @@ browser:
   # slimerjs: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "lib/wraith/javascript/casper.js"
+snap_file: "javascript/casper.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
@@ -44,4 +44,4 @@ spider_days:
 #diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
 mode: diffs_first
 
-threshold: 15
+threshold: 5

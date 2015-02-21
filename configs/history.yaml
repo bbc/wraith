@@ -4,7 +4,7 @@ browser:
   # slimerjs: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "lib/wraith/javascript/snap.js"
+snap_file: "javascript/snap.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
@@ -17,10 +17,6 @@ domains:
 #Type screen widths below, here are a couple of examples
 screen_widths:
   - 320
-  - 600
-  - 768
-  - 1024
-  - 1280
 
 #Type page URL paths below, here are a couple of examples
 paths:
