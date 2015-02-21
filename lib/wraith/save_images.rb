@@ -35,6 +35,10 @@ class Wraith::SaveImages
     parallel_task(jobs)
   end
 
+  def capture_page_image(browser, url, width, file_name, selector)
+    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
+  end
+
   private
 
   def parallel_task(jobs)
@@ -70,10 +74,6 @@ class Wraith::SaveImages
 
   def set_image_width(image, width)
     `convert #{image} -background none -extent #{width}x0 #{image}`
-  end
-
-  def capture_page_image(browser, url, width, file_name, selector)
-    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
   end
 end
 
