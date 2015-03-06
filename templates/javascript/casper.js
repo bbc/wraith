@@ -11,7 +11,12 @@ var selector = casper.cli.get(3);
 casper.start(url, function() {
   this.viewport(view_port_width, 1500).then(function(){
     this.wait(2000, function() {
-      this.captureSelector(image_name, selector);
+      if (selector == undefined) {
+        this.capture(image_name);
+      }
+      else {
+        this.captureSelector(image_name, selector);
+      }
       console.log('Snapping ' + url + ' at width ' + view_port_width);
     });
   });
