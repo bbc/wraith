@@ -112,7 +112,7 @@ Take a look at the LICENSE file in the code.
 
  * [Dave Blooman](http://twitter.com/dblooman)
  * [John Cleveley](http://twitter.com/jcleveley)
- * [Simon Thulbourn](http://twitter.com/sthulbourn)
+ * [Simon Thulbourn](http://twitter.com/sthulb)
 
 ## Selenium-Wraith
 
