@@ -110,9 +110,9 @@ Take a look at the LICENSE file in the code.
 
 ## Credits
 
- * [Dave Blooman](http://twitter.com/dblooman)
- * [John Cleveley](http://twitter.com/jcleveley)
- * [Simon Thulbourn](http://twitter.com/sthulbourn)
+ * [Dave Blooman](https://twitter.com/dblooman)
+ * [John Cleveley](https://twitter.com/jcleveley)
+ * [Simon Thulbourn](https://twitter.com/sthulb)
 
 ## Selenium-Wraith
 
