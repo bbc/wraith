@@ -24,7 +24,7 @@ class Wraith::Wraith
   end
 
   def snap_file
-    @config['snap_file'] ? @config['snap_file'] : File.expand_path('lib/wraith/javascript/snap.js')
+    @config['snap_file'] ? @config['snap_file'] : File.expand_path('javascript/snap.js')
   end
 
   def widths
