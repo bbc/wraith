@@ -58,7 +58,7 @@ task :generate_thumbnails do
 end
 
 task :generate_gallery do
-  gallery = Wraith::GalleryGenerator.new(@config)
+  gallery = Wraith::GalleryGenerator.new(@config, false)
   gallery.generate_gallery
 end
 
