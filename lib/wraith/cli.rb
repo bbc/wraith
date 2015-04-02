@@ -111,6 +111,7 @@ class Wraith::CLI < Thor
   desc "history [config_name]", "Setup a baseline set of shots"
   def history(config)
     reset_shots(config)
+    check_for_paths(config)
     setup_folders(config)
     save_images(config)
     copy_old_shots(config)
