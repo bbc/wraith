@@ -121,8 +121,9 @@ end
 class SaveMetadata
   attr_reader :wraith, :history
 
-  def initialize(config, _history)
+  def initialize(config, history)
     @wraith = config
+    @history = history
   end
 
   def history_label
