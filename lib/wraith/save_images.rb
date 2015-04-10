@@ -36,7 +36,7 @@ class Wraith::SaveImages
   end
 
   def capture_page_image(browser, url, width, file_name, selector)
-    puts `"#{browser}" "#{wraith.phantomjs_options}" "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
+    puts `"#{browser}" #{wraith.phantomjs_options} "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
   end
 
   private
