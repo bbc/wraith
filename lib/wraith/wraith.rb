@@ -79,6 +79,10 @@ class Wraith::Wraith
     @config["fuzz"]
   end
 
+  def highlight_color
+    @config['highlight_color'] ? @config['highlight_color'] : 'blue'
+  end
+
   def mode
     if %w(diffs_only diffs_first alphanumeric).include?(@config["mode"])
       @config["mode"]
