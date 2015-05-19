@@ -7,7 +7,7 @@ describe Wraith do
   let(:test_url1) { "http://www.bbc.co.uk/russian" }
   let(:test_url2) { "http://www.bbc.co.uk/russian" }
   let(:test_image1) { "shots/test/test1.png" }
-  let(:test_image2) { "shots/test/test2.png" }
+  let(:test_image2) { "shots/test/test(2).png" }
   let(:diff_image) { "shots/test/test_diff.png" }
   let(:data_txt) { "shots/test/test.txt" }
   let(:selector) { "" }
@@ -94,7 +94,7 @@ describe Wraith do
       Wraith::Thumbnails.new(config_name).generate_thumbnails
 
       expect(File).to exist("shots/thumbnails/test/test1.png")
-      expect(File).to exist("shots/thumbnails/test/test2.png")
+      expect(File).to exist("shots/thumbnails/test/test(2).png")
       expect(File).to exist("shots/thumbnails/test/test_diff.png")
     end
   end

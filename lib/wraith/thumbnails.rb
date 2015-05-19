@@ -1,6 +1,7 @@
 require "wraith"
 require "parallel"
 require "fileutils"
+require "shellwords"
 
 class Wraith::Thumbnails
   attr_reader :wraith
@@ -25,6 +26,6 @@ class Wraith::Thumbnails
       FileUtils.mkdir_p(File.dirname(output_path))
     end
 
-    `convert #{png_path} -thumbnail 200 -crop 200x200+0+0 #{output_path}`
+    `convert #{png_path.shellescape} -thumbnail 200 -crop 200x200+0+0 #{output_path.shellescape}`
   end
 end

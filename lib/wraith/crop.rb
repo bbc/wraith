@@ -1,6 +1,7 @@
 require "wraith"
 require "image_size"
 require "parallel"
+require "shellwords"
 
 class Wraith::CropImages
   attr_reader :wraith
@@ -32,7 +33,7 @@ class Wraith::CropImages
   end
 
   def crop_task(crop, height, width)
-    `convert #{crop} -background none -extent #{width}x#{height} #{crop}`
+    `convert #{crop.shellescape} -background none -extent #{width}x#{height} #{crop.shellescape}`
   end
 
   def image_dimensions(image)
