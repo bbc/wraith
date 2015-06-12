@@ -132,7 +132,7 @@ class SaveMetadata
   end
 
   def engine_label
-    wraith.engine.key(wraith.engine)
+    wraith.engine.key(engine)
   end
 
   def file_names(width, label, domain_label)
