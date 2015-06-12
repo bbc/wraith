@@ -4,8 +4,8 @@ require "./lib/wraith/cli"
 
 describe Wraith do
   let(:config_name) { "test_config" }
-  let(:test_url1) { "http://www.bbc.co.uk/russian" }
-  let(:test_url2) { "http://www.bbc.co.uk/russian" }
+  let(:test_url1) { "http://www.bbc.com/russian" }
+  let(:test_url2) { "http://www.bbc.com/russian" }
   let(:test_image1) { "shots/test/test1.png" }
   let(:test_image2) { "shots/test/test(2).png" }
   let(:diff_image) { "shots/test/test_diff.png" }
@@ -43,11 +43,11 @@ describe Wraith do
     end
 
     it "include base domain" do
-      expect(wraith.base_domain).to eq "http://www.bbc.co.uk/russian"
+      expect(wraith.base_domain).to eq "http://www.bbc.com/russian"
     end
 
     it "include compare domain" do
-      expect(wraith.comp_domain).to eq "http://www.bbc.co.uk/russian"
+      expect(wraith.comp_domain).to eq "http://www.bbc.com/russian"
     end
 
     it "include base label" do
