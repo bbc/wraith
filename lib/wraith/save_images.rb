@@ -1,5 +1,6 @@
 require "wraith"
 require "parallel"
+require "shellwords"
 
 class Wraith::SaveImages
   attr_reader :wraith, :history, :meta
@@ -73,7 +74,7 @@ class Wraith::SaveImages
   end
 
   def set_image_width(image, width)
-    `convert #{image} -background none -extent #{width}x0 #{image}`
+    `convert #{image.shellescape} -background none -extent #{width}x0 #{image.shellescape}`
   end
 end
 
