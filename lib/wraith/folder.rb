@@ -69,8 +69,12 @@ class Wraith::FolderManager
   def threshold_rate(dirs)
     dirs.each do |_folder_name, shot_info|
       shot_info.each do |_k, v|
-        if v[:data] > wraith.threshold
-          return false
+        begin
+          if v[:data] > wraith.threshold
+            return false
+          end
+        rescue
+          return true
         end
       end
     end
