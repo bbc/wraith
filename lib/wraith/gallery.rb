@@ -10,7 +10,6 @@ class Wraith::GalleryGenerator
 
   TEMPLATE_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
   TEMPLATE_BY_DOMAIN_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
-  BOOTSTRAP_LOCATION = File.expand_path("gallery_template/bootstrap.min.css", File.dirname(__FILE__))
 
   def initialize(config, multi)
     @wraith = Wraith::Wraith.new(config)
@@ -23,10 +22,8 @@ class Wraith::GalleryGenerator
     @dirs = {}
     categories = Dir.foreach(dirname).select do |category|
       if [".", "..", "thumbnails"].include? category
-        # Ignore special dirs
         false
       elsif File.directory? "#{dirname}/#{category}"
-        # Ignore stray files
         true
       else
         false
@@ -102,7 +99,6 @@ class Wraith::GalleryGenerator
     else
       @sorted = dirs.sort_by { |category, _sizes| category }
     end
-    # The sort has made this into an enumerable, convert it back to a Hash
     Hash[@sorted]
   end
 
@@ -113,6 +109,7 @@ class Wraith::GalleryGenerator
       :directories => directories,
       :path        => path,
       :threshold   => wraith.threshold
+
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, "w") do |outf|
@@ -120,11 +117,10 @@ class Wraith::GalleryGenerator
     end
   end
 
-  def generate_gallery(withPath = "")
+  def generate_gallery(with_path = "")
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
-    generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, withPath)
-    FileUtils.cp(BOOTSTRAP_LOCATION, "#{@location}/bootstrap.min.css")
+    generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, with_path)
     puts "Gallery generated"
     check_failed_shots
   end

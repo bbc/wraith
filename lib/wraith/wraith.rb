@@ -80,7 +80,7 @@ class Wraith::Wraith
   end
 
   def highlight_color
-    @config['highlight_color'] ? @config['highlight_color'] : 'blue'
+    @config["highlight_color"] ? @config["highlight_color"] : "blue"
   end
 
   def mode
