@@ -11,7 +11,7 @@ directory: 'shots'
 
 # Add only 2 domains, key will act as a label
 domains:
-  english: "http://www.live.bbc.co.uk/news"
+  arabic: "http://www.live.bbc.co.uk/arabic"
   russian: "http://www.live.bbc.co.uk/russian"
 
 #Type screen widths below, here are a couple of examples
@@ -25,7 +25,7 @@ screen_widths:
 #Type page URL paths below, here are a couple of examples
 paths:
   home: /
-  uk_index: /uk
+  uk_index: /topics/video
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
