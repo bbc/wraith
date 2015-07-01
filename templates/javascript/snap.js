@@ -59,6 +59,31 @@ page.open(url, function(status) {
   }
 });
 
+// Ensures that the image captured is the desired width by defining the area for page.render()
+// A warning is written in the terminal if the horizontal scrollbar is active.
+function set_render_dimensions(){
+  var pageHeight = page.evaluate(function() {
+    return document.body.clientHeight;;
+  });
+  var pageWidth = page.evaluate(function() {
+    return document.body.clientWidth;;
+  });
+
+  // Checking if the document width is the same as the viewport. If not a warning is logged.
+  if(pageWidth != view_port_width) {
+    console.log("Horizontal scrollbar may be visible on " + url);
+    console.log("Document width: " + pageWidth);
+    console.log("Viewport width: " + view_port_width)
+  }
+
+  // Setting the dimensions for page.render
+  page.clipRect = {
+    top: 0,
+    left: 0,
+    width: view_port_width,
+    height: pageHeight
+  };
+}
 
 function debounced_render() {
   clearTimeout(last_request_timeout);
@@ -69,6 +94,7 @@ function debounced_render() {
   if (current_requests < 1) {
       clearTimeout(final_timeout);
       last_request_timeout = setTimeout(function() {
+          set_render_dimensions(); 
           console.log('Snapping ' + url + ' at width ' + view_port_width);
           page.render(image_name);
           phantom.exit();
@@ -78,6 +104,7 @@ function debounced_render() {
   // Sometimes, straggling requests never make it back, in which
   // case, timeout after 5 seconds and render the page anyway
   final_timeout = setTimeout(function() {
+    set_render_dimensions(); 
     console.log('Snapping ' + url + ' at width ' + view_port_width);
     page.render(image_name);
     phantom.exit();
