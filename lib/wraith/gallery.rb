@@ -51,6 +51,12 @@ class Wraith::GalleryGenerator
   def matcher(match, filename, dirname, category)
     @size = match[1].to_i
     @group = match[2]
+    @dash = match[2].rindex('-')
+
+    if !@dash.nil?
+      @group = match[2][@dash+1..-1]
+    end
+    
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
 
