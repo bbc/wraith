@@ -1,4 +1,4 @@
-# Wraith
+![Wraith](wraith-logo.png "Wraith")
 
 [![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
 [![Gem Version](https://badge.fury.io/rb/wraith.svg)](http://badge.fury.io/rb/wraith)
@@ -31,7 +31,7 @@ diff](http://bbc-news.github.io/wraith/img/wraith.png)
 Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager. You can also use SlimerJS and CasperJS, CasperJS can be used to target specific selectors. To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
 
 ```sh
-brew install phantomjs  
+brew install phantomjs
 brew install imagemagick
 ```
 
@@ -60,7 +60,7 @@ wraith setup
 
 ### CLI
 
-There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.  
+There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.
 
 ```sh
   wraith capture [config_name]              # A full Wraith job
