@@ -1,16 +1,18 @@
-![Wraith](wraith-logo.png "Wraith")
----
+<p align="center">
+  <img src="https://raw.githubusercontent.com/BBC-News/wraith/master/wraith-logo.png">
+</p>
 
-[![Build Status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
-[![Gem Version](https://badge.fury.io/rb/wraith.svg)](http://badge.fury.io/rb/wraith)
-[![Code Climate](https://codeclimate.com/github/BBC-News/wraith.png)](https://codeclimate.com/github/BBC-News/wraith)
-[![Join the chat at https://gitter.im/BBC-News/wraith](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/BBC-News/wraith?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<p align="center">
+  <a href="http://travis-ci.org/BBC-News/wraith" target="_blank"><img src="https://secure.travis-ci.org/BBC-News/wraith.png?branch=master"></a>
+  <a href="https://rubygems.org/gems/wraith" target="_blank"><img src="https://img.shields.io/gem/v/wraith.svg"></a>
+  <a href="https://codeclimate.com/github/BBC-News/wraith" target="_blank"><img src="https://codeclimate.com/github/BBC-News/wraith.png"></a>
+</p>
 
- * Website: http://responsivenews.co.uk
- * Source: http://github.com/bbc-news/wraith
-
-Wraith is a screenshot comparison tool, created by developers at BBC News.
-
+<p align="center">
+  Wraith is a screenshot comparison tool, created by developers at BBC News.
+  <br>
+  <a href="http://responsivenews.co.uk" target="_blank">Website</a> • <a href="http://github.com/bbc-news/wraith" target="_blank">Source</a>
+</p>
 
 ## What is it?
 
