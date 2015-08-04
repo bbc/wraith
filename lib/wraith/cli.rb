@@ -27,6 +27,7 @@ class Wraith::CLI < Thor
   def setup_casper
     template("configs/component.yaml", "configs/component.yaml")
     template("javascript/casper.js", "javascript/casper.js")
+    template("javascript/beforeCapture.js", "javascript/beforeCapture.js")
   end
 
   desc "reset_shots [config_name]", "removes all the files in the shots folder"
