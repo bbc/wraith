@@ -91,11 +91,11 @@ class CaptureOptions
   end
 
   def selector
-    casper_selector(options)
+    options["selector"] || " "
   end
 
   def before_capture
-    options["before_capture"] ? options["before_capture"] : " "
+    options["before_capture"] || " "
   end
 
   def base_url
@@ -116,10 +116,6 @@ class CaptureOptions
 
   def has_casper(options)
     options["path"] ? options["path"] : options
-  end
-
-  def casper_selector(options)
-    options["selector"] ? options["selector"] : " "
   end
 end
 
