@@ -68,7 +68,7 @@ describe Wraith do
 
     it "saves image" do
       wraith.engine.each do |_type, engine|
-        saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
+        saving.capture_page_image(engine, test_url1, 320, test_image1, selector, '')
       end
 
       expect(image_size[0]).to eq 320
@@ -103,8 +103,8 @@ end
 
 def create_diff_image
   wraith.engine.each do |_type, engine|
-    saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
-    saving.capture_page_image(engine, test_url2, 320, test_image2, selector)
+    saving.capture_page_image(engine, test_url1, 320, test_image1, selector, '')
+    saving.capture_page_image(engine, test_url2, 320, test_image2, selector, '')
   end
 end
 

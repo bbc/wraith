@@ -27,13 +27,6 @@ paths:
   brand:
     path: /
     selector: '.site-brand'
-  header:
-    path: /
-    selector: '#orb-banner'
-  header_with_expanded_menu:
-    path: /
-    selector: '#orb-banner'
-    before_capture: 'javascript/beforeCapture.js'
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
