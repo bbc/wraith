@@ -12,7 +12,7 @@ var beforeCaptureJS = casper.cli.get(4);
 casper.start(url, function() {
   this.viewport(view_port_width, 1500).then(function(){
       if (beforeCaptureJS) {
-        require('./' + beforeCaptureJS)()(this);
+        require('./' + beforeCaptureJS)(this);
       }
     }).then(function(){
     this.wait(2000, function() {
