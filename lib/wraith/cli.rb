@@ -14,20 +14,20 @@ class Wraith::CLI < Thor
   attr_accessor :config_name
 
   def self.source_root
-    File.expand_path("../../../templates/", __FILE__)
+    File.expand_path("../../../", __FILE__)
   end
 
   desc "setup", "creates config folder and default config"
   def setup
-    template("configs/config.yaml", "configs/config.yaml")
-    template("javascript/snap.js", "javascript/snap.js")
+    template("configs/templates/config.yaml", "configs/config.yaml")
+    template("lib/wraith/javascript/snap.js", "javascript/snap.js")
   end
 
   desc "setup_casper", "creates config folder and default config for casper"
   def setup_casper
-    template("configs/component.yaml", "configs/component.yaml")
-    template("javascript/casper.js", "javascript/casper.js")
-    template("javascript/beforeCapture.js", "javascript/beforeCapture.js")
+    template("configs/templates/component.yaml", "configs/component.yaml")
+    template("lib/wraith/javascript/casper.js", "javascript/casper.js")
+    template("lib/wraith/javascript/beforeCapture.js", "javascript/beforeCapture.js")
   end
 
   desc "reset_shots [config_name]", "removes all the files in the shots folder"
