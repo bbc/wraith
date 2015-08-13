@@ -111,24 +111,27 @@ describe Wraith do
     let(:selector) { "body" }
 
     it "Executes the global JS before capturing" do
-      saving.capture_page_image('casperjs', test_url1, 320, 'shots/test/global.png', selector, before_capture__global, 'false')
-      Wraith::CompareImages.new(config_name).compare_task('shots/test/global.png', 'spec/base/global.png', diff_image, data_txt)
-      diff = File.open('shots/test/test.txt', "rb").read
-      expect(diff).to eq '0.0'
+      run_js_then_capture(
+        global_js: before_capture__global,
+        path_js: 'false',
+        output_should_look_like: 'spec/base/global.png'
+      )
     end
 
     it "Executes the path-level JS before capturing" do
-      saving.capture_page_image('casperjs', test_url1, 320, 'shots/test/path.png', selector, 'false', before_capture__path)
-      Wraith::CompareImages.new(config_name).compare_task('shots/test/path.png', 'spec/base/path.png', diff_image, data_txt)
-      diff = File.open('shots/test/test.txt', "rb").read
-      expect(diff).to eq '0.0'
+      run_js_then_capture(
+        global_js: 'false',
+        path_js: before_capture__path,
+        output_should_look_like: 'spec/base/path.png'
+      )
     end
 
     it "Executes the global JS before the path-level JS" do
-      saving.capture_page_image('casperjs', test_url1, 320, 'shots/test/globalthenpath.png', selector, before_capture__global, before_capture__path)
-      Wraith::CompareImages.new(config_name).compare_task('shots/test/globalthenpath.png', 'spec/base/path.png', diff_image, data_txt)
-      diff = File.open('shots/test/test.txt', "rb").read
-      expect(diff).to eq '0.0'
+      run_js_then_capture(
+        global_js: before_capture__global,
+        path_js: before_capture__path,
+        output_should_look_like: 'spec/base/path.png'
+      )
     end
   end
 
