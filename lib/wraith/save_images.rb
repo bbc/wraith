@@ -29,23 +29,23 @@ class Wraith::SaveImages
         base_file_name    = meta.file_names(width, label, meta.base_label)
         compare_file_name = meta.file_names(width, label, meta.compare_label)
 
-        jobs << [label, settings.path, width, settings.base_url,    base_file_name, settings.selector]
-        jobs << [label, settings.path, width, settings.compare_url, compare_file_name, settings.selector] unless settings.compare_url.nil?
+        jobs << [label, settings.path, width, settings.base_url,    base_file_name, settings.selector, wraith.before_capture, settings.before_capture]
+        jobs << [label, settings.path, width, settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
       end
     end
     parallel_task(jobs)
   end
 
-  def capture_page_image(browser, url, width, file_name, selector)
-    puts `"#{browser}" #{wraith.phantomjs_options} "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}"`
+  def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
+    puts `"#{browser}" #{wraith.phantomjs_options} "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}" "#{global_before_capture}" "#{path_before_capture}"`
   end
 
   private
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector|
+    Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
-        attempt_image_capture(width, url, filename, selector, 5)
+        attempt_image_capture(width, url, filename, selector, global_before_capture, path_before_capture, 5)
       rescue => e
         puts e
         create_invalid_image(filename, width)
@@ -53,9 +53,9 @@ class Wraith::SaveImages
     end
   end
 
-  def attempt_image_capture(width, url, filename, selector, max_attempts)
+  def attempt_image_capture(width, url, filename, selector, global_before_capture, path_before_capture, max_attempts)
     max_attempts.times do |i|
-      capture_page_image meta.engine, url, width, filename, selector
+      capture_page_image meta.engine, url, width, filename, selector, global_before_capture, path_before_capture
 
       return if File.exist? filename
 
@@ -91,7 +91,11 @@ class CaptureOptions
   end
 
   def selector
-    casper_selector(options)
+    options["selector"] || " "
+  end
+
+  def before_capture
+    options["before_capture"] || "false"
   end
 
   def base_url
@@ -112,10 +116,6 @@ class CaptureOptions
 
   def has_casper(options)
     options["path"] ? options["path"] : options
-  end
-
-  def casper_selector(options)
-    options["selector"] ? options["selector"] : " "
   end
 end
 

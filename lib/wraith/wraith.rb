@@ -27,6 +27,10 @@ class Wraith::Wraith
     @config["snap_file"] ? @config["snap_file"] : File.expand_path("lib/wraith/javascript/snap.js")
   end
 
+  def before_capture
+    @config["before_capture"] || "false"
+  end
+
   def widths
     @config["screen_widths"]
   end
