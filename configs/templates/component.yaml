@@ -10,10 +10,9 @@ snap_file: "javascript/casper.js"
 directory: 'shots'
 history_dir: 'shots_base'
 
-# Add only 2 domains, key will act as a label
+# Add as many domains as necessary. Key will act as a label
 domains:
   english: "http://www.bbc.co.uk/news"
-  #arabic: "http://www.bbc.com/arabic"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:

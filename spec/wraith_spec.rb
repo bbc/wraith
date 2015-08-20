@@ -9,8 +9,6 @@ describe Wraith do
   let(:test_url2) { "http://www.bbc.com/russian" }
   let(:test_image1) { "shots/test/test1.png" }
   let(:test_image2) { "shots/test/test(2).png" }
-  let(:before_capture__global) { "spec/js/global.js" }
-  let(:before_capture__path) { "spec/js/path.js" }
   let(:diff_image) { "shots/test/test_diff.png" }
   let(:data_txt) { "shots/test/test.txt" }
   let(:selector) { "" }
@@ -104,15 +102,16 @@ describe Wraith do
   end
 
   describe "When hooking into beforeCapture" do
-
     let(:config_name) { "test_config--casper" }
     let(:saving) { Wraith::SaveImages.new(config_name) }
     let(:wraith) { Wraith::Wraith.new(config_name) }
     let(:selector) { "body" }
+    let(:before_suite_js) { "spec/js/global.js" }
+    let(:before_capture_js) { "spec/js/path.js" }
 
     it "Executes the global JS before capturing" do
       run_js_then_capture(
-        global_js: before_capture__global,
+        global_js: before_suite_js,
         path_js: 'false',
         output_should_look_like: 'spec/base/global.png'
       )
@@ -121,15 +120,15 @@ describe Wraith do
     it "Executes the path-level JS before capturing" do
       run_js_then_capture(
         global_js: 'false',
-        path_js: before_capture__path,
+        path_js: before_capture_js,
         output_should_look_like: 'spec/base/path.png'
       )
     end
 
     it "Executes the global JS before the path-level JS" do
       run_js_then_capture(
-        global_js: before_capture__global,
-        path_js: before_capture__path,
+        global_js: before_suite_js,
+        path_js: before_capture_js,
         output_should_look_like: 'spec/base/path.png'
       )
     end
