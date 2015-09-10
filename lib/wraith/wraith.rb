@@ -71,6 +71,10 @@ class Wraith::Wraith
     @config["spider_skips"]
   end
 
+  def spider_use_mongodb
+    @config["spider_use_mongodb"]
+  end
+
   def paths
     @config["paths"]
   end
