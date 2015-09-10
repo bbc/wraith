@@ -93,21 +93,26 @@ class Wraith::CrawlerDB < Wraith::Spider
            m3u f4v pdf doc xls ppt pps bin exe rss xml)
 
   def spider
-    puts "create spider and use Anemone MongoDB storage"  
-    
-    # TODO check if MongoDB already has records
-    # TODO allow db and collection specification
-
-    spider_list = []
-    Anemone.crawl(@wraith.base_domain) do |anemone|
-      anemone.skip_links_like(/\.(#{EXT.join('|')})$/)
-      anemone.storage = Anemone::Storage.MongoDB
-      # Add user specified skips
-      anemone.skip_links_like(@wraith.spider_skips)
-      anemone.on_every_page { |page| add_path(page.url.path) }
+    puts "use Anemone MongoDB storage"
+    require "mongo"
+    db = Mongo::Connection.new().db("anemone")
+    col = db.collection("pages")
+    # Check existing database populated
+    if col.find_one
+      puts "use existing MongoDB collection"
+      col.find.each { |page| add_path(page['url']) }
+    else
+      puts "create new MongoDB collection"
+      spider_list = []
+      Anemone.crawl(@wraith.base_domain) do |anemone|
+        anemone.skip_links_like(/\.(#{EXT.join('|')})$/)
+        anemone.storage = Anemone::Storage.MongoDB
+        # Add user specified skips
+        anemone.skip_links_like(@wraith.spider_skips)
+        anemone.on_every_page { |page| add_path(page.url.path) }
+      end
     end
   end
-
 end
 
 class Wraith::Sitemap < Wraith::Spider
