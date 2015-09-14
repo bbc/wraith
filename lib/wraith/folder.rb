@@ -34,7 +34,11 @@ class Wraith::FolderManager
   end
 
   def copy_old_shots
-    FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
+    if history_dir.nil?
+      abort 'Error: no `history_dir` attribute found in config. Cannot copy files.'
+    else
+      FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
+    end
   end
 
   def restore_shots
