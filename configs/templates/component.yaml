@@ -8,11 +8,11 @@ snap_file: "javascript/casper.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
+history_dir: 'shots_base'
 
-# Add only 2 domains, key will act as a label
+# Add as many domains as necessary. Key will act as a label
 domains:
-  russian: "http://www.bbc.com/russian"
-  arabic: "http://www.bbc.com/arabic"
+  english: "http://www.bbc.co.uk/news"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
@@ -24,9 +24,13 @@ screen_widths:
 
 #Type page URL paths below, here are a couple of examples
 paths:
-  brand:
-    path: /
-    selector: '.site-brand'
+  clickable_guide:
+    path: /entertainment-arts-27221191
+    selector: '.idt__news'
+  clickable_guide__after_click:
+    path: /entertainment-arts-27221191
+    selector: '.idt__news'
+    before_capture: 'javascript/beforeCapture.js'
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'

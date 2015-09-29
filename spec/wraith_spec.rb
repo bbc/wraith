@@ -1,5 +1,6 @@
 require "rspec"
 require "image_size"
+require "helpers"
 require "./lib/wraith/cli"
 
 describe Wraith do
@@ -68,7 +69,7 @@ describe Wraith do
 
     it "saves image" do
       wraith.engine.each do |_type, engine|
-        saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
+        saving.capture_page_image(engine, test_url1, 320, test_image1, selector, 'false', 'false')
       end
 
       expect(image_size[0]).to eq 320
@@ -87,7 +88,7 @@ describe Wraith do
     end
   end
 
-  describe "When generating tumbnails" do
+  describe "When generating thumbnails" do
     it "produce thumbnails" do
       create_diff_image
       crop_images
@@ -116,19 +117,38 @@ describe Wraith do
       expect(dirs["test"][0][:diff][:thumb]).to eq "thumbnails/test/test_image-diff.png"
     end
   end
-end
+  
+  describe "When hooking into beforeCapture" do
+    let(:config_name) { "test_config--casper" }
+    let(:saving) { Wraith::SaveImages.new(config_name) }
+    let(:wraith) { Wraith::Wraith.new(config_name) }
+    let(:selector) { "body" }
+    let(:before_suite_js) { "spec/js/global.js" }
+    let(:before_capture_js) { "spec/js/path.js" }
 
-def create_diff_image
-  wraith.engine.each do |_type, engine|
-    saving.capture_page_image(engine, test_url1, 320, test_image1, selector)
-    saving.capture_page_image(engine, test_url2, 320, test_image2, selector)
+    it "Executes the global JS before capturing" do
+      run_js_then_capture(
+        global_js: before_suite_js,
+        path_js: 'false',
+        output_should_look_like: 'spec/base/global.png'
+      )
+    end
+
+    it "Executes the path-level JS before capturing" do
+      run_js_then_capture(
+        global_js: 'false',
+        path_js: before_capture_js,
+        output_should_look_like: 'spec/base/path.png'
+      )
+    end
+
+    it "Executes the global JS before the path-level JS" do
+      run_js_then_capture(
+        global_js: before_suite_js,
+        path_js: before_capture_js,
+        output_should_look_like: 'spec/base/path.png'
+      )
+    end
   end
-end
 
-def crop_images
-  Wraith::CropImages.new(config_name).crop_images
-end
-
-def compare_images
-  Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
 end

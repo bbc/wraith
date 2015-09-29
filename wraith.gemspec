@@ -6,8 +6,8 @@ require 'wraith/version'
 Gem::Specification.new do |spec|
   spec.name          = 'wraith'
   spec.version       = Wraith::VERSION
-  spec.authors       = ['Dave Blooman', 'Simon Thulbourn']
-  spec.email         = ['david.blooman@gmail.com', 'simon+github@thulbourn.com']
+  spec.authors       = ['Dave Blooman', 'Simon Thulbourn', 'Chris Ashton']
+  spec.email         = ['david.blooman@gmail.com', 'simon+github@thulbourn.com', 'chrisashtonweb@gmail.com']
   spec.summary       = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.description   = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.homepage      = 'https://github.com/BBC-News/wraith'
