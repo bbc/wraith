@@ -101,6 +101,23 @@ describe Wraith do
     end
   end
 
+  describe "Wraith gallery generator" do
+    let(:gallery) { Wraith::GalleryGenerator.new(config_name, false) }
+
+    it "should not break when there is a `-` in the filename" do
+      dirs = gallery.parse_directories 'spec/thumbnails'
+
+      expect(dirs["test"][0][:variants][0][:filename]).to eq "test/test_image-1.png"
+      expect(dirs["test"][0][:variants][0][:thumb]).to eq "thumbnails/test/test_image-1.png"
+
+      expect(dirs["test"][0][:variants][1][:filename]).to eq "test/test_image-2.png"
+      expect(dirs["test"][0][:variants][1][:thumb]).to eq "thumbnails/test/test_image-2.png"
+
+      expect(dirs["test"][0][:diff][:filename]).to eq "test/test_image-diff.png"
+      expect(dirs["test"][0][:diff][:thumb]).to eq "thumbnails/test/test_image-diff.png"
+    end
+  end
+  
   describe "When hooking into beforeCapture" do
     let(:config_name) { "test_config--casper" }
     let(:saving) { Wraith::SaveImages.new(config_name) }
