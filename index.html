@@ -72,7 +72,7 @@
           <p class="well">
           <a href="http://phantomjs.org" target="_blank">PhantomJS</a>, <a href="http://casperjs.org" target="_blank">CasperJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a>.  PhantomJS and SlimerJS are the browsers that capture the screenshots, CasperJS is a layer on top of these to aid in target selectors for capturing a particular component.
           <br>
-          <br>Installation instructions for different Operating systems for these browsers and software can be found <a href="os-install.html">here</a>
+          <br>Read <a href="os-install.html">installation instructions for different Operating systems, browsers and software</a>.
           </p>
           <br>
           <h2>Installation</h2>
@@ -85,12 +85,11 @@ gem install wraith
           <br>
           <h2>Getting Started</h2>
           <p class="well note">
-          To create template javascript and config files for use, use the setup command in terminal.  This will create folders in the directory you are in.  You can alternatively setup Wraith for CasperJS using the second command
+          To create template javascript and config files for use, use the setup command in terminal.  This will create folders in the directory you are in.
           </p>
           <pre>
           <code data-language="ruby">
 wraith setup
-wraith setup_casper
           </code>
           </pre>
           <p class="well note">
@@ -98,12 +97,23 @@ wraith setup_casper
           </p>
           <pre>
           <code data-language="ruby">
-wraith capture configs/config.yaml
+wraith capture configs/component.yaml
           </code>
           </pre>
           <br>
-          <h3>Config options</h3>
-          There are few different ways to use Wraith, comparison of 2 domains, capturing a specific component on a page, comparing the same domain over and over and spidering 2 domains for changes.  These all have slightly different configs, which you can see below, but there are some constants across the different usages.
+          <h2>Wraith modes</h2>
+          There are few different ways to use Wraith:
+
+          <ul>
+            <li>Comparison of 2 domains</li>
+            <li>Capturing a specific component on a page</li>
+            <li>Comparing the same domain over and over</li>
+            <li>Spidering 2 domains for changes.</li>
+          </ul>
+
+          These all have slightly different configs, which you can see below, but there are some constants across the different usages.
+          <br />
+
           All config options will be placed in a config.yaml. You specify the snap file name, this could be used in a situation where you have a large amount of JS files. You set the headless browser, diff mode, threshold, fuzz amount and screen widths.
           <br>
           <br>
@@ -145,7 +155,7 @@ This will create 2 folders with the labels you have specified in the config file
           <br>
 
 
-          <h3>beforeCapture hooks</h3>
+          <h2>beforeCapture hooks</h2>
 
           <p>Using Casper Mode allows you to hook into a 'beforeCapture' event so that you can run arbitrary JavaScript before taking the screenshot. This allows you to regression test interactive content. (Note: the beforeCapture hook is currently only supported in Casper Mode).</p>
 
@@ -184,7 +194,7 @@ paths:
 
           <p>All of the before_capture hooks are optional.</p>
 
-          <h3>Command line options</h3>
+          <h2>Command line options</h2>
           <p></p>
           <p class="well note">
 Wraith allows for most of the commands to be used individually, allowing you perform tasks as you see fit.  This assumes that your snap.js and config.yaml are in the folders that were created on setup.  There are other commands also available, these all expect a config_name to be passed as an option.
@@ -202,7 +212,6 @@ Wraith allows for most of the commands to be used individually, allowing you per
   wraith reset_shots [config_name]          # removes all the files in the shots folder
   wraith save_images [config_name]          # captures screenshots
   wraith setup                              # creates config & Javascript
-  wraith setup_casper                       # creates config & Javascript for CasperJS
   wraith setup_folders [config_name]        # create folders for images
 		  </code>
           </pre>
