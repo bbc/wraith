@@ -115,18 +115,6 @@ describe Wraith do
         {
           :filename => 'test/test_image-2.png',
           :thumb    => 'thumbnails/test/test_image-2.png'
-        },
-        {
-          :filename => 'test/test_image--modifier.png',
-          :thumb    => 'thumbnails/test/test_image--modifier.png'
-        },
-        {
-          :filename => 'test/test_image__my_name.png',
-          :thumb    => 'thumbnails/test/test_image__my_name.png'
-        },
-        {
-          :filename => 'test/test_image_my_name.png',
-          :thumb    => 'thumbnails/test/test_image_my_name.png'
         }
       ]
 
