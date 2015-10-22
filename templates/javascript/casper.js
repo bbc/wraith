@@ -1,15 +1,25 @@
-var system = require('system');
-var page = require('webpage').create();
-var fs = require('fs');
-var casper = require("casper").create();
+// modules
+var system = require('system'),
+    casper = require('casper').create();
 
-var url = casper.cli.get(0);
-var view_port_width = casper.cli.get(1);
-var image_name = casper.cli.get(2);
-var selector = casper.cli.get(3);
-var globalBeforeCaptureJS = casper.cli.get(4);
-var pathBeforeCaptureJS = casper.cli.get(5);
+// command line arguments
+var url = casper.cli.get(0),
+    dimensions = requireRelative('_getDimensions.js')(casper.cli.get(1)),
+    image_name = casper.cli.get(2),
+    selector = casper.cli.get(3),
+    globalBeforeCaptureJS = casper.cli.get(4),
+    pathBeforeCaptureJS = casper.cli.get(5);
 
+// functions
+function requireRelative(file) {
+  // PhantomJS will automatically `require` relatively, but CasperJS needs some extra help. Hence this function.
+  // 'templates/javascript/casper.js' -> 'templates/javascript'
+  var currentFilePath = system.args[3].split('/');
+  currentFilePath.pop();
+  var fs = require('fs');
+  currentFilePath = fs.absolute(currentFilePath.join('/'));
+  return require(currentFilePath + '/' + file);
+}
 function snap() {
   if (!selector) {
     this.capture(image_name);
@@ -17,12 +27,13 @@ function snap() {
   else {
     this.captureSelector(image_name, selector);
   }
-  console.log('Snapping ' + url + ' at width ' + view_port_width);
+  console.log('Snapping ' + url + ' at: ' + dimensions.viewportWidth + 'x' + dimensions.viewportHeight);
 }
 
+// Casper can now do its magic
 casper.start();
 casper.open(url);
-casper.viewport(view_port_width, 1500);
+casper.viewport(dimensions.viewportWidth, dimensions.viewportHeight);
 casper.then(function() {
   if (globalBeforeCaptureJS) {
     require('./' + globalBeforeCaptureJS)(this);

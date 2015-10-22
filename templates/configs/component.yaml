@@ -17,7 +17,7 @@ paths:
     selector: '.idt__news'
     # (optional) JavaScript file to execute before taking the screenshot of this path.
     # This is always executed AFTER the 'global' before_capture hook toward the top of this file.
-    before_capture: 'javascript/beforeCapture.js'
+    before_capture: 'javascript/beforeCapture--casper_example.js'
 
 # amount of fuzz ImageMagick will use when comparing images. A higher fuzz makes the comparison less strict.
 fuzz: '20%'

@@ -15,7 +15,7 @@ end
 
 def run_js_then_capture(config)
   generated_image = 'shots/test/temporary_jsified_image.png'
-  saving.capture_page_image('casperjs', test_url1, 320, generated_image, selector, config[:global_js], config[:path_js])
+  saving.capture_page_image(config[:engine], test_url1, 320, generated_image, selector, config[:global_js], config[:path_js])
   Wraith::CompareImages.new(config_name).compare_task(generated_image, config[:output_should_look_like], diff_image, data_txt)
   diff = File.open('shots/test/test.txt', "rb").read
   expect(diff).to eq '0.0'
