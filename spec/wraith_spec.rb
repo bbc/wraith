@@ -101,6 +101,50 @@ describe Wraith do
     end
   end
 
+  describe "When generating gallery" do
+    let(:gallery) { Wraith::GalleryGenerator.new(config_name, false) }
+
+    it "should not break when there is a `-` in the filename" do
+      dirs = gallery.parse_directories 'spec/thumbnails'
+
+      images = [
+        {
+          :filename => 'test/test_image-1.png',
+          :thumb    => 'thumbnails/test/test_image-1.png'
+        },
+        {
+          :filename => 'test/test_image-2.png',
+          :thumb    => 'thumbnails/test/test_image-2.png'
+        },
+        {
+          :filename => 'test/test_image--modifier.png',
+          :thumb    => 'thumbnails/test/test_image--modifier.png'
+        },
+        {
+          :filename => 'test/test_image__my_name.png',
+          :thumb    => 'thumbnails/test/test_image__my_name.png'
+        },
+        {
+          :filename => 'test/test_image_my_name.png',
+          :thumb    => 'thumbnails/test/test_image_my_name.png'
+        }
+      ]
+
+      dirs['test'][0][:variants].each_with_index do |image, i|
+        expect(image[:filename]).to eq images[i][:filename]
+        expect(image[:thumb]).to eq images[i][:thumb]
+      end
+
+      diff = {
+        :filename => 'test/test_image-diff.png',
+        :thumb    => 'thumbnails/test/test_image-diff.png'
+      }
+
+      expect(dirs['test'][0][:diff][:filename]).to eq 'test/test_image-diff.png'
+      expect(dirs['test'][0][:diff][:thumb]).to eq 'thumbnails/test/test_image-diff.png'
+    end
+  end
+
   describe "When hooking into beforeCapture (CasperJS)" do
     let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--casper.yaml" }
     let(:saving) { Wraith::SaveImages.new(config_name) }
@@ -137,6 +181,7 @@ describe Wraith do
     end
   end
 
+  # @TODO - uncomment and figure out why broken
   # describe "When hooking into beforeCapture (PhantomJS)" do
   #   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   #   let(:saving) { Wraith::SaveImages.new(config_name) }
