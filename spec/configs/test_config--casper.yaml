@@ -1,10 +1,15 @@
+##########
+### NB: the paths in this YAML config are relative to the root of the Wraith directory,
+### as `bundle exec rspec` is run from the root.
+##########
+
 #Headless browser option
 browser:
-  phantomjs: "phantomjs"
+  phantomjs: "casperjs"
   # slimerjs: "slimerjs"
 
 #If you want to have multiple snapping files, set the file name here
-snap_file: "lib/wraith/javascript/snap.js"
+snap_file: "lib/wraith/javascript/casper.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'

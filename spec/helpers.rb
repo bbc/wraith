@@ -20,3 +20,7 @@ def run_js_then_capture(config)
   diff = File.open('shots/test/test.txt', "rb").read
   expect(diff).to eq '0.0'
 end
+
+def get_path_relative_to(current_file, file_to_find)
+  File.expand_path(File.join(File.dirname(current_file), file_to_find))
+end

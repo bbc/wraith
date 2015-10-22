@@ -4,7 +4,7 @@ require "helpers"
 require "./lib/wraith/cli"
 
 describe Wraith do
-  let(:config_name) { "test_config" }
+  let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config.yaml" }
   let(:test_url1) { "http://www.bbc.com/afrique" }
   let(:test_url2) { "http://www.bbc.com/russian" }
   let(:test_image1) { "shots/test/test1.png" }
@@ -102,7 +102,7 @@ describe Wraith do
   end
 
   describe "When hooking into beforeCapture" do
-    let(:config_name) { "test_config--casper" }
+    let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--casper.yaml" }
     let(:saving) { Wraith::SaveImages.new(config_name) }
     let(:wraith) { Wraith::Wraith.new(config_name) }
     let(:selector) { "body" }
