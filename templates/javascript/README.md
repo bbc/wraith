@@ -1,0 +1,1 @@
+These JavaScript files have been provided by Wraith for your benefit, but you are free to edit these or add new JavaScript files if you wish.

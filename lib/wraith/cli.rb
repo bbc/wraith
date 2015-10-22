@@ -19,15 +19,8 @@ class Wraith::CLI < Thor
 
   desc "setup", "creates config folder and default config"
   def setup
-    template("configs/templates/config.yaml", "configs/config.yaml")
-    template("lib/wraith/javascript/snap.js", "javascript/snap.js")
-  end
-
-  desc "setup_casper", "creates config folder and default config for casper"
-  def setup_casper
-    template("configs/templates/component.yaml", "configs/component.yaml")
-    template("lib/wraith/javascript/casper.js", "javascript/casper.js")
-    template("lib/wraith/javascript/beforeCapture.js", "javascript/beforeCapture.js")
+    directory("templates/configs", "configs")
+    directory("templates/javascript", "javascript")
   end
 
   desc "reset_shots [config_name]", "removes all the files in the shots folder"

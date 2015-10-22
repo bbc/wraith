@@ -25,7 +25,7 @@ page.settings.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleW
 // page.customHeaders = {
 
 //      'X-Candy-OVERRIDE': 'https://api.live.bbc.co.uk/'
- 
+
 //  };
 
 // If you want to set a cookie, just add your details below in the following way.
