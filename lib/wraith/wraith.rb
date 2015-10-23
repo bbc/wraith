@@ -10,7 +10,7 @@ class Wraith::Wraith
       @config = YAML.load(File.open("configs/#{config_name}.yaml"))
     end
   rescue
-    puts "unable to find config"
+    puts "unable to find config at #{config_name}"
     exit 1
   end
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/BBC-News/wraith/master/wraith-logo.png">
+  <img src="https://raw.githubusercontent.com/BBC-News/wraith/master/assets/wraith-logo.png">
 </p>
 
 <p align="center">

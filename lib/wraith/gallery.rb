@@ -50,7 +50,7 @@ class Wraith::GalleryGenerator
 
   def matcher(match, filename, dirname, category)
     @size = match[1].split('_')[0]
-    @group = match[2]
+    @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
 
@@ -61,6 +61,16 @@ class Wraith::GalleryGenerator
     size_dict = @dirs[category][@size]
 
     data_group(@group, size_dict, dirname, @filepath)
+  end
+
+  def get_group_from_match(match)
+    group = match[2]
+    dash = match[2].rindex('-')
+
+    if !dash.nil?
+      group = match[2][dash+1..-1]
+    end
+    group
   end
 
   def data_group(group, size_dict, dirname, filepath)

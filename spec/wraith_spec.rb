@@ -4,7 +4,7 @@ require "helpers"
 require "./lib/wraith/cli"
 
 describe Wraith do
-  let(:config_name) { "test_config" }
+  let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   let(:test_url1) { "http://www.bbc.com/afrique" }
   let(:test_url2) { "http://www.bbc.com/russian" }
   let(:test_image1) { "shots/test/test1.png" }
@@ -101,8 +101,40 @@ describe Wraith do
     end
   end
 
-  describe "When hooking into beforeCapture" do
-    let(:config_name) { "test_config--casper" }
+  describe "When generating gallery" do
+    let(:gallery) { Wraith::GalleryGenerator.new(config_name, false) }
+
+    it "should not break when there is a `-` in the filename" do
+      dirs = gallery.parse_directories 'spec/thumbnails'
+
+      images = [
+        {
+          :filename => 'test/test_image-1.png',
+          :thumb    => 'thumbnails/test/test_image-1.png'
+        },
+        {
+          :filename => 'test/test_image-2.png',
+          :thumb    => 'thumbnails/test/test_image-2.png'
+        }
+      ]
+
+      dirs['test'][0][:variants].each_with_index do |image, i|
+        expect(image[:filename]).to eq images[i][:filename]
+        expect(image[:thumb]).to eq images[i][:thumb]
+      end
+
+      diff = {
+        :filename => 'test/test_image-diff.png',
+        :thumb    => 'thumbnails/test/test_image-diff.png'
+      }
+
+      expect(dirs['test'][0][:diff][:filename]).to eq 'test/test_image-diff.png'
+      expect(dirs['test'][0][:diff][:thumb]).to eq 'thumbnails/test/test_image-diff.png'
+    end
+  end
+
+  describe "When hooking into beforeCapture (CasperJS)" do
+    let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--casper.yaml" }
     let(:saving) { Wraith::SaveImages.new(config_name) }
     let(:wraith) { Wraith::Wraith.new(config_name) }
     let(:selector) { "body" }
@@ -112,8 +144,9 @@ describe Wraith do
     it "Executes the global JS before capturing" do
       run_js_then_capture(
         global_js: before_suite_js,
-        path_js: 'false',
-        output_should_look_like: 'spec/base/global.png'
+        path_js:   'false',
+        output_should_look_like: 'spec/base/global.png',
+        engine:    'casperjs'
       )
     end
 
@@ -121,7 +154,8 @@ describe Wraith do
       run_js_then_capture(
         global_js: 'false',
         path_js: before_capture_js,
-        output_should_look_like: 'spec/base/path.png'
+        output_should_look_like: 'spec/base/path.png',
+        engine:    'casperjs'
       )
     end
 
@@ -129,9 +163,47 @@ describe Wraith do
       run_js_then_capture(
         global_js: before_suite_js,
         path_js: before_capture_js,
-        output_should_look_like: 'spec/base/path.png'
+        output_should_look_like: 'spec/base/path.png',
+        engine:    'casperjs'
       )
     end
   end
+
+  # @TODO - uncomment and figure out why broken
+  # describe "When hooking into beforeCapture (PhantomJS)" do
+  #   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
+  #   let(:saving) { Wraith::SaveImages.new(config_name) }
+  #   let(:wraith) { Wraith::Wraith.new(config_name) }
+  #   let(:selector) { "body" }
+  #   let(:before_suite_js) { "../../spec/js/global.js" }
+  #   let(:before_capture_js) { "../../spec/js/path.js" }
+
+  #   it "Executes the global JS before capturing" do
+  #     run_js_then_capture(
+  #       global_js: before_suite_js,
+  #       path_js:   'false',
+  #       output_should_look_like: 'spec/base/global.png',
+  #       engine:    'phantomjs'
+  #     )
+  #   end
+
+  #   it "Executes the path-level JS before capturing" do
+  #     run_js_then_capture(
+  #       global_js: 'false',
+  #       path_js: before_capture_js,
+  #       output_should_look_like: 'spec/base/path.png',
+  #       engine:    'phantomjs'
+  #     )
+  #   end
+
+  #   it "Executes the global JS before the path-level JS" do
+  #     run_js_then_capture(
+  #       global_js: before_suite_js,
+  #       path_js: before_capture_js,
+  #       output_should_look_like: 'spec/base/path.png',
+  #       engine:    'phantomjs'
+  #     )
+  #   end
+  # end
 
 end
