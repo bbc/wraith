@@ -129,13 +129,12 @@ class Wraith::GalleryGenerator
     if @mutli
       return true
     elsif @failed_shots == false
-      puts "Failures detected"
+      puts "Failures detected:"
 
       @dirs.each do |dir, sizes|
         sizes.to_a.sort.each do |size, files|
           if files[:data] > wraith.threshold
-            message = "#{dir.gsub('__', '/')} failed in #{size} size resolution"
-            puts "\e[31m#{message}\e[0m"
+            puts "\t #{dir.gsub('__', '/')} failed at a resolution of #{size} (#{files[:data]}% diff)"
           end
         end
       end
