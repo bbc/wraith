@@ -107,11 +107,11 @@ class Wraith::Wraith
     @config["threshold"] ? @config["threshold"] : 0
   end
 
-  def phantomjs_options
-    @config["phantomjs_options"]
+  def slideshow
+    @config["slideshow"] ? @config["slideshow"] : false 
   end
 
-  def ryan
-    @config["ryan"]
+  def phantomjs_options
+    @config["phantomjs_options"]
   end
 end
