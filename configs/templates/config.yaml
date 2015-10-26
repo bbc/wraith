@@ -41,3 +41,7 @@ spider_days:
 mode: diffs_first
 
 threshold: 5
+
+thumb_width: 200
+thumb_height: 400
+slideshow: true
