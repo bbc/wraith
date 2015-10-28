@@ -77,7 +77,6 @@ There are other commands also available, these all expect a config_name to be pa
   wraith reset_shots [config_name]          # removes all the files in the shots folder
   wraith save_images [config_name]          # captures screenshots
   wraith setup                              # creates config folder and default config
-  wraith setup_casper                       # creates config folder and default config for casper
   wraith setup_folders [config_name]        # create folders for images
 ```
 
