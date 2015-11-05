@@ -20,7 +20,9 @@ Wraith uses a headless browser to create screenshots of webpages on different en
 
 ![Photo of BBC News with a diff](http://bbc-news.github.io/wraith/img/wraith.png)
 
-After each screenshot is captured, the compare task will run, which will output a diff.png and a data.txt. The data.txt for each file will show the percentage of pixels that have changed.
+## Documentation
+
+For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
 
 ### Wraith modes
 
@@ -31,21 +33,14 @@ There are several ways in which Wraith can be used:
     * Running several comparisons at once (`wraith multi_capture`)
 2. Comparing the same domain over time (`wraith history`, then `wraith latest`)
 
-### Can I use it for manual sanity-checks?
+Whichever mode you decide to run Wraith in, the process it follows is generally the same:
 
-Yes - in your YAML configuration file, specify as many webpages as you wish to capture. Wraith will amalgamate all of the captured screenshots and their diffs into an easy-to-view HTML gallery.
-
-The gallery will highlight any screenshots whose diff is above the threshold set in your configuration file.
-
-### Can I use it for automated regression tests on CI?
-
-Yes - Wraith isn't just about manual sanity-checks. If a Wraith comparison generates a diff higher than the threshold you specify in your configuration file, the test will exit with a system error code, causing your build to fail if you introduce a visual regression.
-
-If you're hoping to automate your tests, we strongly recommend you [run Wraith inside Docker](https://hub.docker.com/r/bbcnews/wraith/~/dockerfile/), to guarantee consistency of available system fonts, etc.
-
-## Documentation
-
-For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
+* takes screenshots of your webpages
+* runs a comparison task across them
+* outputs a diff PNG file comparing the two images, and a data.txt file which contains the percentage of pixels that have changed
+* packages all of this up into a gallery.html, ready for you to view
+* if any screenshot's diff is above the threshold you specified in your configuration file, the task exits with a system error code (useful for CI)
+* the failed screenshot will also be highlighted in the gallery
 
 ## Requirements
 
