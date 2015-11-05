@@ -54,6 +54,7 @@ class Wraith::CLI < Thor
 
   desc "save_images [config_name]", "captures screenshots"
   def save_images(config_name, history = false)
+    puts "SAVING IMAGES"
     save_images = Wraith::SaveImages.new(config_name, history)
     save_images.save_images
   end
@@ -66,18 +67,21 @@ class Wraith::CLI < Thor
 
   desc "compare_images [config_name]", "compares images to generate diffs"
   def compare_images(config_name)
+    puts "COMPARING IMAGES"
     compare = Wraith::CompareImages.new(config_name)
     compare.compare_images
   end
 
   desc "generate_thumbnails [config_name]", "create thumbnails for gallery"
   def generate_thumbnails(config_name)
+    puts "GENERATING THUMBNAILS"
     thumbs = Wraith::Thumbnails.new(config_name)
     thumbs.generate_thumbnails
   end
 
   desc "generate_gallery [config_name]", "create page for viewing images"
   def generate_gallery(config_name, multi = false)
+    puts "GENERATING GALLERY"
     gallery = Wraith::GalleryGenerator.new(config_name, multi)
     gallery.generate_gallery
   end
