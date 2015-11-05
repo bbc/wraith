@@ -79,41 +79,33 @@
             </p>
             <p><a class="btn btn-primary btn-lg" href="https://github.com/BBC-News/wraith" target="_blank">Fork on Github »</a></p>
           </div>
-          <h2>Requirements</h2>
-          <!-- <br> -->
+
+
+          <h2>Setup</h2>
+
           <p class="well">
-          <a href="http://phantomjs.org" target="_blank">PhantomJS</a>, <a href="http://casperjs.org" target="_blank">CasperJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a>.  PhantomJS and SlimerJS are the browsers that capture the screenshots, CasperJS is a layer on top of these to aid in target selectors for capturing a particular component.
-          <br>
-          <br>Read <a href="os-install.html">installation instructions for different Operating systems, browsers and software</a>.
+            Wraith relies on various programs (such as ImageMagick and a headless browser such as PhantomJS) for it to function properly. You'll need to <a href="http://bbc-news.github.io/wraith/index.html">follow the instructions for your operating system to install Wraith's dependencies</a>.
+            <br>
+            Once you've done that, you are ready to install the gem:
           </p>
-          <br>
-          <h2>Installation</h2>
-          <!-- <br> -->
+
           <pre>
           <code data-language="ruby">
 gem install wraith
           </code>
           </pre>
-          <br>
-          <h2>Getting Started</h2>
+
           <p class="well note">
-          To create template javascript and config files for use, use the setup command in terminal.  This will create folders in the directory you are in.
+          Wraith is now ready to use. Wraith has some built-in JavaScript and configuration file templates ready for you to get started with right away. The following command will create folders in the directory you are in:
           </p>
           <pre>
           <code data-language="ruby">
 wraith setup
           </code>
           </pre>
-          <p class="well note">
-          To start Wraith, use the capture command, passing the name of your config as an option.
-          </p>
-          <pre>
-          <code data-language="ruby">
-wraith capture configs/component.yaml
-          </code>
-          </pre>
-          <br>
-          <h2>Wraith modes</h2>
+
+          <h2>Using Wraith</h2>
+
           There are few different ways to use Wraith:
 
           <ul>
@@ -138,6 +130,13 @@ wraith capture configs/component.yaml
           <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
           <h3>Standard Mode</h3>
             Standard mode is the simplest to get going with.  Specify 2 domains <a href="configs.html">as shown in the 'standard' example config</a>, some paths on that domain and then run the config. Once set, run the config using the capture command.
+
+          <pre>
+          <code data-language="ruby">
+wraith capture configs/config.yaml
+          </code>
+          </pre>
+
           <h3>Casper Mode</h3>
             CasperJS allows for the targeting of a specific selector on a web page.  This could be used to check style guides, actual components or to ensure your tests don't get affected by other dynamic components.  The config is mostly the same as the standard mode except when setting the paths, this structure is different to allow passing of a selector.  <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.  Run using the wraith capture command.
           <h3>History Mode</h3>
