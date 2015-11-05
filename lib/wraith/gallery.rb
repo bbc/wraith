@@ -53,9 +53,18 @@ class Wraith::GalleryGenerator
     @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
+    @url = ''
 
     if @dirs[category][@size].nil?
       @dirs[category][@size] = { :variants => [] }
+    end
+
+    if @group == "old"
+      @url = wraith.domains["old"] 
+    end
+
+    if @group == "new"
+      @url = wraith.domains["new"]
     end
 
     size_dict = @dirs[category][@size]
@@ -88,7 +97,8 @@ class Wraith::GalleryGenerator
     size_dict[:variants] << {
       :name     => group,
       :filename => @filepath,
-      :thumb    => @thumbnail
+      :thumb    => @thumbnail,
+      :url      => @url 
     }
     size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
   end
@@ -130,7 +140,12 @@ class Wraith::GalleryGenerator
   def generate_gallery(with_path = "")
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
-    generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, with_path)
+    if (wraith.slideshow)
+      slideshow_template = File.expand_path("gallery_template/gallery_template_slideshow.erb", File.dirname(__FILE__))
+      generate_html(@location, directories, slideshow_template, dest, with_path)
+    else
+      generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, with_path)
+    end
     puts "Gallery generated"
     check_failed_shots
   end

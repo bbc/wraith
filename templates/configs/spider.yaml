@@ -1,6 +1,7 @@
 # Add as many domains as necessary. Key will act as a label
 domains:
   my_site:  "http://www.example.com"
+  my_other_site: "http://www.test.example.com"
 
 # Notice the absence of a `paths` property. When no paths are provided, Wraith defaults to
 # spidering mode to check your entire website.
