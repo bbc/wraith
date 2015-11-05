@@ -36,8 +36,24 @@ class Wraith::SaveImages
     parallel_task(jobs)
   end
 
+  def engine_from_browser(snap_file)
+    case snap_file
+    when "phantom"
+      "phantomjs"
+    when "phantom--nojs"
+      "phantomjs"
+    when "casper"
+      "casperjs"
+    # @TODO - add a SlimerJS option
+    else
+      abort "Wraith does not know which browser engine to use for browser '#{snap_file}'"
+    end
+  end
+
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
-    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+
+    engine = engine_from_browser browser
+    command = "#{engine} #{wraith.phantomjs_options} 'javascript/#{browser}.js' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
     # puts command
