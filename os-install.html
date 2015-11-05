@@ -130,6 +130,11 @@ C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
           <p class="well">
 If ImageMagick is not in your PATH (but you have it installed), you will need to add it in. <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx" target="_blank">Follow these instructions to add in the path to where you have ImageMagick installed</a>.
           </p>
+
+          <p class="well">
+          <b>Warning:</b> if your Windows machine uses Nvidia's Optimus drivers, PhantomJS will hang.  The Optimus driver fails to automatically determine which video card should be used for the program.  You will need to <a href="https://code.google.com/p/phantomjs/issues/detail?id=845#c26">force the graphics driver to use one of your video cards</a>.
+          </p>
+
           <br>
           <h3>Ubuntu</h3>
           <p class="well">
@@ -145,9 +150,6 @@ rake
           <p class="well">
           ...and then download the PhantomJS binary package from
           <a href="http://phantomjs.org/" target="_blank">http://phantomjs.org/</a> (or install with NPM).</p>
-		  <p class="well">
-		  If your Windows machine uses Nvidia's Optimus drivers, PhantomJS will hang.  The Optimus driver fails to automatically determine which video card should be used for the program.  You will need to <a href="https://code.google.com/p/phantomjs/issues/detail?id=845#c26">force the graphics driver to use one of your video cards</a>.
-		  </p>
 
     <!-- Le javascript
     ================================================== -->
