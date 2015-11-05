@@ -11,7 +11,7 @@ class Wraith::GalleryGenerator
   def initialize(config, multi)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
-    @mutli = multi
+    @multi = multi
     @folder_manager = Wraith::FolderManager.new(config)
   end
 
@@ -147,15 +147,18 @@ class Wraith::GalleryGenerator
   end
 
   def check_failed_shots
-    if @mutli
+    if @multi
       return true
     elsif @failed_shots == false
       puts "Failures detected:"
 
       @dirs.each do |dir, sizes|
         sizes.to_a.sort.each do |size, files|
-          if files[:data] > wraith.threshold
-            puts "\t #{dir.gsub('__', '/')} failed at a resolution of #{size} (#{files[:data]}% diff)"
+          file = dir.gsub('__', '/')
+          if !files.include?(:diff)
+            puts "\t Unable to create a diff image for #{file}"
+          elsif files[:data] > wraith.threshold
+            puts "\t #{file} failed at a resolution of #{size} (#{files[:data]}% diff)"
           end
         end
       end

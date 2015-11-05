@@ -78,7 +78,9 @@ class Wraith::FolderManager
     dirs.each do |_folder_name, shot_info|
       shot_info.each do |_k, v|
         begin
-          if v[:data] > wraith.threshold
+          if !v.include?(:diff)
+            return false
+          elsif v[:data] > wraith.threshold
             return false
           end
         rescue
