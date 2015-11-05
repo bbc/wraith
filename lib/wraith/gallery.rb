@@ -49,7 +49,7 @@ class Wraith::GalleryGenerator
   end
 
   def matcher(match, filename, dirname, category)
-    @size = match[1].to_i
+    @size = match[1].split('_')[0]
     @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
@@ -139,7 +139,16 @@ class Wraith::GalleryGenerator
     if @mutli
       return true
     elsif @failed_shots == false
-      puts "Failures detected"
+      puts "Failures detected:"
+
+      @dirs.each do |dir, sizes|
+        sizes.to_a.sort.each do |size, files|
+          if files[:data] > wraith.threshold
+            puts "\t #{dir.gsub('__', '/')} failed at a resolution of #{size} (#{files[:data]}% diff)"
+          end
+        end
+      end
+
       exit 1
     else
       true
