@@ -83,14 +83,6 @@ class Wraith::Wraith
     @config["fuzz"]
   end
 
-  def thumb_height
-    @config["thumb_height"] ? @config["thumb_height"] : 200
-  end
-
-  def thumb_width
-    @config["thumb_width"] ? @config["thumb_width"] : 200
-  end
-
   def highlight_color
     @config["highlight_color"] ? @config["highlight_color"] : "blue"
   end
@@ -107,8 +99,31 @@ class Wraith::Wraith
     @config["threshold"] ? @config["threshold"] : 0
   end
 
-  def slideshow
-    @config["slideshow"] ? @config["slideshow"] : false 
+  def gallery_template
+    default = 'basic_template'
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["template"] || default
+    end
+  end
+
+  def thumb_height
+    default = 200
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["thumb_height"] || default
+    end
+  end
+
+  def thumb_width
+    default = 200
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["thumb_width"] || default
+    end
   end
 
   def phantomjs_options

@@ -8,9 +8,6 @@ class Wraith::GalleryGenerator
 
   MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
 
-  TEMPLATE_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
-  TEMPLATE_BY_DOMAIN_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
-
   def initialize(config, multi)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
@@ -140,12 +137,11 @@ class Wraith::GalleryGenerator
   def generate_gallery(with_path = "")
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
-    if (wraith.slideshow)
-      slideshow_template = File.expand_path("gallery_template/gallery_template_slideshow.erb", File.dirname(__FILE__))
-      generate_html(@location, directories, slideshow_template, dest, with_path)
-    else
-      generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, with_path)
-    end
+
+    slideshow_template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
+
+    generate_html(@location, directories, slideshow_template, dest, with_path)
+
     puts "Gallery generated"
     check_failed_shots
   end
