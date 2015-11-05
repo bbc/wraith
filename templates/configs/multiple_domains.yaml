@@ -45,6 +45,11 @@ history_dir: 'shots_base'
 # the directory that your latest screenshots will be stored in
 directory: 'shots'
 
+gallery:
+  template: 'slideshow_template' # 'basic_template' (default)
+  thumb_width: 200
+  thumb_height: 200
+
 # choose how results are displayed in the gallery (default is `alphanumeric` if omitted)
 # Different screen widths are always grouped together.
 # Options:
