@@ -24,7 +24,9 @@ Wraith uses a headless browser to create screenshots of webpages on different en
 
 For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
 
-### Wraith modes
+A brief overview of how Wraith works is provided below.
+
+## Wraith modes
 
 There are several ways in which Wraith can be used:
 
@@ -50,7 +52,7 @@ Wraith also requires at least one of these headless browsers:
 
 * [PhantomJS](http://phantomjs.org)
 * [CasperJS](http://casperjs.org/) (which can be used to target specific selectors)
-* [SlimerJS](http://slimerjs.org).
+* [SlimerJS](http://slimerjs.org)
 
 ## Contributing
 
