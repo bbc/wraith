@@ -35,6 +35,19 @@ class Wraith::CLI < Thor
     create.create_folders
   end
 
+  desc "make_sure_base_shots_exists [config_name]", "warns user if config is missing base shots"
+  def make_sure_base_shots_exists(config_name)
+    wraith = Wraith::Wraith.new(config_name)
+    if wraith.history_dir.nil?
+      puts "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
+      exit 1
+    end
+    if !File.directory?(wraith.history_dir)
+      puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
+      exit 1
+    end
+  end
+
   no_commands do
     def check_for_paths(config_name)
       spider = Wraith::Spidering.new(config_name)
@@ -117,6 +130,7 @@ class Wraith::CLI < Thor
 
   desc "latest [config_name]", "Capture new shots to compare with baseline"
   def latest(config)
+    make_sure_base_shots_exists(config)
     reset_shots(config)
     restore_shots(config)
     save_images(config, true)
