@@ -49,7 +49,7 @@ class Wraith::GalleryGenerator
   end
 
   def matcher(match, filename, dirname, category)
-    @size = match[1].split('_')[0]
+    @size = match[1].to_i
     @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
