@@ -247,6 +247,22 @@ Wraith allows for most of the commands to be used individually, allowing you per
           <br>
           A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
           </p>
+
+          <p class="well">
+          As of <a href="https://github.com/BBC-News/wraith/releases/tag/v2.8.0">Wraith version 2.8.0</a>, there are now multiple gallery templates for you to choose from. The basic template is the default one and is simply a list of thumbnails sat side by side. The slideshow template is a new one and gives a more managable way of comparing thumbnails (including seeing everything at once in a lightbox), but is still under development and so is not the default yet.
+          <br>
+          <br>
+          You can choose your template, as well as the size of the generated thumbnails, by specifying the following config:
+          </p>
+
+          <pre><code data-language="yaml">
+# this property and its sub-properties are all optional
+gallery:
+  template: 'slideshow_template' # or 'basic_template' (which is the default)
+  thumb_width: 200 # default
+  thumb_height: 200 # default
+          </code></pre>
+
           <br>
           <p class="well">
           If you are new to ruby, rake and PhantomJS, <a href="http://www.youtube.com/watch?v=gE_19L0l2q0" target="_blank">here is a great screencast</a> about how to use Wraith by <a href="https://twitter.com/klamping" target="_blank">Kevin Lamping</a>
