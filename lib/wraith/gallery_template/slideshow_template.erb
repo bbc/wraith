@@ -138,10 +138,10 @@
       })
 
       $('.compare').unbind().on('click', function(){
-        var slide = $(this).closest(".slide");
-        newImage = '../shots/' + slide.find('a.shot:eq(0)').attr('href'),
-        oldImage = '../shots/' + slide.find('a.shot:eq(1)').attr('href');
-        diffImage = '../shots/' + slide.find('a.shot:eq(2)').attr('href');
+        var slide = $(this).closest(".slide"),
+            newImage = slide.find('a.shot:eq(0)').attr('href'),
+            oldImage = slide.find('a.shot:eq(1)').attr('href'),
+            diffImage = slide.find('a.shot:eq(2)').attr('href');
         $('.container').append('<div class="compare-modal"><div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
         $('.compare-modal').unbind().on('click', function(){
           $(this).remove();

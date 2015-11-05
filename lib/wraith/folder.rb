@@ -41,9 +41,13 @@ class Wraith::FolderManager
     end
   end
 
-  def restore_shots
-    puts "restoring"
-    FileUtils.cp_r(Dir.glob("#{history_dir}/*"), dir)
+  def copy_base_images
+    puts "COPYING BASE IMAGES"
+    wraith.paths.each do |path|
+      path = path[0]
+      puts "Copying #{history_dir}/#{path} to #{dir}"
+      FileUtils.cp_r(Dir.glob("#{history_dir}/#{path}"), dir)
+    end
   end
 
   def create_folders

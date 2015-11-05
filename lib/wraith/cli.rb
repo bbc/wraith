@@ -35,6 +35,12 @@ class Wraith::CLI < Thor
     create.create_folders
   end
 
+  desc "copy_base_images [config_name]", "copies the required base images over for comparison with latest images"
+  def copy_base_images(config_name)
+    copy = Wraith::FolderManager.new(config_name)
+    copy.copy_base_images
+  end
+
   desc "make_sure_base_shots_exists [config_name]", "warns user if config is missing base shots"
   def make_sure_base_shots_exists(config_name)
     wraith = Wraith::Wraith.new(config_name)
@@ -57,11 +63,6 @@ class Wraith::CLI < Thor
     def copy_old_shots(config_name)
       create = Wraith::FolderManager.new(config_name)
       create.copy_old_shots
-    end
-
-    def restore_shots(config_name)
-      create = Wraith::FolderManager.new(config_name)
-      create.restore_shots
     end
   end
 
@@ -132,8 +133,8 @@ class Wraith::CLI < Thor
   def latest(config)
     make_sure_base_shots_exists(config)
     reset_shots(config)
-    restore_shots(config)
     save_images(config, true)
+    copy_base_images(config)
     crop_images(config)
     compare_images(config)
     generate_thumbnails(config)
