@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js"></script>
+  <style type="text/css">
+    body {
+      position: relative;
+      float: left;
+      width: 100%;
+    }
+    .slideshow {
+      height: 510px;
+      margin: 20px 0;
+    }
+    .slide {
+      background-color: #FFF !important;
+      width: 100% !important;
+      height: 510px !important;
+    }
+    .prev {
+      margin-left: -10px;
+      margin-right: 10px;
+    }
+    .next,
+    .prev {
+      cursor: pointer;
+      background-color: #e7e7e7;
+      border: 2px solid #eee;
+      height: 400px;
+      margin-top: 60px;
+    }
+
+    .prev span:before,
+    .next span:before {
+      font-size: 35px;
+      padding: 10px;
+      display: block;
+      font-family: "FontAwesome";
+      margin-top: 165px;
+      display: block;
+    }
+
+    .prev span:before {
+      content:"\f0d9";
+    }
+    .next span:before {
+      content:"\f0da";
+    }
+    .list-group-item.checked a:after {
+      color: #23e343;
+    }
+    .list-group-item a span {
+      word-wrap: break-word;
+      width: 95%;
+      display: block;
+    }
+    .list-group-item a:after {
+      content:"\f00c";
+      font-family: "FontAwesome";
+      color: #eae6e6;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    .checked a {
+      color: #000;
+    }
+    .current {
+      background-color: #e7e7e7;
+    }
+    .threshold {
+      color: red;
+    }
+    .compare {
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .compare:before {
+      font-family: "FontAwesome";
+      content:"\f0c5";
+      font-size: 30px;
+    }
+    .compare-modal {
+      position:fixed;
+      margin:0;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      background:rgba(0,0,0,0.7);
+      overflow: scroll;
+      z-index: 1000;
+    }
+    .compare-container {
+      padding-bottom: 300px;
+      z-index: 1000;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .compare-container img{
+      margin-right: 20px;
+      max-width: 30%;
+    }
+  </style>
+  <script type="text/javascript">
+    $(function() {
+      $('.slideshow').cycle({
+        fx:     'cover',
+        prev:   '.prev',
+        next:   '.next',
+        before: function (curr, next, opts) {
+          $('.current').removeClass('current');
+          var path = $(next).find('.path').attr('name');
+          $.each($('.list-group .list-group-item a'), function() {
+            if ($(this).attr('href').substring(1) == path) {
+              $(this).parent().addClass('checked');
+              $(this).parent().addClass('current');
+            }
+          })
+        },
+        timeout: 0
+      });
+
+      $('.list-group .list-group-item a').unbind().on('click', function(){
+        var href = $(this).attr('href').substring(1);
+
+        $('.slideshow').cycle($('.slide.'+href+':first').index());
+      })
+
+      $('.shot').unbind().on('click', function(e){
+        e.preventDefault();
+        var url = $(this).attr('href');
+        window.open(url,'_blank');
+      })
+
+      $('.compare').unbind().on('click', function(){
+        var slide = $(this).closest(".slide"),
+            newImage = slide.find('a.shot:eq(0)').attr('href'),
+            oldImage = slide.find('a.shot:eq(1)').attr('href'),
+            diffImage = slide.find('a.shot:eq(2)').attr('href');
+        $('.container').append('<div class="compare-modal"><div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
+        $('.compare-modal').unbind().on('click', function(){
+          $(this).remove();
+        })
+      })
+    })
+</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-3">
+        <div class="panel">
+          <div class="page-header">
+            <h4>List of screenshots for <%= location %> <small>taken <%= Time.now.strftime('%Y/%m/%d %H:%M:%S') %></small></h4>
+          </div>
+          <div class="panel-heading">Pages:</div>
+          <ul class="list-group list-group-flush">
+            <% directories.keys.each do |dir| %>
+            <li class="list-group-item"><a href="#<%=path%><%=dir%>"><span>/<%=dir.gsub('__', '/')%></span></a></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-9">
+        <div class="slideshow-container">
+          <div class="prev col-sm-1"><span></span></div>
+          <div class="slideshow pull-left col-sm-10">
+            <% directories.each do |dir, sizes| %>
+            <% sizes.to_a.sort.each do |size, files| %>
+            <div class="row slide <%= dir %>">
+              <a class="path" name="<%= dir %>"></a>
+              <div class="col-sm-12 text-center">
+                <% if threshold.nil? %>
+                <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                <% else %>
+                <% if files[:data] > threshold %>
+                <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                <% else %>
+                <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                <% end %>
+                <% end %>
+              </div>
+              <% files[:variants].each do |file| %>
+              <div class="col-sm-4">
+                <a class="shot" href="<%=file[:filename]%>">
+                  <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
+                </a>
+                <p class="text-center"><a target="_blank" href="<%=file[:url]%>"><%=file[:name]%></a></p>
+              </div>
+              <% end %>
+              <div class="col-sm-4">
+                <% if files[:diff] %>
+                <a class="shot" href="<%=files[:diff][:filename]%>">
+                  <img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
+                </a>
+                <% end %>
+                <p class="text-center">diff</p>
+              </div>
+              <div class="difference col-sm-12">
+                <% if threshold.nil? %>
+                <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                <% else %>
+                <% if files[:data] > threshold %>
+                <h4 class="text-center threshold"><%=files[:data]%> % different<span class="compare"></span></h4>
+                <% else %>
+                <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                <% end %>
+                <% end %>
+              </div>
+            </div>
+            <% end %>
+            <% end %>
+          </div>
+          <div class="next col-sm-1"><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

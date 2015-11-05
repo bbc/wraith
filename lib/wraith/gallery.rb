@@ -8,13 +8,10 @@ class Wraith::GalleryGenerator
 
   MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
 
-  TEMPLATE_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
-  TEMPLATE_BY_DOMAIN_LOCATION = File.expand_path("gallery_template/gallery_template.erb", File.dirname(__FILE__))
-
   def initialize(config, multi)
     @wraith = Wraith::Wraith.new(config)
     @location = wraith.directory
-    @mutli = multi
+    @multi = multi
     @folder_manager = Wraith::FolderManager.new(config)
   end
 
@@ -53,6 +50,7 @@ class Wraith::GalleryGenerator
     @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
+    @url = figure_out_url @group, category
 
     if @dirs[category][@size].nil?
       @dirs[category][@size] = { :variants => [] }
@@ -61,6 +59,14 @@ class Wraith::GalleryGenerator
     size_dict = @dirs[category][@size]
 
     data_group(@group, size_dict, dirname, @filepath)
+  end
+
+  def figure_out_url(group, category)
+    root = wraith.domains["#{group}"]
+    return '' if root.nil?
+    path = wraith.paths["#{category}"]['path']
+    url  = root + path
+    url
   end
 
   def get_group_from_match(match)
@@ -88,7 +94,8 @@ class Wraith::GalleryGenerator
     size_dict[:variants] << {
       :name     => group,
       :filename => @filepath,
-      :thumb    => @thumbnail
+      :thumb    => @thumbnail,
+      :url      => @url
     }
     size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
   end
@@ -130,16 +137,32 @@ class Wraith::GalleryGenerator
   def generate_gallery(with_path = "")
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
-    generate_html(@location, directories, TEMPLATE_BY_DOMAIN_LOCATION, dest, with_path)
+
+    slideshow_template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
+
+    generate_html(@location, directories, slideshow_template, dest, with_path)
+
     puts "Gallery generated"
     check_failed_shots
   end
 
   def check_failed_shots
-    if @mutli
+    if @multi
       return true
     elsif @failed_shots == false
-      puts "Failures detected"
+      puts "Failures detected:"
+
+      @dirs.each do |dir, sizes|
+        sizes.to_a.sort.each do |size, files|
+          file = dir.gsub('__', '/')
+          if !files.include?(:diff)
+            puts "\t Unable to create a diff image for #{file}"
+          elsif files[:data] > wraith.threshold
+            puts "\t #{file} failed at a resolution of #{size} (#{files[:data]}% diff)"
+          end
+        end
+      end
+
       exit 1
     else
       true

@@ -99,6 +99,33 @@ class Wraith::Wraith
     @config["threshold"] ? @config["threshold"] : 0
   end
 
+  def gallery_template
+    default = 'basic_template'
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["template"] || default
+    end
+  end
+
+  def thumb_height
+    default = 200
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["thumb_height"] || default
+    end
+  end
+
+  def thumb_width
+    default = 200
+    if @config["gallery"].nil?
+      default
+    else
+      @config["gallery"]["thumb_width"] || default
+    end
+  end
+
   def phantomjs_options
     @config["phantomjs_options"]
   end

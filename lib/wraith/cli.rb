@@ -35,6 +35,25 @@ class Wraith::CLI < Thor
     create.create_folders
   end
 
+  desc "copy_base_images [config_name]", "copies the required base images over for comparison with latest images"
+  def copy_base_images(config_name)
+    copy = Wraith::FolderManager.new(config_name)
+    copy.copy_base_images
+  end
+
+  desc "make_sure_base_shots_exists [config_name]", "warns user if config is missing base shots"
+  def make_sure_base_shots_exists(config_name)
+    wraith = Wraith::Wraith.new(config_name)
+    if wraith.history_dir.nil?
+      puts "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
+      exit 1
+    end
+    if !File.directory?(wraith.history_dir)
+      puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
+      exit 1
+    end
+  end
+
   no_commands do
     def check_for_paths(config_name)
       spider = Wraith::Spidering.new(config_name)
@@ -45,15 +64,11 @@ class Wraith::CLI < Thor
       create = Wraith::FolderManager.new(config_name)
       create.copy_old_shots
     end
-
-    def restore_shots(config_name)
-      create = Wraith::FolderManager.new(config_name)
-      create.restore_shots
-    end
   end
 
   desc "save_images [config_name]", "captures screenshots"
   def save_images(config_name, history = false)
+    puts "SAVING IMAGES"
     save_images = Wraith::SaveImages.new(config_name, history)
     save_images.save_images
   end
@@ -66,18 +81,21 @@ class Wraith::CLI < Thor
 
   desc "compare_images [config_name]", "compares images to generate diffs"
   def compare_images(config_name)
+    puts "COMPARING IMAGES"
     compare = Wraith::CompareImages.new(config_name)
     compare.compare_images
   end
 
   desc "generate_thumbnails [config_name]", "create thumbnails for gallery"
   def generate_thumbnails(config_name)
+    puts "GENERATING THUMBNAILS"
     thumbs = Wraith::Thumbnails.new(config_name)
     thumbs.generate_thumbnails
   end
 
   desc "generate_gallery [config_name]", "create page for viewing images"
   def generate_gallery(config_name, multi = false)
+    puts "GENERATING GALLERY"
     gallery = Wraith::GalleryGenerator.new(config_name, multi)
     gallery.generate_gallery
   end
@@ -113,9 +131,10 @@ class Wraith::CLI < Thor
 
   desc "latest [config_name]", "Capture new shots to compare with baseline"
   def latest(config)
+    make_sure_base_shots_exists(config)
     reset_shots(config)
-    restore_shots(config)
     save_images(config, true)
+    copy_base_images(config)
     crop_images(config)
     compare_images(config)
     generate_thumbnails(config)

@@ -41,9 +41,13 @@ class Wraith::FolderManager
     end
   end
 
-  def restore_shots
-    puts "restoring"
-    FileUtils.cp_r(Dir.glob("#{history_dir}/*"), dir)
+  def copy_base_images
+    puts "COPYING BASE IMAGES"
+    wraith.paths.each do |path|
+      path = path[0]
+      puts "Copying #{history_dir}/#{path} to #{dir}"
+      FileUtils.cp_r(Dir.glob("#{history_dir}/#{path}"), dir)
+    end
   end
 
   def create_folders
@@ -74,7 +78,9 @@ class Wraith::FolderManager
     dirs.each do |_folder_name, shot_info|
       shot_info.each do |_k, v|
         begin
-          if v[:data] > wraith.threshold
+          if !v.include?(:diff)
+            return false
+          elsif v[:data] > wraith.threshold
             return false
           end
         rescue

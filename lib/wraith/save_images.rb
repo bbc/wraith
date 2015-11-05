@@ -37,10 +37,21 @@ class Wraith::SaveImages
   end
 
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
-    puts `"#{browser}" #{wraith.phantomjs_options} "#{wraith.snap_file}" "#{url}" "#{width}" "#{file_name}" "#{selector}" "#{global_before_capture}" "#{path_before_capture}"`
+    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+
+    # @TODO - uncomment the following line when we add a verbose mode
+    # puts command
+    run_command command
   end
 
-  private
+  def run_command(command)
+    output = []
+    IO.popen(command).each do |line|
+      puts line
+      output << line.chomp!
+    end.close
+    output
+  end
 
   def parallel_task(jobs)
     Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
