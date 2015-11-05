@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js"></script>
   <style type="text/css">
@@ -110,7 +111,7 @@
       $('.slideshow').cycle({
         fx:     'cover',
         prev:   '.prev',
-        next:   '.next', 
+        next:   '.next',
         before: function (curr, next, opts) {
           $('.current').removeClass('current');
           var path = $(next).find('.path').attr('name');
@@ -121,7 +122,7 @@
             }
           })
         },
-        timeout: 0 
+        timeout: 0
       });
 
       $('.list-group .list-group-item a').unbind().on('click', function(){
@@ -189,7 +190,7 @@
                 <a class="shot" href="<%=file[:filename]%>">
                   <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
                 </a>
-                <p class="text-center"><a target="_blank" href="<%=file[:url]%>/<%= dir.gsub('__', '/')%>"><%=file[:name]%></a></p>
+                <p class="text-center"><a target="_blank" href="<%=file[:url]%>"><%=file[:name]%></a></p>
               </div>
               <% end %>
               <div class="col-sm-4">

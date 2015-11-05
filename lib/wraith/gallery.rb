@@ -53,23 +53,23 @@ class Wraith::GalleryGenerator
     @group = get_group_from_match match
     @filepath = category + "/" + filename
     @thumbnail = "thumbnails/#{category}/#{filename}"
-    @url = ''
+    @url = figure_out_url @group, category
 
     if @dirs[category][@size].nil?
       @dirs[category][@size] = { :variants => [] }
     end
 
-    if @group == "old"
-      @url = wraith.domains["old"] 
-    end
-
-    if @group == "new"
-      @url = wraith.domains["new"]
-    end
-
     size_dict = @dirs[category][@size]
 
     data_group(@group, size_dict, dirname, @filepath)
+  end
+
+  def figure_out_url(group, category)
+    root = wraith.domains["#{group}"]
+    return '' if root.nil?
+    path = wraith.paths["#{category}"]['path']
+    url  = root + path
+    url
   end
 
   def get_group_from_match(match)
@@ -98,7 +98,7 @@ class Wraith::GalleryGenerator
       :name     => group,
       :filename => @filepath,
       :thumb    => @thumbnail,
-      :url      => @url 
+      :url      => @url
     }
     size_dict[:variants].sort! { |a, b| a[:name] <=> b[:name] }
   end
