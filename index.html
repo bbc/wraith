@@ -57,7 +57,8 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class="active"><a href="index.html">Main Documentation</a></li>
-      <li class><a href="os-install.html">Requirements Installation</a></li>
+      <li class><a href="os-install.html">Installation</a></li>
+      <li class><a href="configs.html">Example Configs</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -136,13 +137,13 @@ wraith capture configs/component.yaml
           <br>
           <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
           <h3>Standard Mode</h3>
-            Standard mode is the simplest to get going with.  Specify 2 domains as shown in this <a href="standard.html" target="_blank">this example config</a>, some paths on that domain and then run the config. Once set, run the config using the capture command.
+            Standard mode is the simplest to get going with.  Specify 2 domains <a href="configs.html">as shown in the 'standard' example config</a>, some paths on that domain and then run the config. Once set, run the config using the capture command.
           <h3>Casper Mode</h3>
-            CasperJS allows for the targeting of a specific selector on a web page.  This could be used to check style guides, actual components or to ensure your tests don't get affected by other dynamic components.  The config is mostly the same as the standard mode except when setting the paths, this structure is different to allow passing of a selector.  <a href="component.html" target="_blank">In the example config</a>, you can see how we specify a component name, domain path and selector we want to capture.  Run using the wraith capture command.
+            CasperJS allows for the targeting of a specific selector on a web page.  This could be used to check style guides, actual components or to ensure your tests don't get affected by other dynamic components.  The config is mostly the same as the standard mode except when setting the paths, this structure is different to allow passing of a selector.  <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.  Run using the wraith capture command.
           <h3>History Mode</h3>
             In Wraith 2.0 we introduced a new way for using Wraith in development and testing, historical shots. Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare. This makes working against an isolated dev environment much easier.
 
-The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder. Specify a history_dir in addition to the directory key in your config.yml file. An example of this can be <a href="history.html" target="_blank">found here</a>.
+The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder. Specify a history_dir in addition to the directory key in your config.yml file. An example of this can be <a href="configs.html">found in the 'history' example config</a>.
 <br>
 Shots are captured as normal with the history command.
 <br>
@@ -161,7 +162,7 @@ This will create 2 folders with the labels you have specified in the config file
   </code>
 </pre>
           <h3>Spidering Mode</h3>
-          If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml.  There are other spidering options too, including a spider file and regexs.  An example config can be seen <a href="spider.html" target="_blank">here</a>
+          If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml.  There are other spidering options too, including a spider file and regexs.  <a href="configs.html">See the 'spider' example config.</a>
           <p>
           <br>
 
@@ -226,7 +227,7 @@ Wraith allows for most of the commands to be used individually, allowing you per
   wraith setup_folders [config_name]        # create folders for images
 		  </code>
           </pre>
-          <h2>Gallery & Output</h2>
+          <h2>Gallery &amp; Output</h2>
           <p class="well">
           After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.
           <br>
@@ -237,25 +238,7 @@ Wraith allows for most of the commands to be used individually, allowing you per
           <p class="well">
           If you are new to ruby, rake and PhantomJS, <a href="http://www.youtube.com/watch?v=gE_19L0l2q0" target="_blank">here is a great screencast</a> about how to use Wraith by <a href="https://twitter.com/klamping" target="_blank">Kevin Lamping</a>
           </p>
-          <h2>Contributing</h2>
-          <p class="well">
-          If you want to add functionality to this project, pull requests are welcome.
-          <br>
-          <br>
-          - Create a branch based off master and do all of your changes with in it
-          <br>
-          - If you have to pause to add a 'and' anywhere in the title, it should be two pull requests.
-          <br>
-          - Make commits of logical units and describe them properly
-          <br>
-          - Check for unnecessary whitespace with git diff --check before committing.
-          <br>
-          - If possible, submit tests to your patch / new feature so it can be tested easily.
-          <br>
-          - Assure nothing is broken by running all the test
-          <br>
-          - Please make sure that it complies with coding standards.
-          </p>
+
 		<h2>Copyright</h2>
         <p class="well">
             Copyright © BBC

@@ -58,7 +58,8 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class><a href="index.html">Main Documentation</a></li>
-      <li class="active"><a href="os-install.html">Requirements Installation</a></li>
+      <li class="active"><a href="os-install.html">Installation</a></li>
+      <li class><a href="configs.html">Example Configs</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -71,30 +72,41 @@
           </div><!--/.well -->
         </div><!--/span-->
         <div class="col-sm-9 col-md-9">
-          <h2>Installation</h2>
+          <h2>Requirements</h2>
           <!-- <br> -->
           <p class="well">
-          <a href="http://phantomjs.org" target="_blank">PhantomJS</a>, <a href="http://casperjs.org" target="_blank">CasperJS</a> or <a href="http://slimerjs.org" target="_blank">SlimerJS</a>, <a href="http://www.imagemagick.org/" target="_blank">Imagemagick</a>  and <a href="https://www.ruby-lang.org" target="_blank">Ruby</a>
-          <br>
-          <br>
-          It's up to you to decide which browser engine you want to run it against, PhantomJS is a more widely used option as it runs headlessly.
+            <ul>
+              <li><a href="https://www.ruby-lang.org" target="_blank">Ruby</a></li>
+              <li><a href="http://www.imagemagick.org/" target="_blank">ImageMagick</a></li>
+              <li>At least one of:
+                <ul>
+                  <li><a href="http://phantomjs.org" target="_blank">PhantomJS</a></li>
+                  <li><a href="http://casperjs.org" target="_blank">CasperJS</a></li>
+                  <li><a href="http://slimerjs.org" target="_blank">SlimerJS</a></li>
+                </ul>
+              </li>
+            </ul>
+            <br>
+            <br>
+            It's up to you to decide which browser engine you want to run it against. PhantomJS and SlimerJS are the browsers that capture the screenshots, CasperJS is a layer on top of these to aid in target selectors for capturing a particular component.
           </p>
           <br>
-          <h2>OSX</h2>
+          <h2>Installation</h2>
+          <h3>OSX</h3>
           <p class="well">
-          On Mac OS X, the best way to install dependencies is if you have <a href="http://brew.sh" target="_blank">Homebrew</a>
-          It is the quickest way to install PhantomJS & ImageMagick.
+          On Mac OS X, the best way to install dependencies is if you have <a href="http://brew.sh" target="_blank">Homebrew</a>.
+          It is the quickest way to install PhantomJS &amp; ImageMagick.
           <pre>
           <code data-language="ruby">
 brew install imagemagick
-brew install phantomjs or brew install slimerjs
+brew install phantomjs # or `brew install casperjs` or `brew install slimerjs`
           </code>
           </pre>
           <br>
-          <h2>Windows</h2>
+          <h3>Windows</h3>
           <p class="well">
 
-          On Windows it's important to install ImageMagick from the binary found <a href="http://www.imagemagick.org/script/binary-releases.php#windows" target="_blank">here.</a>
+          On Windows it's important to <a href="http://www.imagemagick.org/script/binary-releases.php#windows" target="_blank">install ImageMagick from the Windows binary</a>.</a>
           <br>
           <br>
           This will ensure that ImageMagick is listed first in your PATH.
@@ -114,13 +126,10 @@ C:\Program Files\ImageMagick-6.8.7-Q16;C:\Windows\system32;C:\Windows...
           </code>
           </pre>
           <p class="well">
-If ImageMagick is in your path but not listed first you can edit your path by following the instructions <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx" target="_blank">here.</a>
-
-If ImageMagick is not in your PATH at all but you have it installed you will need to add it in. Follow the instructions from the link above and add in the path to where you have ImageMagick installed. For example C:\Program Files\ImageMagick-6.8.7-Q16;
-Make sure the version number and location are correct for your system.
+If ImageMagick is not in your PATH (but you have it installed), you will need to add it in. <a href="http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx" target="_blank">Follow these instructions to add in the path to where you have ImageMagick installed</a>.
           </p>
           <br>
-          <h2>Ubuntu</h2>
+          <h3>Ubuntu</h3>
           <p class="well">
           On Ubuntu 12.04, you will need to apt-get the following packages:
           <pre>
@@ -132,10 +141,10 @@ rake
           </pre>
 
           <p class="well">
-          And then download the PhantomJS binary package from
-          <a href="http://phantomjs.org/" target="_blank">http://phantomjs.org/</a>.</p>
+          ...and then download the PhantomJS binary package from
+          <a href="http://phantomjs.org/" target="_blank">http://phantomjs.org/</a> (or install with NPM).</p>
 		  <p class="well">
-		  If your Windows machine uses Nvidia's Optimus drivers, PhantomJS will hang.  The Optimus driver fails to automatically determine which video card should be used for the program.  You will need to force the graphics driver to use one of your video cards (<a href="https://code.google.com/p/phantomjs/issues/detail?id=845#c26">details and instructions</a>).
+		  If your Windows machine uses Nvidia's Optimus drivers, PhantomJS will hang.  The Optimus driver fails to automatically determine which video card should be used for the program.  You will need to <a href="https://code.google.com/p/phantomjs/issues/detail?id=845#c26">force the graphics driver to use one of your video cards</a>.
 		  </p>
 
     <!-- Le javascript
