@@ -23,8 +23,8 @@ class Wraith::Wraith
     @config["history_dir"]
   end
 
-  def snap_file
-    @config["snap_file"] ? @config["snap_file"] : File.expand_path("lib/wraith/javascript/snap.js")
+  def engine
+    @config["browser"]
   end
 
   def before_capture
@@ -73,10 +73,6 @@ class Wraith::Wraith
 
   def paths
     @config["paths"]
-  end
-
-  def engine
-    @config["browser"]
   end
 
   def fuzz
