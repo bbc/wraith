@@ -49,7 +49,9 @@
             <a href="<%=file[:filename]%>">
               <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
             </a>
-            <p class="text-center"><%=file[:name]%></p>
+            <p class="text-center">
+              <a href="<%=file[:url]%>" target="_blank"><%=file[:name]%></a>
+            </p>
           </div>
           <% end %>
           <div class="col-lg-3">
