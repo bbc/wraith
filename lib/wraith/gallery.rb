@@ -64,9 +64,13 @@ class Wraith::GalleryGenerator
   def figure_out_url(group, category)
     root = wraith.domains["#{group}"]
     return '' if root.nil?
-    path = wraith.paths["#{category}"]['path']
+    path = get_path(category)
     url  = root + path
     url
+  end
+
+  def get_path(category)
+    wraith.paths[category]['path'] || wraith.paths[category]
   end
 
   def get_group_from_match(match)
