@@ -109,27 +109,27 @@ describe Wraith do
 
       images = [
         {
-          :filename => 'test/test_image-1.png',
-          :thumb    => 'thumbnails/test/test_image-1.png'
+          :filename => 'home/test_image-afrique.png',
+          :thumb    => 'thumbnails/home/test_image-afrique.png'
         },
         {
-          :filename => 'test/test_image-2.png',
-          :thumb    => 'thumbnails/test/test_image-2.png'
+          :filename => 'home/test_image-russian.png',
+          :thumb    => 'thumbnails/home/test_image-russian.png'
         }
       ]
 
-      dirs['test'][0][:variants].each_with_index do |image, i|
+      dirs['home'][0][:variants].each_with_index do |image, i|
         expect(image[:filename]).to eq images[i][:filename]
         expect(image[:thumb]).to eq images[i][:thumb]
       end
 
       diff = {
-        :filename => 'test/test_image-diff.png',
-        :thumb    => 'thumbnails/test/test_image-diff.png'
+        :filename => 'home/test_image-diff.png',
+        :thumb    => 'thumbnails/home/test_image-diff.png'
       }
 
-      expect(dirs['test'][0][:diff][:filename]).to eq 'test/test_image-diff.png'
-      expect(dirs['test'][0][:diff][:thumb]).to eq 'thumbnails/test/test_image-diff.png'
+      expect(dirs['home'][0][:diff][:filename]).to eq 'home/test_image-diff.png'
+      expect(dirs['home'][0][:diff][:thumb]).to eq 'thumbnails/home/test_image-diff.png'
     end
   end
 
