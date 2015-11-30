@@ -6,7 +6,6 @@ script: bundle exec rspec
 notifications:
   email:
     recipients:
-    - david.blooman@bbc.co.uk
     - chris.ashton@bbc.co.uk
     on_failure: change
     on_success: never

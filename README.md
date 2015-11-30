@@ -11,122 +11,78 @@
 <p align="center">
   Wraith is a screenshot comparison tool, created by developers at BBC News.
   <br>
-  <a href="http://responsivenews.co.uk" target="_blank">Website</a> • <a href="http://github.com/bbc-news/wraith" target="_blank">Source</a>
+  <a href="http://bbc-news.github.io/wraith/index.html" target="_blank">Documentation</a> • <a href="http://github.com/bbc-news/wraith" target="_blank">Source</a> • <a href="http://responsivenews.co.uk" target="_blank">Responsive News Website</a>
 </p>
 
 ## What is it?
 
-Wraith uses either [PhantomJS](http://phantomjs.org), [CasperJS](http://casperjs.org/) or
-[SlimerJS](http://slimerjs.org) to create screen-shots of webpages on different environments
-and then creates a diff of the two images, the affected areas are highlighted in
-blue
+Wraith uses a headless browser to create screenshots of webpages on different environments (or at different moments in time) and then creates a diff of the two images; the affected areas are highlighted in blue.
 
-![Photo of BBC News with a
-diff](http://bbc-news.github.io/wraith/img/wraith.png)
+![Photo of BBC News with a diff](http://bbc-news.github.io/wraith/img/wraith.png)
 
 ## Documentation
 
-[The main documentation can be found here, this will cover all the features and options for Wraith as well as sample configs.](http://bbc-news.github.io/wraith/index.html)
+For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
 
+A brief overview of how Wraith works is provided below.
+
+## Wraith modes
+
+There are several ways in which Wraith can be used:
+
+1. Comparison of 2 domains (`wraith capture`). There are also some specialist options within this mode:
+    * Spidering 2 domains for changes (`wraith capture` when no `paths` property is provided in the configuration file)
+    * Running several comparisons at once (`wraith multi_capture`)
+2. Comparing the same domain over time (`wraith history`, then `wraith latest`)
+
+Whichever mode you decide to run Wraith in, the process it follows is generally the same:
+
+* takes screenshots of your webpages
+* runs a comparison task across them
+* outputs a diff PNG file comparing the two images, and a data.txt file which contains the percentage of pixels that have changed
+* packages all of this up into a gallery.html, ready for you to view
+* if any screenshot's diff is above the threshold you specified in your configuration file, the task exits with a system error code (useful for CI)
+* the failed screenshot will also be highlighted in the gallery
 
 ## Requirements
 
-Imagemagick and PhantomJS are required to use Wraith, install via your favourite package manager. You can also use SlimerJS and CasperJS, CasperJS can be used to target specific selectors. To read our detailed instructions for setup and install, as well as example configs, visit [wraith docs](http://bbc-news.github.io/wraith/index.html)
+[ImageMagick](http://www.imagemagick.org/) is required to compare the screenshots.
 
-```sh
-brew install phantomjs
-brew install imagemagick
-```
+Wraith also requires at least one of these headless browsers:
 
-## Installation
-
-Open terminal and run
-
-    gem install wraith
-
-You can then run the following to create a template snap.js and config file:
-
-    wraith setup
-
-## Using Wraith
-You can type `wraith` into terminal to bring up the list of commands, but the one to start Wraith is
-
-```sh
-wraith capture config_name
-```
-
-This assumes that your snap.js and config.yaml are in the folders that were created on setup. To run the setup, create a folder and inside run
-
-```sh
-wraith setup
-```
-
-### CLI
-
-There are other commands also available, these all expect a config_name to be passed as an option. Wraith will look for the config file at `configs/[config_name].yaml`.
-
-```sh
-  wraith capture [config_name]              # A full Wraith job
-  wraith compare_images [config_name]       # compares images to generate diffs
-  wraith crop_images [config_name]          # crops images to the same height
-  wraith generate_gallery [config_name]     # create page for viewing images
-  wraith generate_thumbnails [config_name]  # create thumbnails for gallery
-  wraith history [config_name]              # Setup a baseline set of shots
-  wraith latest [config_name]               # Capture new shots to compare with baseline
-  wraith multi_capture [filelist]           # A Batch of Wraith Jobs
-  wraith reset_shots [config_name]          # removes all the files in the shots folder
-  wraith save_images [config_name]          # captures screenshots
-  wraith setup                              # creates config folder and default config
-  wraith setup_folders [config_name]        # create folders for images
-```
-
-## Output
-
-After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.  There is a main data.txt which is in the root of the output folder that will combine all of these values to easier view all the pixel changes.
-
-## Gallery
-
-A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.  You can set thresholds in the config file, if above this value, the gallery will indicate the shots above the threshold.
-
-## Changelog - updated 2014-12-09
-In the latest release I have implemented thresholds for Wraith, this makes finding failed shots easier.  Set the threshold value in the config to a value you want, by default it is 0.  When a failure is detected, the terminal will show a failure message and the gallery will have a red cross next to the set of shots.
+* [PhantomJS](http://phantomjs.org)
+* [CasperJS](http://casperjs.org/) (which can be used to target specific selectors)
+* [SlimerJS](http://slimerjs.org)
 
 ## Contributing
 
 If you want to add functionality to this project, pull requests are welcome.
 
- * Create a branch based off master and do all of your changes with in it.
- * If you have to pause to add a 'and' anywhere in the title, it should be two pull requests.
- * Make commits of logical units and describe them properly
+ * Fork a branch based off BBC-News/wraith:master and do all of your changes within it.
+ * Make commits of logical units and describe them properly.
  * Check for unnecessary whitespace with git diff --check before committing.
  * If possible, submit tests to your patch / new feature so it can be tested easily.
- * Assure nothing is broken by running all the test
+ * Assure nothing is broken by running all the tests (`bundle exec rspec`).
  * Please ensure that it complies with coding standards.
+ * When writing the title of your Pull Request, if you have to pause to add an 'and' anywhere in the title - it should be two pull requests.
 
 **Please raise any issues with this project as a GitHub issue.**
 
 ## License
 
-Wraith is available to everyone under the terms of the Apache 2.0 open source license.
-Take a look at the LICENSE file in the code.
+Wraith is available to everyone under the terms of the Apache 2.0 open source license. [Take a look at Wraith's LICENSE file](https://github.com/BBC-News/wraith/blob/master/LICENSE).
 
 ## Credits
 
  * [Dave Blooman](https://twitter.com/dblooman)
  * [John Cleveley](https://twitter.com/jcleveley)
  * [Simon Thulbourn](https://twitter.com/sthulb)
+ * [Chris Ashton](https://twitter.com/chrisbashton)
 
 ## Selenium-Wraith
 
-Anyone interested in integrating selenium capability with Wraith should check out
-Selenium-Wraith by Andrew Tekle-Cadman of Future Visible.
-
-Selenium-Wraith was forked from the BBC repo on 16/04/14 and adds the following capabilities to Wraith
+Anyone interested in integrating selenium capability with Wraith should check out [Selenium-Wraith](https://github.com/andrewccadman/wraith-selenium) (by Andrew Tekle-Cadman of Future Visible), which was forked from BBC's Wraith on 16/04/14 and adds the following capabilities:
 
 1. Selenium integration, both running locally on a desktop or on a selenium grid
 2. Browser to browser screenshot comparison
 3. Page component-based comparison
-
-You can check out Andrew's Project on GitHub here:
-
-https://github.com/andrewccadman/wraith-selenium
