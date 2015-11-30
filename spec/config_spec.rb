@@ -120,4 +120,20 @@ describe "wraith config" do
     end
   end
 
+  describe "different modes of efficiency (resize or reload)" do
+
+    it "should trigger efficient mode if resize was specified" do
+      config = 'resize_or_reload: "resize"'
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.resize)
+    end
+
+    it "should fall back to slow mode if reload was specified" do
+      config = 'resize_or_reload: "reload"'
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.resize).to eq false
+    end
+
+  end
+
 end

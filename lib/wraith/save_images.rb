@@ -41,7 +41,7 @@ class Wraith::SaveImages
     compare_file_name = meta.file_names(width, label, meta.compare_label)
 
     if width.kind_of? Array
-      # prepare for the command line
+      # prepare for the command line. [30,40,50] => "'30','40','50'"
       width = width.map{ |i| "'#{i}'" }.join(',')
     end
 
