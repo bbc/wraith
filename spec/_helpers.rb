@@ -1,3 +1,6 @@
+require "rspec"
+require "./lib/wraith/cli"
+
 def create_diff_image
   wraith.engine.each do |_type, engine|
     saving.capture_page_image(engine, test_url1, 320, test_image1, selector, 'false', 'false')

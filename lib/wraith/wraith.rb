@@ -23,8 +23,25 @@ class Wraith::Wraith
     @config["history_dir"]
   end
 
+  def engine
+    @config["browser"]
+  end
+
   def snap_file
-    @config["snap_file"] ? @config["snap_file"] : File.expand_path("lib/wraith/javascript/snap.js")
+    @config["snap_file"] || snap_file_from_engine(engine)
+  end
+
+  def snap_file_from_engine(engine)
+    path_to_js_templates = File.dirname(__FILE__) + '/javascript'
+    case engine.keys.first
+    when "phantomjs"
+      path_to_js_templates + "/phantom.js"
+    when "casperjs"
+      path_to_js_templates + "/casper.js"
+    # @TODO - add a SlimerJS option
+    else
+      abort "Wraith does not recognise the browser engine '#{engine}'"
+    end
   end
 
   def before_capture
@@ -73,10 +90,6 @@ class Wraith::Wraith
 
   def paths
     @config["paths"]
-  end
-
-  def engine
-    @config["browser"]
   end
 
   def fuzz

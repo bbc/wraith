@@ -8,8 +8,8 @@ browser:
   phantomjs: "casperjs"
   # slimerjs: "slimerjs"
 
-#If you want to have multiple snapping files, set the file name here
-snap_file: "templates/javascript/casper.js"
+#overriding the snap file
+snap_file: "spec/js/custom_snap_file.js"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
