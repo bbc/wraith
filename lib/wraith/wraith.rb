@@ -3,17 +3,20 @@ require "yaml"
 class Wraith::Wraith
   attr_accessor :config
 
-  def initialize(config_name, yaml_passed = false)
-    if yaml_passed
-      @config = YAML.load(config_name)
-    elsif File.exist?(config_name) && File.extname(config_name) == ".yaml"
-      @config = YAML.load(File.open(config_name))
-    else
-      @config = YAML.load(File.open("configs/#{config_name}.yaml"))
-    end
+  def initialize(config, yaml_passed = false)
+    yaml_string = yaml_passed ? config : open_config_file(config)
+    @config = YAML.load yaml_string
   rescue
-    puts "unable to find config at #{config_name}"
+    puts "unable to find config at #{config}"
     exit 1
+  end
+
+  def open_config_file(config_name)
+    if File.exist?(config_name) && File.extname(config_name) == ".yaml"
+      File.open config_name
+    else
+      File.open "configs/#{config_name}.yaml"
+    end
   end
 
   def directory
