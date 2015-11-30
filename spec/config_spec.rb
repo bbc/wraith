@@ -22,7 +22,7 @@ describe "wraith config" do
   describe "When creating a wraith worker" do
 
     it "should have a browser engine defined" do
-      expect(wraith.engine).to be_a Hash
+      expect(wraith.engine).to be_a String
     end
 
     it "should have a directory defined" do
@@ -85,9 +85,7 @@ describe "wraith config" do
           phantomjs: "casperjs"
       '
       wraith = Wraith::Wraith.new(config, true)
-
-      expect(wraith.engine).to be_a Hash
-      expect(wraith.config['browser']['phantomjs']).to eq 'casperjs'
+      expect(wraith.engine).to eq 'casperjs'
     end
   end
 

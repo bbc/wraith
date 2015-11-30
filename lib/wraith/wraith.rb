@@ -29,7 +29,12 @@ class Wraith::Wraith
   end
 
   def engine
-    @config["browser"]
+    engine = @config["browser"]
+    # Legacy support for those using the old style "browser: \n phantomjs: 'casperjs'" configs
+    if engine.is_a? Hash
+      engine = engine.values.first
+    end
+    engine
   end
 
   def snap_file
@@ -37,7 +42,6 @@ class Wraith::Wraith
   end
 
   def snap_file_from_engine(engine)
-    engine = (engine.is_a? Hash) ? engine.values.first : engine
     path_to_js_templates = File.dirname(__FILE__) + '/javascript'
     case engine
     when "phantomjs"
