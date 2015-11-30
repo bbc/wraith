@@ -70,4 +70,56 @@ describe "wraith config" do
     end
   end
 
+  describe "different ways of initialising browser engine" do
+
+    it "should let us directly specify the engine" do
+      config = 'browser: phantomjs'
+      wraith = Wraith::Wraith.new(config, true)
+
+      expect(wraith.engine).to eq 'phantomjs'
+    end
+
+    it "should be backwards compatible with the old way" do
+      config = '
+        browser:
+          phantomjs: "casperjs"
+      '
+      wraith = Wraith::Wraith.new(config, true)
+
+      expect(wraith.engine).to be_a Hash
+      expect(wraith.config['browser']['phantomjs']).to eq 'casperjs'
+    end
+  end
+
+  describe "different ways of determining the snap file" do
+
+    it "should calculate the snap file from the engine" do
+      config = 'browser: phantomjs'
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.snap_file).to include 'lib/wraith/javascript/phantom.js'
+
+      config = 'browser: casperjs'
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
+    end
+
+    it "should calculate the snap file in a backwards-compatible way" do
+      config = '
+        browser:
+          phantomjs: "casperjs"
+      '
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
+    end
+
+    it "should allow users to specify their own snap file" do
+      config = '
+        browser:   casperjs
+        snap_file: path/to/snap.js
+      '
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.snap_file).to eq 'path/to/snap.js'
+    end
+  end
+
 end

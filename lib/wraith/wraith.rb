@@ -3,8 +3,10 @@ require "yaml"
 class Wraith::Wraith
   attr_accessor :config
 
-  def initialize(config_name)
-    if File.exist?(config_name) && File.extname(config_name) == ".yaml"
+  def initialize(config_name, yaml_passed = false)
+    if yaml_passed
+      @config = YAML.load(config_name)
+    elsif File.exist?(config_name) && File.extname(config_name) == ".yaml"
       @config = YAML.load(File.open(config_name))
     else
       @config = YAML.load(File.open("configs/#{config_name}.yaml"))
@@ -32,8 +34,9 @@ class Wraith::Wraith
   end
 
   def snap_file_from_engine(engine)
+    engine = (engine.is_a? Hash) ? engine.values.first : engine
     path_to_js_templates = File.dirname(__FILE__) + '/javascript'
-    case engine.keys.first
+    case engine
     when "phantomjs"
       path_to_js_templates + "/phantom.js"
     when "casperjs"
