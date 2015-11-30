@@ -25,25 +25,40 @@ class Wraith::SaveImages
     check_paths.each do |label, options|
       settings = CaptureOptions.new(options, wraith)
 
-      wraith.widths.each do |width|
-        base_file_name    = meta.file_names(width, label, meta.base_label)
-        compare_file_name = meta.file_names(width, label, meta.compare_label)
-
-        jobs << [label, settings.path, width, settings.base_url,    base_file_name, settings.selector, wraith.before_capture, settings.before_capture]
-        jobs << [label, settings.path, width, settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
+      if wraith.resize
+        jobs = define_jobs(label, settings, wraith.widths)
+      else
+        jobs = []
+        wraith.widths.each do |width|
+          jobs = jobs + define_jobs(label, settings, width)
+        end
       end
     end
     parallel_task(jobs)
   end
 
+  def define_jobs(label, settings, width)
+    base_file_name    = meta.file_names(width, label, meta.base_label)
+    compare_file_name = meta.file_names(width, label, meta.compare_label)
+
+    if width.kind_of? Array
+      # prepare for the command line
+      width = width.map{ |i| "'#{i}'" }.join(',')
+    end
+
+    jobs = []
+    jobs << [label, settings.path, width, settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture]
+    jobs << [label, settings.path, width, settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
+
+    jobs
+  end
+
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
 
-    width = "320 464x900 768" # temporarily mocking the array passing behaviour in shell
-
-    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"'#{width}'\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
-    # puts command
+    puts command
     run_command command
   end
 
@@ -70,6 +85,10 @@ class Wraith::SaveImages
   def attempt_image_capture(width, url, filename, selector, global_before_capture, path_before_capture, max_attempts)
     max_attempts.times do |i|
       capture_page_image meta.engine, url, width, filename, selector, global_before_capture, path_before_capture
+
+      if wraith.resize
+        return # @TODO - need to check if the image was generated, as per the non-efficient example below
+      end
 
       return if File.exist? filename
 
@@ -146,6 +165,9 @@ class SaveMetadata
   end
 
   def file_names(width, label, domain_label)
+    if width.kind_of? Array
+      width = 'MULTI'
+    end
     "#{wraith.directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 
