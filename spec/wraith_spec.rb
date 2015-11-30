@@ -35,8 +35,29 @@ describe Wraith do
   end
 
   context "When creating a wraith worker" do
-    it "should have 7 config keys" do
-      expect(wraith.config.keys.size).to be 7
+
+    it "should have a browser engine defined" do
+      expect(wraith.engine).to be_a Hash
+    end
+
+    it "should have a directory defined" do
+      expect(wraith.directory).to be_a String
+    end
+
+    it "should have domains defined" do
+      expect(wraith.domains).to be_a Hash
+    end
+
+    it "should have screen widths defined" do
+      expect(wraith.widths).to be_a Array
+    end
+
+    it "should have paths defined" do
+      expect(wraith.paths).to be_a Hash
+    end
+
+    it "should have fuzz defined" do
+      expect(wraith.fuzz).to be_a String
     end
 
     it "should have widths" do
