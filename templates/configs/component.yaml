@@ -34,6 +34,9 @@ screen_widths:
   - 1024
   - 1280
 
+# resize to each screen width, or reload at each screen width. (The former is more efficient).
+resize_or_reload: 'resize'
+
 # the engine to run Wraith with.
 browser: "casperjs"
 

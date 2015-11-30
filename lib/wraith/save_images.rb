@@ -37,7 +37,10 @@ class Wraith::SaveImages
   end
 
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
-    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+
+    width = "320 464x900 768" # temporarily mocking the array passing behaviour in shell
+
+    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"'#{width}'\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
     # puts command
