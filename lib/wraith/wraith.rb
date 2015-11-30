@@ -62,6 +62,11 @@ class Wraith::Wraith
     @config["screen_widths"]
   end
 
+  def resize
+    # @TODO make this default to true, once it's been tested a bit more thoroughly
+    @config["resize_or_reload"] ? (@config["resize_or_reload"] == "resize") : false
+  end
+
   def domains
     @config["domains"]
   end
