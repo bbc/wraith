@@ -142,12 +142,8 @@ class SaveMetadata
     history ? "_latest" : ""
   end
 
-  def engine_label
-    wraith.engine.key(engine)
-  end
-
   def file_names(width, label, domain_label)
-    "#{wraith.directory}/#{label}/#{width}_#{engine_label}_#{domain_label}.png"
+    "#{wraith.directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 
   def base_label
@@ -159,6 +155,6 @@ class SaveMetadata
   end
 
   def engine
-    wraith.engine.each { |_label, browser| return browser }
+    wraith.engine
   end
 end

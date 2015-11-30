@@ -5,19 +5,19 @@ domains:
 
 # Notice the absence of a `paths` property. When no paths are provided, Wraith defaults to
 # spidering mode to check your entire website.
-​
-​# A list of URLs to skip when spidering.
-# Ruby regular expressions can be​ used, if prefixed with `!ruby/regexp` as defined in the YAML Cookbook​.
-​# See http://www.yaml.org/YAML_for_ruby.html#regexps​
-​spider_skips:​
-  - /foo/bar.html           # Matches /foo/bar.html explicitly​
-​  - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz​
 
-# the filename of the spider file to use. Default: spider.txt​
+# A list of URLs to skip when spidering.
+# Ruby regular expressions can be used, if prefixed with `!ruby/regexp` as defined in the YAML Cookbook​.
+# See http://www.yaml.org/YAML_for_ruby.html#regexps
+spider_skips:
+  - /foo/bar.html           # Matches /foo/bar.html explicitly
+  - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz
+
+# the filename of the spider file to use. Default: spider.txt
 spider_file: example_com_spider.txt
-​
-​# the number of days to keep the site spider file​
-spider_days: 10​
+
+# the number of days to keep the site spider file
+spider_days: 10
 
 # amount of fuzz ImageMagick will use when comparing images. A higher fuzz makes the comparison less strict.
 fuzz: '20%'
@@ -35,13 +35,7 @@ screen_widths:
   - 1280
 
 # the engine to run Wraith with.
-browser:
-  #phantomjs: "casperjs"   # variant of PhantomJS that allows screenshots by element selector
-  phantomjs: "phantomjs" # PhantomJS, built on top of Webkit and JavascriptCore (like Safari)
-  #slimerjs: "slimerjs"   # SlimerJS, built on top of Gecko and SpiderMonkey (like Firefox)
-
-# the file in charge of taking the screenshot
-snap_file: "javascript/phantom.js"
+browser: "phantomjs"
 
 # the directory that your latest screenshots will be stored in
 directory: 'shots_nojs'

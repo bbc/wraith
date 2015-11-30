@@ -35,13 +35,7 @@ screen_widths:
   - 1280
 
 # the engine to run Wraith with.
-browser:
-  phantomjs: "casperjs"   # variant of PhantomJS that allows screenshots by element selector
-  #phantomjs: "phantomjs" # PhantomJS, built on top of Webkit and JavascriptCore (like Safari)
-  #slimerjs: "slimerjs"   # SlimerJS, built on top of Gecko and SpiderMonkey (like Firefox)
-
-# the file in charge of taking the screenshot
-snap_file: "javascript/casper.js"
+browser: "casperjs"
 
 # the directory that your base screenshots will be stored in
 history_dir: 'shots_base'
