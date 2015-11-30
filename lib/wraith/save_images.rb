@@ -26,9 +26,8 @@ class Wraith::SaveImages
       settings = CaptureOptions.new(options, wraith)
 
       if wraith.resize
-        jobs = define_jobs(label, settings, wraith.widths)
+        jobs = jobs + define_jobs(label, settings, wraith.widths)
       else
-        jobs = []
         wraith.widths.each do |width|
           jobs = jobs + define_jobs(label, settings, width)
         end
@@ -58,7 +57,7 @@ class Wraith::SaveImages
     command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
-    puts command
+    #puts command
     run_command command
   end
 

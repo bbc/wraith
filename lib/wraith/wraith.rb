@@ -63,7 +63,8 @@ class Wraith::Wraith
   end
 
   def resize
-    @config["resize_or_reload"] ? (@config["resize_or_reload"] == "resize") : true
+    # @TODO make this default to true, once it's been tested a bit more thoroughly
+    @config["resize_or_reload"] ? (@config["resize_or_reload"] == "resize") : false
   end
 
   def domains
