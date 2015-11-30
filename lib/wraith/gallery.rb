@@ -147,7 +147,9 @@ class Wraith::GalleryGenerator
     generate_html(@location, directories, slideshow_template, dest, with_path)
 
     puts "Gallery generated"
-    check_failed_shots
+    failed = check_failed_shots
+    prompt_user_to_open_gallery dest
+    exit 1 if failed
   end
 
   def check_failed_shots
@@ -167,10 +169,15 @@ class Wraith::GalleryGenerator
         end
       end
 
-      exit 1
+      return false
     else
       true
     end
+  end
+
+  def prompt_user_to_open_gallery(dest)
+    puts "\nView the gallery in your browser:"
+    puts "\t file://" + `pwd`.chomp + '/' + dest
   end
 
   class ErbBinding < OpenStruct
