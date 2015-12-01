@@ -4,7 +4,11 @@ var system = require('system'),
 
 // command line arguments
 var url = casper.cli.get(0),
-    dimensions = requireRelative('_getDimensions.js')(casper.cli.get(1)),
+    dimensions_tmp = /(\d*)x?((\d*))?/i.exec(casper.cli.get(1));
+    dimensions = {
+        'viewportWidth':  parseInt(dimensions_tmp[1]),
+        'viewportHeight': parseInt(dimensions_tmp[2] || 1500)
+    },
     image_name = casper.cli.get(2),
     selector = casper.cli.get(3),
     globalBeforeCaptureJS = casper.cli.get(4),
