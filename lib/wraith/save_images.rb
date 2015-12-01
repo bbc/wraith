@@ -5,8 +5,8 @@ require "shellwords"
 class Wraith::SaveImages
   attr_reader :wraith, :history, :meta
 
-  def initialize(config, history = false)
-    @wraith = Wraith::Wraith.new(config)
+  def initialize(config, history = false, yaml_passed = false)
+    @wraith = Wraith::Wraith.new(config, yaml_passed)
     @history = history
     @meta = SaveMetadata.new(@wraith, history)
   end
@@ -21,26 +21,51 @@ class Wraith::SaveImages
   end
 
   def save_images
+    jobs = define_jobs
+    parallel_task(jobs)
+  end
+
+  def define_jobs
     jobs = []
     check_paths.each do |label, options|
       settings = CaptureOptions.new(options, wraith)
 
-      wraith.widths.each do |width|
-        base_file_name    = meta.file_names(width, label, meta.base_label)
-        compare_file_name = meta.file_names(width, label, meta.compare_label)
-
-        jobs << [label, settings.path, width, settings.base_url,    base_file_name, settings.selector, wraith.before_capture, settings.before_capture]
-        jobs << [label, settings.path, width, settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
+      if wraith.resize
+        jobs = jobs + define_individual_job(label, settings, wraith.widths)
+      else
+        wraith.widths.each do |width|
+          jobs = jobs + define_individual_job(label, settings, width)
+        end
       end
     end
-    parallel_task(jobs)
+    jobs
+  end
+
+  def define_individual_job(label, settings, width)
+    base_file_name    = meta.file_names(width, label, meta.base_label)
+    compare_file_name = meta.file_names(width, label, meta.compare_label)
+
+    jobs = []
+    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture]
+    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
+
+    jobs
+  end
+
+  def prepare_widths_for_cli(width)
+    if width.kind_of? Array
+      # prepare for the command line. [30,40,50] => "'30','40','50'"
+      width = width.map{ |i| "'#{i}'" }.join(',')
+    end
+    width
   end
 
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
-    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+
+    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
-    # puts command
+    #puts command
     run_command command
   end
 
@@ -67,6 +92,10 @@ class Wraith::SaveImages
   def attempt_image_capture(width, url, filename, selector, global_before_capture, path_before_capture, max_attempts)
     max_attempts.times do |i|
       capture_page_image meta.engine, url, width, filename, selector, global_before_capture, path_before_capture
+
+      if wraith.resize
+        return # @TODO - need to check if the image was generated, as per the reload example below
+      end
 
       return if File.exist? filename
 
@@ -143,6 +172,9 @@ class SaveMetadata
   end
 
   def file_names(width, label, domain_label)
+    if width.kind_of? Array
+      width = 'MULTI'
+    end
     "#{wraith.directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 

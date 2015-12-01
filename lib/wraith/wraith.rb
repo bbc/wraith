@@ -4,8 +4,7 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    yaml_string = yaml_passed ? config : open_config_file(config)
-    @config = YAML.load yaml_string
+    @config = yaml_passed ? config : open_config_file(config)
   rescue
     puts "unable to find config at #{config}"
     exit 1
@@ -13,10 +12,11 @@ class Wraith::Wraith
 
   def open_config_file(config_name)
     if File.exist?(config_name) && File.extname(config_name) == ".yaml"
-      File.open config_name
+      config = File.open config_name
     else
-      File.open "configs/#{config_name}.yaml"
+      config = File.open "configs/#{config_name}.yaml"
     end
+    YAML.load config
   end
 
   def directory
@@ -60,6 +60,11 @@ class Wraith::Wraith
 
   def widths
     @config["screen_widths"]
+  end
+
+  def resize
+    # @TODO make this default to true, once it's been tested a bit more thoroughly
+    @config["resize_or_reload"] ? (@config["resize_or_reload"] == "resize") : false
   end
 
   def domains
