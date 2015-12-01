@@ -73,14 +73,14 @@ describe "wraith config" do
   describe "different ways of initialising browser engine" do
 
     it "should let us directly specify the engine" do
-      config = 'browser: phantomjs'
+      config = YAML.load 'browser: phantomjs'
       wraith = Wraith::Wraith.new(config, true)
 
       expect(wraith.engine).to eq 'phantomjs'
     end
 
     it "should be backwards compatible with the old way" do
-      config = '
+      config = YAML.load '
         browser:
           phantomjs: "casperjs"
       '
@@ -92,17 +92,17 @@ describe "wraith config" do
   describe "different ways of determining the snap file" do
 
     it "should calculate the snap file from the engine" do
-      config = 'browser: phantomjs'
+      config = YAML.load 'browser: phantomjs'
       wraith = Wraith::Wraith.new(config, true)
       expect(wraith.snap_file).to include 'lib/wraith/javascript/phantom.js'
 
-      config = 'browser: casperjs'
+      config = YAML.load 'browser: casperjs'
       wraith = Wraith::Wraith.new(config, true)
       expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
     end
 
     it "should calculate the snap file in a backwards-compatible way" do
-      config = '
+      config = YAML.load '
         browser:
           phantomjs: "casperjs"
       '
@@ -111,7 +111,7 @@ describe "wraith config" do
     end
 
     it "should allow users to specify their own snap file" do
-      config = '
+      config = YAML.load '
         browser:   casperjs
         snap_file: path/to/snap.js
       '
@@ -123,13 +123,13 @@ describe "wraith config" do
   describe "different modes of efficiency (resize or reload)" do
 
     it "should trigger efficient mode if resize was specified" do
-      config = 'resize_or_reload: "resize"'
+      config = YAML.load 'resize_or_reload: "resize"'
       wraith = Wraith::Wraith.new(config, true)
       expect(wraith.resize)
     end
 
     it "should fall back to slow mode if reload was specified" do
-      config = 'resize_or_reload: "reload"'
+      config = YAML.load 'resize_or_reload: "reload"'
       wraith = Wraith::Wraith.new(config, true)
       expect(wraith.resize).to eq false
     end
