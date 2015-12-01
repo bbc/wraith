@@ -1,56 +1,54 @@
 require "_helpers"
 require "image_size"
 
-describe "wraith config" do
-
+describe Wraith do
   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
+  let(:test_url1) { "http://www.bbc.com/afrique" }
+  let(:test_url2) { "http://www.bbc.com/russian" }
+  let(:test_image1) { "shots/test/test1.png" }
+  let(:test_image2) { "shots/test/test(2).png" }
+  let(:diff_image) { "shots/test/test_diff.png" }
+  let(:data_txt) { "shots/test/test.txt" }
+  let(:selector) { "" }
   let(:saving) { Wraith::SaveImages.new(config_name) }
+  let(:wraith) { Wraith::Wraith.new(config_name) }
 
-  describe "saving images" do
-
-    it "should pass the width plainly to the CLI when running in inefficient mode" do
-      prepared_width = saving.prepare_widths_for_cli 432
-      expect(prepared_width).to eq 432
-    end
-
-    it "should pass an array of widths to CLI when running in efficient mode" do
-      prepared_width = saving.prepare_widths_for_cli [432, 21, 100]
-      expect(prepared_width).to eq "'432','21','100'"
-    end
-
-    it "should create fewer jobs when in efficient mode" do
-      base_config = '
-        domains:
-          test: http://www.bbc.com
-        paths:
-          test: /mypage
-        screen_widths:
-          - 320
-          - 464
-          - 624
-      '
-      efficient_config = YAML.load(base_config + "
-        resize_or_reload: resize
-      ")
-      efficient_saving = Wraith::SaveImages.new(efficient_config, false, true)
-      inefficient_config = YAML.load(base_config + "
-        resize_or_reload: reload
-      ")
-      inefficient_saving = Wraith::SaveImages.new(inefficient_config, false, true)
-
-      efficient_jobs   = efficient_saving.define_jobs
-      inefficient_jobs = inefficient_saving.define_jobs
-
-      expect(efficient_jobs.length).to be 1
-      expect(inefficient_jobs.length).to be 3 # 1 for each screen width
-
-      # [["test", "/mypage", "'320','464','624'", "http://www.bbc.com/mypage", "/test/MULTI__test.png", " ", "false", "false"]]
-      expect(efficient_jobs[0][2]).to eq "'320','464','624'"
-
-      # [["test", "/mypage", 320, "http://www.bbc.com/mypage", "/test/320__test.png", " ", "false", "false"], ["test", "/mypage", 464, "http://www.bbc.com/mypage", "/test/464__test.png", " ", "false", "false"], ["test", "/mypage", 624, "http://www.bbc.com/mypage", "/test/624__test.png", " ", "false", "false"]]
-      expect(inefficient_jobs[0][2]).to eq 320
-    end
-
+  before(:each) do
+    Wraith::FolderManager.new(config_name).clear_shots_folder
+    Dir.mkdir("shots/test")
   end
 
+  describe "When capturing an image" do
+    let(:image_size) { ImageSize.path(test_image1).size }
+
+    it "saves image" do
+      saving.capture_page_image(wraith.engine, test_url1, 320, test_image1, selector, 'false', 'false')
+      expect(image_size[0]).to eq 320
+    end
+  end
+
+  describe "When comparing images" do
+    it "should compare" do
+      create_diff_image
+      crop_images
+      compare_images
+
+      diff = ImageSize.path(diff_image).size
+
+      expect(diff[0]).to eq 320
+    end
+  end
+
+  describe "When generating thumbnails" do
+    it "produce thumbnails" do
+      create_diff_image
+      crop_images
+      Wraith::CompareImages.new(config_name).compare_task(test_image1, test_image2, diff_image, data_txt)
+      Wraith::Thumbnails.new(config_name).generate_thumbnails
+
+      expect(File).to exist("shots/thumbnails/test/test1.png")
+      expect(File).to exist("shots/thumbnails/test/test(2).png")
+      expect(File).to exist("shots/thumbnails/test/test_diff.png")
+    end
+  end
 end

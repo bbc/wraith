@@ -9,6 +9,8 @@ browser:
 
 # we've deliberately left out the snap_file
 
+resize_or_reload: resize
+
 # Type the name of the directory that shots will be stored in
 directory: 'shots'
 
