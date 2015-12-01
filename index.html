@@ -60,13 +60,13 @@
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">Wraith</a>
+    <a class="navbar-brand" href=".">Wraith</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="index.html">Main Documentation</a></li>
+      <li class="active"><a href=".">Main Documentation</a></li>
       <li class><a href="os-install.html">Installation</a></li>
       <li class><a href="configs.html">Example Configs</a></li>
     </ul>
@@ -120,30 +120,25 @@ wraith setup
 
           <h2>Using Wraith</h2>
 
-          There are few different ways to use Wraith:
+          <p>There are two main modes for using Wraith: 'capture' mode and 'history' mode.</p>
 
-          <ul>
-            <li>Comparison of 2 domains</li>
-            <li>Capturing a specific component on a page</li>
-            <li>Comparing the same domain over and over</li>
-            <li>Spidering 2 domains for changes.</li>
-          </ul>
+          <h3>Capture mode</h3>
 
-          These all have slightly different configs, which you can see below, but there are some constants across the different usages.
-          <br />
+          <p>
+            <strong>Summary</strong>: given two domains, Wraith will take screenshots of both and compare them.
+          </p>
 
-          All config options will be placed in a config.yaml. You specify the snap file name, this could be used in a situation where you have a large amount of JS files. You set the headless browser, diff mode, threshold, fuzz amount and screen widths.
-          <br>
-          <br>
-          <b>Headless browser</b> : This is typically PhantomJS or CasperJS, this is a browser that doesn't have a user interface, it runs in the backround.
-          <br>
-          <b>Diff Mode</b> : How you would like the gallery to be presented, you can set ordering and for the unchanged images to be removed.
-          <br>
-          <b>Threshold</b> : This is the minimal level of change you that want to present a failure.  The metric is percentage change of the page and set globally for a Wraith run.
-          <br>
-          <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
-          <h3>Standard Mode</h3>
-            Standard mode is the simplest to get going with.  Specify 2 domains <a href="configs.html">as shown in the 'standard' example config</a>, some paths on that domain and then run the config. Once set, run the config using the capture command.
+          <p>
+            <strong>Use case</strong>: good for comparing test and live versions of the same site.
+          </p>
+
+          <p>
+            <strong>How do I use it?</strong>
+          </p>
+
+          <p>
+            Specify TWO domains, and any number of paths and screen widths, using phantomjs or slimerjs as your browser engine. Run `wraith capture`.
+          </p>
 
           <pre>
           <code data-language="ruby">
@@ -151,33 +146,92 @@ wraith capture configs/config.yaml
           </code>
           </pre>
 
-          <h3>Casper Mode</h3>
-            CasperJS allows for the targeting of a specific selector on a web page.  This could be used to check style guides, actual components or to ensure your tests don't get affected by other dynamic components.  The config is mostly the same as the standard mode except when setting the paths, this structure is different to allow passing of a selector.  <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.  Run using the wraith capture command.
-          <h3>History Mode</h3>
-            In Wraith 2.0 we introduced a new way for using Wraith in development and testing, historical shots. Rather than capture 2 domains, you capture 1 domain, probably your local copy of the latest code, then later on after development is in progress, run Wraith again to compare. This makes working against an isolated dev environment much easier.
+          <p>
+            If you wish to take screenshots of a component rather than the entire page, <strong>use casperjs and pass a selector</strong> along with your paths. <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.
+          </p>
 
-The usage is different in that you need 1 domain in your config and you will need to set a historical shots folder. Specify a history_dir in addition to the directory key in your config.yml file. An example of this can be <a href="configs.html">found in the 'history' example config</a>.
-<br>
-Shots are captured as normal with the history command.
-<br>
-<br>
+          <p>
+            If you wish to take screenshots of your entire website, remove all of your paths from your config to activate <strong>spider mode</strong>, whereby Wraith will scan your website for all pages and take screenshots of them all. <a href="configs.html">See the 'spider' example config.</a>
+          </p>
+
+          <h3>History mode</h3>
+
+          <p>
+            <strong>Summary</strong>: compare the same domain over time.
+          </p>
+
+          <p>
+            <strong>Use case</strong>: good for checking that your website continues to look the same (especially useful if your site relies on third-party components).
+          </p>
+
+          <p>
+            <strong>How do I use it?</strong>
+          </p>
+
+          <p>
+            Specify ONE domain, and any number of paths and screen widths, using phantomjs or slimerjs as your browser engine. Make sure you have a `history_dir` property set. Run `wraith history` to generate your base screenshots, and `wraith latest` to generate new screenshots to compare against the old ones. An example of this can be <a href="configs.html">found in the 'history' example config</a>.
+          </p>
+
 <pre>
   <code data-language="yaml">
   wraith history
   </code>
 </pre>
-This will create 2 folders with the labels you have specified in the config file, for example, shots and shots_history. The original shots will be copied into your 'history' folder, then copied back into the shots folder once you have run your latest job. This workflow will essentially mean your history folder is your baseline, being copied back into the shots folder every time you run the following
-<br>
-<br>
+
+          <p>
+            This will create 2 folders with the labels you have specified in the config file, for example, shots and shots_history. The original shots will be copied into your 'history' folder, then copied back into the shots folder once you have run your latest job. This workflow will essentially mean your history folder is your baseline, being copied back into the shots folder every time you run the following
+          </p>
+
 <pre>
   <code data-language="yaml">
   wraith latest
   </code>
 </pre>
-          <h3>Spidering Mode</h3>
-          If you don't want to set paths, you can use the spidering option to check your entire website, remove/comment out the path: entries in config.yaml.  There are other spidering options too, including a spider file and regexs.  <a href="configs.html">See the 'spider' example config.</a>
           <p>
+            If you wish to take screenshots of a component rather than the entire page, <strong>use casperjs and pass a selector</strong> along with your paths. <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.
+          </p>
+
+          <h3>All modes</h3>
+
+          <p>Regardless of which mode you use, certain config options are applicable to both.</p>
+
+          <p>All config options will be placed in a YAML config file. You set the headless browser, diff mode, threshold, fuzz amount and screen widths.</p>
           <br>
+          <br>
+          <b>Headless browser</b> : This is typically PhantomJS or CasperJS - a browser that doesn't have a user interface; it runs in the backround.
+          <br>
+          <b>Diff Mode</b> : How you would like the gallery to be presented, you can set ordering and for the unchanged images to be removed.
+          <br>
+          <b>Threshold</b> : This is the minimal level of change you that want to present a failure.  The metric is percentage change of the page and set globally for a Wraith run.
+          <br>
+          <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
+          <br>
+          <b>resize_or_reload</b> : As of Wraith 3.0.0, you can now tell Wraith to run more efficiently. The old default is 'reload', which reloads the browser for every screen width you want to take a screenshot of. However, you can set it to 'resize' to tell Wraith to resize the browser (rather than reload it) in between taking screenshots - making Wraith run much more quickly.
+          <br>
+          <b>snap_file</b> : Before Wraith 3.0.0, you were required to specify a path to a snap JavaScript file responsible for taking the command line arguments from Wraith and loading up Phantom/Casper to take screenshots. As of 3.0.0, this functionality has been abstracted away, so <em>you should no longer specify a snap file</em>. However, you are still able to specify a snap file if you wish.
+
+          <h2>Gallery &amp; Output</h2>
+          <p class="well">
+          After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.
+          <br>
+          <br>
+          A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
+          </p>
+
+          <p class="well">
+          As of <a href="https://github.com/BBC-News/wraith/releases/tag/v2.8.0">Wraith version 2.8.0</a>, there are now multiple gallery templates for you to choose from. The basic template is the default one and is simply a list of thumbnails sat side by side. The slideshow template is a new one and gives a more managable way of comparing thumbnails (including seeing everything at once in a lightbox), but is still under development and so is not the default yet.
+          <br>
+          <br>
+          You can choose your template, as well as the size of the generated thumbnails, by specifying the following config:
+          </p>
+
+          <pre><code data-language="yaml">
+# this property and its sub-properties are all optional
+gallery:
+  template: 'slideshow_template' # or 'basic_template' (which is the default)
+  thumb_width: 200 # default
+  thumb_height: 200 # default
+          </code></pre>
 
 
           <h2>beforeCapture hooks</h2>
@@ -188,7 +242,6 @@ This will create 2 folders with the labels you have specified in the config file
 
           <pre><code data-language="yaml">
 before_capture: "javascript/global.js"
-snap_file: "javascript/casper.js"
 
 # Add as many domains as necessary. Key will act as a label
 domains:
@@ -240,33 +293,16 @@ Wraith allows for most of the commands to be used individually, allowing you per
   wraith setup_folders [config_name]        # create folders for images
 		  </code>
           </pre>
-          <h2>Gallery &amp; Output</h2>
-          <p class="well">
-          After each screenshot is captured, the compare task will run, this will output a diff.png and a data.txt.  The data.txt for each file will show the number of pixels that have changed.
-          <br>
-          <br>
-          A gallery is available to view each of the images and the respective diff images located in the shots folder once all the images have been compared.
-          </p>
 
-          <p class="well">
-          As of <a href="https://github.com/BBC-News/wraith/releases/tag/v2.8.0">Wraith version 2.8.0</a>, there are now multiple gallery templates for you to choose from. The basic template is the default one and is simply a list of thumbnails sat side by side. The slideshow template is a new one and gives a more managable way of comparing thumbnails (including seeing everything at once in a lightbox), but is still under development and so is not the default yet.
-          <br>
-          <br>
-          You can choose your template, as well as the size of the generated thumbnails, by specifying the following config:
-          </p>
 
-          <pre><code data-language="yaml">
-# this property and its sub-properties are all optional
-gallery:
-  template: 'slideshow_template' # or 'basic_template' (which is the default)
-  thumb_width: 200 # default
-  thumb_height: 200 # default
-          </code></pre>
 
-          <br>
-          <p class="well">
-          If you are new to ruby, rake and PhantomJS, <a href="http://www.youtube.com/watch?v=gE_19L0l2q0" target="_blank">here is a great screencast</a> about how to use Wraith by <a href="https://twitter.com/klamping" target="_blank">Kevin Lamping</a>
-          </p>
+
+
+    <h2>More help/tutorials</h2>
+
+    <p class="well">
+    If you are new to ruby, rake and PhantomJS, <a href="http://www.youtube.com/watch?v=gE_19L0l2q0" target="_blank">here is a great screencast</a> about how to use Wraith by <a href="https://twitter.com/klamping" target="_blank">Kevin Lamping</a>
+    </p>
 
 		<h2>Copyright</h2>
         <p class="well">

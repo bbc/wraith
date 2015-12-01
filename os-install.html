@@ -51,13 +51,13 @@
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">Wraith</a>
+    <a class="navbar-brand" href=".">Wraith</a>
   </div>
 
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li class><a href="index.html">Main Documentation</a></li>
+      <li class><a href=".">Main Documentation</a></li>
       <li class="active"><a href="os-install.html">Installation</a></li>
       <li class><a href="configs.html">Example Configs</a></li>
     </ul>
@@ -88,6 +88,12 @@
             </ul>
             <p>
               It's up to you to decide which browser engine you want to run it against. PhantomJS and SlimerJS are the browsers that capture the screenshots, CasperJS is a layer on top of these to aid in target selectors for capturing a particular component.
+            </p>
+            <p>
+              PhantomJS is built on top of Webkit and JavascriptCore (like Safari). SlimerJS is built on top of Gecko and SpiderMonkey (like Firefox).
+            </p>
+            <p>
+              <strong>PLEASE NOTE</strong> - there seems to be an issue with using Wraith with PhantomJS 2. You are safer using a 1.9 variant.
             </p>
           </div>
           <br>
