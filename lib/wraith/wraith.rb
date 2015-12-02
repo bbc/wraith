@@ -1,4 +1,5 @@
 require "yaml"
+require "wraith/utilities"
 
 class Wraith::Wraith
   attr_accessor :config
@@ -41,17 +42,6 @@ class Wraith::Wraith
     @config["snap_file"] ? convert_to_absolute(@config["snap_file"]) : snap_file_from_engine(engine)
   end
 
-  def convert_to_absolute(filepath)
-    if filepath[0] == '/'
-      # filepath is already absolute. return unchanged
-      filepath
-    else
-      # filepath is relative. it must be converted to absolute
-      working_dir = `pwd`.chomp
-      "#{working_dir}/#{filepath}"
-    end
-  end
-
   def snap_file_from_engine(engine)
     path_to_js_templates = File.dirname(__FILE__) + '/javascript'
     case engine
@@ -66,7 +56,7 @@ class Wraith::Wraith
   end
 
   def before_capture
-    @config["before_capture"] || "false"
+    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
   end
 
   def widths
