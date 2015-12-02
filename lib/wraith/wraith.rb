@@ -1,4 +1,5 @@
 require "yaml"
+require "wraith/utilities"
 
 class Wraith::Wraith
   attr_accessor :config
@@ -38,7 +39,7 @@ class Wraith::Wraith
   end
 
   def snap_file
-    @config["snap_file"] || snap_file_from_engine(engine)
+    @config["snap_file"] ? convert_to_absolute(@config["snap_file"]) : snap_file_from_engine(engine)
   end
 
   def snap_file_from_engine(engine)
@@ -55,7 +56,7 @@ class Wraith::Wraith
   end
 
   def before_capture
-    @config["before_capture"] || "false"
+    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
   end
 
   def widths

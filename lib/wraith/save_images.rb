@@ -1,6 +1,7 @@
 require "wraith"
 require "parallel"
 require "shellwords"
+require "wraith/utilities"
 
 class Wraith::SaveImages
   attr_reader :wraith, :history, :meta
@@ -135,7 +136,7 @@ class CaptureOptions
   end
 
   def before_capture
-    options["before_capture"] || "false"
+    @options["before_capture"] ? convert_to_absolute(@options["before_capture"]) : "false"
   end
 
   def base_url

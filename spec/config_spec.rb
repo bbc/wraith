@@ -110,13 +110,23 @@ describe "wraith config" do
       expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
     end
 
-    it "should allow users to specify their own snap file" do
+    it "should allow users to specify the relative path to their own snap file" do
       config = YAML.load '
         browser:   casperjs
         snap_file: path/to/snap.js
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to eq 'path/to/snap.js'
+      # not sure about having code IN the test, but we want to get this right.
+      expect(wraith.snap_file).to eq (`pwd`.chomp! + '/path/to/snap.js')
+    end
+
+    it "should allow users to specify the absolute path to their own snap file" do
+      config = YAML.load '
+        browser:   casperjs
+        snap_file: /Users/my_username/Sites/bbc/wraith/path/to/snap.js
+      '
+      wraith = Wraith::Wraith.new(config, true)
+      expect(wraith.snap_file).to eq ('/Users/my_username/Sites/bbc/wraith/path/to/snap.js')
     end
   end
 
