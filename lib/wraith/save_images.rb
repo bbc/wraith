@@ -31,7 +31,7 @@ class Wraith::SaveImages
     check_paths.each do |label, options|
       settings = CaptureOptions.new(options, wraith)
 
-      if wraith.resize
+      if settings.resize
         jobs = jobs + define_individual_job(label, settings, wraith.widths)
       else
         wraith.widths.each do |width|
@@ -66,7 +66,7 @@ class Wraith::SaveImages
     command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
 
     # @TODO - uncomment the following line when we add a verbose mode
-    #puts command
+    # puts command
     run_command command
   end
 
@@ -132,7 +132,16 @@ class CaptureOptions
   end
 
   def selector
-    options["selector"] || " "
+    options["selector"] || "body"
+  end
+
+  def resize
+    # path level, or YAML-file level `resize_or_reload` property value
+    if @options["resize_or_reload"]
+      (@options["resize_or_reload"] == 'resize')
+    else
+      @wraith.resize
+    end
   end
 
   def before_capture
