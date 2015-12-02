@@ -38,7 +38,18 @@ class Wraith::Wraith
   end
 
   def snap_file
-    @config["snap_file"] || snap_file_from_engine(engine)
+    @config["snap_file"] ? convert_to_absolute(@config["snap_file"]) : snap_file_from_engine(engine)
+  end
+
+  def convert_to_absolute(filepath)
+    if filepath[0] == '/'
+      # filepath is already absolute. return unchanged
+      filepath
+    else
+      # filepath is relative. it must be converted to absolute
+      working_dir = `pwd`.chomp
+      "#{working_dir}/#{filepath}"
+    end
   end
 
   def snap_file_from_engine(engine)
