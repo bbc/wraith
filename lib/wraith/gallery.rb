@@ -154,7 +154,7 @@ class Wraith::GalleryGenerator
 
   def check_failed_shots
     if @multi
-      return true
+      return false
     elsif @failed_shots == false
       puts "Failures detected:"
 
@@ -169,9 +169,9 @@ class Wraith::GalleryGenerator
         end
       end
 
-      return false
+      return true
     else
-      true
+      false
     end
   end
 
