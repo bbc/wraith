@@ -35,7 +35,7 @@
           <% if threshold.nil? %>
           <h2><%= dir.gsub('__', '/') %></h2>
           <% else %>
-          <% if files[:data] > threshold %>
+          <% unless files[:data].nil? or files[:data] > threshold %>
           <h2 style="color:#CC0101"><%= dir.gsub('__', '/') %> <span class="glyphicon glyphicon-remove"></span></h2>
           <% else %>
           <h2><%= dir.gsub('__', '/') %></h2>
@@ -64,7 +64,7 @@
             <% if threshold.nil? %>
             <p class="text-center text-muted"><%=files[:data]%> % different</p>
             <% else %>
-            <% if files[:data] > threshold %>
+            <% unless files[:data].nil? or files[:data] > threshold %>
             <p style="color:#CC0101" class="text-center text-muted"><%=files[:data]%> % different</p>
             <% else %>
             <p class="text-center text-muted"><%=files[:data]%> % different</p>
