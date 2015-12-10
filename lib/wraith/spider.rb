@@ -55,7 +55,7 @@ class Wraith::Crawler < Wraith::Spider
            m3u f4v pdf doc xls ppt pps bin exe rss xml)
 
   def spider
-    if File.exist?(@wraith.spider_file) && modified_since(@wraith.spider_file, @wraith.spider_days[0])
+    if File.exist?(@wraith.spider_file) && modified_since(@wraith.spider_file, @wraith.spider_days)
       puts "using existing spider file"
       @paths = eval(File.read(@wraith.spider_file))
     else
