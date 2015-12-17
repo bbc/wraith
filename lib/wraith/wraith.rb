@@ -1,5 +1,5 @@
 require "yaml"
-require "wraith/utilities"
+require "wraith/helpers/utilities"
 
 class Wraith::Wraith
   attr_accessor :config

@@ -2,8 +2,10 @@ require "rspec"
 require "./lib/wraith/cli"
 
 def create_diff_image
-  saving.capture_page_image(wraith.engine, test_url1, 320, test_image1, selector, 'false', 'false')
-  saving.capture_page_image(wraith.engine, test_url2, 320, test_image2, selector, 'false', 'false')
+  capture_image = saving.construct_command(320, test_url1, test_image1, selector, 'false', 'false')
+  `#{capture_image}`
+  capture_image = saving.construct_command(320, test_url2, test_image2, selector, 'false', 'false')
+  `#{capture_image}`
 end
 
 def crop_images
@@ -16,7 +18,8 @@ end
 
 def run_js_then_capture(config)
   generated_image = 'shots/test/temporary_jsified_image.png'
-  saving.capture_page_image(config[:engine], test_url1, 320, generated_image, selector, config[:global_js], config[:path_js])
+  capture_image = saving.construct_command(320, test_url1, generated_image, selector, config[:global_js], config[:path_js])
+  `#{capture_image}`
   Wraith::CompareImages.new(config_name).compare_task(generated_image, config[:output_should_look_like], diff_image, data_txt)
   diff = File.open('shots/test/test.txt', "rb").read
   expect(diff).to eq '0.0'

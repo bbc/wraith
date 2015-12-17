@@ -22,7 +22,8 @@ describe Wraith do
     let(:image_size) { ImageSize.path(test_image1).size }
 
     it "saves image" do
-      saving.capture_page_image(wraith.engine, test_url1, 320, test_image1, selector, 'false', 'false')
+      capture_image = saving.construct_command(320, test_url1, test_image1, selector, 'false', 'false')
+      `#{capture_image}`
       expect(image_size[0]).to eq 320
     end
   end
