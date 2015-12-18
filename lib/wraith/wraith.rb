@@ -59,6 +59,14 @@ class Wraith::Wraith
     @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
   end
 
+  def num_threads
+    @config['num_threads'] ? @config['num_threads'] : 8
+  end
+
+  def timeout_ms
+    @config['timeout_ms'] ? @config['timeout_ms'] : 1000
+  end
+
   def widths
     @config["screen_widths"]
   end
