@@ -158,4 +158,10 @@ class Wraith::Wraith
   def phantomjs_options
     @config["phantomjs_options"]
   end
+
+  def verbose
+    # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
+    @config['verbose'] || false
+  end
+
 end

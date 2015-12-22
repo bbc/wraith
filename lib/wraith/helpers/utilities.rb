@@ -10,3 +10,9 @@ def convert_to_absolute(filepath)
     "#{working_dir}/#{filepath}"
   end
 end
+
+def verbose_log(message)
+  if wraith.verbose
+    puts message
+  end
+end

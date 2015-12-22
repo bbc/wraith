@@ -56,8 +56,8 @@ class Wraith::SaveImages
 
   def prepare_widths_for_cli(width)
     if width.kind_of? Array
-      # prepare for the command line. [30,40,50] => "'30','40','50'"
-      width = width.map{ |i| "'#{i}'" }.join(',')
+      # prepare for the command line. [30,40,50] => "30,40,50"
+      width = width.join(',')
     end
     width
   end
@@ -84,9 +84,9 @@ class Wraith::SaveImages
   end
 
   def construct_command(width, url, file_name, selector, global_before_capture, path_before_capture)
-    capture_page_image = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
-    # @TODO - uncomment the following line when we add a verbose mode
-    # puts capture_page_image
+    selector.gsub! '#', '\#' # make sure id selectors aren't escaped in the CLI
+    capture_page_image = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+    verbose_log capture_page_image
     return capture_page_image
   end
 
