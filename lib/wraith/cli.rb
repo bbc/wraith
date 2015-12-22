@@ -8,6 +8,7 @@ require "wraith/thumbnails"
 require "wraith/compare_images"
 require "wraith/gallery"
 require "wraith/version"
+require "wraith/helpers/utilities"
 
 class Wraith::CLI < Thor
   include Thor::Actions
@@ -33,12 +34,10 @@ class Wraith::CLI < Thor
     def make_sure_base_shots_exists(config_name)
       wraith = Wraith::Wraith.new(config_name)
       if wraith.history_dir.nil?
-        puts "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
-        exit 1
+        error "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
       end
       if !File.directory?(wraith.history_dir)
-        puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
-        exit 1
+        error "You need to run `wraith history` at least once before you can run `wraith latest`!"
       end
     end
   end

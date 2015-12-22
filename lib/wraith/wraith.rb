@@ -8,20 +8,23 @@ class Wraith::Wraith
     begin
       @config = yaml_passed ? config : open_config_file(config)
     rescue
-      abort "unable to find config at #{config}"
+      error "unable to find config at #{config}"
     end
     $wraith = self
   end
 
   def validate(mode = false)
-    debug if verbose
+    list_debug_information if verbose
     validate_basic_properties
     validate_mode_properties(mode) if mode
+    puts "Config validated. No serious issues found."
   end
 
   def validate_basic_properties
     snap_file_from_engine engine # quick test to see if engine is recognised (even if manual snapfile is provided)
-    # @TODO - validate more properties
+    if !domains
+      error "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
+    end
   end
 
   def validate_mode_properties(mode)
@@ -34,13 +37,13 @@ class Wraith::Wraith
       validate_history_mode
       validate_base_shots_exist
     else
-      puts "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
+      warning "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
     end
   end
 
   def validate_capture_mode
     if domains.length != 2
-      abort "`wraith capture` requires exactly two domains. #{docs_prompt}"
+      error "`wraith capture` requires exactly two domains. #{docs_prompt}"
     end
     if history_dir
       verbose_log "Warning: you have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
@@ -49,10 +52,10 @@ class Wraith::Wraith
 
   def validate_history_mode
     if !history_dir
-      abort "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
+      error "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
     end
     if domains.length != 1
-      abort "History mode requires exactly one domain. #{docs_prompt}"
+      error "History mode requires exactly one domain. #{docs_prompt}"
     end
   end
 
@@ -64,7 +67,7 @@ class Wraith::Wraith
     "See the docs at http://bbc-news.github.io/wraith/"
   end
 
-  def debug
+  def list_debug_information
     wraith_version      = Wraith::VERSION
     ruby_version        = run_command_safely('ruby -v') || 'Ruby not installed'
     phantomjs_version   = run_command_safely('phantomjs --version') || 'PhantomJS not installed'
@@ -131,7 +134,7 @@ class Wraith::Wraith
       path_to_js_templates + "/casper.js"
     # @TODO - add a SlimerJS option
     else
-      abort "Wraith does not recognise the browser engine '#{engine}'"
+      error "Wraith does not recognise the browser engine '#{engine}'"
     end
   end
 

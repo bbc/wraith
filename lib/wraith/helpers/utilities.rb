@@ -15,3 +15,11 @@ def verbose_log(message)
     puts message
   end
 end
+
+def error(message)
+  abort "Error: #{message}"
+end
+
+def warning(message)
+  puts "Warning: #{message}"
+end
