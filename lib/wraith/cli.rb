@@ -29,11 +29,23 @@ class Wraith::CLI < Thor
       create = Wraith::FolderManager.new(config_name)
       create.copy_old_shots
     end
+
+    def make_sure_base_shots_exists(config_name)
+      wraith = Wraith::Wraith.new(config_name)
+      if wraith.history_dir.nil?
+        puts "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
+        exit 1
+      end
+      if !File.directory?(wraith.history_dir)
+        puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
+        exit 1
+      end
+    end
   end
 
   desc "validate", "checks your configuration and validates that all required properties exist"
   def validate(config_name)
-    wraith = Wraith::Wraith.new(config_name)
+    wraith = Wraith::Wraith.new(config_name).validate
   end
 
   desc "setup", "creates config folder and default config"
@@ -58,19 +70,6 @@ class Wraith::CLI < Thor
   def copy_base_images(config_name)
     copy = Wraith::FolderManager.new(config_name)
     copy.copy_base_images
-  end
-
-  desc "make_sure_base_shots_exists [config_name]", "warns user if config is missing base shots"
-  def make_sure_base_shots_exists(config_name)
-    wraith = Wraith::Wraith.new(config_name)
-    if wraith.history_dir.nil?
-      puts "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
-      exit 1
-    end
-    if !File.directory?(wraith.history_dir)
-      puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
-      exit 1
-    end
   end
 
   desc "save_images [config_name]", "captures screenshots"
@@ -107,8 +106,9 @@ class Wraith::CLI < Thor
     gallery.generate_gallery
   end
 
-  desc "capture [config_name]", "A full Wraith job"
+  desc "capture [config_name]", "Capture paths against two domains, compare them, generate gallery"
   def capture(config, multi = false)
+    Wraith::Wraith.new(config).validate('capture')
     reset_shots(config)
     check_for_paths(config)
     setup_folders(config)
@@ -129,6 +129,7 @@ class Wraith::CLI < Thor
 
   desc "history [config_name]", "Setup a baseline set of shots"
   def history(config)
+    Wraith::Wraith.new(config).validate('history')
     reset_shots(config)
     check_for_paths(config)
     setup_folders(config)
@@ -138,6 +139,7 @@ class Wraith::CLI < Thor
 
   desc "latest [config_name]", "Capture new shots to compare with baseline"
   def latest(config)
+    Wraith::Wraith.new(config).validate('latest')
     make_sure_base_shots_exists(config)
     reset_shots(config)
     save_images(config, true)

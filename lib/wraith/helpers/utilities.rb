@@ -11,7 +11,7 @@ def convert_to_absolute(filepath)
 end
 
 def verbose_log(message)
-  if wraith.verbose
+  if $wraith.verbose
     puts message
   end
 end
