@@ -7,6 +7,7 @@ require "wraith/folder"
 require "wraith/thumbnails"
 require "wraith/compare_images"
 require "wraith/gallery"
+require "wraith/version"
 
 class Wraith::CLI < Thor
   include Thor::Actions
@@ -15,6 +16,24 @@ class Wraith::CLI < Thor
 
   def self.source_root
     File.expand_path("../../../", __FILE__)
+  end
+
+  # define internal methods which user should not be able to run directly
+  no_commands do
+    def check_for_paths(config_name)
+      spider = Wraith::Spidering.new(config_name)
+      spider.check_for_paths
+    end
+
+    def copy_old_shots(config_name)
+      create = Wraith::FolderManager.new(config_name)
+      create.copy_old_shots
+    end
+  end
+
+  desc "validate", "checks your configuration and validates that all required properties exist"
+  def validate(config_name)
+    wraith = Wraith::Wraith.new(config_name)
   end
 
   desc "setup", "creates config folder and default config"
@@ -51,18 +70,6 @@ class Wraith::CLI < Thor
     if !File.directory?(wraith.history_dir)
       puts "You need to run `wraith history` at least once before you can run `wraith latest`!"
       exit 1
-    end
-  end
-
-  no_commands do
-    def check_for_paths(config_name)
-      spider = Wraith::Spidering.new(config_name)
-      spider.check_for_paths
-    end
-
-    def copy_old_shots(config_name)
-      create = Wraith::FolderManager.new(config_name)
-      create.copy_old_shots
     end
   end
 

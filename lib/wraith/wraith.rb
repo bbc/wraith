@@ -5,10 +5,48 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    @config = yaml_passed ? config : open_config_file(config)
-  rescue
-    puts "unable to find config at #{config}"
-    exit 1
+    begin
+      @config = yaml_passed ? config : open_config_file(config)
+    rescue
+      puts "unable to find config at #{config}"
+      exit 1
+    end
+
+    self.validate
+  end
+
+  def validate
+    if self.verbose
+      self.debug
+    end
+    # @TODO - check all the basic properties are defined
+  end
+
+  def debug
+    wraith_version      = Wraith::VERSION
+    ruby_version        = run_command_safely('ruby -v') || 'Ruby not installed'
+    phantomjs_version   = run_command_safely('phantomjs --version') || 'PhantomJS not installed'
+    casperjs_version    = run_command_safely('casperjs --version') || 'CasperJS not installed'
+    imagemagick_version = run_command_safely('convert -version') || 'ImageMagick not installed'
+
+    puts "#################################################"
+    puts "  Wraith version:     #{wraith_version}"
+    puts "  Ruby version:       #{ruby_version}"
+    puts "  ImageMagick:        #{imagemagick_version}"
+    puts "  PhantomJS version:  #{phantomjs_version}"
+    puts "  CasperJS version:   #{casperjs_version}"
+    # @TODO - add a SlimerJS equivalent
+    puts "#################################################"
+    puts ""
+  end
+
+  def run_command_safely(command)
+    begin
+      output = `#{command}`
+    rescue Exception => e
+      return false
+    end
+    output.lines.first
   end
 
   def open_config_file(config_name)
