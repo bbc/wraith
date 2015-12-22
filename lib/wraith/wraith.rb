@@ -17,6 +17,7 @@ class Wraith::Wraith
     list_debug_information if verbose
     validate_basic_properties
     validate_mode_properties(mode) if mode
+    # if we get this far, we've only had warnings at worst, not errors.
     puts "Config validated. No serious issues found."
   end
 
@@ -239,7 +240,7 @@ class Wraith::Wraith
   end
 
   def phantomjs_options
-    @config["phantomjs_options"]
+    @config["phantomjs_options"] || '--ignore-ssl-errors=true --ssl-protocol=tlsv1'
   end
 
   def verbose

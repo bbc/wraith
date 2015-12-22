@@ -1,4 +1,4 @@
-module.exports = function (phantom) {
+module.exports = function (phantom, ready) {
 
     /* you may want to test some interaction on the page */
     phantom.evaluate(function(){
@@ -8,6 +8,9 @@ module.exports = function (phantom) {
         a.dispatchEvent(e);
         waitforload = true;
     });
+
+    /* or you may need to make Wraith wait a bit longer before taking the screenshot */
+    setTimeout(ready, 1000); // you MUST call the ready() callback for Wraith to continue
 
     /* or you may want to see how your page looks without JavaScript */
     // phantom.settings.javascriptEnabled = false;
