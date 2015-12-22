@@ -177,7 +177,7 @@ class Wraith::GalleryGenerator
 
   def prompt_user_to_open_gallery(dest)
     puts "\nView the gallery in your browser:"
-    puts "\t file://" + `pwd`.chomp + '/' + dest
+    puts "\t file://" + Dir.pwd + '/' + dest
   end
 
   class ErbBinding < OpenStruct

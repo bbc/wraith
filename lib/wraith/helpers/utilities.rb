@@ -6,8 +6,7 @@ def convert_to_absolute(filepath)
     filepath
   else
     # filepath is relative. it must be converted to absolute
-    working_dir = `pwd`.chomp
-    "#{working_dir}/#{filepath}"
+    "#{Dir.pwd}/#{filepath}"
   end
 end
 

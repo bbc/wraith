@@ -19,7 +19,7 @@ describe Wraith do
       '
       wraith = Wraith::Wraith.new(config, true)
       # not sure about having code IN the test, but we want to get this right.
-      expect(wraith.before_capture).to eq (`pwd`.chomp! + '/javascript/do_something.js')
+      expect(wraith.before_capture).to eq (Dir.pwd + '/javascript/do_something.js')
     end
 
     it "should allow users to specify the absolute path to the before_capture file" do
