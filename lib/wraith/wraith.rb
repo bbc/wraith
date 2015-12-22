@@ -13,18 +13,18 @@ class Wraith::Wraith
     $wraith = self
   end
 
-  def validate(mode_validation = false)
-    if self.verbose
-      self.debug
-    end
-    # @TODO - check all the basic properties are defined
-
-    if mode_validation
-      self.validate(mode_validation)
-    end
+  def validate(mode = false)
+    debug if verbose
+    validate_basic_properties
+    validate_mode_properties(mode) if mode
   end
 
-  def validate_mode(mode)
+  def validate_basic_properties
+    snap_file_from_engine engine # quick test to see if engine is recognised (even if manual snapfile is provided)
+    # @TODO - validate more properties
+  end
+
+  def validate_mode_properties(mode)
     case mode
     when "capture"
       validate_capture_mode
@@ -39,25 +39,25 @@ class Wraith::Wraith
   end
 
   def validate_capture_mode
-    if self.domains.length != 2
+    if domains.length != 2
       abort "`wraith capture` requires exactly two domains. #{docs_prompt}"
     end
-    if self.history_dir
+    if history_dir
       verbose_log "Warning: you have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
     end
   end
 
   def validate_history_mode
-    if !self.history_dir
+    if !history_dir
       abort "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
     end
-    if self.domains.length != 1
+    if domains.length != 1
       abort "History mode requires exactly one domain. #{docs_prompt}"
     end
   end
 
   def validate_base_shots_exist
-    # @TODO - validate history mode base shots exist
+    puts "@TODO - need to validate history mode base shots exist"
   end
 
   def docs_prompt

@@ -84,7 +84,7 @@ class Wraith::SaveImages
   end
 
   def construct_command(width, url, file_name, selector, global_before_capture, path_before_capture)
-    selector.gsub! '#', '\#' # make sure id selectors aren't escaped in the CLI
+    selector = selector.gsub '#', '\#' # make sure id selectors aren't escaped in the CLI
     capture_page_image = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
     verbose_log capture_page_image
     return capture_page_image
