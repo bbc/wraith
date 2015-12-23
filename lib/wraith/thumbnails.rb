@@ -11,8 +11,6 @@ class Wraith::Thumbnails
   end
 
   def generate_thumbnails
-    puts "Generating thumbnails"
-
     files = Dir.glob("#{wraith.directory}/*/*.png")
 
     Parallel.each(files, :in_processes => Parallel.processor_count) do |filename|
