@@ -1,4 +1,4 @@
-# @TODO - extract more shared functions to this file
+require "wraith/helpers/custom_exceptions"
 
 def convert_to_absolute(filepath)
   if filepath[0] == '/'
