@@ -1,6 +1,17 @@
+##############################################################
+##############################################################
+# This is an example configuration provided by Wraith.
+# Feel free to amend for your own requirements.
+# ---
+# This particular config is intended to demonstrate how
+# to use Wraith in 'spider' mode.
+##############################################################
+##############################################################
+
+
 # Add as many domains as necessary. Key will act as a label
 domains:
-  my_site:  "http://www.example.com"
+  my_site:       "http://www.example.com"
   my_other_site: "http://www.test.example.com"
 
 # Notice the absence of a `paths` property. When no paths are provided, Wraith defaults to
@@ -38,7 +49,7 @@ screen_widths:
 browser: "phantomjs"
 
 # the directory that your latest screenshots will be stored in
-directory: 'shots_nojs'
+directory: 'shots'
 
 # choose how results are displayed in the gallery (default is `alphanumeric` if omitted)
 # Different screen widths are always grouped together.

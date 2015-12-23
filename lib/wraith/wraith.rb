@@ -26,6 +26,7 @@ class Wraith::Wraith
     if !domains
       error "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
     end
+    #@TODO validate fuzz is not nil, etc
   end
 
   def validate_mode_properties(mode)
