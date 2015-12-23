@@ -63,7 +63,7 @@ class Wraith::SaveImages
 
   def capture_page_image(browser, url, width, file_name, selector, global_before_capture, path_before_capture)
 
-    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+    command = "#{browser} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' \"#{width}\" '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}' #{wraith.timeout_ms}"
 
     # @TODO - uncomment the following line when we add a verbose mode
     # puts command
@@ -80,7 +80,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
+    Parallel.each(jobs, :in_threads => wraith.num_threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
         attempt_image_capture(width, url, filename, selector, global_before_capture, path_before_capture, 5)
       rescue => e

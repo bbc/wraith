@@ -17,6 +17,27 @@ describe "wraith config" do
     it "contains shot options" do
       expect(wraith.config).to include "directory" => "shots"
     end
+
+    it 'returns default values for num_threads' do
+      expect(wraith.num_threads).to eq 8
+    end
+
+    it 'returns default values for timeout_ms' do
+      expect(wraith.timeout_ms).to eq 1000
+    end
+
+    context 'non-standard config values' do
+      let(:config) { YAML.load "browser: phantomjs\nnum_threads: 2\ntimeout_ms: 4000"}
+      let(:non_standard_wraith)  { Wraith::Wraith.new( config, true) }
+    
+      it 'returns non standard values for num_threads if specified in config' do
+        expect(non_standard_wraith.num_threads).to eq 2
+      end
+
+      it 'returns non_standard values for timeout_ms if specified in config' do
+        expect(non_standard_wraith.timeout_ms).to eq 4000
+      end
+    end
   end
 
   describe "When creating a wraith worker" do
