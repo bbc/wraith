@@ -1,14 +1,16 @@
 require "yaml"
-require "wraith/utilities"
+require "wraith/helpers/utilities"
 
 class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    @config = yaml_passed ? config : open_config_file(config)
-  rescue
-    puts "unable to find config at #{config}"
-    exit 1
+    begin
+      @config = yaml_passed ? config : open_config_file(config)
+    rescue
+      error "unable to find config at #{config}"
+    end
+    $wraith = self
   end
 
   def open_config_file(config_name)
@@ -26,7 +28,7 @@ class Wraith::Wraith
   end
 
   def history_dir
-    @config["history_dir"]
+    @config["history_dir"] || false
   end
 
   def engine
@@ -51,12 +53,12 @@ class Wraith::Wraith
       path_to_js_templates + "/casper.js"
     # @TODO - add a SlimerJS option
     else
-      abort "Wraith does not recognise the browser engine '#{engine}'"
+      error "Wraith does not recognise the browser engine '#{engine}'"
     end
   end
 
   def before_capture
-    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
+    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : false
   end
 
   def widths
@@ -156,6 +158,12 @@ class Wraith::Wraith
   end
 
   def phantomjs_options
-    @config["phantomjs_options"]
+    @config["phantomjs_options"] || '--ignore-ssl-errors=true --ssl-protocol=tlsv1'
   end
+
+  def verbose
+    # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
+    @config['verbose'] || false
+  end
+
 end

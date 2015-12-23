@@ -123,6 +123,19 @@ class Wraith::GalleryGenerator
     Hash[@sorted]
   end
 
+  def generate_gallery(with_path = "")
+    dest = "#{@location}/gallery.html"
+    directories = parse_directories(@location)
+
+    template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
+    generate_html(@location, directories, template, dest, with_path)
+
+    puts "Gallery generated"
+    failed = check_failed_shots
+    prompt_user_to_open_gallery dest
+    exit 1 if failed
+  end
+
   def generate_html(location, directories, template, destination, path)
     template = File.read(template)
     locals = {
@@ -130,26 +143,11 @@ class Wraith::GalleryGenerator
       :directories => directories,
       :path        => path,
       :threshold   => wraith.threshold
-
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, "w") do |outf|
       outf.write(html)
     end
-  end
-
-  def generate_gallery(with_path = "")
-    dest = "#{@location}/gallery.html"
-    directories = parse_directories(@location)
-
-    slideshow_template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
-
-    generate_html(@location, directories, slideshow_template, dest, with_path)
-
-    puts "Gallery generated"
-    failed = check_failed_shots
-    prompt_user_to_open_gallery dest
-    exit 1 if failed
   end
 
   def check_failed_shots
@@ -177,7 +175,7 @@ class Wraith::GalleryGenerator
 
   def prompt_user_to_open_gallery(dest)
     puts "\nView the gallery in your browser:"
-    puts "\t file://" + `pwd`.chomp + '/' + dest
+    puts "\t file://" + Dir.pwd + '/' + dest
   end
 
   class ErbBinding < OpenStruct
