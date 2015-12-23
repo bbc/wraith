@@ -4,9 +4,7 @@
 ##########
 
 #Headless browser option
-browser:
-  phantomjs: "casperjs"
-  # slimerjs: "slimerjs"
+browser: "casperjs"
 
 #overriding the snap file
 snap_file: "spec/js/custom_snap_file.js"
