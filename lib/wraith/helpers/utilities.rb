@@ -1,7 +1,9 @@
 require "wraith/helpers/custom_exceptions"
 
 def convert_to_absolute(filepath)
-  if filepath[0] == '/'
+  if !filepath
+    'false'
+  elsif filepath[0] == '/'
     # filepath is already absolute. return unchanged
     filepath
   else

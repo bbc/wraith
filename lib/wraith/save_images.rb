@@ -3,6 +3,7 @@ require "shellwords"
 require "wraith"
 require "wraith/helpers/capture_options"
 require "wraith/helpers/save_metadata"
+require "wraith/helpers/utilities"
 
 class Wraith::SaveImages
   attr_reader :wraith, :history, :meta
@@ -84,7 +85,11 @@ class Wraith::SaveImages
   end
 
   def construct_command(width, url, file_name, selector, global_before_capture, path_before_capture)
+    width    = prepare_widths_for_cli(width)
     selector = selector.gsub '#', '\#' # make sure id selectors aren't escaped in the CLI
+    global_before_capture = convert_to_absolute global_before_capture
+    path_before_capture   = convert_to_absolute path_before_capture
+
     capture_page_image = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
     verbose_log capture_page_image
     return capture_page_image

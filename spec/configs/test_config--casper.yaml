@@ -5,8 +5,6 @@
 
 #Headless browser option
 browser: "casperjs"
-
-#overriding the snap file
 snap_file: "spec/js/custom_snap_file.js"
 
 # Type the name of the directory that shots will be stored in

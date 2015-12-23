@@ -58,7 +58,7 @@ class Wraith::Wraith
   end
 
   def before_capture
-    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
+    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : false
   end
 
   def widths
