@@ -75,7 +75,7 @@ class Wraith::SaveImages
     Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
         command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
-        attempt_image_capture command
+        attempt_image_capture(command, filename)
       rescue => e
         puts e
         create_invalid_image(filename, width)
@@ -90,7 +90,8 @@ class Wraith::SaveImages
     return capture_page_image
   end
 
-  def attempt_image_capture(capture_page_image, max_attempts = 5)
+  def attempt_image_capture(capture_page_image, filename)
+    max_attempts = 5
     max_attempts.times do |i|
       run_command capture_page_image
 
