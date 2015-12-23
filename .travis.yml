@@ -2,6 +2,9 @@ language: ruby
 rvm:
 - 1.9.3
 - 2.0.0
+before_install:
+  - gem update --system 2.4.5 # last known successful Travis build
+  - gem --version
 script: bundle exec rspec
 notifications:
   email:
@@ -11,3 +14,4 @@ notifications:
     on_success: never
   slack:
     secure: BgRAqwHabAtIBgtApDjyUiND2SNxd4sHMgq4ffnJ+EoMme6RSUAeK0G6LLyaGAk6YcpCeWRGOccEpzai87R3ckv6uycUVGxFcTvPmCEClakbUelWovVEyVT3hPLWznxJ8pz3EVB2+5aJnAsTg5M2ZnYtk3a5C1mrPS+WKceE/Ls=
+sudo: false
