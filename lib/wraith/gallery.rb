@@ -70,6 +70,7 @@ class Wraith::GalleryGenerator
   end
 
   def get_path(category)
+    return '' if wraith.paths.nil?
     wraith.paths[category]['path'] || wraith.paths[category]
   end
 
