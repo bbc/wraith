@@ -15,7 +15,11 @@ class Wraith::Spidering
         spider = Wraith::Sitemap.new(@wraith)
       else
         puts "no paths defined in config, crawling from site root"
-        spider = Wraith::Crawler.new(@wraith)
+        if !@wraith.spider_use_mongodb.nil?
+          spider = Wraith::CrawlerDB.new(@wraith)
+        else
+          spider = Wraith::Crawler.new(@wraith)
+        end
       end
       spider.determine_paths
     end
@@ -60,9 +64,15 @@ class Wraith::Crawler < Wraith::Spider
       @paths = eval(File.read(@wraith.spider_file))
     else
       puts "creating new spider file"
+      if (!@wraith.spider_use_mongodb.nil?)
+        puts "override file with Anemone MongoDB storage"
+      end
       spider_list = []
       Anemone.crawl(@wraith.base_domain) do |anemone|
         anemone.skip_links_like(/\.(#{EXT.join('|')})$/)
+        if (!@wraith.spider_use_mongodb.nil?)
+          anemone.storage = Anemone::Storage.MongoDB
+        end
         # Add user specified skips
         anemone.skip_links_like(@wraith.spider_skips)
         anemone.on_every_page { |page| add_path(page.url.path) }
@@ -72,6 +82,36 @@ class Wraith::Crawler < Wraith::Spider
 
   def modified_since(file, since)
     (Time.now - File.ctime(file)) / (24 * 3600) < since
+  end
+end
+
+class Wraith::CrawlerDB < Wraith::Spider
+  EXT = %w(flv swf png jpg gif asx zip rar tar 7z \
+           gz jar js css dtd xsd ico raw mp3 mp4 \
+           wav wmv ape aac ac3 wma aiff mpg mpeg \
+           avi mov ogg mkv mka asx asf mp2 m1v \
+           m3u f4v pdf doc xls ppt pps bin exe rss xml)
+
+  def spider
+    puts "use Anemone MongoDB storage"
+    require "mongo"
+    db = Mongo::Connection.new().db("anemone")
+    col = db.collection("pages")
+    # Check existing database populated
+    if col.find_one
+      puts "use existing MongoDB collection"
+      col.find.each { |page| add_path(page['url']) }
+    else
+      puts "create new MongoDB collection"
+      spider_list = []
+      Anemone.crawl(@wraith.base_domain) do |anemone|
+        anemone.skip_links_like(/\.(#{EXT.join('|')})$/)
+        anemone.storage = Anemone::Storage.MongoDB
+        # Add user specified skips
+        anemone.skip_links_like(@wraith.spider_skips)
+        anemone.on_every_page { |page| add_path(page.url.path) }
+      end
+    end
   end
 end
 
