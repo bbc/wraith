@@ -209,9 +209,11 @@ wraith capture configs/config.yaml
           <br>
           <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
           <br>
-          <b>resize_or_reload</b> : As of Wraith 3.0.0, you can now tell Wraith to run more efficiently. The old default is 'reload', which reloads the browser for every screen width you want to take a screenshot of. However, you can set it to 'resize' to tell Wraith to resize the browser (rather than reload it) in between taking screenshots - making Wraith run much more quickly.
+          <b>resize_or_reload</b> : (optional) As of Wraith 3.0.0, you can now tell Wraith to run more efficiently. The old default is 'reload', which reloads the browser for every screen width you want to take a screenshot of. However, you can set it to 'resize' to tell Wraith to resize the browser (rather than reload it) in between taking screenshots - making Wraith run much more quickly.
           <br>
-          <b>snap_file</b> : Before Wraith 3.0.0, you were required to specify a path to a snap JavaScript file responsible for taking the command line arguments from Wraith and loading up Phantom/Casper to take screenshots. As of 3.0.0, this functionality has been abstracted away, so <em>you should no longer specify a snap file</em>. However, you are still able to specify a snap file if you wish.
+          <b>verbose</b> : (optional: boolean) As of Wraith 3.1.0, you can run Wraith in verbose mode, which lists helpful debug information. Default: false
+          <br>
+          <b>snap_file</b> : (optional: string) Before Wraith 3.0.0, you were required to specify a path to a snap JavaScript file responsible for taking the command line arguments from Wraith and loading up Phantom/Casper to take screenshots. As of 3.0.0, this functionality has been abstracted away, so <em>you should no longer specify a snap file</em>. However, you are still able to specify a snap file if you wish.
 
           <h2>Gallery &amp; Output</h2>
           <p class="well">
@@ -275,6 +277,26 @@ paths:
 
           <p>All of the before_capture hooks are optional.</p>
 
+          <p>before_capture files should be in module form. Depending on the browser engine used, you may have direct access to the DOM or you may need to access it through the engine in another way. The important thing is to execute the `ready` callback when you're done, otherwise Wraith will hang forever.</p>
+
+          <h4>CasperJS before_capture module</h4>
+
+          <pre><code data-language="javascript">
+module.exports = function (casper, ready) {
+    // make Wraith wait a bit longer before taking the screenshot
+    casper.wait(2000, ready); // you MUST call the ready() callback for Wraith to continue
+}
+          </code></pre>
+
+          <h4>PhantomJS before_capture module</h4>
+
+          <pre><code data-language="javascript">
+module.exports = function (phantom, ready) {
+    // make Wraith wait a bit longer before taking the screenshot
+    setTimeout(ready, 2000); // you MUST call the ready() callback for Wraith to continue
+}
+          </code></pre>
+
           <h2>Command line options</h2>
           <p></p>
           <p class="well note">
@@ -282,18 +304,21 @@ Wraith allows for most of the commands to be used individually, allowing you per
           </p>
           <pre>
 		  <code data-language="shell">
-  wraith capture [config_name]              # A full Wraith job
+  wraith capture [config_name]              # Capture paths against two domains, compare them, generate gallery
   wraith compare_images [config_name]       # compares images to generate diffs
+  wraith copy_base_images [config_name]     # copies the required base images over for comparison with latest images
   wraith crop_images [config_name]          # crops images to the same height
   wraith generate_gallery [config_name]     # create page for viewing images
   wraith generate_thumbnails [config_name]  # create thumbnails for gallery
+  wraith help [COMMAND]                     # Describe available commands or one specific command
   wraith history [config_name]              # Setup a baseline set of shots
   wraith latest [config_name]               # Capture new shots to compare with baseline
   wraith multi_capture [filelist]           # A Batch of Wraith Jobs
   wraith reset_shots [config_name]          # removes all the files in the shots folder
   wraith save_images [config_name]          # captures screenshots
-  wraith setup                              # creates config & Javascript
+  wraith setup                              # creates config folder and default config
   wraith setup_folders [config_name]        # create folders for images
+  wraith validate                           # checks your configuration and validates that all required properties exist
 		  </code>
           </pre>
 
