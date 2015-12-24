@@ -40,16 +40,6 @@ class Wraith::CLI < Thor
       create = Wraith::FolderManager.new(config_name)
       create.copy_old_shots
     end
-
-    def make_sure_base_shots_exists(config_name)
-      wraith = Wraith::Wraith.new(config_name)
-      if wraith.history_dir.nil?
-        logger.error "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
-      end
-      unless File.directory?(wraith.history_dir)
-        logger.error "You need to run `wraith history` at least once before you can run `wraith latest`!"
-      end
-    end
   end
 
   desc "validate", "checks your configuration and validates that all required properties exist"
@@ -176,7 +166,6 @@ class Wraith::CLI < Thor
   def latest(config)
     within_acceptable_limits do
       logger.info Wraith::Validate.new(config).validate('latest')
-      make_sure_base_shots_exists(config)
       reset_shots(config)
       save_images(config, true)
       copy_base_images(config)

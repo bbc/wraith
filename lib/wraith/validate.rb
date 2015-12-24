@@ -60,7 +60,9 @@ class Wraith::Validate
   end
 
   def validate_base_shots_exist
-    # @TODO - need to validate history mode base shots exist
+    unless File.directory?(@wraith.history_dir)
+      logger.error "You need to run `wraith history` at least once before you can run `wraith latest`!"
+    end
   end
 
   def docs_prompt
