@@ -45,7 +45,7 @@ class Wraith::CLI < Thor
   desc "validate", "checks your configuration and validates that all required properties exist"
   def validate(config_name)
     within_acceptable_limits do
-      wraith = Wraith::Validate.new(config_name).validate
+      Wraith::Validate.new(config_name).validate
     end
   end
 

@@ -113,7 +113,7 @@ describe "wraith config" do
       '
       wraith = Wraith::Wraith.new(config, true)
       # not sure about having code IN the test, but we want to get this right.
-      expect(wraith.snap_file).to eq (Dir.pwd + "/path/to/snap.js")
+      expect(wraith.snap_file).to eq(Dir.pwd + "/path/to/snap.js")
     end
 
     it "should allow users to specify the absolute path to their own snap file" do
@@ -122,7 +122,7 @@ describe "wraith config" do
         snap_file: /Users/my_username/Sites/bbc/wraith/path/to/snap.js
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to eq ("/Users/my_username/Sites/bbc/wraith/path/to/snap.js")
+      expect(wraith.snap_file).to eq("/Users/my_username/Sites/bbc/wraith/path/to/snap.js")
     end
   end
 

@@ -4,13 +4,14 @@ require "wraith/helpers/utilities"
 
 class Wraith::Validate
   include Logging
+  attr_reader :wraith
 
   def initialize(config, yaml_passed = false)
     @wraith = Wraith::Wraith.new(config, yaml_passed)
   end
 
   def validate(mode = false)
-    list_debug_information if @wraith.verbose
+    list_debug_information if wraith.verbose
     validate_basic_properties
     validate_mode_properties(mode) if mode
     # if we get this far, we've only had warnings at worst, not errors.
@@ -18,10 +19,10 @@ class Wraith::Validate
   end
 
   def validate_basic_properties
-    if @wraith.engine.nil?
+    if wraith.engine.nil?
       fail MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}"
     end
-    unless @wraith.domains
+    unless wraith.domains
       fail MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
     end
     # @TODO validate fuzz is not nil, etc
@@ -42,25 +43,21 @@ class Wraith::Validate
   end
 
   def validate_capture_mode
-    if @wraith.domains.length != 2
-      fail InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}"
-    end
-    if @wraith.history_dir
-      logger.warn "You have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
-    end
+    fail InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}" if wraith.domains.length != 2
+
+    logger.warn "You have specified a `history_dir` in your config, but this is"\
+                " used in `history` mode, NOT `capture` mode. #{docs_prompt}" if wraith.history_dir
   end
 
   def validate_history_mode
-    unless @wraith.history_dir
-      fail MissingRequiredPropertyError, "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
-    end
-    if @wraith.domains.length != 1
-      fail InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}"
-    end
+    fail MissingRequiredPropertyError, "You must specify a `history_dir` to run"\
+                  " Wraith in history mode. #{docs_prompt}" unless wraith.history_dir
+
+    fail InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}" if wraith.domains.length != 1
   end
 
   def validate_base_shots_exist
-    unless File.directory?(@wraith.history_dir)
+    unless File.directory?(wraith.history_dir)
       logger.error "You need to run `wraith history` at least once before you can run `wraith latest`!"
     end
   end
@@ -90,7 +87,7 @@ class Wraith::Validate
   def run_command_safely(command)
     begin
       output = `#{command}`
-    rescue Exception => e
+    rescue StandardError
       return false
     end
     output.lines.first

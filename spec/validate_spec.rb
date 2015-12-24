@@ -12,7 +12,7 @@ describe "Wraith config validator" do
 
   describe "universal, basic validation for all modes" do
     it "should validate a basic config" do
-      validate = Wraith::Validate.new(config, true).validate
+      Wraith::Validate.new(config, true).validate
     end
 
     it "should complain if the `domains` property is missing" do
@@ -45,7 +45,7 @@ describe "Wraith config validator" do
           test:  http://something.bbc.com
           live:  http://www.bbc.com
       ')
-      validate = Wraith::Validate.new(config, true).validate("capture")
+      Wraith::Validate.new(config, true).validate("capture")
     end
   end
 
@@ -70,7 +70,7 @@ describe "Wraith config validator" do
     end
 
     it "should be happy if a history_dir and one domain is specified" do
-      validate = Wraith::Validate.new(history_conf, true).validate("history")
+      Wraith::Validate.new(history_conf, true).validate("history")
     end
   end
 end

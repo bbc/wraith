@@ -24,11 +24,6 @@ describe Wraith do
         expect(image[:thumb]).to eq images[i][:thumb]
       end
 
-      diff = {
-        :filename => "home/test_image-diff.png",
-        :thumb    => "thumbnails/home/test_image-diff.png"
-      }
-
       expect(dirs["home"][0][:diff][:filename]).to eq "home/test_image-diff.png"
       expect(dirs["home"][0][:diff][:thumb]).to eq "thumbnails/home/test_image-diff.png"
     end

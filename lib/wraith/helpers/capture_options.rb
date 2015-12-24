@@ -10,7 +10,7 @@ class CaptureOptions
   end
 
   def path
-    has_casper(options)
+    casper?(options)
   end
 
   def selector
@@ -19,15 +19,15 @@ class CaptureOptions
 
   def resize
     # path level, or YAML-file level `resize_or_reload` property value
-    if @options["resize_or_reload"]
-      (@options["resize_or_reload"] == "resize")
+    if options["resize_or_reload"]
+      (options["resize_or_reload"] == "resize")
     else
-      @wraith.resize
+      wraith.resize
     end
   end
 
   def before_capture
-    @options["before_capture"] ? convert_to_absolute(@options["before_capture"]) : false
+    options["before_capture"] ? convert_to_absolute(options["before_capture"]) : false
   end
 
   def base_url
@@ -46,7 +46,7 @@ class CaptureOptions
     wraith.comp_domain + path unless wraith.comp_domain.nil?
   end
 
-  def has_casper(options)
+  def casper?(options)
     options["path"] ? options["path"] : options
   end
 end
