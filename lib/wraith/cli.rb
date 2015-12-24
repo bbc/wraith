@@ -128,7 +128,7 @@ class Wraith::CLI < Thor
   desc "capture [config_name]", "Capture paths against two domains, compare them, generate gallery"
   def capture(config, multi = false)
     within_acceptable_limits do
-      logger.info Wraith::Validate.new(config).validate('capture')
+      logger.info Wraith::Validate.new(config).validate("capture")
       reset_shots(config)
       check_for_paths(config)
       setup_folders(config)
@@ -153,7 +153,7 @@ class Wraith::CLI < Thor
   desc "history [config_name]", "Setup a baseline set of shots"
   def history(config)
     within_acceptable_limits do
-      logger.info Wraith::Validate.new(config).validate('history')
+      logger.info Wraith::Validate.new(config).validate("history")
       reset_shots(config)
       check_for_paths(config)
       setup_folders(config)
@@ -165,7 +165,7 @@ class Wraith::CLI < Thor
   desc "latest [config_name]", "Capture new shots to compare with baseline"
   def latest(config)
     within_acceptable_limits do
-      logger.info Wraith::Validate.new(config).validate('latest')
+      logger.info Wraith::Validate.new(config).validate("latest")
       reset_shots(config)
       save_images(config, true)
       copy_base_images(config)

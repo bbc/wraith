@@ -2,12 +2,12 @@ require "_helpers"
 
 def run_js_then_capture(config)
   saving     = Wraith::SaveImages.new(config_name)
-  generated_image = 'shots/test/temporary_jsified_image.png'
+  generated_image = "shots/test/temporary_jsified_image.png"
   capture_image   = saving.construct_command(320, "http://www.bbc.com/afrique", generated_image, selector, config[:global_js], config[:path_js])
   `#{capture_image}`
   Wraith::CompareImages.new(config_name).compare_task(generated_image, config[:output_should_look_like], "shots/test/test_diff.png", "shots/test/test.txt")
-  diff = File.open('shots/test/test.txt', "rb").read
-  expect(diff).to eq '0.0'
+  diff = File.open("shots/test/test.txt", "rb").read
+  expect(diff).to eq "0.0"
 end
 
 describe Wraith do
@@ -30,7 +30,7 @@ describe Wraith do
       '
       wraith = Wraith::Wraith.new(config, true)
       # not sure about having code IN the test, but we want to get this right.
-      expect(wraith.before_capture).to eq (Dir.pwd + '/javascript/do_something.js')
+      expect(wraith.before_capture).to eq (Dir.pwd + "/javascript/do_something.js")
     end
 
     it "should allow users to specify the absolute path to the before_capture file" do
@@ -39,7 +39,7 @@ describe Wraith do
         before_capture: /Users/some_user/wraith/javascript/do_something.js
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.before_capture).to eq ('/Users/some_user/wraith/javascript/do_something.js')
+      expect(wraith.before_capture).to eq ("/Users/some_user/wraith/javascript/do_something.js")
     end
   end
 
@@ -48,33 +48,33 @@ describe Wraith do
   describe "When hooking into beforeCapture (CasperJS)" do
     it "Executes the global JS before capturing" do
       run_js_then_capture(
-        global_js: before_suite_js,
-        path_js:   false,
-        output_should_look_like: 'spec/base/global.png',
-        engine:    'casperjs'
+        :global_js               => before_suite_js,
+        :path_js                 => false,
+        :output_should_look_like => "spec/base/global.png",
+        :engine                  => "casperjs"
       )
     end
 
     it "Executes the path-level JS before capturing" do
       run_js_then_capture(
-        global_js: false,
-        path_js: before_capture_js,
-        output_should_look_like: 'spec/base/path.png',
-        engine:    'casperjs'
+        :global_js               => false,
+        :path_js                 => before_capture_js,
+        :output_should_look_like => "spec/base/path.png",
+        :engine                  => "casperjs"
       )
     end
 
     it "Executes the global JS before the path-level JS" do
       run_js_then_capture(
-        global_js: before_suite_js,
-        path_js: before_capture_js,
-        output_should_look_like: 'spec/base/path.png',
-        engine:    'casperjs'
+        :global_js               => before_suite_js,
+        :path_js                 => before_capture_js,
+        :output_should_look_like => "spec/base/path.png",
+        :engine                  => "casperjs"
       )
     end
   end
 
-  # @TODO - uncomment and figure out why broken
+  #  @TODO - uncomment and figure out why broken
   # describe "When hooking into beforeCapture (PhantomJS)" do
   #   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   #   let(:saving) { Wraith::SaveImages.new(config_name) }

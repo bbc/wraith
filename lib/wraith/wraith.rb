@@ -7,12 +7,10 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    begin
-      @config = yaml_passed ? config : open_config_file(config)
-      logger.level = verbose ? Logger::DEBUG : Logger::INFO
-    rescue
-      logger.error "unable to find config at #{config}"
-    end
+    @config = yaml_passed ? config : open_config_file(config)
+    logger.level = verbose ? Logger::DEBUG : Logger::INFO
+  rescue
+    logger.error "unable to find config at #{config}"
   end
 
   def open_config_file(config_name)
@@ -45,7 +43,7 @@ class Wraith::Wraith
   end
 
   def snap_file_from_engine(engine)
-    path_to_js_templates = File.dirname(__FILE__) + '/javascript'
+    path_to_js_templates = File.dirname(__FILE__) + "/javascript"
     case engine
     when "phantomjs"
       path_to_js_templates + "/phantom.js"
@@ -131,7 +129,7 @@ class Wraith::Wraith
   end
 
   def gallery_template
-    default = 'basic_template'
+    default = "basic_template"
     if @config["gallery"].nil?
       default
     else
@@ -163,6 +161,6 @@ class Wraith::Wraith
 
   def verbose
     # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
-    @config['verbose'] || false
+    @config["verbose"] || false
   end
 end

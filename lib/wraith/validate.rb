@@ -19,12 +19,12 @@ class Wraith::Validate
 
   def validate_basic_properties
     if @wraith.engine.nil?
-      raise MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}"
+      fail MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}"
     end
     unless @wraith.domains
-      raise MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
+      fail MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
     end
-    #@TODO validate fuzz is not nil, etc
+    # @TODO validate fuzz is not nil, etc
   end
 
   def validate_mode_properties(mode)
@@ -43,7 +43,7 @@ class Wraith::Validate
 
   def validate_capture_mode
     if @wraith.domains.length != 2
-      raise InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}"
+      fail InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}"
     end
     if @wraith.history_dir
       logger.warn "You have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
@@ -52,10 +52,10 @@ class Wraith::Validate
 
   def validate_history_mode
     unless @wraith.history_dir
-      raise MissingRequiredPropertyError, "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
+      fail MissingRequiredPropertyError, "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
     end
     if @wraith.domains.length != 1
-      raise InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}"
+      fail InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}"
     end
   end
 
@@ -71,10 +71,10 @@ class Wraith::Validate
 
   def list_debug_information
     wraith_version      = Wraith::VERSION
-    ruby_version        = run_command_safely('ruby -v')             || 'Ruby not installed'
-    phantomjs_version   = run_command_safely('phantomjs --version') || 'PhantomJS not installed'
-    casperjs_version    = run_command_safely('casperjs --version')  || 'CasperJS not installed'
-    imagemagick_version = run_command_safely('convert -version')    || 'ImageMagick not installed'
+    ruby_version        = run_command_safely("ruby -v") || "Ruby not installed"
+    phantomjs_version   = run_command_safely("phantomjs --version") || "PhantomJS not installed"
+    casperjs_version    = run_command_safely("casperjs --version") || "CasperJS not installed"
+    imagemagick_version = run_command_safely("convert -version") || "ImageMagick not installed"
 
     logger.debug "#################################################"
     logger.debug "  Wraith version:     #{wraith_version}"

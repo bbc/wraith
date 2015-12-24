@@ -70,10 +70,10 @@ describe "wraith config" do
 
   describe "different ways of initialising browser engine" do
     it "should let us directly specify the engine" do
-      config = YAML.load 'browser: phantomjs'
+      config = YAML.load "browser: phantomjs"
       wraith = Wraith::Wraith.new(config, true)
 
-      expect(wraith.engine).to eq 'phantomjs'
+      expect(wraith.engine).to eq "phantomjs"
     end
 
     it "should be backwards compatible with the old way" do
@@ -82,19 +82,19 @@ describe "wraith config" do
           phantomjs: "casperjs"
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.engine).to eq 'casperjs'
+      expect(wraith.engine).to eq "casperjs"
     end
   end
 
   describe "different ways of determining the snap file" do
     it "should calculate the snap file from the engine" do
-      config = YAML.load 'browser: phantomjs'
+      config = YAML.load "browser: phantomjs"
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to include 'lib/wraith/javascript/phantom.js'
+      expect(wraith.snap_file).to include "lib/wraith/javascript/phantom.js"
 
-      config = YAML.load 'browser: casperjs'
+      config = YAML.load "browser: casperjs"
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
+      expect(wraith.snap_file).to include "lib/wraith/javascript/casper.js"
     end
 
     it "should calculate the snap file in a backwards-compatible way" do
@@ -103,7 +103,7 @@ describe "wraith config" do
           phantomjs: "casperjs"
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to include 'lib/wraith/javascript/casper.js'
+      expect(wraith.snap_file).to include "lib/wraith/javascript/casper.js"
     end
 
     it "should allow users to specify the relative path to their own snap file" do
@@ -113,7 +113,7 @@ describe "wraith config" do
       '
       wraith = Wraith::Wraith.new(config, true)
       # not sure about having code IN the test, but we want to get this right.
-      expect(wraith.snap_file).to eq (Dir.pwd + '/path/to/snap.js')
+      expect(wraith.snap_file).to eq (Dir.pwd + "/path/to/snap.js")
     end
 
     it "should allow users to specify the absolute path to their own snap file" do
@@ -122,7 +122,7 @@ describe "wraith config" do
         snap_file: /Users/my_username/Sites/bbc/wraith/path/to/snap.js
       '
       wraith = Wraith::Wraith.new(config, true)
-      expect(wraith.snap_file).to eq ('/Users/my_username/Sites/bbc/wraith/path/to/snap.js')
+      expect(wraith.snap_file).to eq ("/Users/my_username/Sites/bbc/wraith/path/to/snap.js")
     end
   end
 

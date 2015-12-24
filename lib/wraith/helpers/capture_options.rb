@@ -20,7 +20,7 @@ class CaptureOptions
   def resize
     # path level, or YAML-file level `resize_or_reload` property value
     if @options["resize_or_reload"]
-      (@options["resize_or_reload"] == 'resize')
+      (@options["resize_or_reload"] == "resize")
     else
       @wraith.resize
     end
