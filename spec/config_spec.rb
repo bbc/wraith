@@ -1,7 +1,6 @@
 require "_helpers"
 
 describe "wraith config" do
-
   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   let(:wraith) { Wraith::Wraith.new(config_name) }
 
@@ -20,7 +19,6 @@ describe "wraith config" do
   end
 
   describe "When creating a wraith worker" do
-
     it "should have a browser engine defined" do
       expect(wraith.engine).to be_a String
     end
@@ -71,7 +69,6 @@ describe "wraith config" do
   end
 
   describe "different ways of initialising browser engine" do
-
     it "should let us directly specify the engine" do
       config = YAML.load 'browser: phantomjs'
       wraith = Wraith::Wraith.new(config, true)
@@ -90,7 +87,6 @@ describe "wraith config" do
   end
 
   describe "different ways of determining the snap file" do
-
     it "should calculate the snap file from the engine" do
       config = YAML.load 'browser: phantomjs'
       wraith = Wraith::Wraith.new(config, true)
@@ -131,7 +127,6 @@ describe "wraith config" do
   end
 
   describe "different modes of efficiency (resize or reload)" do
-
     it "should trigger efficient mode if resize was specified" do
       config = YAML.load 'resize_or_reload: "resize"'
       wraith = Wraith::Wraith.new(config, true)
@@ -143,7 +138,5 @@ describe "wraith config" do
       wraith = Wraith::Wraith.new(config, true)
       expect(wraith.resize).to eq false
     end
-
   end
-
 end

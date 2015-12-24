@@ -2,8 +2,6 @@ require "wraith/wraith"
 require "wraith/helpers/utilities"
 
 class Wraith::Validate
-  attr_accessor :config
-
   def initialize(config, yaml_passed = false)
     @wraith = Wraith::Wraith.new(config, yaml_passed)
   end
@@ -20,7 +18,7 @@ class Wraith::Validate
     if @wraith.engine.nil?
       raise MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}"
     end
-    if !@wraith.domains
+    unless @wraith.domains
       raise MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
     end
     #@TODO validate fuzz is not nil, etc
@@ -50,7 +48,7 @@ class Wraith::Validate
   end
 
   def validate_history_mode
-    if !@wraith.history_dir
+    unless @wraith.history_dir
       raise MissingRequiredPropertyError, "You must specify a `history_dir` to run Wraith in history mode. #{docs_prompt}"
     end
     if @wraith.domains.length != 1
@@ -92,5 +90,4 @@ class Wraith::Validate
     end
     output.lines.first
   end
-
 end

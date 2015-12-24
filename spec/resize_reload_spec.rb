@@ -1,12 +1,10 @@
 require "_helpers"
 
 describe "wraith config" do
-
   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   let(:saving) { Wraith::SaveImages.new(config_name) }
 
   describe "saving images" do
-
     it "should pass the width plainly to the CLI when running in inefficient mode" do
       prepared_width = saving.prepare_widths_for_cli 432
       expect(prepared_width).to eq 432
@@ -49,7 +47,5 @@ describe "wraith config" do
       # [["test", "/mypage", 320, "http://www.bbc.com/mypage", "/test/320__test.png", " ", "false", "false"], ["test", "/mypage", 464, "http://www.bbc.com/mypage", "/test/464__test.png", " ", "false", "false"], ["test", "/mypage", 624, "http://www.bbc.com/mypage", "/test/624__test.png", " ", "false", "false"]]
       expect(inefficient_jobs[0][2]).to eq 320
     end
-
   end
-
 end

@@ -35,9 +35,7 @@ class Wraith::GalleryGenerator
 
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
-        unless match.nil?
-          matcher(match, filename, dirname, category)
-        end
+        matcher(match, filename, dirname, category) unless match.nil?
       end
     end
     @folder_manager.tidy_shots_folder(@dirs)
@@ -76,10 +74,7 @@ class Wraith::GalleryGenerator
   def get_group_from_match(match)
     group = match[2]
     dash = match[2].rindex('-')
-
-    if !dash.nil?
-      group = match[2][dash+1..-1]
-    end
+    group = match[2][dash+1..-1] unless dash.nil?
     group
   end
 

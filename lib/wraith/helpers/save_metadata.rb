@@ -13,9 +13,7 @@ class SaveMetadata
   end
 
   def file_names(width, label, domain_label)
-    if width.kind_of? Array
-      width = 'MULTI'
-    end
+    width = "MULTI" if width.is_a? Array
     "#{wraith.directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 

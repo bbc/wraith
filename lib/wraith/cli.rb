@@ -22,14 +22,11 @@ class Wraith::CLI < Thor
 
   # define internal methods which user should not be able to run directly
   no_commands do
-
     def within_acceptable_limits
-      begin
-        yield
-      rescue CustomError => e
-        puts e.message
-        # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
-      end
+      yield
+    rescue CustomError => e
+      puts e.message
+      # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
     end
 
     def check_for_paths(config_name)
@@ -47,7 +44,7 @@ class Wraith::CLI < Thor
       if wraith.history_dir.nil?
         error "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
       end
-      if !File.directory?(wraith.history_dir)
+      unless File.directory?(wraith.history_dir)
         error "You need to run `wraith history` at least once before you can run `wraith latest`!"
       end
     end

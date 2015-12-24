@@ -56,10 +56,8 @@ class Wraith::SaveImages
   end
 
   def prepare_widths_for_cli(width)
-    if width.kind_of? Array
-      # prepare for the command line. [30,40,50] => "30,40,50"
-      width = width.join(',')
-    end
+    # prepare for the command line. [30,40,50] => "30,40,50"
+    width = width.join(',') if width.is_a? Array
     width
   end
 
@@ -90,9 +88,9 @@ class Wraith::SaveImages
     global_before_capture = convert_to_absolute global_before_capture
     path_before_capture   = convert_to_absolute path_before_capture
 
-    capture_page_image = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
-    verbose_log capture_page_image
-    return capture_page_image
+    command_to_run = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+    verbose_log command_to_run
+    command_to_run
   end
 
   def attempt_image_capture(capture_page_image, filename)

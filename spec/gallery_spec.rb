@@ -34,5 +34,4 @@ describe Wraith do
       expect(dirs['home'][0][:diff][:thumb]).to eq 'thumbnails/home/test_image-diff.png'
     end
   end
-
 end

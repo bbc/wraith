@@ -34,9 +34,7 @@ class Wraith::Wraith
   def engine
     engine = @config["browser"]
     # Legacy support for those using the old style "browser: \n phantomjs: 'casperjs'" configs
-    if engine.is_a? Hash
-      engine = engine.values.first
-    end
+    engine = engine.values.first if engine.is_a? Hash
     engine
   end
 
@@ -158,12 +156,11 @@ class Wraith::Wraith
   end
 
   def phantomjs_options
-    @config["phantomjs_options"] || '--ignore-ssl-errors=true --ssl-protocol=tlsv1'
+    @config["phantomjs_options"]
   end
 
   def verbose
     # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
     @config['verbose'] || false
   end
-
 end

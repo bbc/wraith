@@ -11,7 +11,6 @@ def run_js_then_capture(config)
 end
 
 describe Wraith do
-
   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--casper.yaml" }
   let(:wraith) { Wraith::Wraith.new(config_name) }
   let(:selector) { "body" }
@@ -47,7 +46,6 @@ describe Wraith do
   # @TODO - we need tests determining the path to "path-level before_capture hooks"
 
   describe "When hooking into beforeCapture (CasperJS)" do
-
     it "Executes the global JS before capturing" do
       run_js_then_capture(
         global_js: before_suite_js,
@@ -112,5 +110,4 @@ describe Wraith do
   #     )
   #   end
   # end
-
 end
