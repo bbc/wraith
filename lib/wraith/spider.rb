@@ -28,7 +28,7 @@ end
 
 class Wraith::Spider
   def initialize(wraith)
-    wraith = wraith
+    @wraith = wraith
     @paths = {}
   end
 
