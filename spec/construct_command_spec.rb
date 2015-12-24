@@ -6,10 +6,10 @@ describe "Wraith config to CLI argument mapping" do
     let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
     let(:saving)      { Wraith::SaveImages.new(config_name) }
     let(:width)       { 320 }
-    let(:url)         { 'http://example.com/my-page' }
-    let(:file_name)   { 'wraith/my-page/320_phantomjs_latest.png' }
-    let(:selector)    { '.my_selector' }
-    let(:global_bc)   { 'javascript/before_capture.js' }
+    let(:url)         { "http://example.com/my-page" }
+    let(:file_name)   { "wraith/my-page/320_phantomjs_latest.png" }
+    let(:selector)    { ".my_selector" }
+    let(:global_bc)   { "javascript/before_capture.js" }
     let(:path_bc)     { false }
 
     it "should take a load of variables and construct a command" do

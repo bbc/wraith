@@ -36,10 +36,10 @@ class Wraith::SaveImages
       settings = CaptureOptions.new(options, wraith)
 
       if settings.resize
-        jobs = jobs + define_individual_job(label, settings, wraith.widths)
+        jobs += define_individual_job(label, settings, wraith.widths)
       else
         wraith.widths.each do |width|
-          jobs = jobs + define_individual_job(label, settings, width)
+          jobs += define_individual_job(label, settings, width)
         end
       end
     end
@@ -59,7 +59,7 @@ class Wraith::SaveImages
 
   def prepare_widths_for_cli(width)
     # prepare for the command line. [30,40,50] => "30,40,50"
-    width = width.join(',') if width.is_a? Array
+    width = width.join(",") if width.is_a? Array
     width
   end
 
@@ -101,10 +101,10 @@ class Wraith::SaveImages
       run_command capture_page_image
 
       if wraith.resize
-        return # @TODO - need to check if the image was generated, as per the reload example below
+        next # @TODO - need to check if the image was generated, as per the reload example below
       end
 
-      return if File.exist? filename
+      next if File.exist? filename
 
       logger.warn "Failed to capture image #{filename} on attempt number #{i + 1} of #{max_attempts}"
     end

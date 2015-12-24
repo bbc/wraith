@@ -37,7 +37,7 @@ class Wraith::FolderManager
 
   def copy_old_shots
     if history_dir.nil?
-      logger.error 'no `history_dir` attribute found in config. Cannot copy files.'
+      logger.error "no `history_dir` attribute found in config. Cannot copy files."
     else
       FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
     end
