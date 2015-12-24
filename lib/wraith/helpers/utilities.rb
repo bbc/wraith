@@ -11,17 +11,3 @@ def convert_to_absolute(filepath)
     "#{Dir.pwd}/#{filepath}"
   end
 end
-
-def verbose_log(message)
-  if $wraith.verbose
-    puts message
-  end
-end
-
-def error(message)
-  abort "Error: #{message}"
-end
-
-def warning(message)
-  puts "Warning: #{message}"
-end

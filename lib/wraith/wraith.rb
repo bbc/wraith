@@ -1,16 +1,18 @@
 require "yaml"
+require "wraith/helpers/logger"
 require "wraith/helpers/utilities"
 
 class Wraith::Wraith
+  include Logging
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
     begin
       @config = yaml_passed ? config : open_config_file(config)
+      logger.level = verbose ? Logger::DEBUG : Logger::INFO
     rescue
-      error "unable to find config at #{config}"
+      logger.error "unable to find config at #{config}"
     end
-    $wraith = self
   end
 
   def open_config_file(config_name)
@@ -51,7 +53,7 @@ class Wraith::Wraith
       path_to_js_templates + "/casper.js"
     # @TODO - add a SlimerJS option
     else
-      error "Wraith does not recognise the browser engine '#{engine}'"
+      logger.error "Wraith does not recognise the browser engine '#{engine}'"
     end
   end
 

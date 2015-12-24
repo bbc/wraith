@@ -2,10 +2,12 @@ require "parallel"
 require "shellwords"
 require "wraith"
 require "wraith/helpers/capture_options"
+require "wraith/helpers/logger"
 require "wraith/helpers/save_metadata"
 require "wraith/helpers/utilities"
 
 class Wraith::SaveImages
+  include Logging
   attr_reader :wraith, :history, :meta
 
   def initialize(config, history = false, yaml_passed = false)
@@ -64,7 +66,7 @@ class Wraith::SaveImages
   def run_command(command)
     output = []
     IO.popen(command).each do |line|
-      puts line
+      logger.info line
       output << line.chomp!
     end.close
     output
@@ -76,7 +78,7 @@ class Wraith::SaveImages
         command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
         attempt_image_capture(command, filename)
       rescue => e
-        puts e
+        logger.error e
         create_invalid_image(filename, width)
       end
     end
@@ -89,7 +91,7 @@ class Wraith::SaveImages
     path_before_capture   = convert_to_absolute path_before_capture
 
     command_to_run = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
-    verbose_log command_to_run
+    logger.debug command_to_run
     command_to_run
   end
 
@@ -104,14 +106,14 @@ class Wraith::SaveImages
 
       return if File.exist? filename
 
-      puts "Failed to capture image #{filename} on attempt number #{i + 1} of #{max_attempts}"
+      logger.warn "Failed to capture image #{filename} on attempt number #{i + 1} of #{max_attempts}"
     end
 
     fail "Unable to capture image #{filename} after #{max_attempts} attempt(s)"
   end
 
   def create_invalid_image(filename, width)
-    puts "Using fallback image instead"
+    logger.warn "Using fallback image instead"
     invalid = File.expand_path("../../assets/invalid.jpg", File.dirname(__FILE__))
     FileUtils.cp invalid, filename
 

@@ -1,9 +1,11 @@
 require "wraith"
+require "wraith/helpers/logger"
 require "image_size"
 require "parallel"
 require "shellwords"
 
 class Wraith::CropImages
+  include Logging
   attr_reader :wraith
 
   def initialize(config)
@@ -14,7 +16,7 @@ class Wraith::CropImages
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
     Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
-      puts "cropping images"
+      logger.info "cropping images"
 
       width          = image_dimensions(base)[0]
       base_height    = image_dimensions(base)[1]

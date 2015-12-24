@@ -9,10 +9,12 @@ require "wraith/compare_images"
 require "wraith/gallery"
 require "wraith/validate"
 require "wraith/version"
+require "wraith/helpers/logger"
 require "wraith/helpers/utilities"
 
 class Wraith::CLI < Thor
   include Thor::Actions
+  include Logging
 
   attr_accessor :config_name
 
@@ -25,7 +27,7 @@ class Wraith::CLI < Thor
     def within_acceptable_limits
       yield
     rescue CustomError => e
-      puts e.message
+      logger.error e.message
       # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
     end
 
@@ -42,10 +44,10 @@ class Wraith::CLI < Thor
     def make_sure_base_shots_exists(config_name)
       wraith = Wraith::Wraith.new(config_name)
       if wraith.history_dir.nil?
-        error "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
+        logger.error "You need to specify a `history_dir` property at #{config_name} before you can run `wraith latest`!"
       end
       unless File.directory?(wraith.history_dir)
-        error "You need to run `wraith history` at least once before you can run `wraith latest`!"
+        logger.error "You need to run `wraith history` at least once before you can run `wraith latest`!"
       end
     end
   end
@@ -92,7 +94,7 @@ class Wraith::CLI < Thor
   desc "save_images [config_name]", "captures screenshots"
   def save_images(config_name, history = false)
     within_acceptable_limits do
-      puts "SAVING IMAGES"
+      logger.info "SAVING IMAGES"
       save_images = Wraith::SaveImages.new(config_name, history)
       save_images.save_images
     end
@@ -109,7 +111,7 @@ class Wraith::CLI < Thor
   desc "compare_images [config_name]", "compares images to generate diffs"
   def compare_images(config_name)
     within_acceptable_limits do
-      puts "COMPARING IMAGES"
+      logger.info "COMPARING IMAGES"
       compare = Wraith::CompareImages.new(config_name)
       compare.compare_images
     end
@@ -118,7 +120,7 @@ class Wraith::CLI < Thor
   desc "generate_thumbnails [config_name]", "create thumbnails for gallery"
   def generate_thumbnails(config_name)
     within_acceptable_limits do
-      puts "GENERATING THUMBNAILS"
+      logger.info "GENERATING THUMBNAILS"
       thumbs = Wraith::Thumbnails.new(config_name)
       thumbs.generate_thumbnails
     end
@@ -127,7 +129,7 @@ class Wraith::CLI < Thor
   desc "generate_gallery [config_name]", "create page for viewing images"
   def generate_gallery(config_name, multi = false)
     within_acceptable_limits do
-      puts "GENERATING GALLERY"
+      logger.info "GENERATING GALLERY"
       gallery = Wraith::GalleryGenerator.new(config_name, multi)
       gallery.generate_gallery
     end
@@ -136,7 +138,7 @@ class Wraith::CLI < Thor
   desc "capture [config_name]", "Capture paths against two domains, compare them, generate gallery"
   def capture(config, multi = false)
     within_acceptable_limits do
-      puts Wraith::Validate.new(config).validate('capture')
+      logger.info Wraith::Validate.new(config).validate('capture')
       reset_shots(config)
       check_for_paths(config)
       setup_folders(config)
@@ -161,7 +163,7 @@ class Wraith::CLI < Thor
   desc "history [config_name]", "Setup a baseline set of shots"
   def history(config)
     within_acceptable_limits do
-      puts Wraith::Validate.new(config).validate('history')
+      logger.info Wraith::Validate.new(config).validate('history')
       reset_shots(config)
       check_for_paths(config)
       setup_folders(config)
@@ -173,7 +175,7 @@ class Wraith::CLI < Thor
   desc "latest [config_name]", "Capture new shots to compare with baseline"
   def latest(config)
     within_acceptable_limits do
-      puts Wraith::Validate.new(config).validate('latest')
+      logger.info Wraith::Validate.new(config).validate('latest')
       make_sure_base_shots_exists(config)
       reset_shots(config)
       save_images(config, true)

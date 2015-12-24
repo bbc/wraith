@@ -1,7 +1,10 @@
 require "wraith/wraith"
+require "wraith/helpers/logger"
 require "wraith/helpers/utilities"
 
 class Wraith::Validate
+  include Logging
+
   def initialize(config, yaml_passed = false)
     @wraith = Wraith::Wraith.new(config, yaml_passed)
   end
@@ -34,7 +37,7 @@ class Wraith::Validate
       validate_history_mode
       validate_base_shots_exist
     else
-      warning "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
+      logger.warn "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
     end
   end
 
@@ -43,7 +46,7 @@ class Wraith::Validate
       raise InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}"
     end
     if @wraith.history_dir
-      verbose_log "Warning: you have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
+      logger.warn "You have specified a `history_dir` in your config, but this is used in `history` mode, NOT `capture` mode. #{docs_prompt}"
     end
   end
 
@@ -71,15 +74,15 @@ class Wraith::Validate
     casperjs_version    = run_command_safely('casperjs --version')  || 'CasperJS not installed'
     imagemagick_version = run_command_safely('convert -version')    || 'ImageMagick not installed'
 
-    puts "#################################################"
-    puts "  Wraith version:     #{wraith_version}"
-    puts "  Ruby version:       #{ruby_version}"
-    puts "  ImageMagick:        #{imagemagick_version}"
-    puts "  PhantomJS version:  #{phantomjs_version}"
-    puts "  CasperJS version:   #{casperjs_version}"
+    logger.debug "#################################################"
+    logger.debug "  Wraith version:     #{wraith_version}"
+    logger.debug "  Ruby version:       #{ruby_version}"
+    logger.debug "  ImageMagick:        #{imagemagick_version}"
+    logger.debug "  PhantomJS version:  #{phantomjs_version}"
+    logger.debug "  CasperJS version:   #{casperjs_version}"
     # @TODO - add a SlimerJS equivalent
-    puts "#################################################"
-    puts ""
+    logger.debug "#################################################"
+    logger.debug ""
   end
 
   def run_command_safely(command)
