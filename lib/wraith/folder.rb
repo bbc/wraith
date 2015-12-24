@@ -1,6 +1,8 @@
 require "wraith"
+require "wraith/helpers/logger"
 
 class Wraith::FolderManager
+  include Logging
   attr_reader :wraith
 
   def initialize(config)
@@ -35,17 +37,17 @@ class Wraith::FolderManager
 
   def copy_old_shots
     if history_dir.nil?
-      abort 'Error: no `history_dir` attribute found in config. Cannot copy files.'
+      logger.error 'no `history_dir` attribute found in config. Cannot copy files.'
     else
       FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
     end
   end
 
   def copy_base_images
-    puts "COPYING BASE IMAGES"
+    logger.info "COPYING BASE IMAGES"
     wraith.paths.each do |path|
       path = path[0]
-      puts "Copying #{history_dir}/#{path} to #{dir}"
+      logger.info "Copying #{history_dir}/#{path} to #{dir}"
       FileUtils.cp_r(Dir.glob("#{history_dir}/#{path}"), dir)
     end
   end
@@ -60,7 +62,7 @@ class Wraith::FolderManager
       FileUtils.mkdir_p("#{dir}/thumbnails/#{folder_label}")
       FileUtils.mkdir_p("#{dir}/#{folder_label}")
     end
-    puts "Creating Folders"
+    logger.info "Creating Folders"
   end
 
   def tidy_shots_folder(dirs)

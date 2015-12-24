@@ -1,14 +1,18 @@
 require "yaml"
-require "wraith/utilities"
+require "wraith/helpers/logger"
+require "wraith/helpers/utilities"
 
 class Wraith::Wraith
+  include Logging
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    @config = yaml_passed ? config : open_config_file(config)
-  rescue
-    puts "unable to find config at #{config}"
-    exit 1
+    begin
+      @config = yaml_passed ? config : open_config_file(config)
+      logger.level = verbose ? Logger::DEBUG : Logger::INFO
+    rescue
+      logger.error "unable to find config at #{config}"
+    end
   end
 
   def open_config_file(config_name)
@@ -26,15 +30,13 @@ class Wraith::Wraith
   end
 
   def history_dir
-    @config["history_dir"]
+    @config["history_dir"] || false
   end
 
   def engine
     engine = @config["browser"]
     # Legacy support for those using the old style "browser: \n phantomjs: 'casperjs'" configs
-    if engine.is_a? Hash
-      engine = engine.values.first
-    end
+    engine = engine.values.first if engine.is_a? Hash
     engine
   end
 
@@ -51,12 +53,12 @@ class Wraith::Wraith
       path_to_js_templates + "/casper.js"
     # @TODO - add a SlimerJS option
     else
-      abort "Wraith does not recognise the browser engine '#{engine}'"
+      logger.error "Wraith does not recognise the browser engine '#{engine}'"
     end
   end
 
   def before_capture
-    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : "false"
+    @config["before_capture"] ? convert_to_absolute(@config["before_capture"]) : false
   end
 
   def widths
@@ -157,5 +159,10 @@ class Wraith::Wraith
 
   def phantomjs_options
     @config["phantomjs_options"]
+  end
+
+  def verbose
+    # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
+    @config['verbose'] || false
   end
 end

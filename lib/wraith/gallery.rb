@@ -2,8 +2,10 @@ require "erb"
 require "pp"
 require "fileutils"
 require "wraith/wraith"
+require "wraith/helpers/logger"
 
 class Wraith::GalleryGenerator
+  include Logging
   attr_reader :wraith
 
   MATCH_FILENAME = /(\S+)_(\S+)\.\S+/
@@ -35,9 +37,7 @@ class Wraith::GalleryGenerator
 
       Dir.foreach("#{dirname}/#{category}") do |filename|
         match = MATCH_FILENAME.match(filename)
-        unless match.nil?
-          matcher(match, filename, dirname, category)
-        end
+        matcher(match, filename, dirname, category) unless match.nil?
       end
     end
     @folder_manager.tidy_shots_folder(@dirs)
@@ -76,10 +76,7 @@ class Wraith::GalleryGenerator
   def get_group_from_match(match)
     group = match[2]
     dash = match[2].rindex('-')
-
-    if !dash.nil?
-      group = match[2][dash+1..-1]
-    end
+    group = match[2][dash+1..-1] unless dash.nil?
     group
   end
 
@@ -123,6 +120,16 @@ class Wraith::GalleryGenerator
     Hash[@sorted]
   end
 
+  def generate_gallery(with_path = "")
+    dest = "#{@location}/gallery.html"
+    directories = parse_directories(@location)
+
+    template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
+    generate_html(@location, directories, template, dest, with_path)
+
+    report_gallery_status dest
+  end
+
   def generate_html(location, directories, template, destination, path)
     template = File.read(template)
     locals = {
@@ -130,7 +137,6 @@ class Wraith::GalleryGenerator
       :directories => directories,
       :path        => path,
       :threshold   => wraith.threshold
-
     }
     html = ERB.new(template).result(ErbBinding.new(locals).get_binding)
     File.open(destination, "w") do |outf|
@@ -138,15 +144,8 @@ class Wraith::GalleryGenerator
     end
   end
 
-  def generate_gallery(with_path = "")
-    dest = "#{@location}/gallery.html"
-    directories = parse_directories(@location)
-
-    slideshow_template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
-
-    generate_html(@location, directories, slideshow_template, dest, with_path)
-
-    puts "Gallery generated"
+  def report_gallery_status(dest)
+    logger.info "Gallery generated"
     failed = check_failed_shots
     prompt_user_to_open_gallery dest
     exit 1 if failed
@@ -156,15 +155,15 @@ class Wraith::GalleryGenerator
     if @multi
       return false
     elsif @failed_shots == false
-      puts "Failures detected:"
+      logger.warn "Failures detected:"
 
       @dirs.each do |dir, sizes|
         sizes.to_a.sort.each do |size, files|
           file = dir.gsub('__', '/')
           if !files.include?(:diff)
-            puts "\t Unable to create a diff image for #{file}"
+            logger.warn "\t Unable to create a diff image for #{file}"
           elsif files[:data] > wraith.threshold
-            puts "\t #{file} failed at a resolution of #{size} (#{files[:data]}% diff)"
+            logger.warn "\t #{file} failed at a resolution of #{size} (#{files[:data]}% diff)"
           end
         end
       end
@@ -176,8 +175,8 @@ class Wraith::GalleryGenerator
   end
 
   def prompt_user_to_open_gallery(dest)
-    puts "\nView the gallery in your browser:"
-    puts "\t file://" + `pwd`.chomp + '/' + dest
+    logger.info "\nView the gallery in your browser:"
+    logger.info "\t file://" + Dir.pwd + '/' + dest
   end
 
   class ErbBinding < OpenStruct

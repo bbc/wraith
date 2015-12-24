@@ -4,11 +4,7 @@
 ##########
 
 #Headless browser option
-browser:
-  phantomjs: "casperjs"
-  # slimerjs: "slimerjs"
-
-#overriding the snap file
+browser: "casperjs"
 snap_file: "spec/js/custom_snap_file.js"
 
 # Type the name of the directory that shots will be stored in
