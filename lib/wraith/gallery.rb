@@ -127,10 +127,7 @@ class Wraith::GalleryGenerator
     template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
     generate_html(@location, directories, template, dest, with_path)
 
-    logger.info "Gallery generated"
-    failed = check_failed_shots
-    prompt_user_to_open_gallery dest
-    exit 1 if failed
+    report_gallery_status dest
   end
 
   def generate_html(location, directories, template, destination, path)
@@ -145,6 +142,13 @@ class Wraith::GalleryGenerator
     File.open(destination, "w") do |outf|
       outf.write(html)
     end
+  end
+
+  def report_gallery_status(dest)
+    logger.info "Gallery generated"
+    failed = check_failed_shots
+    prompt_user_to_open_gallery dest
+    exit 1 if failed
   end
 
   def check_failed_shots
