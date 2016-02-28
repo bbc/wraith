@@ -42,6 +42,10 @@ class Wraith::FolderManager
       FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
       FileUtils.rm_rf("#{history_dir}/thumbnails") # thumbnails aren't generated until the gallery stage anyway
       FileUtils.rm_rf("#{dir}") # get rid of the live folder
+      Dir["#{history_dir}/**/*.png"].each do |filepath|
+        new_name = filepath.gsub("latest.png", "base.png")
+        File.rename(filepath, new_name)
+      end
     end
   end
 
