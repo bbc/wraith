@@ -40,6 +40,8 @@ class Wraith::FolderManager
       logger.error "no `history_dir` attribute found in config. Cannot copy files."
     else
       FileUtils.cp_r("#{dir}/.", "#{history_dir}/")
+      FileUtils.rm_rf("#{history_dir}/thumbnails") # thumbnails aren't generated until the gallery stage anyway
+      FileUtils.rm_rf("#{dir}") # get rid of the live folder
     end
   end
 
