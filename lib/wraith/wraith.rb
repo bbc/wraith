@@ -9,17 +9,25 @@ class Wraith::Wraith
   def initialize(config, yaml_passed = false)
     @config = yaml_passed ? config : open_config_file(config)
     logger.level = verbose ? Logger::DEBUG : Logger::INFO
-  rescue
-    logger.error "unable to find config at #{config}"
   end
 
   def open_config_file(config_name)
-    if File.exist?(config_name) && File.extname(config_name) == ".yaml"
-      config = File.open config_name
-    else
-      config = File.open "configs/#{config_name}.yaml"
+    possible_filenames = [
+      config_name,
+      "#{config_name}.yml",
+      "#{config_name}.yaml",
+      "configs/#{config_name}.yml",
+      "configs/#{config_name}.yaml"
+    ]
+
+    possible_filenames.each do |filepath|
+      if File.exist?(filepath)
+        config = File.open config_name
+        return YAML.load config
+      end
     end
-    YAML.load config
+  rescue
+    logger.error "unable to find config \"#{config}\""
   end
 
   def directory
