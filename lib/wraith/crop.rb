@@ -16,7 +16,6 @@ class Wraith::CropImages
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
     Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
-      logger.info "cropping images"
       crop_if_necessary base, compare
     end
   end
