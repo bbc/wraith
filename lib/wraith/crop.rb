@@ -17,24 +17,31 @@ class Wraith::CropImages
 
     Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
       logger.info "cropping images"
-
-      width          = image_dimensions(base)[0]
-      base_height    = image_dimensions(base)[1]
-      compare_height = image_dimensions(compare)[1]
-
-      if base_height > compare_height
-        image_to_crop     = compare
-        height_to_crop_to = base_height
-      else
-        image_to_crop     = base
-        height_to_crop_to = compare_height
-      end
-
-      crop_task(image_to_crop, height_to_crop_to, width)
+      crop_if_necessary base, compare
     end
   end
 
-  def crop_task(crop, height, width)
+  def crop_if_necessary(base, compare)
+      base_width     = image_dimensions(base)[0]
+      base_height    = image_dimensions(base)[1]
+      compare_width  = image_dimensions(compare)[0]
+      compare_height = image_dimensions(compare)[1]
+
+      if base_height == compare_height and base_width == compare_width
+        logger.debug "Both images are exactly #{base_width}x#{base_height} - no cropping required. (#{base}, #{compare})"
+        return true
+      end
+
+      max_width  = [base_width, compare_width].max
+      max_height = [base_height, compare_height].max
+
+      logger.debug "Cropping both images to #{max_width}x#{max_height}. (#{base}, #{compare})"
+      [base, compare].each do |image_to_crop|
+        run_crop_task(image_to_crop, max_height, max_width)
+      end
+  end
+
+  def run_crop_task(crop, height, width)
     `convert #{crop.shellescape} -background none -extent #{width}x#{height} #{crop.shellescape}`
   end
 
