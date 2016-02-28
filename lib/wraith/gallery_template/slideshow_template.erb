@@ -33,8 +33,8 @@
       margin-top: 60px;
     }
 
-    .prev span:before,
-    .next span:before {
+    .prev span::before,
+    .next span::before {
       font-size: 35px;
       padding: 10px;
       display: block;
@@ -43,21 +43,19 @@
       display: block;
     }
 
-    .prev span:before {
+    .prev span::before {
       content:"\f0d9";
     }
-    .next span:before {
+    .next span::before {
       content:"\f0da";
     }
-    .list-group-item.checked a:after {
-      color: #23e343;
-    }
+
     .list-group-item a span {
       word-wrap: break-word;
       width: 95%;
       display: block;
     }
-    .list-group-item a:after {
+    .list-group-item a::after {
       content:"\f00c";
       font-family: "FontAwesome";
       color: #eae6e6;
@@ -65,6 +63,18 @@
       right: 10px;
       top: 10px;
     }
+
+    .list-group-item.current a::after {
+      color: #E1AB2F;
+      font-weight: bold;
+      content: "---";
+    }
+    .list-group-item.checked a::after {
+      color: #23e343;
+      content:"\f00c";
+      font-weight: normal;
+    }
+
     .checked a {
       color: #000;
     }
@@ -79,7 +89,7 @@
       margin-left: 20px;
     }
 
-    .compare:before {
+    .compare::before {
       font-family: "FontAwesome";
       content:"\f0c5";
       font-size: 30px;
@@ -149,22 +159,59 @@
         }
       }
 
+      function updateProgressIndicator(before, after, opts) {
+        // if we're the first entry in the batch
+        before = $(before);
+        after = $(after);
+
+        // NEXT
+        $('.current').removeClass('current');
+        var path = after.find('.path').attr('name');
+        var item = getMenuItemCorrespondingTo(path);
+        item.addClass('current');
+
+        // CURRENT
+        var similarElements = getElementsOfSameClass(before);
+        before.addClass('processed');
+
+        var allProcessed = true;
+        similarElements.each(function () {
+          if ( !$(this).hasClass('processed') ) {
+            allProcessed = false;
+          }
+        });
+
+        if (allProcessed) {
+          var path = before.find('.path').attr('name');
+          var item = getMenuItemCorrespondingTo(path);
+
+          item.addClass('checked');
+        }
+      }
+
+      function getElementsOfSameClass(element) {
+        var classNamesOfElement = element.attr('class').split(/\s+/),
+            similarElements = element.parent().find('.' + classNamesOfElement.join('.'));
+        return similarElements;
+      }
+
+      function getMenuItemCorrespondingTo(path) {
+        var item = false;
+        $.each($('.list-group .list-group-item a'), function() {
+          if ($(this).attr('href').substring(1) == path) {
+            item = $(this).parent();
+          }
+        })
+        return item;
+      }
+
       // http://jquery.malsup.com/cycle/options.html
       $('.slideshow').cycle({
         fx:     'cover',
         prev:   '.prev',
         next:   '.next',
         speed: 300,
-        before: function (curr, next, opts) {
-          $('.current').removeClass('current');
-          var path = $(next).find('.path').attr('name');
-          $.each($('.list-group .list-group-item a'), function() {
-            if ($(this).attr('href').substring(1) == path) {
-              $(this).parent().addClass('checked');
-              $(this).parent().addClass('current');
-            }
-          })
-        },
+        before: updateProgressIndicator,
         after: function () {
           if (fullscreen) {
             $('.compare-modal').remove();
