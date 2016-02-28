@@ -93,6 +93,7 @@ class Wraith::CLI < Thor
   desc "crop_images [config_name]", "crops images to the same height"
   def crop_images(config_name)
     within_acceptable_limits do
+      logger.info "CROPPING IMAGES"
       crop = Wraith::CropImages.new(config_name)
       crop.crop_images
     end
