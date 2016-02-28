@@ -99,7 +99,7 @@ class Wraith::SaveImages
     max_attempts = 5
     max_attempts.times do |i|
       run_command capture_page_image
-      next if image_was_created filename
+      return true if image_was_created filename
       logger.warn "Failed to capture image #{filename} on attempt number #{i + 1} of #{max_attempts}"
     end
 
