@@ -16,8 +16,6 @@ class Wraith::CropImages
     files = Dir.glob("#{wraith.directory}/*/*.png").sort
 
     Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
-      logger.info "cropping images"
-
       width          = image_dimensions(base)[0]
       base_height    = image_dimensions(base)[1]
       compare_height = image_dimensions(compare)[1]
@@ -29,6 +27,8 @@ class Wraith::CropImages
         image_to_crop     = base
         height_to_crop_to = compare_height
       end
+
+      logger.debug "Cropping image: #{image_to_crop}"
 
       crop_task(image_to_crop, height_to_crop_to, width)
     end
