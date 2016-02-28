@@ -105,13 +105,56 @@
       margin-right: 20px;
       max-width: 30%;
     }
+
+    .compare-modal ~ .prev {
+      z-index: 9999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 4%;
+      padding: 7px;
+    }
+
+    .compare-modal ~ .next {
+      z-index: 9999;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 4%;
+      padding: 7px;
+    }
+
+    .compare-modal h1 {
+        color: white;
+    }
+
   </style>
   <script type="text/javascript">
     $(function() {
+
+      var fullscreen = false;
+
+      function fullScreenSlide(slide) {
+        if (slide) {
+          fullscreen = true;
+          var title    = slide.find('h4').first().text(),
+              newImage = slide.find('a.shot:eq(0)').attr('href'),
+              oldImage = slide.find('a.shot:eq(1)').attr('href'),
+              diffImage = slide.find('a.shot:eq(2)').attr('href');
+          $('.slideshow-container').prepend('<div class="compare-modal"><div class="compare-container"><h1>' + title + '</h1><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
+          $('.compare-modal').unbind().on('click', function(){
+            $(this).remove();
+            fullscreen = false;
+          })
+        }
+      }
+
+      // http://jquery.malsup.com/cycle/options.html
       $('.slideshow').cycle({
         fx:     'cover',
         prev:   '.prev',
         next:   '.next',
+        speed: 300,
         before: function (curr, next, opts) {
           $('.current').removeClass('current');
           var path = $(next).find('.path').attr('name');
@@ -121,6 +164,19 @@
               $(this).parent().addClass('current');
             }
           })
+        },
+        after: function () {
+          if (fullscreen) {
+            $('.compare-modal').remove();
+            var currentSlide = false;
+            $('.slide').each(function () {
+              if ($(this).css('display') === 'block') {
+                currentSlide = $(this);
+              }
+            });
+
+            fullScreenSlide(currentSlide);
+          }
         },
         timeout: 0
       });
@@ -138,14 +194,8 @@
       })
 
       $('.compare').unbind().on('click', function(){
-        var slide = $(this).closest(".slide"),
-            newImage = slide.find('a.shot:eq(0)').attr('href'),
-            oldImage = slide.find('a.shot:eq(1)').attr('href'),
-            diffImage = slide.find('a.shot:eq(2)').attr('href');
-        $('.container').append('<div class="compare-modal"><div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
-        $('.compare-modal').unbind().on('click', function(){
-          $(this).remove();
-        })
+        var slide = $(this).closest(".slide")
+        fullScreenSlide(slide);
       })
     })
 </script>
