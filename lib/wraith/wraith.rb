@@ -22,12 +22,12 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        config = File.open config_name
+        config = File.open filepath
         return YAML.load config
       end
     end
   rescue
-    logger.error "unable to find config \"#{config}\""
+    logger.error "unable to find config \"#{config_name}\""
   end
 
   def directory
