@@ -22,7 +22,7 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        config = File.open config_name
+        config = File.open filepath
         return YAML.load config
       end
     end
