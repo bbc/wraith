@@ -176,4 +176,9 @@ class Wraith::CLI < Thor
       generate_gallery(config)
     end
   end
+
+  desc "version", "Show the version of wraith"
+  def version
+    puts "Wraith version " + Wraith::VERSION
+  end
 end
