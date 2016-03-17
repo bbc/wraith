@@ -177,8 +177,9 @@ class Wraith::CLI < Thor
     end
   end
 
-  desc "version", "Show the version of wraith"
+  desc "version", "Show the version of Wraith"
+  map ["--version", "-version", "-v"] => "version"
   def version
-    puts "Wraith version " + Wraith::VERSION
+    logger.info Wraith::VERSION
   end
 end
