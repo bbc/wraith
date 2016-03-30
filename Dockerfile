@@ -17,4 +17,7 @@ RUN echo "deb http://security.debian.org/ jessie/updates contrib non-free" | tee
 RUN apt-get update
 RUN apt-get install -y ttf-freefont ttf-mscorefonts-installer ttf-bitstream-vera ttf-dejavu ttf-liberation
 
+# Make sure a recent (>6.7.7-10) version of ImageMagick is installed.
+RUN apt-get install -y imagemagick
+
 ENTRYPOINT [ "wraith" ]
