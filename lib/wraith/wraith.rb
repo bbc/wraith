@@ -171,4 +171,8 @@ class Wraith::Wraith
     # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
     @config["verbose"] || false
   end
+
+  def save_image_threads
+    (@config["save_image_threads"] || 8).to_i
+  end
 end
