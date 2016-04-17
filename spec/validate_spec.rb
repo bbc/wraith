@@ -7,6 +7,8 @@ describe "Wraith config validator" do
         test: http://www.bbc.com
 
       browser: "casperjs"
+
+      directory: some/dir
     ')
   end
 
@@ -46,6 +48,15 @@ describe "Wraith config validator" do
           live:  http://www.bbc.com
       ')
       Wraith::Validate.new(config, true).validate("capture")
+    end
+    
+    it "should fail if no directory is specified" do
+      config["domains"] = YAML.load('
+          test:  http://something.bbc.com
+          live:  http://www.bbc.com
+      ')
+      config["directory"] = nil
+      expect { Wraith::Validate.new(config, true).validate("capture") }.to raise_error MissingRequiredPropertyError
     end
   end
 
