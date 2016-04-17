@@ -45,6 +45,8 @@ class Wraith::Validate
   def validate_capture_mode
     fail InvalidDomainsError, "`wraith capture` requires exactly two domains. #{docs_prompt}" if wraith.domains.length != 2
 
+    fail MissingRequiredPropertyError, "You must specify a directory for capture! #{docs_prompt}" if wraith.directory.nil?
+    
     logger.warn "You have specified a `history_dir` in your config, but this is"\
                 " used in `history` mode, NOT `capture` mode. #{docs_prompt}" if wraith.history_dir
   end
