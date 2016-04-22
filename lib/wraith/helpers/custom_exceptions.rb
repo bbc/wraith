@@ -6,3 +6,6 @@ end
 
 class MissingRequiredPropertyError < CustomError
 end
+
+class ConfigFileDoesNotExistError < CustomError
+end

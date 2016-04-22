@@ -26,8 +26,7 @@ class Wraith::Wraith
         return YAML.load config
       end
     end
-  rescue
-    logger.error "unable to find config \"#{config_name}\""
+    fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
   end
 
   def directory
