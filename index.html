@@ -239,14 +239,14 @@ gallery:
           </code></pre>
 
 
-          <h2>beforeCapture hooks</h2>
+          <h2>before_capture hooks</h2>
 
-          <p>Using Casper Mode allows you to hook into a 'beforeCapture' event so that you can run arbitrary JavaScript before taking the screenshot. This allows you to regression test interactive content. (Note: the beforeCapture hook is currently only supported in Casper Mode).</p>
+          <p>Using Casper Mode allows you to hook into a 'before_capture' event so that you can run arbitrary JavaScript before taking the screenshot. This allows you to regression test interactive content. (Note: the before_capture hook is currently only supported in Casper Mode).</p>
 
           <p>There are two options for hooking your JavaScript into the Wraith process, which are denoted by where you specify your 'before_capture' property. This is best illustrated using an example config:</p>
 
           <pre><code data-language="yaml">
-before_capture: "javascript/global.js"
+before_capture: "javascript/config-level.js"
 
 # Add as many domains as necessary. Key will act as a label
 domains:
@@ -268,12 +268,12 @@ paths:
   clickable_guide__after_click:
     path: /entertainment-arts-27221191
     selector: '.idt__news'
-    before_capture: 'javascript/local.js'
+    before_capture: 'javascript/path-level.js'
           </code></pre>
 
-          <p>The before_capture at the top of the example is called before every path (i.e. before both 'clickable_guide' and 'clickable_gude__after_click'). The before_capture at the bottom of the example is called only before the path which it is associated with (i.e. only before 'clickable_guide__after_click'). The former can be considered 'global', and the latter 'local'.</p>
+          <p>The before_capture at the top of the example is called before EVERY path (i.e. before both 'clickable_guide' and 'clickable_guide__after_click'). The before_capture at the bottom of the example is called only before the path which it is associated with (i.e. only before 'clickable_guide__after_click').</p>
 
-          <p>The global JS is always executed before the local JS. In the example above, that means 'clickable_guide' has global.js executed before a screenshot is taken, and 'clickable_gude__after_click' has global.js then local.js executed before a screenshot is taken.</p>
+          <p>The config-level JS is always executed <em>before</em> the path-level JS. In the example above, that means 'clickable_guide' has config-level.js executed before a screenshot is taken, and 'clickable_guide__after_click' has config-level.js then path-level.js executed before a screenshot is taken.</p>
 
           <p>All of the before_capture hooks are optional.</p>
 
