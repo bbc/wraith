@@ -80,9 +80,9 @@
               <li><a href="http://www.imagemagick.org/" target="_blank">ImageMagick</a></li>
               <li>At least one of:
                 <ul>
-                  <li><a href="http://phantomjs.org" target="_blank">PhantomJS</a></li>
-                  <li><a href="http://casperjs.org" target="_blank">CasperJS</a></li>
-                  <li><a href="http://slimerjs.org" target="_blank">SlimerJS</a></li>
+                  <li><a href="http://phantomjs.org" target="_blank">PhantomJS</a> - any version</li>
+                  <li><a href="http://casperjs.org" target="_blank">CasperJS</a> - use v1.1.0-beta4 alongside PhantomJS 2.1.1, or v1.0 alongside PhantomJS 1.9.*</li>
+                  <li><a href="http://slimerjs.org" target="_blank">SlimerJS</a> - limited support, see below</li>
                 </ul>
               </li>
             </ul>
@@ -91,9 +91,6 @@
             </p>
             <p>
               PhantomJS is built on top of Webkit and JavascriptCore (like Safari). SlimerJS is built on top of Gecko and SpiderMonkey (like Firefox).
-            </p>
-            <p>
-              <strong>PLEASE NOTE</strong> - there seems to be an issue with using Wraith with PhantomJS 2. You are safer using a 1.9 variant.
             </p>
             <p>
               <strong>PLEASE NOTE</strong> - Wraith doesn't support SlimerJS out of the box. To use it, you'll need to specify your own snap file, and implement your own support for `before_capture` hooks, etc. If you'd like to see Wraith provide dedicated support for SlimerJS, please +1 the <a href="https://github.com/BBC-News/wraith/issues/364">open issue on GitHub</a>.
