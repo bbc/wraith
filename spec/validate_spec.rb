@@ -24,6 +24,10 @@ describe "Wraith config validator" do
       config["browser"] = nil
       expect { Wraith::Validate.new(config, true).validate }.to raise_error MissingRequiredPropertyError
     end
+
+    it "should complain if the config file doesn't exist" do
+      expect { Wraith::Wraith.new('configs/some_made_up_config.yml') }.to raise_error ConfigFileDoesNotExistError
+    end
   end
 
   describe "validation specific to capture mode" do
