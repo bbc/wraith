@@ -19,12 +19,12 @@ class Wraith::Validate
   end
 
   def validate_basic_properties
-    if wraith.engine.nil?
-      fail MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}"
-    end
-    unless wraith.domains
-      fail MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}"
-    end
+    fail MissingRequiredPropertyError, "You must specify a browser engine! #{docs_prompt}" if wraith.engine.nil?
+
+    fail MissingRequiredPropertyError, "You must specify at least one domain for Wraith to do anything! #{docs_prompt}" unless wraith.domains
+
+    fail MissingRequiredPropertyError, "You must specify a directory for capture! #{docs_prompt}" if wraith.directory.nil?
+
     # @TODO validate fuzz is not nil, etc
   end
 
