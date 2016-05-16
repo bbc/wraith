@@ -6,15 +6,15 @@ Reporting a problem? Please describe the issue above, and complete the following
 
 #### Issue checklist:
 
-[ ] I have validated my config file against [YAML Validator](http://codebeautify.org/yaml-validator) to make sure it is valid YAML.
+- [ ] I have validated my config file against [YAML Validator](http://codebeautify.org/yaml-validator) to make sure it is valid YAML.
 
-[ ] I have run the command in verbose mode (by adding `verbose: true` to my config) and pasted the output below:
+- [ ] I have run the command in verbose mode (by adding `verbose: true` to my config) and pasted the output below:
 
 ```
 paste results here
 ```
 
-[ ] I have pasted the contents of my config file below:
+- [ ] I have pasted the contents of my config file below:
 
 ```
 paste config here
