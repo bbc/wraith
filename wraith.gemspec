@@ -29,5 +29,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'log4r'
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'parallel'
-  spec.add_runtime_dependency 'casperjs'
 end
