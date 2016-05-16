@@ -29,7 +29,7 @@ paths:
   clickable_guide__after_click:
     path: /news/entertainment-arts-27221191
     selector: '.idt__news'
-    before_capture: 'javascript/beforeCapture--casper_example.js' # (optional) JavaScript file to execute before taking the screenshot of this path.
+    before_capture: 'javascript/interact--casper.js' # (optional) JavaScript file to execute before taking the screenshot of this path.
 
 # (optional) JavaScript file to execute before taking screenshot of every path. Default: nil
 before_capture: 'javascript/wait--casper.js'
