@@ -2,7 +2,7 @@
 // This is an example module provided by Wraith.
 // Feel free to amend for your own requirements.
 // ######################################################
-module.exports = function (casper, ready) {
+module.exports = function (casper, ready, url) {
     // reload page with headers set
     casper.open(casper.page.url, {
         method: 'get',
