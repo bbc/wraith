@@ -49,8 +49,22 @@
     .next span:before {
       content:"\f0da";
     }
+    .list-group-item {
+      padding: 7px 15px 0px 15px;
+    }
     .list-group-item.checked a:after {
       color: #23e343;
+    }
+    .list-group-item a span.result-preview {
+      display:inline-block;
+      height: 10px;
+      width: 6px;
+    }
+    .list-group-item a span.result-success {
+      background-color: #23e343;
+    }
+    .list-group-item a span.result-failed {
+      background-color: #F33;
     }
     .list-group-item a span {
       word-wrap: break-word;
@@ -161,8 +175,20 @@
           </div>
           <div class="panel-heading">Pages:</div>
           <ul class="list-group list-group-flush">
-            <% directories.keys.each do |dir| %>
-            <li class="list-group-item"><a href="#<%=path%><%=dir%>"><span>/<%=dir.gsub('__', '/')%></span></a></li>
+            <% directories.each do |dir, sizes| %>
+            <li class="list-group-item"><a href="#<%=path%><%=dir%>">
+              <span>/<%=dir.gsub('__', '/')%></span>
+              <% sizes.to_a.sort.each do |size, files| %>
+                <% unless threshold.nil? %>
+                  <% if files[:data] > threshold %>
+                  <span class="result-preview result-failed" style="opacity: <%= (files[:data] / 100 * 0.6 + 0.4).round(2) %>" title="<%=files[:data]%> %">&nbsp;</span>
+                  <% else %>
+                  <span class="result-preview result-success" style="background-color: #23e343" title="<%=files[:data]%> %">&nbsp;</span>
+                  <% end %>
+                <% end %>
+              <% end %>
+              </a>
+            </li>
             <% end %>
           </ul>
         </div>
