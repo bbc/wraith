@@ -65,7 +65,7 @@ class Wraith::SaveImages
 
   def run_command(command)
     output = []
-    ommand.gsub!(/'/, '')
+    command.gsub!(/'/, '')
     IO.popen(command).each do |line|
       logger.info line
       output << line.chomp!
