@@ -148,6 +148,20 @@
           $(this).remove();
         })
       })
+
+      window.addEventListener('keydown', function(e){
+        var leftArrowKeyCode = 37;
+        var rightArrowKeyCode = 39;
+
+        e = e || window.event;
+
+        if (e.keyCode === leftArrowKeyCode) {
+           $('.slideshow').cycle('prev');
+        }
+        else if (e.keyCode === rightArrowKeyCode) {
+           $('.slideshow').cycle('next');
+        }
+      });
     })
 </script>
 </head>
