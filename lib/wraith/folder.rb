@@ -23,6 +23,7 @@ class Wraith::FolderManager
 
   def spider_paths
     if !paths
+      logger.debug "Read the spider file...."
       paths = File.read(wraith.spider_file)
       eval(paths)
     else
@@ -51,7 +52,7 @@ class Wraith::FolderManager
 
   def copy_base_images
     logger.info "COPYING BASE IMAGES"
-    wraith.paths.each do |path|
+    spider_paths.each do |path|
       path = path[0]
       logger.info "Copying #{history_dir}/#{path} to #{dir}"
       FileUtils.cp_r(Dir.glob("#{history_dir}/#{path}"), dir)
