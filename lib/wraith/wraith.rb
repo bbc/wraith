@@ -12,6 +12,9 @@ class Wraith::Wraith
     else
       filepath = determine_config_path config
       @config = YAML.load_file filepath
+      if !@config
+        fail InvalidYamlError, "could not parse \"#{config}\" as YAML"
+      end
     end
 
     if @config['imports']
@@ -32,7 +35,7 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        @config_dir = absolute_path_of_dir(convert_to_absolute filepath)
+        @calculated_config_dir = absolute_path_of_dir(convert_to_absolute filepath)
         return convert_to_absolute filepath
       end
     end
@@ -40,14 +43,20 @@ class Wraith::Wraith
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
   end
 
+  def config_dir
+    @calculated_config_dir
+  end
+
   def apply_imported_config(config_to_import, config)
-    path_to_config = "#{@config_dir}/#{config_to_import}"
+    path_to_config = "#{config_dir}/#{config_to_import}"
     if File.exist?(path_to_config)
       yaml = YAML.load_file path_to_config
       return yaml.merge(config)
     end
 
-    fail ConfigFileDoesNotExistError, "unable to find referenced imported config \"#{config_name}\""
+    # if we got this far, no config could be merged. Return original config.
+    logger.info "unable to find referenced imported config \"#{config_to_import}\""
+    config
   end
 
   def directory
@@ -185,6 +194,10 @@ class Wraith::Wraith
 
   def phantomjs_options
     @config["phantomjs_options"]
+  end
+
+  def imports
+    @config['imports'] || false
   end
 
   def verbose

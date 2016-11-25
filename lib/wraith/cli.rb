@@ -22,26 +22,6 @@ class Wraith::CLI < Thor
     File.expand_path("../../../", __FILE__)
   end
 
-  # define internal methods which user should not be able to run directly
-  no_commands do
-    def within_acceptable_limits
-      yield
-    rescue CustomError => e
-      logger.error e.message
-      # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
-    end
-
-    def check_for_paths(config_name)
-      spider = Wraith::Spidering.new(config_name)
-      spider.check_for_paths
-    end
-
-    def copy_old_shots(config_name)
-      create = Wraith::FolderManager.new(config_name)
-      create.copy_old_shots
-    end
-  end
-
   desc "validate [config_name]", "checks your configuration and validates that all required properties exist"
   def validate(config_name)
     within_acceptable_limits do
@@ -54,6 +34,15 @@ class Wraith::CLI < Thor
     within_acceptable_limits do
       directory("templates/configs", "configs")
       directory("templates/javascript", "javascript")
+    end
+  end
+
+  desc "spider [config_name]", "crawls a site for paths and stores them to YML file"
+  def spider(config)
+    within_acceptable_limits do
+      logger.info Wraith::Validate.new(config).validate("spider")
+      spider = Wraith::Spider.new(config)
+      spider.crawl
     end
   end
 
@@ -131,7 +120,6 @@ class Wraith::CLI < Thor
     within_acceptable_limits do
       logger.info Wraith::Validate.new(config).validate("capture")
       reset_shots(config)
-      check_for_paths(config)
       setup_folders(config)
       save_images(config)
       crop_images(config)
@@ -156,10 +144,9 @@ class Wraith::CLI < Thor
     within_acceptable_limits do
       logger.info Wraith::Validate.new(config).validate("history")
       reset_shots(config)
-      check_for_paths(config)
       setup_folders(config)
       save_images(config)
-      copy_old_shots(config)
+      Wraith::FolderManager.new(config).copy_old_shots
     end
   end
 

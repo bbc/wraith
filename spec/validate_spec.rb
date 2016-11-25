@@ -53,7 +53,7 @@ describe "Wraith config validator" do
       ')
       Wraith::Validate.new(config, true).validate("capture")
     end
-    
+
     it "should fail if no directory is specified" do
       config["domains"] = YAML.load('
           test:  http://something.bbc.com
@@ -86,6 +86,34 @@ describe "Wraith config validator" do
 
     it "should be happy if a history_dir and one domain is specified" do
       Wraith::Validate.new(history_conf, true).validate("history")
+    end
+  end
+
+  describe "validations specific to spider mode" do
+    let(:spider_conf) do
+      YAML.load('
+        domains:
+          test: http://www.bbc.com
+
+        browser: "casperjs"
+
+        directory: some/dir
+
+        imports: "spider_paths.yml"
+      ')
+    end
+
+    it "should complain if imports is empty" do
+      spider_conf.delete 'imports'
+      expect { Wraith::Validate.new(spider_conf, true).validate("spider") }.to raise_error MissingRequiredPropertyError
+    end
+
+    it "should complain if paths is set" do
+      spider_conf.merge!(YAML.load('
+        paths:
+          home: /
+      '))
+      expect { Wraith::Validate.new(spider_conf, true).validate("spider") }.to raise_error PropertyOutOfContextError
     end
   end
 end

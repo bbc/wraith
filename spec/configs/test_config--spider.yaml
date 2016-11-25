@@ -1,0 +1,38 @@
+imports: "spider_paths.yaml"
+
+#Headless browser option
+browser: "phantomjs"
+
+# Type the name of the directory that shots will be stored in
+directory: "shots"
+
+# Add only 2 domains, key will act as a label
+domains:
+ personal: "http://ashton.codes"
+ business: "http://webdapper.com"
+
+#Type screen widths below, here are a couple of examples
+screen_widths:
+ - 320
+ - 600
+ - 768x1500 # you can also specify the height, as we've done here
+ - 1024
+ - 1280
+
+#Amount of fuzz ImageMagick will use
+fuzz: "20%"
+
+#A list of URLs to skip when spidering. Ruby regular expressions can be
+#used, if prefixed with !ruby/regexp as defined in the YAML Cookbook
+#http://www.yaml.org/YAML_for_ruby.html#regexps
+# spider_skips:
+#   - /foo/bar.html # Matches /foo/bar.html explcitly
+#   - !ruby/regexp /^\/baz\// # Matches any URLs that start with /baz
+
+#Choose how results are displayed, by default alphanumeric. Different screen widths are always grouped.
+#alphanumeric - all paths (with, and without, a difference) are shown, sorted by path
+#diffs_first - all paths (with, and without, a difference) are shown, sorted by difference size (largest first)
+#diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+mode: diffs_first
+
+threshold: 15

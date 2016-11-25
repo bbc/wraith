@@ -1,5 +1,12 @@
 require "wraith/helpers/custom_exceptions"
 
+def within_acceptable_limits
+  yield
+rescue CustomError => e
+  logger.error e.message
+  # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
+end
+
 def absolute_path_of_dir(filepath)
   path_parts = filepath.split('/')
   path_to_dir = path_parts.first path_parts.size - 1
