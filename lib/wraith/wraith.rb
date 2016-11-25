@@ -7,19 +7,21 @@ class Wraith::Wraith
   attr_accessor :config
 
   def initialize(config, yaml_passed = false)
-    @config = yaml_passed ? config : open_config_file(config)
-    if @config['imports']
-      abs_path = @absolute_path_to_config.split('/')
-      abs_path = abs_path.first abs_path.size - 1
-      abs_path = abs_path.join('/')
-      yaml = YAML.load_file("#{abs_path}/#{@config['imports']}")
-      combined = yaml.merge(@config)
-      @config = combined
+    if yaml_passed
+      @config = config
+    else
+      filepath = determine_config_path config
+      @config = YAML.load_file filepath
     end
+
+    if @config['imports']
+      @config = apply_imported_config(@config['imports'], @config)
+    end
+
     logger.level = verbose ? Logger::DEBUG : Logger::INFO
   end
 
-  def open_config_file(config_name)
+  def determine_config_path(config_name)
     possible_filenames = [
       config_name,
       "#{config_name}.yml",
@@ -30,11 +32,17 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        @absolute_path_to_config = convert_to_absolute(filepath)
-        return YAML.load_file filepath
+        @config_dir = absolute_path_of_dir(convert_to_absolute filepath)
+        return convert_to_absolute filepath
       end
     end
+
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
+  end
+
+  def apply_imported_config(config_to_import, config)
+    yaml = YAML.load_file("#{@config_dir}/#{config_to_import}")
+    yaml.merge(config)
   end
 
   def directory

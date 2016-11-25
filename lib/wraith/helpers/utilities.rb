@@ -1,5 +1,11 @@
 require "wraith/helpers/custom_exceptions"
 
+def absolute_path_of_dir(filepath)
+  path_parts = filepath.split('/')
+  path_to_dir = path_parts.first path_parts.size - 1
+  path_to_dir.join('/')
+end
+
 def convert_to_absolute(filepath)
   if !filepath
     "false"
