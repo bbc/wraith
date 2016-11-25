@@ -207,7 +207,8 @@
 
       // http://jquery.malsup.com/cycle/options.html
       $('.slideshow').cycle({
-        fx:     'cover',
+        fx:     'scrollHorz',
+        speed:  300,
         prev:   '.prev',
         next:   '.next',
         speed: 300,
@@ -244,6 +245,20 @@
         var slide = $(this).closest(".slide")
         fullScreenSlide(slide);
       })
+
+      window.addEventListener('keydown', function(e){
+        var leftArrowKeyCode = 37;
+        var rightArrowKeyCode = 39;
+
+        e = e || window.event;
+
+        if (e.keyCode === leftArrowKeyCode) {
+           $('.slideshow').cycle('prev');
+        }
+        else if (e.keyCode === rightArrowKeyCode) {
+           $('.slideshow').cycle('next');
+        }
+      });
     })
 </script>
 </head>

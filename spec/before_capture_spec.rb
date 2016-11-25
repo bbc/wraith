@@ -45,7 +45,7 @@ describe Wraith do
 
   # @TODO - we need tests determining the path to "path-level before_capture hooks"
 
-  describe "When hooking into beforeCapture (CasperJS)" do
+  describe "When hooking into before_capture (CasperJS)" do
     it "Executes the global JS before capturing" do
       run_js_then_capture(
         :global_js               => before_suite_js,
@@ -75,7 +75,7 @@ describe Wraith do
   end
 
   #  @TODO - uncomment and figure out why broken
-  # describe "When hooking into beforeCapture (PhantomJS)" do
+  # describe "When hooking into before_capture (PhantomJS)" do
   #   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   #   let(:saving) { Wraith::SaveImages.new(config_name) }
   #   let(:wraith) { Wraith::Wraith.new(config_name) }

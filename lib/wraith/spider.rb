@@ -27,6 +27,8 @@ class Wraith::Spidering
 end
 
 class Wraith::Spider
+  attr_reader :wraith
+
   def initialize(wraith)
     @wraith = wraith
     @paths = {}

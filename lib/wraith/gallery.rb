@@ -111,11 +111,30 @@ class Wraith::GalleryGenerator
 
   def sorting_dirs(dirs)
     if %w(diffs_only diffs_first).include?(wraith.mode)
-      @sorted = dirs.sort_by { |_category, sizes| -1 * sizes.max_by { |_size, dict| dict[:data] }[1][:data] }
+      @sorted = sort_by_diffs dirs
     else
-      @sorted = dirs.sort_by { |category, _sizes| category }
+      @sorted = sort_alphabetically dirs
     end
     Hash[@sorted]
+  end
+
+  def sort_by_diffs(dirs)
+    dirs.sort_by do |_category, sizes|
+      size = select_size_with_biggest_diff sizes
+      -1 * size[1][:data]
+    end
+  end
+
+  def select_size_with_biggest_diff(sizes)
+    begin
+      sizes.max_by { |_size, dict| dict[:data] }
+    rescue
+      fail MissingImageError
+    end
+  end
+
+  def sort_alphabetically(dirs)
+    dirs.sort_by { |category, _sizes| category }
   end
 
   def generate_gallery(with_path = "")
