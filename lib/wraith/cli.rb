@@ -164,6 +164,11 @@ class Wraith::CLI < Thor
     end
   end
 
+  desc "info", "Show various info about your system"
+  def info
+    list_debug_information
+  end
+
   desc "version", "Show the version of Wraith"
   map ["--version", "-version", "-v"] => "version"
   def version
