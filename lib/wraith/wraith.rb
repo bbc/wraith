@@ -41,8 +41,13 @@ class Wraith::Wraith
   end
 
   def apply_imported_config(config_to_import, config)
-    yaml = YAML.load_file("#{@config_dir}/#{config_to_import}")
-    yaml.merge(config)
+    path_to_config = "#{@config_dir}/#{config_to_import}"
+    if File.exist?(path_to_config)
+      yaml = YAML.load_file path_to_config
+      return yaml.merge(config)
+    end
+
+    fail ConfigFileDoesNotExistError, "unable to find referenced imported config \"#{config_name}\""
   end
 
   def directory
