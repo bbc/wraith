@@ -16,6 +16,16 @@ describe "wraith config" do
     it "contains shot options" do
       expect(wraith.config).to include "directory" => "shots"
     end
+
+    it "should be able to import other configs" do
+      config_name = get_path_relative_to __FILE__, "./configs/test_config--imports.yaml"
+      wraith = Wraith::Wraith.new(config_name)
+
+      # retain the imported config settings
+      expect(wraith.paths).to eq("home" => "/", "uk_index" => "/uk")
+      # ...but override the imported config in places
+      expect(wraith.widths).to eq [1337]
+    end
   end
 
   describe "When creating a wraith worker" do
