@@ -16,6 +16,16 @@ describe "wraith config" do
     it "contains shot options" do
       expect(wraith.config).to include "directory" => "shots"
     end
+
+    it "should be able to import other configs" do
+      config_name = get_path_relative_to __FILE__, "./configs/test_config--imports.yaml"
+      wraith = Wraith::Wraith.new(config_name)
+
+      # retain the imported config settings
+      expect(wraith.paths).to eq("home" => "/", "uk_index" => "/uk")
+      # ...but override the imported config in places
+      expect(wraith.widths).to eq [1337]
+    end
   end
 
   describe "When creating a wraith worker" do
@@ -71,7 +81,7 @@ describe "wraith config" do
   describe "different ways of initialising browser engine" do
     it "should let us directly specify the engine" do
       config = YAML.load "browser: phantomjs"
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
 
       expect(wraith.engine).to eq "phantomjs"
     end
@@ -81,7 +91,7 @@ describe "wraith config" do
         browser:
           phantomjs: "casperjs"
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.engine).to eq "casperjs"
     end
   end
@@ -89,11 +99,11 @@ describe "wraith config" do
   describe "different ways of determining the snap file" do
     it "should calculate the snap file from the engine" do
       config = YAML.load "browser: phantomjs"
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.snap_file).to include "lib/wraith/javascript/phantom.js"
 
       config = YAML.load "browser: casperjs"
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.snap_file).to include "lib/wraith/javascript/casper.js"
     end
 
@@ -102,7 +112,7 @@ describe "wraith config" do
         browser:
           phantomjs: "casperjs"
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.snap_file).to include "lib/wraith/javascript/casper.js"
     end
 
@@ -111,7 +121,7 @@ describe "wraith config" do
         browser:   casperjs
         snap_file: path/to/snap.js
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       # not sure about having code IN the test, but we want to get this right.
       expect(wraith.snap_file).to eq(Dir.pwd + "/path/to/snap.js")
     end
@@ -121,7 +131,7 @@ describe "wraith config" do
         browser:   casperjs
         snap_file: /Users/my_username/Sites/bbc/wraith/path/to/snap.js
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.snap_file).to eq("/Users/my_username/Sites/bbc/wraith/path/to/snap.js")
     end
   end
@@ -129,13 +139,13 @@ describe "wraith config" do
   describe "different modes of efficiency (resize or reload)" do
     it "should trigger efficient mode if resize was specified" do
       config = YAML.load 'resize_or_reload: "resize"'
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.resize)
     end
 
     it "should fall back to slow mode if reload was specified" do
       config = YAML.load 'resize_or_reload: "reload"'
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.resize).to eq false
     end
   end

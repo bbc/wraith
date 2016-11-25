@@ -6,8 +6,8 @@ class Wraith::Validate
   include Logging
   attr_reader :wraith
 
-  def initialize(config, yaml_passed = false)
-    @wraith = Wraith::Wraith.new(config, yaml_passed)
+  def initialize(config, options = {})
+    @wraith = Wraith::Wraith.new(config, options)
   end
 
   def validate(mode = false)
@@ -37,6 +37,8 @@ class Wraith::Validate
     when "latest"
       validate_history_mode
       validate_base_shots_exist
+    when "spider"
+      validate_spider_mode
     else
       logger.warn "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
     end
@@ -56,6 +58,14 @@ class Wraith::Validate
     fail InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}" if wraith.domains.length != 1
   end
 
+  def validate_spider_mode
+    fail MissingRequiredPropertyError, "You must specify an `imports` YML"\
+                  " before running `wraith spider`. #{docs_prompt}" unless wraith.imports
+
+    #fail PropertyOutOfContextError, "Tried running `wraith spider` but you have already"\
+    #                              " specified paths in your YML. #{docs_prompt}" if wraith.paths
+  end
+
   def validate_base_shots_exist
     unless File.directory?(wraith.history_dir)
       logger.error "You need to run `wraith history` at least once before you can run `wraith latest`!"
@@ -64,34 +74,5 @@ class Wraith::Validate
 
   def docs_prompt
     "See the docs at http://bbc-news.github.io/wraith/"
-  end
-
-  def list_debug_information
-    wraith_version      = Wraith::VERSION
-    command_run         = ARGV.join ' '
-    ruby_version        = run_command_safely("ruby -v") || "Ruby not installed"
-    phantomjs_version   = run_command_safely("phantomjs --version") || "PhantomJS not installed"
-    casperjs_version    = run_command_safely("casperjs --version") || "CasperJS not installed"
-    imagemagick_version = run_command_safely("convert -version") || "ImageMagick not installed"
-
-    logger.debug "#################################################"
-    logger.debug "  Command run:        #{command_run}"
-    logger.debug "  Wraith version:     #{wraith_version}"
-    logger.debug "  Ruby version:       #{ruby_version}"
-    logger.debug "  ImageMagick:        #{imagemagick_version}"
-    logger.debug "  PhantomJS version:  #{phantomjs_version}"
-    logger.debug "  CasperJS version:   #{casperjs_version}"
-    # @TODO - add a SlimerJS equivalent
-    logger.debug "#################################################"
-    logger.debug ""
-  end
-
-  def run_command_safely(command)
-    begin
-      output = `#{command}`
-    rescue StandardError
-      return false
-    end
-    output.lines.first
   end
 end

@@ -28,7 +28,7 @@ describe Wraith do
         browser:        casperjs
         before_capture: javascript/do_something.js
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       # not sure about having code IN the test, but we want to get this right.
       expect(wraith.before_capture).to eq(Dir.pwd + "/javascript/do_something.js")
     end
@@ -38,7 +38,7 @@ describe Wraith do
         browser:        casperjs
         before_capture: /Users/some_user/wraith/javascript/do_something.js
       '
-      wraith = Wraith::Wraith.new(config, true)
+      wraith = Wraith::Wraith.new(config, { yaml_passed: true })
       expect(wraith.before_capture).to eq("/Users/some_user/wraith/javascript/do_something.js")
     end
   end

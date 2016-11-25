@@ -11,7 +11,7 @@ class Wraith::SaveImages
   attr_reader :wraith, :history, :meta
 
   def initialize(config, history = false, yaml_passed = false)
-    @wraith = Wraith::Wraith.new(config, yaml_passed)
+    @wraith = Wraith::Wraith.new(config, { yaml_passed: yaml_passed })
     @history = history
     @meta = SaveMetadata.new(@wraith, history)
   end

@@ -1,0 +1,4 @@
+imports: 'test_config--phantom.yaml'
+
+screen_widths:
+  - 1337

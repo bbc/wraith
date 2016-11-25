@@ -6,12 +6,30 @@ class Wraith::Wraith
   include Logging
   attr_accessor :config
 
-  def initialize(config, yaml_passed = false)
-    @config = yaml_passed ? config : open_config_file(config)
+  def initialize(config, options = {})
+    options = {
+      yaml_passed: false,
+      imports_must_resolve: true,
+    }.merge(options)
+
+    if options[:yaml_passed]
+      @config = config
+    else
+      filepath = determine_config_path config
+      @config = YAML.load_file filepath
+      if !@config
+        fail InvalidYamlError, "could not parse \"#{config}\" as YAML"
+      end
+    end
+
+    if @config['imports']
+      @config = apply_imported_config(@config['imports'], @config, options[:imports_must_resolve])
+    end
+
     logger.level = verbose ? Logger::DEBUG : Logger::INFO
   end
 
-  def open_config_file(config_name)
+  def determine_config_path(config_name)
     possible_filenames = [
       config_name,
       "#{config_name}.yml",
@@ -22,11 +40,30 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        config = File.open filepath
-        return YAML.load config
+        @calculated_config_dir = absolute_path_of_dir(convert_to_absolute filepath)
+        return convert_to_absolute filepath
       end
     end
+
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
+  end
+
+  def config_dir
+    @calculated_config_dir
+  end
+
+  def apply_imported_config(config_to_import, config, imports_must_resolve)
+    path_to_config = "#{config_dir}/#{config_to_import}"
+    if File.exist?(path_to_config)
+      yaml = YAML.load_file path_to_config
+      return yaml.merge(config)
+    end
+
+    if imports_must_resolve
+      fail ConfigFileDoesNotExistError, "unable to find referenced imported config \"#{config_to_import}\""
+    else
+      config # return original config
+    end
   end
 
   def directory
@@ -164,6 +201,10 @@ class Wraith::Wraith
 
   def phantomjs_options
     @config["phantomjs_options"]
+  end
+
+  def imports
+    @config['imports'] || false
   end
 
   def verbose
