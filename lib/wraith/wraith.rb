@@ -8,6 +8,14 @@ class Wraith::Wraith
 
   def initialize(config, yaml_passed = false)
     @config = yaml_passed ? config : open_config_file(config)
+    if @config['imports']
+      abs_path = @absolute_path_to_config.split('/')
+      abs_path = abs_path.first abs_path.size - 1
+      abs_path = abs_path.join('/')
+      yaml = YAML.load_file("#{abs_path}/#{@config['imports']}")
+      combined = yaml.merge(@config)
+      @config = combined
+    end
     logger.level = verbose ? Logger::DEBUG : Logger::INFO
   end
 
@@ -22,8 +30,8 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        config = File.open filepath
-        return YAML.load config
+        @absolute_path_to_config = convert_to_absolute(filepath)
+        return YAML.load_file filepath
       end
     end
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
