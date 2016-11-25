@@ -22,8 +22,12 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        config = File.open filepath
-        return YAML.load config
+        config = YAML.load_file(filepath)
+        if config
+          return config
+        else
+          fail InvalidYamlError, "could not parse \"#{config_name}\" as YAML"
+        end
       end
     end
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
@@ -164,6 +168,10 @@ class Wraith::Wraith
 
   def phantomjs_options
     @config["phantomjs_options"]
+  end
+
+  def imports
+    @config['imports'] || nil
   end
 
   def verbose

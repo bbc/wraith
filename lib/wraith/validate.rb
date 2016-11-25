@@ -37,6 +37,8 @@ class Wraith::Validate
     when "latest"
       validate_history_mode
       validate_base_shots_exist
+    when "spider"
+      validate_spider_mode
     else
       logger.warn "Wraith doesn't know how to validate mode '#{mode}'. Continuing..."
     end
@@ -54,6 +56,14 @@ class Wraith::Validate
                   " Wraith in history mode. #{docs_prompt}" unless wraith.history_dir
 
     fail InvalidDomainsError, "History mode requires exactly one domain. #{docs_prompt}" if wraith.domains.length != 1
+  end
+
+  def validate_spider_mode
+    fail MissingRequiredPropertyError, "You must specify an `imports` YML"\
+                  " before running `wraith spider`. #{docs_prompt}" unless wraith.imports
+
+    fail PropertyOutOfContextError, "Tried running `wraith spider` but you have already"\
+                                  " specified paths in your YML. #{docs_prompt}" if wraith.paths
   end
 
   def validate_base_shots_exist

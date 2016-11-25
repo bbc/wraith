@@ -57,6 +57,15 @@ class Wraith::CLI < Thor
     end
   end
 
+  desc "spider [config_name]", "crawls a site for paths and stores them to YML file"
+  def spider(config)
+    within_acceptable_limits do
+      logger.info Wraith::Validate.new(config).validate("spider")
+      spider = Wraith::Spider.new(config)
+      spider.crawl
+    end
+  end
+
   desc "reset_shots [config_name]", "removes all the files in the shots folder"
   def reset_shots(config_name)
     within_acceptable_limits do
