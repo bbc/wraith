@@ -40,7 +40,7 @@ class Wraith::CLI < Thor
   desc "spider [config_name]", "crawls a site for paths and stores them to YML file"
   def spider(config)
     within_acceptable_limits do
-      logger.info Wraith::Validate.new(config).validate("spider")
+      logger.info Wraith::Validate.new(config, { imports_must_resolve: false }).validate("spider")
       spider = Wraith::Spider.new(config)
       spider.crawl
     end

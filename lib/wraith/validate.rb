@@ -6,8 +6,8 @@ class Wraith::Validate
   include Logging
   attr_reader :wraith
 
-  def initialize(config, yaml_passed = false)
-    @wraith = Wraith::Wraith.new(config, yaml_passed)
+  def initialize(config, options = {})
+    @wraith = Wraith::Wraith.new(config, options)
   end
 
   def validate(mode = false)
@@ -62,8 +62,8 @@ class Wraith::Validate
     fail MissingRequiredPropertyError, "You must specify an `imports` YML"\
                   " before running `wraith spider`. #{docs_prompt}" unless wraith.imports
 
-    fail PropertyOutOfContextError, "Tried running `wraith spider` but you have already"\
-                                  " specified paths in your YML. #{docs_prompt}" if wraith.paths
+    #fail PropertyOutOfContextError, "Tried running `wraith spider` but you have already"\
+    #                              " specified paths in your YML. #{docs_prompt}" if wraith.paths
   end
 
   def validate_base_shots_exist

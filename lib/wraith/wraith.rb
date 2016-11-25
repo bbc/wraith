@@ -6,8 +6,13 @@ class Wraith::Wraith
   include Logging
   attr_accessor :config
 
-  def initialize(config, yaml_passed = false)
-    if yaml_passed
+  def initialize(config, options = {})
+    options = {
+      yaml_passed: false,
+      imports_must_resolve: true,
+    }.merge(options)
+
+    if options[:yaml_passed]
       @config = config
     else
       filepath = determine_config_path config
@@ -18,7 +23,7 @@ class Wraith::Wraith
     end
 
     if @config['imports']
-      @config = apply_imported_config(@config['imports'], @config)
+      @config = apply_imported_config(@config['imports'], @config, options[:imports_must_resolve])
     end
 
     logger.level = verbose ? Logger::DEBUG : Logger::INFO
@@ -47,16 +52,18 @@ class Wraith::Wraith
     @calculated_config_dir
   end
 
-  def apply_imported_config(config_to_import, config)
+  def apply_imported_config(config_to_import, config, imports_must_resolve)
     path_to_config = "#{config_dir}/#{config_to_import}"
     if File.exist?(path_to_config)
       yaml = YAML.load_file path_to_config
       return yaml.merge(config)
     end
 
-    # if we got this far, no config could be merged. Return original config.
-    logger.info "unable to find referenced imported config \"#{config_to_import}\""
-    config
+    if imports_must_resolve
+      fail ConfigFileDoesNotExistError, "unable to find referenced imported config \"#{config_to_import}\""
+    else
+      config # return original config
+    end
   end
 
   def directory
