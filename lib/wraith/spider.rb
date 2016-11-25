@@ -41,10 +41,10 @@ class Wraith::Spider
   end
 
   def write_file
-    logger.info "Writing to YML file:"
+    logger.info "Writing to YML file..."
     config = {}
     config['paths'] = @paths
-    File.open(wraith.imports, "w+") do |file|
+    File.open("#{wraith.config_dir}/#{wraith.imports}", "w+") do |file|
       file.write(config.to_yaml)
       logger.info "Spider paths written to #{wraith.imports}"
     end

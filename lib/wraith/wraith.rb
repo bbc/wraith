@@ -35,7 +35,7 @@ class Wraith::Wraith
 
     possible_filenames.each do |filepath|
       if File.exist?(filepath)
-        @config_dir = absolute_path_of_dir(convert_to_absolute filepath)
+        @calculated_config_dir = absolute_path_of_dir(convert_to_absolute filepath)
         return convert_to_absolute filepath
       end
     end
@@ -43,8 +43,12 @@ class Wraith::Wraith
     fail ConfigFileDoesNotExistError, "unable to find config \"#{config_name}\""
   end
 
+  def config_dir
+    @calculated_config_dir
+  end
+
   def apply_imported_config(config_to_import, config)
-    path_to_config = "#{@config_dir}/#{config_to_import}"
+    path_to_config = "#{config_dir}/#{config_to_import}"
     if File.exist?(path_to_config)
       yaml = YAML.load_file path_to_config
       return yaml.merge(config)
