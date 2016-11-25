@@ -171,7 +171,7 @@ class Wraith::Wraith
   end
 
   def imports
-    @config['imports'] || nil
+    @config['imports'] || false
   end
 
   def verbose

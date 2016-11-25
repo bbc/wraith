@@ -91,18 +91,25 @@ describe "Wraith config validator" do
 
   describe "validations specific to spider mode" do
     let(:spider_conf) do
-      config.merge(YAML.load('
+      YAML.load('
+        domains:
+          test: http://www.bbc.com
+
+        browser: "casperjs"
+
+        directory: some/dir
+
         imports: "spider_paths.yml"
-      '))
+      ')
     end
 
     it "should complain if imports is empty" do
-      spider_conf['imports'] = nil
-      expect { Wraith::Validate.new(spider_conf, true).validate("spider") }.to raise_error PropertyOutOfContextError
+      spider_conf.delete 'imports'
+      expect { Wraith::Validate.new(spider_conf, true).validate("spider") }.to raise_error MissingRequiredPropertyError
     end
 
     it "should complain if paths is set" do
-      spider_conf.merge(YAML.load('
+      spider_conf.merge!(YAML.load('
         paths:
           home: /
       '))

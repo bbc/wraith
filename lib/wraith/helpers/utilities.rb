@@ -1,5 +1,12 @@
 require "wraith/helpers/custom_exceptions"
 
+def within_acceptable_limits
+  yield
+rescue CustomError => e
+  logger.error e.message
+  # other errors, such as SystemError, will not be caught nicely and will give a stack trace (which we'd need)
+end
+
 def convert_to_absolute(filepath)
   if !filepath
     "false"
