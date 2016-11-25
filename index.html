@@ -153,10 +153,6 @@ wraith capture configs/config.yaml
             If you wish to take screenshots of a component rather than the entire page, <strong>use casperjs and pass a selector</strong> along with your paths. <a href="configs.html">In the 'component' example config</a>, you can see how we specify a component name, domain path and selector we want to capture.
           </p>
 
-          <p>
-            If you wish to take screenshots of your entire website, remove all of your paths from your config to activate <strong>spider mode</strong>, whereby Wraith will scan your website for all pages and take screenshots of them all. <a href="configs.html">See the 'spider' example config.</a>
-          </p>
-
           <h3>History mode</h3>
 
           <p>
@@ -214,6 +210,42 @@ wraith capture configs/config.yaml
           <b>verbose</b> : (optional: boolean) As of Wraith 3.1.0, you can run Wraith in verbose mode, which lists helpful debug information. Default: false
           <br>
           <b>snap_file</b> : (optional: string) Before Wraith 3.0.0, you were required to specify a path to a snap JavaScript file responsible for taking the command line arguments from Wraith and loading up Phantom/Casper to take screenshots. As of 3.0.0, this functionality has been abstracted away, so <em>you should no longer specify a snap file</em>. However, you are still able to specify a snap file if you wish.
+
+          <h2>Spider functionality</h2>
+
+          <p class="well">
+            You can specify paths in one of two ways. 1) specify the paths manually, or 2) have Wraith crawl your website to determine your paths for you.
+          </p>
+
+          <p class="well">
+            To have Wraith crawl your site for you, remove the 'paths' property and specify an 'imports' property in your YML file, e.g.
+          </p>
+
+<pre>
+  <code data-language="yaml">
+  imports: "spider_paths.yml"
+  </code>
+</pre>
+
+          <p class="well">
+            Tell Wraith to crawl your domain:
+          </p>
+
+<pre>
+  <code data-language="yaml">
+  wraith spider my_config.yml
+  </code>
+</pre>
+
+          <p>
+            ...this creates a file called spider_paths.yml in the same directory as your my_config.yml. Now you can run Wraith commands as normal, as if you've specified the paths manually:
+          </p>
+
+<pre>
+  <code data-language="yaml">
+  wraith capture my_config.yml
+  </code>
+</pre>
 
           <h2>Gallery &amp; Output</h2>
           <p class="well">
@@ -312,12 +344,14 @@ Wraith allows for most of the commands to be used individually, allowing you per
   wraith generate_thumbnails [config_name]  # create thumbnails for gallery
   wraith help [COMMAND]                     # Describe available commands or one specific command
   wraith history [config_name]              # Setup a baseline set of shots
+  wraith info                               # See useful system Wraith/ImageMagick/Phantom info
   wraith latest [config_name]               # Capture new shots to compare with baseline
   wraith multi_capture [filelist]           # A Batch of Wraith Jobs
   wraith reset_shots [config_name]          # removes all the files in the shots folder
   wraith save_images [config_name]          # captures screenshots
   wraith setup                              # creates config folder and default config
   wraith setup_folders [config_name]        # create folders for images
+  wraith spider [config_name]               # crawl your domain to generate a YML of paths
   wraith validate [config_name]             # checks your configuration and validates that all required properties exist
   wraith version                            # Show the version of Wraith
           </code>
