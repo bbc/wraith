@@ -4,7 +4,7 @@
 // ######################################################
 module.exports = function (phantom, ready) {
 
-    page.customHeaders = {
+    phantom.customHeaders = {
         'SOME-HEADER': 'fish'
     };
 
