@@ -33,8 +33,8 @@
       margin-top: 60px;
     }
 
-    .prev span:before,
-    .next span:before {
+    .prev span::before,
+    .next span::before {
       font-size: 35px;
       padding: 10px;
       display: block;
@@ -43,21 +43,19 @@
       display: block;
     }
 
-    .prev span:before {
+    .prev span::before {
       content:"\f0d9";
     }
-    .next span:before {
+    .next span::before {
       content:"\f0da";
     }
-    .list-group-item.checked a:after {
-      color: #23e343;
-    }
+
     .list-group-item a span {
       word-wrap: break-word;
       width: 95%;
       display: block;
     }
-    .list-group-item a:after {
+    .list-group-item a::after {
       content:"\f00c";
       font-family: "FontAwesome";
       color: #eae6e6;
@@ -65,6 +63,18 @@
       right: 10px;
       top: 10px;
     }
+
+    .list-group-item.current a::after {
+      color: #E1AB2F;
+      font-weight: bold;
+      content: "---";
+    }
+    .list-group-item.checked a::after {
+      color: #23e343;
+      content:"\f00c";
+      font-weight: normal;
+    }
+
     .checked a {
       color: #000;
     }
@@ -79,7 +89,7 @@
       margin-left: 20px;
     }
 
-    .compare:before {
+    .compare::before {
       font-family: "FontAwesome";
       content:"\f0c5";
       font-size: 30px;
@@ -105,23 +115,116 @@
       margin-right: 20px;
       max-width: 30%;
     }
+
+    .compare-modal ~ .prev {
+      z-index: 9999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 4%;
+      padding: 7px;
+    }
+
+    .compare-modal ~ .next {
+      z-index: 9999;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 4%;
+      padding: 7px;
+    }
+
+    .compare-modal h1 {
+        color: white;
+    }
+
   </style>
   <script type="text/javascript">
     $(function() {
+
+      var fullscreen = false;
+
+      function fullScreenSlide(slide) {
+        if (slide) {
+          fullscreen = true;
+          var title    = slide.find('h4').first().text(),
+              newImage = slide.find('a.shot:eq(0)').attr('href'),
+              oldImage = slide.find('a.shot:eq(1)').attr('href'),
+              diffImage = slide.find('a.shot:eq(2)').attr('href');
+          $('.slideshow-container').prepend('<div class="compare-modal"><div class="compare-container"><h1>' + title + '</h1><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
+          $('.compare-modal').unbind().on('click', function(){
+            $(this).remove();
+            fullscreen = false;
+          })
+        }
+      }
+
+      function updateProgressIndicator(before, after, opts) {
+        // if we're the first entry in the batch
+        before = $(before);
+        after = $(after);
+
+        // NEXT
+        $('.current').removeClass('current');
+        var path = after.find('.path').attr('name');
+        var item = getMenuItemCorrespondingTo(path);
+        item.addClass('current');
+
+        // CURRENT
+        var similarElements = getElementsOfSameClass(before);
+        before.addClass('processed');
+
+        var allProcessed = true;
+        similarElements.each(function () {
+          if ( !$(this).hasClass('processed') ) {
+            allProcessed = false;
+          }
+        });
+
+        if (allProcessed) {
+          var path = before.find('.path').attr('name');
+          var item = getMenuItemCorrespondingTo(path);
+
+          item.addClass('checked');
+        }
+      }
+
+      function getElementsOfSameClass(element) {
+        var classNamesOfElement = element.attr('class').split(/\s+/),
+            similarElements = element.parent().find('.' + classNamesOfElement.join('.'));
+        return similarElements;
+      }
+
+      function getMenuItemCorrespondingTo(path) {
+        var item = false;
+        $.each($('.list-group .list-group-item a'), function() {
+          if ($(this).attr('href').substring(1) == path) {
+            item = $(this).parent();
+          }
+        })
+        return item;
+      }
+
+      // http://jquery.malsup.com/cycle/options.html
       $('.slideshow').cycle({
         fx:     'scrollHorz',
         speed:  300,
         prev:   '.prev',
         next:   '.next',
-        before: function (curr, next, opts) {
-          $('.current').removeClass('current');
-          var path = $(next).find('.path').attr('name');
-          $.each($('.list-group .list-group-item a'), function() {
-            if ($(this).attr('href').substring(1) == path) {
-              $(this).parent().addClass('checked');
-              $(this).parent().addClass('current');
-            }
-          })
+        speed: 300,
+        before: updateProgressIndicator,
+        after: function () {
+          if (fullscreen) {
+            $('.compare-modal').remove();
+            var currentSlide = false;
+            $('.slide').each(function () {
+              if ($(this).css('display') === 'block') {
+                currentSlide = $(this);
+              }
+            });
+
+            fullScreenSlide(currentSlide);
+          }
         },
         timeout: 0
       });
@@ -139,15 +242,23 @@
       })
 
       $('.compare').unbind().on('click', function(){
-        var slide = $(this).closest(".slide"),
-            newImage = slide.find('a.shot:eq(0)').attr('href'),
-            oldImage = slide.find('a.shot:eq(1)').attr('href'),
-            diffImage = slide.find('a.shot:eq(2)').attr('href');
-        $('.container').append('<div class="compare-modal"><div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
-        $('.compare-modal').unbind().on('click', function(){
-          $(this).remove();
-        })
+        var slide = $(this).closest(".slide")
+        fullScreenSlide(slide);
       })
+
+      window.addEventListener('keydown', function(e){
+        var leftArrowKeyCode = 37;
+        var rightArrowKeyCode = 39;
+
+        e = e || window.event;
+
+        if (e.keyCode === leftArrowKeyCode) {
+           $('.slideshow').cycle('prev');
+        }
+        else if (e.keyCode === rightArrowKeyCode) {
+           $('.slideshow').cycle('next');
+        }
+      });
     })
 </script>
 </head>
