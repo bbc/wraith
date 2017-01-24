@@ -16,7 +16,7 @@ class Wraith::Spider
   attr_reader :wraith
 
   def initialize(config)
-    @wraith = Wraith::Wraith.new(config)
+    @wraith = Wraith::Wraith.new(config, { imports_must_resolve: false })
     @paths = {}
   end
 
