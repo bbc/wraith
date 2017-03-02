@@ -108,7 +108,9 @@
   </style>
   <script type="text/javascript">
     $(function() {
-      $('.slideshow').cycle({
+      var slideshow = $('.slideshow');
+
+      slideshow.cycle({
         fx:     'scrollHorz',
         speed:  300,
         prev:   '.prev',
@@ -129,7 +131,7 @@
       $('.list-group .list-group-item a').unbind().on('click', function(){
         var href = $(this).attr('href').substring(1);
 
-        $('.slideshow').cycle($('.slide.'+href+':first').index());
+        slideshow.cycle($('.slide.'+href+':first').index());
       })
 
       $('.shot').unbind().on('click', function(e){
@@ -148,6 +150,14 @@
           $(this).remove();
         })
       })
+
+      $(document).on('keyup', function(e) {
+        if (e.keyCode === 37) {
+          slideshow.cycle('prev');
+        } else if (e.keyCode === 39) {
+          slideshow.cycle('next');
+        }
+      });
     })
 </script>
 </head>
