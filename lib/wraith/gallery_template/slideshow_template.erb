@@ -109,6 +109,7 @@
   <script type="text/javascript">
     $(function() {
       var slideshow = $('.slideshow');
+      var compareModal = $('.compare-modal');
 
       slideshow.cycle({
         fx:     'scrollHorz',
@@ -117,15 +118,25 @@
         next:   '.next',
         before: function (curr, next, opts) {
           $('.current').removeClass('current');
-          var path = $(next).find('.path').attr('name');
+          var $next = $(next);
+          var path = $next.find('.path').attr('name');
           $.each($('.list-group .list-group-item a'), function() {
             if ($(this).attr('href').substring(1) == path) {
               $(this).parent().addClass('checked');
               $(this).parent().addClass('current');
             }
-          })
+          });
+
+          var newImage = $next.find('a.shot:eq(0)').attr('href');
+          var oldImage = $next.find('a.shot:eq(1)').attr('href');
+          var diffImage = $next.find('a.shot:eq(2)').attr('href');
+          compareModal.html('<div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div>');
         },
         timeout: 0
+      });
+
+      $(document).on('click', '.compare', function() {
+        compareModal.show();
       });
 
       $('.list-group .list-group-item a').unbind().on('click', function(){
@@ -140,21 +151,16 @@
         window.open(url,'_blank');
       })
 
-      $('.compare').unbind().on('click', function(){
-        var slide = $(this).closest(".slide"),
-            newImage = slide.find('a.shot:eq(0)').attr('href'),
-            oldImage = slide.find('a.shot:eq(1)').attr('href'),
-            diffImage = slide.find('a.shot:eq(2)').attr('href');
-        $('.container').append('<div class="compare-modal"><div class="compare-container"><img src="'+newImage+'"/><img src="'+oldImage+'"/><img src="'+diffImage+'"/></div></div>');
-        $('.compare-modal').unbind().on('click', function(){
-          $(this).remove();
-        })
-      })
+      compareModal.on('click', function(){
+        $(this).remove();
+      });
 
       $(document).on('keyup', function(e) {
-        if (e.keyCode === 37) {
+        if (e.keyCode === 27) { // Escape
+          compareModal.hide();
+        } else if (e.keyCode === 37) { // Left
           slideshow.cycle('prev');
-        } else if (e.keyCode === 39) {
+        } else if (e.keyCode === 39) { // Right
           slideshow.cycle('next');
         }
       });
@@ -162,6 +168,7 @@
 </script>
 </head>
 <body>
+  <div class="compare-modal" style="display: none;"></div>
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-3">
