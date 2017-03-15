@@ -4,6 +4,7 @@ require "image_size"
 require "open3"
 require "parallel"
 require "shellwords"
+require "wraith/image_pairs"
 
 class Wraith::CompareImages
   include Logging
@@ -14,8 +15,10 @@ class Wraith::CompareImages
   end
 
   def compare_images
-    files = Dir.glob("#{wraith.directory}/*/*.png").sort
-    Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
+    files = Dir.glob("#{wraith.directory}/*/*.png")
+    image_pairs = Wraith::ImagePairs.from_list(files)
+
+    Parallel.each(image_pairs.each, :in_processes => Parallel.processor_count) do |base, compare|
       diff = base.gsub(/([a-zA-Z0-9]+).png$/, "diff.png")
       info = base.gsub(/([a-zA-Z0-9]+).png$/, "data.txt")
       logger.info "Comparing #{base} and #{compare}"
