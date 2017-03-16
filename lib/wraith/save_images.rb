@@ -73,7 +73,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
+    Parallel.each(jobs, :in_threads => Parallel.processor_count) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
         command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
         attempt_image_capture(command, filename)
