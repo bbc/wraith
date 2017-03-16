@@ -3,6 +3,7 @@ require "wraith/helpers/logger"
 require "image_size"
 require "parallel"
 require "shellwords"
+require "wraith/image_pairs"
 
 class Wraith::CropImages
   include Logging
@@ -13,9 +14,10 @@ class Wraith::CropImages
   end
 
   def crop_images
-    files = Dir.glob("#{wraith.directory}/*/*.png").sort
+    files = Dir.glob("#{wraith.directory}/*/*.png")
+    image_pairs = Wraith::ImagePairs.from_list(files)
 
-    Parallel.each(files.each_slice(2), :in_processes => Parallel.processor_count) do |base, compare|
+    Parallel.each(image_pairs.each, :in_processes => Parallel.processor_count) do |base, compare|
       crop_if_necessary base, compare
     end
   end
