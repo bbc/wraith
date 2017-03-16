@@ -68,7 +68,13 @@ class Wraith::GalleryGenerator
   end
 
   def get_path(category)
-    wraith.paths[category]["path"] || wraith.paths[category]
+    if wraith.paths
+      wraith.paths[category]["path"] || wraith.paths[category]
+    else
+      logger.debug "Read the spider file...."
+      paths = File.read(wraith.spider_file)
+      paths[category]["path"] || paths[category]
+    end
   end
 
   def get_group_from_match(match)
