@@ -33,6 +33,7 @@ def list_debug_information
   command_run         = ARGV.join ' '
   ruby_version        = run_command_safely("ruby -v") || "Ruby not installed"
   phantomjs_version   = run_command_safely("phantomjs --version") || "PhantomJS not installed"
+  chromedriver_version   = run_command_safely("chromedriver --version") || "chromedriver not installed"
   casperjs_version    = run_command_safely("casperjs --version") || "CasperJS not installed"
   imagemagick_version = run_command_safely("convert -version") || "ImageMagick not installed"
 
@@ -42,6 +43,7 @@ def list_debug_information
   logger.debug "  Ruby version:       #{ruby_version}"
   logger.debug "  ImageMagick:        #{imagemagick_version}"
   logger.debug "  PhantomJS version:  #{phantomjs_version}"
+  logger.debug "  chromedriver version:  #{chromedriver_version}"
   logger.debug "  CasperJS version:   #{casperjs_version}"
   # @TODO - add a SlimerJS equivalent
   logger.debug "#################################################"

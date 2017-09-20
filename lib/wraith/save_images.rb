@@ -5,6 +5,7 @@ require "wraith/helpers/capture_options"
 require "wraith/helpers/logger"
 require "wraith/helpers/save_metadata"
 require "wraith/helpers/utilities"
+require "selenium-webdriver"
 
 class Wraith::SaveImages
   include Logging
@@ -75,12 +76,36 @@ class Wraith::SaveImages
   def parallel_task(jobs)
     Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
-        command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
-        attempt_image_capture(command, filename)
+        if "#{meta.engine}" == "chrome"
+          capture_image_selenium_chrome(width, url, filename, selector, global_before_capture, path_before_capture)
+        else
+          command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
+          attempt_image_capture(command, filename)
+        end
       rescue => e
         logger.error e
         create_invalid_image(filename, width)
       end
+    end
+  end
+
+  def capture_image_selenium_chrome(width, url, file_name, selector, global_before_capture, path_before_capture)
+    home_path = run_command_safely('pwd')
+    widths = width.to_s.split(",")
+    widths.each do |w|
+      w = "#{w}x1500" unless w['x']
+      new_file_name = file_name.sub('MULTI', w)
+      target_folder = File.dirname(new_file_name)
+      basename = File.basename(new_file_name)
+
+      options = Selenium::WebDriver::Chrome::Options.new
+      options.add_argument('--disable-gpu')
+      options.add_argument('--headless')
+      options.add_argument("--window-size=#{w.sub('x',',')}")
+      driver = Selenium::WebDriver.for :chrome, options: options
+      driver.navigate.to url
+      driver.save_screenshot("#{target_folder}/#{basename}")
+      driver.quit
     end
   end
 
