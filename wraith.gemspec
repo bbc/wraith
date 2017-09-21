@@ -21,13 +21,14 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'casperjs'
-  spec.add_development_dependency 'selenium-webdriver', ">= 3.5.2"
 
   spec.add_runtime_dependency 'rake'
   spec.add_runtime_dependency 'image_size'
+  spec.add_runtime_dependency 'mini_magick', "~> 4.8.0"
   spec.add_runtime_dependency 'anemone'
   spec.add_runtime_dependency 'robotex'
   spec.add_runtime_dependency 'log4r'
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'parallel'
+  spec.add_runtime_dependency 'selenium-webdriver', "~> 3.5.2"
 end

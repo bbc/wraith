@@ -6,6 +6,7 @@ require "wraith/helpers/logger"
 require "wraith/helpers/save_metadata"
 require "wraith/helpers/utilities"
 require "selenium-webdriver"
+require 'mini_magick'
 
 class Wraith::SaveImages
   include Logging
@@ -76,8 +77,8 @@ class Wraith::SaveImages
   def parallel_task(jobs)
     Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
-        if "#{meta.engine}" == "chrome"
-          capture_image_selenium_chrome(width, url, filename, selector, global_before_capture, path_before_capture)
+        if meta.engine == "chrome"
+          capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
         else
           command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
           attempt_image_capture(command, filename)
@@ -89,22 +90,45 @@ class Wraith::SaveImages
     end
   end
 
-  def capture_image_selenium_chrome(width, url, file_name, selector, global_before_capture, path_before_capture)
-    home_path = run_command_safely('pwd')
-    widths = width.to_s.split(",")
-    widths.each do |w|
-      w = "#{w}x1500" unless w['x']
-      new_file_name = file_name.sub('MULTI', w)
-      target_folder = File.dirname(new_file_name)
-      basename = File.basename(new_file_name)
-
+  # currently only chrome headless at 1x scaling
+  def get_driver screen_size
+    screen_size = "#{screen_size}x1500" unless screen_size['x']
+    case meta.engine
+    when "chrome"
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--disable-gpu')
       options.add_argument('--headless')
-      options.add_argument("--window-size=#{w.sub('x',',')}")
-      driver = Selenium::WebDriver.for :chrome, options: options
+      options.add_argument('--device-scale-factor=1') # have to change cropping for 2x. also this is faster
+      options.add_argument('--force-device-scale-factor')
+      options.add_argument("--window-size=#{screen_size.sub('x',',')}")
+      Selenium::WebDriver.for :chrome, options: options
+    end
+  end
+
+  # resize to fit entire page
+  def resize_to_fit_page driver
+    width  = driver.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
+    height = driver.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+    driver.manage.window.resize_to(width, height)
+  end 
+
+  # crop an image around the coordinates of an element
+  def crop_selector driver, selector, image_location
+    el = driver.find_element(:css, selector)
+    image = MiniMagick::Image.open(image_location)
+    image.crop "#{el.rect.width}x#{el.rect.height}+#{el.rect.x}+#{el.rect.y}"
+    image.write(image_location)
+  end
+
+  def capture_image_selenium(screen_sizes, url, file_name, selector, global_before_capture, path_before_capture)
+    screen_sizes.to_s.split(",").each do |screen_size|
+      new_file_name = file_name.sub('MULTI', screen_size)
+      driver = get_driver screen_size
       driver.navigate.to url
-      driver.save_screenshot("#{target_folder}/#{basename}")
+      resize_to_fit_page(driver) unless screen_size['x']
+      driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
+      driver.save_screenshot(new_file_name)
+      crop_selector(driver, selector, new_file_name) if selector
       driver.quit
     end
   end
