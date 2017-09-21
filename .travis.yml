@@ -1,9 +1,24 @@
+sudo: required
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
 language: ruby
 rvm:
 - 2.3.3
 before_install:
   - gem update
   - gem --version
+  - mkdir /tmp/chromedriver
+  # - wget  http://chromedriver.storage.googleapis.com/2.32/chromedriver_mac64.zip -O /tmp/chromedriver/chromedriver.zip
+  - wget https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -O /tmp/chromedriver/chromedriver.zip
+  - unzip /tmp/chromedriver/chromedriver.zip -d /tmp/chromedriver
+  - rm /tmp/chromedriver/chromedriver.zip
+  - chmod 777 /tmp/chromedriver/chromedriver
+  - export PATH=$PATH:/tmp/chromedriver
 script: bundle exec rspec
 notifications:
   email:
@@ -13,4 +28,3 @@ notifications:
     on_success: never
   slack:
     secure: BgRAqwHabAtIBgtApDjyUiND2SNxd4sHMgq4ffnJ+EoMme6RSUAeK0G6LLyaGAk6YcpCeWRGOccEpzai87R3ckv6uycUVGxFcTvPmCEClakbUelWovVEyVT3hPLWznxJ8pz3EVB2+5aJnAsTg5M2ZnYtk3a5C1mrPS+WKceE/Ls=
-sudo: false

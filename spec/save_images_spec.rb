@@ -33,9 +33,9 @@ describe Wraith do
       expect(image_size[0]).to eq 320
     end
     it "saves image chrome" do
-      capture_image = saving_chrome.capture_image_selenium(1440, test_url1, test_image_chrome, selector, false, false)
+      capture_image = saving_chrome.capture_image_selenium("1080x600", test_url1, test_image_chrome, selector, false, false)
       image_size_chrome = ImageSize.path(test_image_chrome).size
-      expect(image_size_chrome[0]).to eq 1440
+      expect(image_size_chrome[0]).to eq 1080
     end
     it "crops around a selector" do
       selector = "#orb-nav-more"
