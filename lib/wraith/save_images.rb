@@ -128,7 +128,7 @@ class Wraith::SaveImages
       resize_to_fit_page(driver) unless screen_size['x']
       driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
       driver.save_screenshot(new_file_name)
-      crop_selector(driver, selector, new_file_name) if selector
+      crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
       driver.quit
     end
   end
