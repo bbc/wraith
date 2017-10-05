@@ -47,7 +47,7 @@ Wraith also requires at least one of these headless browsers:
 * [PhantomJS](http://phantomjs.org)
 * [CasperJS](http://casperjs.org/) (which can be used to target specific selectors)
 * [SlimerJS](http://slimerjs.org)
-* [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/getting-started) (Currently using Selenium WebDriver for Chrome; Can target specific selectors)
+* [Chrome](https://askubuntu.com/questions/510056/how-to-install-google-chrome/510063) (Currently using Selenium WebDriver + Chromedriver for Chrome; Can target specific selectors)
   * `brew install chromedriver` on Mac
 
 ## Contributing

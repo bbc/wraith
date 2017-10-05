@@ -12,13 +12,6 @@ rvm:
 before_install:
   - gem update
   - gem --version
-  - mkdir /tmp/chromedriver
-  # - wget  http://chromedriver.storage.googleapis.com/2.32/chromedriver_mac64.zip -O /tmp/chromedriver/chromedriver.zip
-  - wget https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -O /tmp/chromedriver/chromedriver.zip
-  - unzip /tmp/chromedriver/chromedriver.zip -d /tmp/chromedriver
-  - rm /tmp/chromedriver/chromedriver.zip
-  - chmod 777 /tmp/chromedriver/chromedriver
-  - export PATH=$PATH:/tmp/chromedriver
 script: bundle exec rspec
 notifications:
   email:
