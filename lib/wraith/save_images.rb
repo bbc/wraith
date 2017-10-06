@@ -91,8 +91,7 @@ class Wraith::SaveImages
   end
 
   # currently only chrome headless at 1x scaling
-  def get_driver screen_size
-    screen_size = "#{screen_size}x1500" unless screen_size['x']
+  def get_driver
     case meta.engine
     when "chrome"
       options = Selenium::WebDriver::Chrome::Options.new
@@ -100,7 +99,7 @@ class Wraith::SaveImages
       options.add_argument('--headless')
       options.add_argument('--device-scale-factor=1') # have to change cropping for 2x. also this is faster
       options.add_argument('--force-device-scale-factor')
-      options.add_argument("--window-size=#{screen_size.sub('x',',')}")
+      options.add_argument("--window-size=1200,1500") # resize later so we can reuse drivers
       Selenium::WebDriver.for :chrome, options: options
     end
   end
@@ -121,17 +120,19 @@ class Wraith::SaveImages
   end
 
   def capture_image_selenium(screen_sizes, url, file_name, selector, global_before_capture, path_before_capture)
+    driver = get_driver
     screen_sizes.to_s.split(",").each do |screen_size|
+      width, height = screen_size.split("x")
       new_file_name = file_name.sub('MULTI', screen_size)
-      driver = get_driver screen_size
+      driver.manage.window.resize_to(width, height || 1500)
       driver.navigate.to url
       driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
       driver.execute_async_script(File.read(path_before_capture)) if path_before_capture
-      resize_to_fit_page(driver) unless screen_size['x']
+      resize_to_fit_page(driver) unless height
       driver.save_screenshot(new_file_name)
       crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
-      driver.quit
     end
+    driver.quit
   end
 
   def construct_command(width, url, file_name, selector, global_before_capture, path_before_capture)
