@@ -26,7 +26,7 @@ class Wraith::CompareImages
 
   def percentage(img_size, px_value, info)
     pixel_count = (px_value / img_size) * 100
-    rounded = pixel_count.round(2)
+    rounded = pixel_count.round(4)
     File.open(info, "w") { |file| file.write(rounded) }
   end
 
