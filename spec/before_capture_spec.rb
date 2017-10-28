@@ -13,7 +13,7 @@ end
 def run_js_then_capture_chrome(config)
   saving = Wraith::SaveImages.new(config_chrome)
   generated_image = "shots_chrome/test/temporary_jsified_image.png"
-  saving.capture_image_selenium('320x320', 'http://www.bbc.com/afrique', generated_image, selector, config[:global_js], config[:path_js])
+  saving.capture_image_selenium('320', 'http://www.bbc.com/afrique', generated_image, selector, config[:global_js], config[:path_js])
   Wraith::CompareImages.new(config_chrome).compare_task(generated_image, config[:output_should_look_like], "shots/test/test_diff.png", "shots/test/test.txt")
   diff = File.open("shots/test/test.txt", "rb").read
   expect(diff).to eq "0.0"
@@ -87,7 +87,7 @@ describe Wraith do
   end
 
   # @TODO - we need tests determining the path to "path-level before_capture hooks"
-  # @TODO - uncomment and figure out why broken
+  # @TODO - uncomment and figure out why broken OR deprecate
   # describe "When hooking into before_capture (CasperJS)" do
   #   it "Executes the global JS before capturing" do
   #     run_js_then_capture(

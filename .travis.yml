@@ -1,18 +1,14 @@
-sudo: required
+sudo: false
 addons:
   apt:
-    sources:
-      - google-chrome
     packages:
       - google-chrome-stable
 
 language: ruby
 rvm:
-- 2.3.3
-before_install:
-  - gem update
-  - gem --version
-script: bundle exec rspec
+- 2.4.1
+script:
+  - bundle exec rspec
 notifications:
   email:
     recipients:
