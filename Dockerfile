@@ -4,7 +4,7 @@ FROM ruby:2.1.2
 # we purge this later to make sure our final image uses what we just built
 RUN apt-get update
 RUN echo "export phantomjs=/usr/bin/phantomjs" > .bashrc
-RUN apt-get install -y libfreetype6 libfontconfig1 nodejs npm
+RUN apt-get install -y libfreetype6 libfontconfig1 nodejs npm libnss3-dev libgconf-2-4
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install npm
 RUN npm install -g phantomjs@2.1.7 casperjs@1.1.1
