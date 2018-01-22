@@ -79,3 +79,7 @@ highlight_color: red
 
 # (optional) Parameters to pass to Phantom/Casper command line. Default: '--ignore-ssl-errors=true --ssl-protocol=tlsv1'
 phantomjs_options: ''
+
+# (optional, new) specify which platform to render the web page by setting user agent,
+# deafult is 'desktop', can be 'mobile'
+platform: desktop
