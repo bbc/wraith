@@ -142,7 +142,7 @@ class Wraith::SaveImages
     global_before_capture = convert_to_absolute global_before_capture
     path_before_capture   = convert_to_absolute path_before_capture
 
-    command_to_run = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}'"
+    command_to_run = "#{meta.engine} #{wraith.phantomjs_options} '#{wraith.snap_file}' '#{url}' '#{width}' '#{file_name}' '#{selector}' '#{global_before_capture}' '#{path_before_capture}' '#{wraith.platform}'"
     logger.debug command_to_run
     command_to_run
   end

@@ -211,4 +211,8 @@ class Wraith::Wraith
     # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
     @config["verbose"] || false
   end
+  
+  def platform
+    @config['platform'] || 'desktop'
+  end
 end

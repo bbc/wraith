@@ -59,3 +59,7 @@ gallery:
 #   diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
 # Note: different screen widths are always grouped together.
 mode: diffs_first
+
+# (optional, new) specify which platform to render the web page by setting user agent,
+# deafult is 'desktop', can be 'mobile'
+platform: desktop
