@@ -5,6 +5,8 @@ require "wraith/helpers/capture_options"
 require "wraith/helpers/logger"
 require "wraith/helpers/save_metadata"
 require "wraith/helpers/utilities"
+require "selenium-webdriver"
+require 'mini_magick'
 
 class Wraith::SaveImages
   include Logging
@@ -75,13 +77,63 @@ class Wraith::SaveImages
   def parallel_task(jobs)
     Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
-        command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
-        attempt_image_capture(command, filename)
+        if meta.engine == "chrome"
+          capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
+        else
+          command = construct_command(width, url, filename, selector, global_before_capture, path_before_capture)
+          attempt_image_capture(command, filename)
+        end
       rescue => e
         logger.error e
         create_invalid_image(filename, width)
       end
     end
+  end
+
+  # currently only chrome headless at 1x scaling
+  def get_driver
+    case meta.engine
+    when "chrome"
+      options = Selenium::WebDriver::Chrome::Options.new
+      options.add_argument('--disable-gpu')
+      options.add_argument('--headless')
+      options.add_argument('--device-scale-factor=1') # have to change cropping for 2x. also this is faster
+      options.add_argument('--force-device-scale-factor')
+      options.add_argument("--window-size=1200,1500") # resize later so we can reuse drivers
+      options.add_argument("--hide-scrollbars") # hide scrollbars from screenshots
+      Selenium::WebDriver.for :chrome, options: options
+    end
+  end
+
+  # resize to fit entire page
+  def resize_to_fit_page driver
+    width  = driver.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
+    height = driver.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+    driver.manage.window.resize_to(width, height)
+  end 
+
+  # crop an image around the coordinates of an element
+  def crop_selector driver, selector, image_location
+    el = driver.find_element(:css, selector)
+    image = MiniMagick::Image.open(image_location)
+    image.crop "#{el.rect.width}x#{el.rect.height}+#{el.rect.x}+#{el.rect.y}"
+    image.write(image_location)
+  end
+
+  def capture_image_selenium(screen_sizes, url, file_name, selector, global_before_capture, path_before_capture)
+    driver = get_driver
+    screen_sizes.to_s.split(",").each do |screen_size|
+      width, height = screen_size.split("x")
+      new_file_name = file_name.sub('MULTI', screen_size)
+      driver.manage.window.resize_to(width, height || 1500)
+      driver.navigate.to url
+      driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
+      driver.execute_async_script(File.read(path_before_capture)) if path_before_capture
+      resize_to_fit_page(driver) unless height
+      driver.save_screenshot(new_file_name)
+      crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
+    end
+    driver.quit
   end
 
   def construct_command(width, url, file_name, selector, global_before_capture, path_before_capture)

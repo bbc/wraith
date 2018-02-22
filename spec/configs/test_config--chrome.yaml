@@ -1,0 +1,53 @@
+##########
+### NB: the paths in this YAML config are relative to the root of the Wraith directory,
+### as `bundle exec rspec` is run from the root.
+##########
+
+#Headless browser option
+browser:
+  phantomjs: "chrome"
+
+# Type the name of the directory that shots will be stored in
+directory: 'shots_chrome'
+
+# Add only 2 domains, key will act as a label
+domains:
+  afrique: "http://www.bbc.com/afrique"
+  russian: "http://www.bbc.com/russian"
+
+#Type screen widths below, here are a couple of examples
+screen_widths:
+  - 600
+  - 1280
+
+#Type page URL paths below, here are a couple of examples
+paths:
+  home: /
+  home_menu:
+    path: /
+    selector: "#orb-nav-more"
+  uk_index: /uk
+
+# (optional) JavaScript file to execute before taking screenshot of every path. Default: nil
+  # before_capture: 'javascript/interact--chrome.js'
+  # before_capture: 'javascript/wait--chrome.js'
+
+#Amount of fuzz ImageMagick will use
+fuzz: '20%'
+
+# (optional) The maximum acceptable level of difference (in %) between two images before Wraith reports a failure. Default: 0
+threshold: 5
+
+# (optional) Specify the template (and generated thumbnail sizes) for the gallery output.
+gallery:
+  template: 'slideshow_template' # Examples: 'basic_template' (default), 'slideshow_template'
+  thumb_width:  200
+  thumb_height: 200
+
+# (optional) Choose which results are displayed in the gallery, and in what order. Default: alphanumeric
+# Options:
+#   alphanumeric - all paths (with or without a difference) are shown, sorted by path
+#   diffs_first - all paths (with or without a difference) are shown, sorted by difference size (largest first)
+#   diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+# Note: different screen widths are always grouped together.
+mode: diffs_first
