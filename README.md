@@ -40,13 +40,14 @@ Whichever mode you decide to run Wraith in, the process it follows is generally 
 
 ## Requirements
 
-[ImageMagick](http://www.imagemagick.org/) is required to compare the screenshots.
+[ImageMagick](http://www.imagemagick.org/) is required to compare the screenshots and crop images.
 
 Wraith also requires at least one of these headless browsers:
 
 * [PhantomJS](http://phantomjs.org)
 * [CasperJS](http://casperjs.org/) (which can be used to target specific selectors)
 * [SlimerJS](http://slimerjs.org)
+* [Chrome](https://askubuntu.com/questions/510056/how-to-install-google-chrome/510063) (Currently using Selenium WebDriver + Chromedriver for Chrome; Can target specific selectors)
 
 ## Contributing
 
