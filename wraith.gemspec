@@ -30,6 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'log4r'
   spec.add_runtime_dependency 'thor'
   spec.add_runtime_dependency 'parallel'
-  spec.add_runtime_dependency 'selenium-webdriver', "~> 3.5"
-  spec.add_runtime_dependency 'chromedriver-helper', "~> 1.1"
+  spec.add_runtime_dependency 'selenium-webdriver', "~> 3.9"
+  spec.add_runtime_dependency 'chromedriver-helper', "~> 1.2"
 end
