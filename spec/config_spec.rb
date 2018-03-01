@@ -149,4 +149,18 @@ describe "wraith config" do
       expect(wraith.resize).to eq false
     end
   end
+
+  describe "chrome config" do
+    let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--chrome-mobile.yaml" }
+    let(:wraith) { Wraith::Wraith.new(config_name) }
+
+    it "sets the engine correctly" do
+      expect(wraith.engine).to eq("chrome")
+    end
+
+    it "creates selenium options" do
+      expect(wraith.selenium_options).to include("--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25")
+    end
+  end
+
 end

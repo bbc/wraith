@@ -101,6 +101,9 @@ class Wraith::SaveImages
       options.add_argument('--force-device-scale-factor')
       options.add_argument("--window-size=1200,1500") # resize later so we can reuse drivers
       options.add_argument("--hide-scrollbars") # hide scrollbars from screenshots
+      meta.selenium_options.each do |opt|
+        options.add_argument(opt)
+      end
       Selenium::WebDriver.for :chrome, options: options
     end
   end

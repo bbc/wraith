@@ -4,17 +4,22 @@ require "image_size"
 describe Wraith do
   let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--phantom.yaml" }
   let(:config_chrome) { get_path_relative_to __FILE__, "./configs/test_config--chrome.yaml" }
+  let(:config_chrome_mobile) { get_path_relative_to __FILE__, "./configs/test_config--chrome-mobile.yaml" }
   let(:test_url1) { "http://www.bbc.com/afrique" }
   let(:test_url2) { "http://www.bbc.com/russian" }
+  let(:test_hp_url1) { "http://m.huffingtonpost.gr" }
+  let(:test_hp_url2) { "http://m.huffingtonpost.ca" }
   let(:test_image1) { "shots/test/test1.png" }
   let(:test_image_chrome) { "shots_chrome/test/test_chrome.png" }
   let(:test_image_chrome_selector) { "shots_chrome/test/test_chrome_selector.png" }
+  let(:test_image_chrome_mobile) { "shots_chrome/test/test_chrome_mobile.png" }
   let(:test_image2) { "shots/test/test(2).png" }
   let(:diff_image) { "shots/test/test_diff.png" }
   let(:data_txt) { "shots/test/test.txt" }
   let(:selector) { "" }
   let(:saving) { Wraith::SaveImages.new(config_name) }
   let(:saving_chrome) { Wraith::SaveImages.new(config_chrome) }
+  let(:saving_chrome_mobile) { Wraith::SaveImages.new(config_chrome_mobile) }
   let(:wraith) { Wraith::Wraith.new(config_name) }
 
   before(:each) do
@@ -43,6 +48,12 @@ describe Wraith do
       image_size_chrome_selector = ImageSize.path(test_image_chrome_selector).size
       expect(image_size_chrome_selector[0]).to eq 673
       expect(image_size_chrome_selector[1]).to eq 40
+    end
+
+    it "loads mobile user agent and captures page" do
+      capture_image = saving_chrome_mobile.capture_image_selenium(320, test_hp_url1, test_image_chrome_mobile, selector, false, false)
+      image_size_chrome_mobile = ImageSize.path(test_image_chrome_mobile).size
+      expect(image_size_chrome_mobile[0]).to eq(320)
     end
   end
 
