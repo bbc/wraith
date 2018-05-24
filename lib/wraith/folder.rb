@@ -33,6 +33,7 @@ class Wraith::FolderManager
   def clear_shots_folder
     FileUtils.rm_rf("./#{dir}")
     FileUtils.mkdir_p("#{dir}")
+    FileUtils.mkdir_p("#{history_dir}")
   end
 
   def copy_old_shots
