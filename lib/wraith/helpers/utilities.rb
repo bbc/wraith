@@ -51,9 +51,9 @@ end
 
 def run_command_safely(command)
   begin
-    output = `#{command}`
+    output = `#{command}`    
+    output.lines.first.chomp
   rescue StandardError
     return false
   end
-  output.lines.first.chomp
 end
