@@ -155,6 +155,7 @@ class Wraith::CLI < Thor
     within_acceptable_limits do
       logger.info Wraith::Validate.new(config).validate("latest")
       reset_shots(config)
+      setup_folders(config)
       save_images(config, true)
       copy_base_images(config)
       crop_images(config)
