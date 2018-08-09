@@ -132,6 +132,14 @@ class Wraith::Wraith
     domains.keys[1]
   end
 
+  def settle
+    @config["settle"]
+  end
+
+  def threads
+    @config["threads"] ? @config["threads"] : 8
+  end
+
   def spider_file
     @config["spider_file"] ? @config["spider_file"] : "spider.txt"
   end
