@@ -21,6 +21,8 @@ describe "wraith config" do
           test: http://www.bbc.com
         paths:
           test: /mypage
+        directory:
+          test
         screen_widths:
           - 320
           - 464
@@ -41,10 +43,10 @@ describe "wraith config" do
       expect(efficient_jobs.length).to be 1
       expect(inefficient_jobs.length).to be 3 # 1 for each screen width
 
-      # [["test", "/mypage", "320,464,624", "http://www.bbc.com/mypage", "/test/MULTI__test.png", " ", "false", "false"]]
+      # [["test", "/mypage", "320,464,624", "http://www.bbc.com/mypage", "test/MULTI__test.png", " ", "false", "false"]]
       expect(efficient_jobs[0][2]).to eq "320,464,624"
 
-      # [["test", "/mypage", 320, "http://www.bbc.com/mypage", "/test/320__test.png", " ", "false", "false"], ["test", "/mypage", 464, "http://www.bbc.com/mypage", "/test/464__test.png", " ", "false", "false"], ["test", "/mypage", 624, "http://www.bbc.com/mypage", "/test/624__test.png", " ", "false", "false"]]
+      # [["test", "/mypage", 320, "http://www.bbc.com/mypage", "test/320__test.png", " ", "false", "false"], ["test", "/mypage", 464, "http://www.bbc.com/mypage", "/test/464__test.png", " ", "false", "false"], ["test", "/mypage", 624, "http://www.bbc.com/mypage", "/test/624__test.png", " ", "false", "false"]]
       expect(inefficient_jobs[0][2]).to eq 320
     end
   end

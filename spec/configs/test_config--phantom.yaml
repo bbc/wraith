@@ -35,4 +35,4 @@ fuzz: '20%'
 
 
 # Number of threads used when saving images
-threads: 7
+#threads: 7

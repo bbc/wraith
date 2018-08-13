@@ -26,7 +26,7 @@ describe "wraith config" do
 
     context 'non-standard config values' do
       let(:config) { YAML.load "browser: phantomjs\nthreads: 2\ntimeout_ms: 4000"}
-      let(:non_standard_wraith)  { Wraith::Wraith.new( config, true) }
+      let(:non_standard_wraith)  { Wraith::Wraith.new( config, { yaml_passed: true }) }
 
       it 'returns overridden value when threads is specified in config' do
         expect(non_standard_wraith.threads).to eq 2
@@ -95,10 +95,6 @@ describe "wraith config" do
 
     it "include compare label" do
       expect(wraith.paths).to eq("home" => "/", "uk_index" => "/uk")
-    end
-
-    it "include threads" do
-      expect(wraith.threads).to eq(7)
     end
   end
 
