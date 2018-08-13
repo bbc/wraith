@@ -32,3 +32,7 @@ paths:
 
 #Amount of fuzz ImageMagick will use
 fuzz: '20%'
+
+
+# Number of threads used when saving images
+save_image_threads: 7

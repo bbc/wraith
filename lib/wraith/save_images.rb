@@ -76,7 +76,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => 8) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
+    Parallel.each(jobs, :in_threads => wraith.save_image_threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
         if meta.engine == "chrome"
           capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
