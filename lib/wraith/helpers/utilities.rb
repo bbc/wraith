@@ -19,7 +19,7 @@ def convert_to_absolute(filepath)
   elsif filepath[0] == "/"
     # filepath is already absolute. return unchanged
     filepath
-  elsif filepath.match(/^[A-Z]:\/(.+)$/)
+  elsif filepath.match(/^[A-Za-z]:\/(.+)$/)
     # filepath is an absolute Windows path, e.g. C:/Code/Wraith/javascript/global.js. return unchanged
     filepath
   else
@@ -51,9 +51,9 @@ end
 
 def run_command_safely(command)
   begin
-    output = `#{command}`
+    output = `#{command}`    
+    output.lines.first.chomp
   rescue StandardError
     return false
   end
-  output.lines.first.chomp
 end

@@ -66,7 +66,7 @@ Wraith is available to everyone under the terms of the Apache 2.0 open source li
 
 ## Selenium-Wraith
 
-Anyone interested in integrating selenium capability with Wraith should check out [Selenium-Wraith](https://github.com/andrewccadman/wraith-selenium) (by Andrew Tekle-Cadman of Future Visible), which was forked from BBC's Wraith on 16/04/14 and adds the following capabilities:
+Anyone interested in integrating selenium capability with Wraith should check out [Selenium-Wraith](https://github.com/mathew-hall/wraith-selenium) (maintained by Mathew Hall), which was forked from BBC's Wraith on 16/04/14 and adds the following capabilities:
 
 1. Selenium integration, both running locally on a desktop or on a selenium grid
 2. Browser to browser screenshot comparison
