@@ -17,30 +17,22 @@ describe "wraith config" do
       expect(wraith.config).to include "directory" => "shots"
     end
 
-    it 'returns default values for num_threads' do
-      expect(wraith.num_threads).to eq 8
+    it 'returns default values for threads' do
+      expect(wraith.threads).to eq 8
     end
      it 'returns default values for timeout_ms' do
       expect(wraith.timeout_ms).to eq 1000
     end
 
-    it 'returns default values for num_threads' do
-      expect(wraith.num_threads).to eq 8
-    end
-
-    it 'returns default values for timeout_ms' do
-      expect(wraith.timeout_ms).to eq 1000
-    end
-
     context 'non-standard config values' do
-      let(:config) { YAML.load "browser: phantomjs\nnum_threads: 2\ntimeout_ms: 4000"}
+      let(:config) { YAML.load "browser: phantomjs\nthreads: 2\ntimeout_ms: 4000"}
       let(:non_standard_wraith)  { Wraith::Wraith.new( config, true) }
 
-      it 'returns non standard values for num_threads if specified in config' do
-        expect(non_standard_wraith.num_threads).to eq 2
+      it 'returns overridden value when threads is specified in config' do
+        expect(non_standard_wraith.threads).to eq 2
       end
 
-      it 'returns non_standard values for timeout_ms if specified in config' do
+      it 'returns overridden value when timeout_ms is specified in config' do
         expect(non_standard_wraith.timeout_ms).to eq 4000
       end
     end
@@ -103,6 +95,10 @@ describe "wraith config" do
 
     it "include compare label" do
       expect(wraith.paths).to eq("home" => "/", "uk_index" => "/uk")
+    end
+
+    it "include threads" do
+      expect(wraith.threads).to eq(7)
     end
   end
 

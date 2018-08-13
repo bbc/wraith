@@ -136,8 +136,8 @@ class Wraith::Wraith
     @config['timeout_ms'] ? @config['timeout_ms'] : 1000
   end
 
-  def num_threads
-    @config['num_threads'] ? @config['num_threads'] : 8
+  def threads
+    (@config["threads"] || 8).to_i
   end
 
   def spider_file

@@ -58,3 +58,7 @@ directory: 'shots'
 #   diffs_first - all paths (with or without a difference) are shown, sorted by difference size (largest first)
 #   diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
 mode: diffs_first
+
+# (optional) Set the number of threads to use when saving images. Raising this value can improve performance, but very high
+# values can lead to server connection issues. Set to around 1.5 the available CPU cores for best performance. Default: 8
+threads: 8

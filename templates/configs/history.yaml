@@ -79,3 +79,7 @@ highlight_color: red
 
 # (optional) Parameters to pass to Phantom/Casper command line. Default: '--ignore-ssl-errors=true --ssl-protocol=tlsv1'
 phantomjs_options: ''
+
+# (optional) Set the number of threads to use when saving images. Raising this value can improve performance, but very high
+# values can lead to server connection issues. Set to around 1.5 the available CPU cores for best performance. Default: 8
+threads: 8
