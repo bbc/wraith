@@ -75,7 +75,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => wraith.threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture, invalid_image_name|
+    Parallel.each(jobs, :in_threads => wraith.num_threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture, invalid_image_name|
       begin
         if meta.engine == "chrome"
           capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
@@ -132,7 +132,7 @@ class Wraith::SaveImages
           new_file_name = file_name.sub('MULTI', screen_size)
           driver.manage.window.resize_to(width, height || 1500)
           driver.navigate.to url
-          driver.manage.timeouts.implicit_wait = wraith.settle if wraith.settle
+          driver.manage.timeouts.implicit_wait = wraith.timeout_ms * 1000
           driver.execute_script(File.read(global_before_capture)) if global_before_capture
           driver.execute_script(File.read(path_before_capture)) if path_before_capture
           resize_to_fit_page(driver) unless height

@@ -132,12 +132,12 @@ class Wraith::Wraith
     domains.keys[1]
   end
 
-  def settle
-    @config["settle"]
+  def timeout_ms
+    @config['timeout_ms'] ? @config['timeout_ms'] : 1000
   end
 
-  def threads
-    @config["threads"] ? @config["threads"] : 8
+  def num_threads
+    @config['num_threads'] ? @config['num_threads'] : 8
   end
 
   def spider_file
