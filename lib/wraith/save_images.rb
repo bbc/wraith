@@ -123,15 +123,20 @@ class Wraith::SaveImages
   def capture_image_selenium(screen_sizes, url, file_name, selector, global_before_capture, path_before_capture)
     driver = get_driver
     screen_sizes.to_s.split(",").each do |screen_size|
-      width, height = screen_size.split("x")
-      new_file_name = file_name.sub('MULTI', screen_size)
-      driver.manage.window.resize_to(width, height || 1500)
-      driver.navigate.to url
-      driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
-      driver.execute_async_script(File.read(path_before_capture)) if path_before_capture
-      resize_to_fit_page(driver) unless height
-      driver.save_screenshot(new_file_name)
-      crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
+      begin
+        width, height = screen_size.split("x")
+        new_file_name = file_name.sub('MULTI', screen_size)
+        driver.manage.window.resize_to(width, height || 1500)
+        driver.navigate.to url
+        driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
+        driver.execute_async_script(File.read(path_before_capture)) if path_before_capture
+        resize_to_fit_page(driver) unless height
+        driver.save_screenshot(new_file_name)
+        crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
+      rescue => e
+        logger.error e
+        create_invalid_image(new_file_name, width)
+      end
     end
     driver.quit
   end
