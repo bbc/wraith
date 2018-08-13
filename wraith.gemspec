@@ -8,17 +8,16 @@ Gem::Specification.new do |spec|
   spec.version       = Wraith::VERSION
   spec.authors       = ['Dave Blooman', 'Simon Thulbourn', 'Chris Ashton']
   spec.email         = ['david.blooman@gmail.com', 'simon+github@thulbourn.com', 'chrisashtonweb@gmail.com']
-  spec.summary       = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
+  spec.summary       = 'Wraith screenshot comparison tool'
   spec.description   = 'Wraith is a screenshot comparison tool, created by developers at BBC News.'
   spec.homepage      = 'https://github.com/BBC-News/wraith'
-  spec.license       = 'Apache 2'
+  spec.license       = 'Apache-2.0'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'casperjs'
 
