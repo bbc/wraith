@@ -20,6 +20,14 @@ For instructions on how to install, set up and use Wraith and all of its feature
 
 A brief overview of how Wraith works is provided below.
 
+## Configuration Options
+
+Some options that are not listed in the above documentation are explained here
+
+* `browser` also accepts 'chrome' as a valid engine
+* `selenium_options` is an array of options to pass to selenium
+  *  example: `--user-agent=MyUserAgent`
+
 ## Wraith modes
 
 There are several ways in which Wraith can be used:

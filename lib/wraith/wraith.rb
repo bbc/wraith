@@ -82,6 +82,10 @@ class Wraith::Wraith
     engine
   end
 
+  def selenium_options
+    @config["selenium_options"].to_a
+  end
+
   def snap_file
     @config["snap_file"] ? convert_to_absolute(@config["snap_file"]) : snap_file_from_engine(engine)
   end

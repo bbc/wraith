@@ -3,29 +3,29 @@
 ### as `bundle exec rspec` is run from the root.
 ##########
 
-#Headless browser option
+# Headless browser option
 browser: "chrome"
+
+# Add a user agent if you want or any other selenium options
+selenium_options:
+  - "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
 
 # Type the name of the directory that shots will be stored in
 directory: 'shots_chrome'
 
 # Add only 2 domains, key will act as a label
 domains:
-  afrique: "http://www.bbc.com/afrique"
-  russian: "http://www.bbc.com/russian"
+  brazil: "http://m.huffpostbrasil.com/"
+  canada: "http://m.huffingtonpost.ca"
 
 #Type screen widths below, here are a couple of examples
 screen_widths:
-  - 600
-  - 1280
+  - 320
+  - 480
 
 #Type page URL paths below, here are a couple of examples
 paths:
   home: /
-  home_menu:
-    path: /
-    selector: "#orb-nav-more"
-  uk_index: /uk
 
 # (optional) JavaScript file to execute before taking screenshot of every path. Default: nil
   # before_capture: 'javascript/interact--chrome.js'
