@@ -72,7 +72,7 @@ class Wraith::Wraith
   end
 
   def history_dir
-    @config["history_dir"] || false
+    @config.fetch('history_dir', false)
   end
 
   def engine
@@ -109,7 +109,7 @@ class Wraith::Wraith
 
   def resize
     # @TODO make this default to true, once it's been tested a bit more thoroughly
-    @config["resize_or_reload"] ? (@config["resize_or_reload"] == "resize") : false
+    @config.fetch('resize_or_reload', 'reload') == "resize"
   end
 
   def domains
@@ -133,15 +133,15 @@ class Wraith::Wraith
   end
 
   def timeout_ms
-    @config['timeout_ms'] ? @config['timeout_ms'] : 1000
+    @config.fetch('timeout_ms', 1000)
   end
 
   def threads
-    (@config["threads"] || 8).to_i
+    @config.fetch('threads', '8').to_i
   end
 
   def spider_file
-    @config["spider_file"] ? @config["spider_file"] : "spider.txt"
+    @config.fetch('spider_file', 'spider.txt')
   end
 
   def spider_days
@@ -165,7 +165,7 @@ class Wraith::Wraith
   end
 
   def highlight_color
-    @config["highlight_color"] ? @config["highlight_color"] : "blue"
+    @config.fetch('highlight_color', 'blue')
   end
 
   def mode
@@ -177,34 +177,19 @@ class Wraith::Wraith
   end
 
   def threshold
-    @config["threshold"] ? @config["threshold"] : 0
+    @config.fetch('threshold', 0)
   end
 
   def gallery_template
-    default = "basic_template"
-    if @config["gallery"].nil?
-      default
-    else
-      @config["gallery"]["template"] || default
-    end
+    @config.fetch('gallery', {}).fetch('template', 'basic_template')
   end
 
   def thumb_height
-    default = 200
-    if @config["gallery"].nil?
-      default
-    else
-      @config["gallery"]["thumb_height"] || default
-    end
+    @config.fetch('gallery', {}).fetch('thumb_height', 200)
   end
 
   def thumb_width
-    default = 200
-    if @config["gallery"].nil?
-      default
-    else
-      @config["gallery"]["thumb_width"] || default
-    end
+    @config.fetch('gallery', {}).fetch('thumb_width', 200)
   end
 
   def phantomjs_options
@@ -212,11 +197,11 @@ class Wraith::Wraith
   end
 
   def imports
-    @config['imports'] || false
+    @config.fetch('imports', false)
   end
 
   def verbose
     # @TODO - also add a `--verbose` CLI flag which overrides whatever you have set in the config
-    @config["verbose"] || false
+    @config.fetch('verbose', false)
   end
 end

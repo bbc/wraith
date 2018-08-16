@@ -96,14 +96,16 @@ class Wraith::SaveImages
     case meta.engine
     when "chrome"
       options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('--disable-gpu')
-      options.add_argument('--headless')
-      options.add_argument("--no-sandbox");
-      options.add_argument('--device-scale-factor=1') # have to change cropping for 2x. also this is faster
-      options.add_argument('--force-device-scale-factor')
-      options.add_argument("--window-size=1200,1500") # resize later so we can reuse drivers
-      options.add_argument("--hide-scrollbars") # hide scrollbars from screenshots
-      options.add_argument('--ignore-certificate-errors')
+      [
+        'disable-gpu',
+        'headless',
+        'no-sandbox',
+        'device-scale-factor=1',
+        'force-device-scale-factor',
+        'window-size=1200,1500',
+        'hide-scrollbars',
+        'ignore-certificate-errors'
+      ].each { |arg| options.add_argument("--#{arg}")
       Selenium::WebDriver.for :chrome, options: options
     end
   end
