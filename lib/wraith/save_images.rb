@@ -105,7 +105,7 @@ class Wraith::SaveImages
         'window-size=1200,1500',
         'hide-scrollbars',
         'ignore-certificate-errors'
-      ].each { |arg| options.add_argument("--#{arg}")
+      ].each { |arg| options.add_argument("--#{arg}") }
       Selenium::WebDriver.for :chrome, options: options
     end
   end
