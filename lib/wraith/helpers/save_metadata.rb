@@ -1,4 +1,5 @@
 require "wraith"
+require "fileutils"
 
 class SaveMetadata
   attr_reader :wraith, :history
@@ -14,6 +15,8 @@ class SaveMetadata
 
   def file_names(width, label, domain_label)
     width = "MULTI" if width.is_a? Array
+
+    FileUtils::mkdir_p "#{wraith.directory}/#{label}"   # ensure the directory exists
     "#{wraith.directory}/#{label}/#{width}_#{engine}_#{domain_label}.png"
   end
 

@@ -53,8 +53,8 @@ class Wraith::SaveImages
     compare_file_name = meta.file_names(width, label, meta.compare_label)
 
     jobs = []
-    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture]
-    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture] unless settings.compare_url.nil?
+    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture, 'invalid1.jpg']
+    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture, 'invalid2.jpg'] unless settings.compare_url.nil?
 
     jobs
   end
@@ -76,7 +76,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => wraith.save_image_threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
+    Parallel.each(jobs, :in_threads => wraith.threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
       begin
         if meta.engine == "chrome"
           capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
@@ -85,8 +85,8 @@ class Wraith::SaveImages
           attempt_image_capture(command, filename)
         end
       rescue => e
-        logger.error e
-        create_invalid_image(filename, width)
+        logger.error "#{e}\n  URL = #{url}"
+        create_invalid_image(filename, width, invalid_image_name)
       end
     end
   end
@@ -96,12 +96,16 @@ class Wraith::SaveImages
     case meta.engine
     when "chrome"
       options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('--disable-gpu')
-      options.add_argument('--headless')
-      options.add_argument('--device-scale-factor=1') # have to change cropping for 2x. also this is faster
-      options.add_argument('--force-device-scale-factor')
-      options.add_argument("--window-size=1200,1500") # resize later so we can reuse drivers
-      options.add_argument("--hide-scrollbars") # hide scrollbars from screenshots
+      [
+        'disable-gpu',
+        'headless',
+        'no-sandbox',
+        'device-scale-factor=1',
+        'force-device-scale-factor',
+        'window-size=1200,1500',
+        'hide-scrollbars',
+        'ignore-certificate-errors'
+      ].each { |arg| options.add_argument("--#{arg}") }
       Selenium::WebDriver.for :chrome, options: options
     end
   end
@@ -111,7 +115,7 @@ class Wraith::SaveImages
     width  = driver.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
     height = driver.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
     driver.manage.window.resize_to(width, height)
-  end 
+  end
 
   # crop an image around the coordinates of an element
   def crop_selector driver, selector, image_location
@@ -123,16 +127,25 @@ class Wraith::SaveImages
 
   def capture_image_selenium(screen_sizes, url, file_name, selector, global_before_capture, path_before_capture)
     driver = get_driver
+    driver.manage.timeouts.implicit_wait = 10;
     screen_sizes.to_s.split(",").each do |screen_size|
-      width, height = screen_size.split("x")
-      new_file_name = file_name.sub('MULTI', screen_size)
-      driver.manage.window.resize_to(width, height || 1500)
-      driver.navigate.to url
-      driver.execute_async_script(File.read(global_before_capture)) if global_before_capture
-      driver.execute_async_script(File.read(path_before_capture)) if path_before_capture
-      resize_to_fit_page(driver) unless height
-      driver.save_screenshot(new_file_name)
-      crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
+      for attempt in 1..3 do
+        begin
+          width, height = screen_size.split("x")
+          new_file_name = file_name.sub('MULTI', screen_size)
+          driver.manage.window.resize_to(width, height || 1500)
+          driver.navigate.to url
+          driver.manage.timeouts.implicit_wait = wraith.settle
+          driver.execute_script(File.read(global_before_capture)) if global_before_capture
+          driver.execute_script(File.read(path_before_capture)) if path_before_capture
+          resize_to_fit_page(driver) unless height
+          driver.save_screenshot(new_file_name)
+          crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
+          break
+        rescue Net::ReadTimeout => e
+          logger.error "Got #{e} on attempt #{attempt} at screen size #{screensize}. URL = #{url}"
+        end
+      end
     end
     driver.quit
   end
@@ -164,9 +177,9 @@ class Wraith::SaveImages
     wraith.resize or File.exist? filename
   end
 
-  def create_invalid_image(filename, width)
+  def create_invalid_image(filename, width, invalid_image_name)
     logger.warn "Using fallback image instead"
-    invalid = File.expand_path("../../assets/invalid.jpg", File.dirname(__FILE__))
+    invalid = File.expand_path("../../assets/#{invalid_image_name}", File.dirname(__FILE__))
     FileUtils.cp invalid, filename
 
     set_image_width(filename, width)

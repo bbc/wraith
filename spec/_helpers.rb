@@ -1,6 +1,5 @@
 require "rspec"
 require "./lib/wraith/cli"
-require "pry"
 
 def create_diff_image
   capture_image = saving.construct_command(320, test_url1, test_image1, selector, false, false)
