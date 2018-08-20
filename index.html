@@ -195,13 +195,11 @@ wraith capture configs/capture.yaml
           <p>Regardless of which mode you use, certain config options are applicable to both.</p>
 
           <p>All config options will be placed in a YAML config file. You set the headless browser, diff mode, threshold, fuzz amount and screen widths.</p>
-          <br>
-          <br>
           <b>Headless browser</b> : This is typically PhantomJS or CasperJS - a browser that doesn't have a user interface; it runs in the backround.
           <br>
           <b>Diff Mode</b> : How you would like the gallery to be presented, you can set ordering and for the unchanged images to be removed.
           <br>
-          <b>Threshold</b> : This is the minimal level of change you that want to present a failure.  The metric is percentage change of the page and set globally for a Wraith run.
+          <b>Threshold</b> : This is the minimal level of change you that want to present a failure. The metric is percentage change of the page and set globally for a Wraith run.
           <br>
           <b>Fuzz</b> : Use this option to match colors that are close to the target color in RGB space, this number helps with anti-aliasing.
           <br>
@@ -210,6 +208,10 @@ wraith capture configs/capture.yaml
           <b>verbose</b> : (optional: boolean) As of Wraith 3.1.0, you can run Wraith in verbose mode, which lists helpful debug information. Default: false
           <br>
           <b>snap_file</b> : (optional: string) Before Wraith 3.0.0, you were required to specify a path to a snap JavaScript file responsible for taking the command line arguments from Wraith and loading up Phantom/Casper to take screenshots. As of 3.0.0, this functionality has been abstracted away, so <em>you should no longer specify a snap file</em>. However, you are still able to specify a snap file if you wish.
+          <br>
+          <b>threads</b> : (optional: integer) Number of capture threads to run simultanously
+          <br>
+          <b>settle</b> : (optional: integer) Number of seconds to wait for the page to settle (when using Chrome as the headless browser)
 
           <h2>Spider functionality</h2>
 
