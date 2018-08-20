@@ -20,20 +20,20 @@ describe "wraith config" do
     it 'returns default values for threads' do
       expect(wraith.threads).to eq 8
     end
-     it 'returns default values for timeout_ms' do
-      expect(wraith.timeout_ms).to eq 1000
+     it 'returns default values for settle' do
+      expect(wraith.settle).to eq 10
     end
 
     context 'non-standard config values' do
-      let(:config) { YAML.load "browser: phantomjs\nthreads: 2\ntimeout_ms: 4000"}
+      let(:config) { YAML.load "browser: phantomjs\nthreads: 2\nsettle: 5"}
       let(:non_standard_wraith)  { Wraith::Wraith.new( config, { yaml_passed: true }) }
 
       it 'returns overridden value when threads is specified in config' do
         expect(non_standard_wraith.threads).to eq 2
       end
 
-      it 'returns overridden value when timeout_ms is specified in config' do
-        expect(non_standard_wraith.timeout_ms).to eq 4000
+      it 'returns overridden value when settle is specified in config' do
+        expect(non_standard_wraith.settle).to eq 5
       end
     end
 

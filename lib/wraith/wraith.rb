@@ -132,8 +132,8 @@ class Wraith::Wraith
     domains.keys[1]
   end
 
-  def timeout_ms
-    @config.fetch('timeout_ms', 1000)
+  def settle
+    @config.fetch('settle', 10)
   end
 
   def threads
