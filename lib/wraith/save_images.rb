@@ -143,7 +143,7 @@ class Wraith::SaveImages
           crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
           break
         rescue Net::ReadTimeout => e
-          logger.error "Got #{e} on attempt #{attempt} at screen size #{screensize}. URL = #{url}"
+          logger.error "Got #{e} on attempt #{attempt} at screen size #{screen_size}. URL = #{url}"
         end
       end
     end
