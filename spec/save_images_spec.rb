@@ -70,4 +70,25 @@ describe Wraith do
       expect(File).to exist("shots/thumbnails/test/test_diff.png")
     end
   end
+
+  describe "when parallelising jobs" do
+    context "when something goes wrong" do
+      it "creates a dummy invalid image" do
+        allow(saving).to receive(:attempt_image_capture).and_raise("boom")
+        # Create the image at the original res of the invalid image, so that we
+        # can compare it's md5 easily
+        jobs = [
+          ['test', '/test/path', '1500x1500', test_url1, test_image1, nil, nil, nil,
+           'invalid1.jpg']
+        ]
+        saving.parallel_task(jobs)
+        # Test fixture image created from the original invalid image because
+        # the original is a jpg
+        invalid_image = get_path_relative_to __FILE__, "./images/invalid1.png"
+        invalid_md5 = Digest::MD5.hexdigest(File.read(invalid_image))
+        created_md5 = Digest::MD5.hexdigest(File.read(test_image1))
+        expect(created_md5).to eq invalid_md5
+      end
+    end
+  end
 end
