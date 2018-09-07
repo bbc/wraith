@@ -68,7 +68,11 @@ class Wraith::GalleryGenerator
   end
 
   def get_path(category)
-    wraith.paths[category]["path"] || wraith.paths[category]
+    if wraith.paths[category].is_a?(String)
+      wraith.paths[category]
+    else
+      wraith.paths[category].fetch('path')
+    end
   end
 
   def get_group_from_match(match)
