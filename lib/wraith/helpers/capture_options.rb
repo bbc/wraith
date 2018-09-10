@@ -13,6 +13,14 @@ class CaptureOptions
     casper?(options)
   end
 
+  def base_path
+    options.is_a?(Hash) && options.key?('base_path') ? options['base_path'] : path
+  end
+
+  def compare_path
+    options.is_a?(Hash) && options.key?('compare_path') ? options['compare_path'] : path
+  end
+
   def selector
     options["selector"] || "body"
   end
@@ -31,11 +39,11 @@ class CaptureOptions
   end
 
   def base_url
-    base_urls(path)
+    base_urls(base_path)
   end
 
   def compare_url
-    compare_urls(path)
+    compare_urls(compare_path)
   end
 
   def base_urls(path)

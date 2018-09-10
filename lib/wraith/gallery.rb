@@ -3,6 +3,7 @@ require "pp"
 require "fileutils"
 require "wraith/wraith"
 require "wraith/helpers/logger"
+require "wraith/helpers/capture_options"
 
 class Wraith::GalleryGenerator
   include Logging
@@ -60,15 +61,22 @@ class Wraith::GalleryGenerator
   end
 
   def figure_out_url(group, category)
-    root = wraith.domains["#{group}"]
+    group = "#{group}"
+    root = wraith.domains[group]
+    base_or_compare = wraith.domains.keys.index(group) == 0 ? :base : :compare
     return "" if root.nil?
-    path = get_path(category)
+    path = get_path(category, base_or_compare)
     url  = root + path
     url
   end
 
-  def get_path(category)
-    wraith.paths[category]["path"] || wraith.paths[category]
+  def get_path(category, base_or_compare)
+    path_options = CaptureOptions.new(wraith.paths[category], wraith)
+    if base_or_compare == :base
+      path_options.base_path
+    else
+      path_options.compare_path
+    end
   end
 
   def get_group_from_match(match)
