@@ -151,11 +151,15 @@
       z-index: 1;
     }
 
+    .difference {
+      cursor: pointer;
+      text-align: center;
+    }
   </style>
   <script type="text/javascript">
       $(function() {
-          var slideshow = $('.slideshow');
-          var compareModal = $('.compare-modal');
+          let slideshow = $('.slideshow'),
+              compareModal = $('.compare-modal');
 
           slideshow.cycle({
               fx:     'scrollHorz',
@@ -164,8 +168,8 @@
               next:   '.next',
               before: function (curr, next, opts) {
                   $('.current').removeClass('current');
-                  var $next = $(next);
-                  var path = $next.find('.path').attr('name');
+                  let $next = $(next),
+                      path = $next.find('.path').attr('name');
                   $.each($('.list-group .list-group-item a'), function() {
                       if ($(this).attr('href').substring(1) == path) {
                           $(this).parent().addClass('checked');
@@ -173,11 +177,11 @@
                       }
                   });
 
-                  var leftImage = $next.find('a.shot:eq(0)').attr('href');
-                  var rightImage = $next.find('a.shot:eq(1)').attr('href');
-                  var leftImageTitle = $next.find('a.shot:eq(0)').attr('title');
-                  var rightImageTitle = $next.find('a.shot:eq(1)').attr('title');
-                  var imageSize = $next.find('a.shot:eq(0)').data('size');
+                  let leftImage = $next.find('a.shot:eq(0)').attr('href'),
+                      rightImage = $next.find('a.shot:eq(1)').attr('href'),
+                      leftImageTitle = $next.find('a.shot:eq(0)').attr('title'),
+                      rightImageTitle = $next.find('a.shot:eq(1)').attr('title'),
+                      imageSize = $next.find('a.shot:eq(0)').data('size');
                   compareModal.html(
                       '<div class="compare-container-legend">' +
                       '<div class="title esc">Press ESC to close</div>' +
@@ -193,20 +197,19 @@
               timeout: 0
           });
 
-          $(document).on('click', '.compare', function() {
+          $(document).on('click', '.difference', function() {
               compareModal.show();
               $('.compare-container').beforeAfter();
           });
 
           $('.list-group .list-group-item a').unbind().on('click', function(){
-              var href = $(this).attr('href').substring(1);
-
+              let href = $(this).attr('href').substring(1);
               slideshow.cycle($('.slide.'+href+':first').index());
           });
 
           $('.shot').unbind().on('click', function(e){
               e.preventDefault();
-              var url = $(this).attr('href');
+              let url = $(this).attr('href');
               window.open(url,'_blank');
           });
 
@@ -231,7 +234,7 @@
     <div class="col-sm-12 col-md-3">
       <div class="panel">
         <div class="page-header">
-          <h4>heart List of screenshots for <%= location %> <small>taken <%= Time.now.strftime('%Y/%m/%d %H:%M:%S') %></small></h4>
+          <h4>List of screenshots for <%= location %> <small>taken <%= Time.now.strftime('%Y/%m/%d %H:%M:%S') %></small></h4>
         </div>
         <div class="panel-heading">Pages:</div>
         <ul class="list-group list-group-flush">
@@ -277,15 +280,17 @@
                   <p class="text-center">diff</p>
                 </div>
                 <div class="difference col-sm-12">
-                  <% if threshold.nil? %>
-                    <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
-                  <% else %>
-                    <% if files[:data] > threshold %>
-                      <h4 class="text-center threshold"><%=files[:data]%> % different<span class="compare"></span></h4>
-                    <% else %>
+                  <button>
+                    <% if threshold.nil? %>
                       <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                    <% else %>
+                      <% if files[:data] > threshold %>
+                        <h4 class="text-center threshold"><%=files[:data]%> % different<span class="compare"></span></h4>
+                      <% else %>
+                        <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                      <% end %>
                     <% end %>
-                  <% end %>
+                  </button>
                 </div>
               </div>
             <% end %>
