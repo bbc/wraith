@@ -5,26 +5,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Ghost // </title>
+  <title>Wraith // Gallery</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- jvectormap -->
-  <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/1.2.2/jquery-jvectormap.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/css/skins/_all-skins.min.css">
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/unveil/1.3.0/jquery.unveil.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.7/jquery.slimscroll.min.js"></script>
-  <script type="text/javascript" src="https://vagrant.wmdb.de/ghost/js/app.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/js/app.min.js"></script>
   <style type="text/css">
 
     /* Navigation */
@@ -413,13 +412,9 @@
 
     <section class="content-header">
       <h1>
-        Project
-        <small></small>
+        Overview
+        <small><%=config['directory']%></small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-      </ol>
     </section>
 
     <div class="content">
@@ -625,8 +620,6 @@
                                   <br>
                                 </div>
 
-                                <pre><%=files.inspect %></pre>
-
                                 <% files[:variants].each do |variant| %>
                                     <div class="col-sm-4">
                                       <a class="thumbnail" data-toggle="modal" data-target="#imageModal" data-page-title="<%=variant[:url]%>" data-href="<%=variant[:filename]%>" title="<%=variant[:name]%>">
@@ -644,7 +637,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                   <br>
-                                  <button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#compareModal" data-page-title="<%=files[:variants][0][:orig_url]%>"><i class="ion ion-contrast"></i> Compare</button>
+                                  <button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#compareModal" data-page-title="<%=files[:variants][0][:url]%>"><i class="ion ion-contrast"></i> Compare</button>
                                 </div>
                               </div>
                           <% end %>
