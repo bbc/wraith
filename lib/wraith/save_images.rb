@@ -6,6 +6,7 @@ require "wraith/helpers/logger"
 require "wraith/helpers/save_metadata"
 require "wraith/helpers/utilities"
 require "selenium-webdriver"
+require "chromedriver-helper"
 require 'mini_magick'
 
 class Wraith::SaveImages
