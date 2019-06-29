@@ -53,8 +53,8 @@ class Wraith::SaveImages
     compare_file_name = meta.file_names(width, label, meta.compare_label)
 
     jobs = []
-    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture, 'invalid1.jpg']
-    jobs << [label, settings.path, prepare_widths_for_cli(width), settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture, 'invalid2.jpg'] unless settings.compare_url.nil?
+    jobs << [label, settings.base_path, prepare_widths_for_cli(width), settings.base_url,    base_file_name,    settings.selector, wraith.before_capture, settings.before_capture, 'invalid1.jpg']
+    jobs << [label, settings.compare_path, prepare_widths_for_cli(width), settings.compare_url, compare_file_name, settings.selector, wraith.before_capture, settings.before_capture, 'invalid2.jpg'] unless settings.compare_url.nil?
 
     jobs
   end
