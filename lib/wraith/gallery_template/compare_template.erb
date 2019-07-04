@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link type="text/css" href="https://cdn.jotfor.ms/before-after/before-after.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jotfor.ms/before-after/before-after.min.js"></script>
+  <style type="text/css">
+    body {
+      position: relative;
+      float: left;
+      width: 100%;
+    }
+
+    .slideshow {
+      height: 510px;
+      margin: 20px 0;
+    }
+
+    .slide {
+      background-color: #FFF !important;
+      width: 100% !important;
+      height: 510px !important;
+    }
+
+    .prev {
+      margin-left: -10px;
+      margin-right: 10px;
+    }
+
+    .next,
+    .prev {
+      cursor: pointer;
+      background-color: #e7e7e7;
+      border: 2px solid #eee;
+      height: 400px;
+      margin-top: 60px;
+    }
+
+    .prev span:before,
+    .next span:before {
+      font-size: 35px;
+      padding: 10px;
+      display: block;
+      font-family: "FontAwesome";
+      margin-top: 165px;
+      display: block;
+    }
+
+    .prev span:before {
+      content: "\f0d9";
+    }
+
+    .next span:before {
+      content: "\f0da";
+    }
+
+    .list-group-item.checked a:after {
+      color: #23e343;
+    }
+
+    .list-group-item a span {
+      word-wrap: break-word;
+      width: 95%;
+      display: block;
+    }
+
+    .list-group-item a:after {
+      content: "\f00c";
+      font-family: "FontAwesome";
+      color: #eae6e6;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    .checked a {
+      color: #000;
+    }
+
+    .current {
+      background-color: #e7e7e7;
+    }
+
+    .threshold {
+      color: red;
+    }
+
+    .ba-slider .handle:after {
+      top: 10%;
+    }
+
+    .compare {
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .compare:before {
+      font-family: "FontAwesome";
+      content: "\f0c5";
+      font-size: 30px;
+    }
+
+    .compare-modal {
+      position: fixed;
+      margin: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      overflow: scroll;
+      z-index: 1000;
+    }
+
+    .compare-container {
+      z-index: 1000;
+      text-align: center;
+      margin: 3rem auto;
+      margin-top: 6rem;
+      width: 1024px;
+    }
+
+    .compare-container-legend .title {
+      position: absolute;
+      top: 2rem;
+      background-color: #f9c418;
+      color: #545454;
+      font-weight: bold;
+      border: 1px solid #f3a20f;
+      padding: 0.25rem 0.5rem;
+      text-align: center;
+    }
+
+    .rightTitle {
+      right: 2rem;
+    }
+
+    .leftTitle {
+      left: 2rem;
+      z-index: 1;
+    }
+
+    .esc {
+      margin-left: 40%;
+      margin-right: 40%;
+      top: -1rem;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    .difference {
+      text-align: center;
+    }
+  </style>
+  <script type="text/javascript">
+      $(function() {
+          let slideshow = $('.slideshow'),
+              compareModal = $('.compare-modal');
+
+          slideshow.cycle({
+              fx:     'scrollHorz',
+              speed:  300,
+              prev:   '.prev',
+              next:   '.next',
+              before: function (curr, next, opts) {
+                  $('.current').removeClass('current');
+                  let $next = $(next),
+                      path = $next.find('.path').attr('name');
+                  $.each($('.list-group .list-group-item a'), function() {
+                      if ($(this).attr('href').substring(1) == path) {
+                          $(this).parent().addClass('checked');
+                          $(this).parent().addClass('current');
+                      }
+                  });
+
+                  let leftImage = $next.find('a.shot:eq(0)').attr('href'),
+                      rightImage = $next.find('a.shot:eq(1)').attr('href'),
+                      leftImageTitle = $next.find('a.shot:eq(0)').attr('title'),
+                      rightImageTitle = $next.find('a.shot:eq(1)').attr('title'),
+                      imageSize = $next.find('a.shot:eq(0)').data('size');
+                  compareModal.html(
+                      '<div class="compare-container-legend">' +
+                      '<div class="title esc">Press ESC to close</div>' +
+                      '<div class="title leftTitle">' + leftImageTitle + '</div>' +
+                      '<div class="title rightTitle">' + rightImageTitle + '</div>' +
+                      '</div>' +
+                      '<div class="compare-container ba-slider">' +
+                      '<img src="'+rightImage+'"/><div class="resize"><img src="'+leftImage+'"/></div>' +
+                      '<span class="handle"></span>' +
+                      '</div>');
+                  compareModal.find('.compare-container').width(imageSize);
+              },
+              timeout: 0
+          });
+
+          $(document).on('click', '.difference', function() {
+              compareModal.show();
+              $('.compare-container').beforeAfter();
+          });
+
+          $('.list-group .list-group-item a').unbind().on('click', function(){
+              let href = $(this).attr('href').substring(1);
+              slideshow.cycle($('.slide.'+href+':first').index());
+          });
+
+          $('.shot').unbind().on('click', function(e){
+              e.preventDefault();
+              let url = $(this).attr('href');
+              window.open(url,'_blank');
+          });
+
+          $(document).on('keyup', function(e) {
+              if (e.keyCode === 27) { // Escape
+                  compareModal.hide();
+              } else if (e.keyCode === 37) { // Left
+                  slideshow.cycle('prev');
+                  $('.compare-container').beforeAfter();
+              } else if (e.keyCode === 39) { // Right
+                  slideshow.cycle('next');
+                  $('.compare-container').beforeAfter();
+              }
+          });
+      })
+  </script>
+</head>
+<body>
+<div class="compare-modal" style="display: none;"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-3">
+      <div class="panel">
+        <div class="page-header">
+          <h4>List of screenshots for <%= location %> <small>taken <%= Time.now.strftime('%Y/%m/%d %H:%M:%S') %></small></h4>
+        </div>
+        <div class="panel-heading">Pages:</div>
+        <ul class="list-group list-group-flush">
+          <% directories.keys.each do |dir| %>
+            <li class="list-group-item"><a href="#<%=path%><%=dir%>"><span>/<%=dir.gsub('__', '/')%></span></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-9">
+      <div class="slideshow-container">
+        <div class="prev col-sm-1"><span></span></div>
+        <div class="slideshow pull-left col-sm-10">
+          <% directories.each do |dir, sizes| %>
+            <% sizes.to_a.sort.each do |size, files| %>
+              <div class="row slide <%= dir %>">
+                <a class="path" name="<%= dir %>"></a>
+                <div class="col-sm-12 text-center">
+                  <% if threshold.nil? %>
+                    <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                  <% else %>
+                    <% if files[:data] > threshold %>
+                      <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                    <% else %>
+                      <h4><%=size%>px - /<%= dir.gsub('__', '/') %></h4>
+                    <% end %>
+                  <% end %>
+                </div>
+                <% files[:variants].each do |file| %>
+                  <div class="col-sm-4">
+                    <a class="shot" href="<%=file[:filename]%>" title="<%=file[:name]%>" data-size="<%=size %>">
+                      <img class="short-screenshot img-thumbnail" src="<%=path%><%=file[:thumb]%>">
+                    </a>
+                    <p class="text-center"><a target="_blank" href="<%=file[:url]%>"><%=file[:name]%></a></p>
+                  </div>
+                <% end %>
+                <div class="col-sm-4">
+                  <% if files[:diff] %>
+                    <a class="shot" href="<%=files[:diff][:filename]%>">
+                      <img class="short-screenshot img-thumbnail" src="<%=path%><%=files[:diff][:thumb]%>">
+                    </a>
+                  <% end %>
+                  <p class="text-center">diff</p>
+                </div>
+                <div class="difference col-sm-12">
+                  <button>
+                    <% if threshold.nil? %>
+                      <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                    <% else %>
+                      <% if files[:data] > threshold %>
+                        <h4 class="text-center threshold"><%=files[:data]%> % different<span class="compare"></span></h4>
+                      <% else %>
+                        <h4 class="text-center text-muted"><%=files[:data]%> % different<span class="compare"></span></h4>
+                      <% end %>
+                    <% end %>
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="next col-sm-1"><span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
