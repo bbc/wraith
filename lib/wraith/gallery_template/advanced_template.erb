@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Wraith // Gallery</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/1.2.2/jquery-jvectormap.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/css/skins/_all-skins.min.css">
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.cycle/3.03/jquery.cycle.all.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/unveil/1.3.0/jquery.unveil.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.7/jquery.slimscroll.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.2/js/app.min.js"></script>
+  <style type="text/css">
+
+    /* Navigation */
+    .affix.main-header {
+      -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+
+    /* Page List */
+    .nav-stacked>li.active>a,
+    .nav-stacked>li.active>a:hover {
+      background: #f1f1f1;
+    }
+    .nav-stacked>li>a>input[type='checkbox'] {
+      margin: 0 10px 0 5px;
+    }
+    .nav-stacked .text {
+      text-overflow: ellipsis;
+      width: 75%;
+      display: inline-block;
+      vertical-align: bottom;
+      overflow: hidden;
+      white-space: nowrap;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .checked .check-mark:after {
+      color: rgba(128,128,128,1);
+    }
+    .check-mark {
+      word-wrap: break-word;
+      width: 95%;
+      display: block;
+    }
+    .check-mark:after {
+      content:"\f00c";
+      font-family: "FontAwesome";
+      color: rgba(128,128,128,0.3);
+      position: absolute;
+      right: 65px;
+      bottom: 10px;
+    }
+    .checked a {
+      color: #000;
+    }
+
+    /* Slideshow */
+    .slideshow, .slide {
+      height: 500px;
+      overflow: hidden;
+    }
+    .slide {
+      background-color: #FFF !important;
+      width: 100% !important;
+      margin: 0;
+    }
+
+    /* Gallery */
+    .compare-modal {
+      position:fixed;
+      margin:0;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+      background:rgba(0,0,0,0.7);
+      overflow: scroll;
+      z-index: 1000;
+    }
+    .compare-container {
+      padding-bottom: 300px;
+      z-index: 1000;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .compare-container img{
+      margin-right: 20px;
+      max-width: 30%;
+    }
+    #screenshot.affix {
+      right: 0;
+      top: 65px;
+    }
+
+    #screenshot .box {
+      transition: all 0.3s linear;
+    }
+    #screenshot.affix .box {
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
+    .lazy {
+      display: inline-block;
+      max-width: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-image: url('data:image/gif;base64,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');
+    }
+
+    .dl-horizontal{
+      word-wrap: break-word;
+    }
+    .modal {
+      z-index: 10050;
+    }
+    .modal-backdrop {
+      z-index: 10040;
+    }
+    .modal-xl {
+      width: auto;
+      margin: 10px;
+    }
+
+    a.thumbnail {
+      cursor: pointer;
+    }
+
+    .fixed .wrapper {
+      overflow: auto;
+    }
+
+  </style>
+  <script type="text/javascript">
+      $(function() {
+
+          // Slideshow
+          $('.slideshow').cycle({
+              fx:     'fade',
+              speed:  300,
+              prev:   '.prev',
+              next:   '.next',
+              before: function (curr, next, opts) {
+                  $('.active').removeClass('active');
+                  var path = $(next).find('.path').attr('name');
+                  $.each($('#page-list a'), function() {
+                      if ($(this).attr('href').substring(1) == path) {
+                          $(this).addClass('checked');
+                          $(this).parent().addClass('active');
+                      }
+                  });
+                  var $slide = ($(this)),
+                      $modal = $('#compareModal'),
+                      elements = getElementsFromSlider($slide);
+
+                  renderCompareModal($modal, elements);
+
+              },
+              timeout: 0
+          });
+
+          // Keys
+          $(window).keydown(function(event){
+              switch (event.keyCode) {
+                  case 13:
+                      if (!$('body').hasClass('modal-open')) {
+                          var currSlideId = $('.slideshow').data("cycle.opts").currSlide;
+                          var $currSlide = $('.slideshow .row:eq(' + currSlideId + ')');
+                          $currSlide.find('button').click();
+                      }
+                      break;
+                  case 37:
+                  case 38:
+                      $('#page-list>li.active').prev().find('a').click();
+                      return false;
+                      break;
+                  case 39:
+                  case 40:
+                      $('#page-list>li.active').next().find('a').click();
+                      return false;
+                      break;
+              }
+          });
+
+          // Page list
+          $('#page-list a').unbind().on('click', function(){
+              var href = $(this).attr('href').substring(1);
+              $('.slideshow').cycle($('.slide.'+href+':first').index());
+          });
+
+          // Filter pages
+          $('#pagesAll a').on('click', function(){
+              $('#page-list .list-group-item').show();
+          });
+          // Success
+          $('#pagesSuccess a').on('click', function(){
+              $('#page-list .list-group-item').hide();
+              $('#page-list .list-group-item.list-group-item-success').show();
+          });
+          // Warning
+          $('#pagesWarning a').on('click', function(){
+              $('#page-list .list-group-item').hide();
+              $('#page-list .list-group-item.list-group-item-warning').show();
+          });
+          // Danger
+          $('#pagesDanger a').on('click', function(){
+              $('#page-list .list-group-item').hide();
+              $('#page-list .list-group-item.list-group-item-danger').show();
+          });
+
+          // Activate tooltip
+          $('[data-toggle="tooltip"]').tooltip();
+
+
+          /**
+           * renderCompareModal
+           *
+           * @param $modal
+           * @param elements
+           */
+          function renderCompareModal($modal, elements) {
+              $modal.find('#compareModalLabel span:first').text(elements['pageTitle']);
+              $modal.find('#compareModalLabel span:last').text(elements['resolution']);
+              $modal.find('.firstImage').attr('src', elements['firstImage']);
+              $modal.find('.secondImage').attr('src', elements['secondImage']);
+              $modal.find('.diffImage').attr('src', elements['diffImage']);
+              $modal.find('.firstImage').parent().attr('href', elements['firstImageUrl']);
+              $modal.find('.secondImage').parent().attr('href', elements['secondImageUrl']);
+          }
+
+          /**
+           * getElementsFromSlider
+           *
+           * @param $slide
+           * @returns {Array}
+           */
+          function getElementsFromSlider($slide) {
+
+              var elements = [];
+
+              elements['pageTitle'] = $slide.find('button').data('page-title');
+              elements['resolution'] = $slide.find('h4>small>span').text();
+              elements['firstImage'] = $slide.find('a.thumbnail:eq(0)').attr('data-href');
+              elements['secondImage'] = $slide.find('a.thumbnail:eq(1)').attr('data-href');
+              elements['diffImage'] = $slide.find('a.thumbnail:eq(2)').attr('data-href');
+              elements['firstImageUrl'] = $slide.find('a.thumbnail:eq(0)').next().find('a').attr('href');
+              elements['secondImageUrl'] = $slide.find('a.thumbnail:eq(1)').next().find('a').attr('href');
+
+              return elements;
+
+          }
+
+          // Compare modal
+          $('#compareModal').on('show.bs.modal', function (event) {
+              var $button = $(event.relatedTarget),
+                  $modal = $(this),
+                  $slide = $button.closest('.slide'),
+                  elements = getElementsFromSlider($slide);
+
+              renderCompareModal($modal, elements);
+
+          });
+
+          // Image modal
+          $('#imageModal').on('show.bs.modal', function (event) {
+              var $button = $(event.relatedTarget),
+                  $modal = $(this);
+              var pageTitle = $button.data('page-title'); // Extract info from data-* attributes
+              var firstImage = $button.data('href'),
+                  firstImageUrl = $button.next().find('a').attr('href');
+
+              $modal.find('#imageModalLabel').text(pageTitle);
+              $modal.find('.firstImage').attr('src', firstImage);
+              $modal.find('.firstImage').parent().attr('href', firstImageUrl);
+          });
+
+          // Affix
+          $('#screenshot').affix({
+              offset: {
+                  top: function () {
+                      navigationSectionHeight = $('#navigationSection').outerHeight(true);
+                      overviewSectionHeight = $('#overviewSection').outerHeight(true);
+                      return (this.top =  navigationSectionHeight + overviewSectionHeight + 65);
+                  },
+                  bottom: 0
+              }
+          });
+
+          $('#navigationSection').affix({
+              offset: {
+                  top: 0,
+                  bottom: 0
+              }
+          });
+
+          // lazy load
+          // TODO: Bind event to slideshow
+          $("img.lazy").unveil(100, function() {
+              $(this).load(function() {
+                  this.style.background = '#fff';
+              });
+          });
+
+          $(".box").activateBox();
+
+          $('.carousel').carousel();
+
+          window.setTimeout( function(){
+              $('.overlay').hide();
+          }, 1000 );
+
+
+          // Hash URL
+          var hash = $(location).attr('hash');
+          if (hash !== "") {
+              var hashElement = "#page-list a[href^='" + hash +  "']";
+              $(hashElement).click();
+
+              $('html, body').animate({
+                  scrollTop:$(hashElement).offset().top -($('#navigationSection').outerHeight() +80)
+              },'slow');
+          }
+
+          $('#page-list>li>a').on('click', function(){
+              $('html, body').animate({
+                  scrollTop:$(this).offset().top -($('#navigationSection').outerHeight() +83)
+              },100);
+          });
+      });
+
+  </script>
+
+</head>
+<%
+  # Count pages
+  totalPagesCount = 0
+  failedPagesCount = 0
+  warningPagesCount = 0
+  passedPagesCount = 0
+
+  directories.each do |dir, sizes|
+    sizes.to_a.sort.each do |size, files|
+      totalPagesCount += 1
+      if files[:data] > threshold
+        failedPagesCount += 1
+      else
+        if files[:data] < threshold and files[:data] != 0
+          warningPagesCount += 1
+        else
+          passedPagesCount += 1
+        end
+      end
+    end
+  end
+
+  # Progress bar
+  percentFailed = failedPagesCount.to_f / totalPagesCount * 100
+  percentWarning = warningPagesCount.to_f / totalPagesCount * 100
+  percentPassed = passedPagesCount.to_f / totalPagesCount * 100
+
+  # Status label
+  statusLabel = ''
+
+  if failedPagesCount > 0
+    statusLabel = 'label-danger'
+    statusText = 'Failed'
+  else if warningPagesCount > 0
+         statusLabel = 'label-warning'
+         statusText = 'Warning'
+       else
+         statusLabel = 'label-success'
+         statusText = 'Passed'
+       end
+  end
+%>
+<body class="hold-transition skin-black layout-top-nav fixed">
+<div class="wrapper">
+
+  <!-- Header section begin -->
+  <header id="navigationSection" class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand"><b>Wraith</b></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+  <!-- Header section end -->
+
+  <!-- Content wrapper begin -->
+  <div class="content-wrapper">
+
+    <section class="content-header">
+      <h1>
+        Overview
+        <small><%=config['directory']%></small>
+      </h1>
+    </section>
+
+    <div class="content">
+
+      <!-- Overview section begin -->
+      <section id="overviewSection">
+
+        <!-- Summary begin -->
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <i class="ion ion-ios-settings"></i>
+                <h3 class="box-title">Project Configuration</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <dl class="dl-horizontal">
+                  <dt>Domains</dt>
+                  <% config['domains'].each do |domain| %>
+                      <dd><span class="text-muted"><%=domain[1]%></span></dd>
+                  <% end %>
+                  <dt>Directory</dt>
+                  <dd><span class="text-muted"><%=config['directory']%></span></dd>
+                  <dt>Generated</dt>
+                  <dd><span class="text-muted"><%=Time.now.strftime('%Y/%m/%d %H:%M:%S')%></span></dd>
+                  <dt>Threshold</dt>
+                  <dd><span class="text-muted"><%=config['threshold']%>%</span></dd>
+                  <dt>Fuzz</dt>
+                  <dd><span class="text-muted"><%=config['fuzz']%></span></dd>
+                  <dt>Resolution</dt>
+                  <dd><span class="text-muted"><%=config['screen_widths']%></span></dd>
+                  <dt>Spider Skips</dt>
+                  <dd><span class="text-muted"><%=config['spider_skips'] ? config['spider_skips'] : '-'%></span></dd>
+                  <dt>Before Capture</dt>
+                  <dd><span class="text-muted"><%=config['before_capture'] ? config['before_capture'] : '-'%></span></dd>
+                  <dt>Browser</dt>
+                  <dd><span class="text-muted"><%=config['browser']%></span></dd>
+                  <dt>Status</dt>
+                  <dd><span id="status" class="label <%=statusLabel%> text-uppercase"><%=statusText%></span></dd>
+                </dl>
+              </div>
+              <!-- /.box-body -->
+              <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div class="info-box bg-green">
+              <span class="info-box-icon"><i class="fa fa-check"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Passed</span>
+                <span class="info-box-number"><%=passedPagesCount%> / <%=totalPagesCount%></span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: <%=percentPassed.round%>%"></div>
+                </div>
+                <span class="progress-description"><%=percentPassed.round%>%</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+            <div class="info-box bg-yellow">
+              <span class="info-box-icon"><i class="fa fa-exclamation"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Warning</span>
+                <span class="info-box-number"><%=warningPagesCount%> / <%=totalPagesCount%></span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: <%=percentWarning.round%>%"></div>
+                </div>
+                <span class="progress-description"><%=percentWarning.round%>%</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+            <div class="info-box bg-red">
+              <span class="info-box-icon"><i class="fa fa-bolt"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Failed</span>
+                <span class="info-box-number"><%=failedPagesCount%> / <%=totalPagesCount%></span>
+                <div class="progress">
+                  <div class="progress-bar" style="width: <%=percentFailed.round%>%"></div>
+                </div>
+                <span class="progress-description"><%=percentFailed.round%>%</span>
+              </div><!-- /.info-box-content -->
+            </div><!-- /.info-box -->
+          </div>
+
+        </div>
+        <!-- Summary end -->
+
+        <!-- Progress bar begin -->
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" style="width: <%=percentPassed%>%">
+            <span class="text-uppercase">Passed <%=percentPassed.round%>%</span>
+          </div>
+          <div class="progress-bar progress-bar-warning" style="width: <%=percentWarning%>%">
+            <span class="text-uppercase">Warning <%=percentWarning.round%>%</span>
+          </div>
+          <div class="progress-bar progress-bar-danger" style="width: <%=percentFailed%>%">
+            <span class="text-uppercase">Failed <%=percentFailed.round%>%</span>
+          </div>
+        </div>
+        <!-- Progress bar end -->
+
+      </section>
+      <!-- Overview section end -->
+
+      <!-- Detail section begin -->
+      <section id="detailSection">
+
+        <h2 class="page-header">Detail</h2>
+
+        <div class="row">
+
+          <!-- Pages panels begin -->
+          <div class="col-sm-12 col-md-6">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <i class="ion ion-clipboard"></i>
+                <h3 class="box-title">Pages</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="box-body no-padding">
+                <ul id="page-list" class="nav nav-stacked">
+
+                  <% directories.each do |dir, sizes| %>
+                  <% sizes.to_a.sort.each do |size, files| %>
+                  <% if files[:data] > threshold %>
+                  <li>
+                    <a href="#<%=path%><%=dir%>_<%=size%>">
+                      <span class="pull-right badge bg-red"><%=files[:data].ceil%>%</span>
+                      <span class="check-mark"></span>
+                      <span class="label label-default"><%=size%>px</span>
+                      <span class="text"><%=dir.gsub('__', '/')%></span>
+                    </a>
+                  </li>
+                  <% else %>
+                  <% if files[:data] < threshold and files[:data] != 0 %>
+                  <li>
+                    <a href="#<%=path%><%=dir%>_<%=size%>">
+                      <span class="pull-right badge bg-yellow"><%=files[:data].ceil%>%</span>
+                      <span class="check-mark"></span>
+                      <span class="label label-default"><%=size%>px</span>
+                      <span class="text"><%=dir.gsub('__', '/')%></span>
+                    </a>
+                  </li>
+                  <% else %>
+                  <li>
+                    <a href="#<%=path%><%=dir%>_<%=size%>">
+                      <span class="pull-right badge bg-green"><%=files[:data].ceil%>%</span>
+                      <span class="check-mark"></span>
+                      <span class="label label-default"><%=size%>px</span>
+                      <span class="text"><%=dir.gsub('__', '/')%></span>
+                    </a>
+                  </li>
+                  <% end %>
+                  <% end %>
+                  <% end %>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Pages panels end -->
+
+          <!-- Sceenshot panels begin -->
+          <div id="screenshot" class="hidden-xs hidden-sm col-md-6">
+
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <i class="ion ion-images"></i>
+                <h3 class="box-title">Screenshots</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="slideshow pull-left col-sm-12">
+                      <% directories.each do |dir, sizes| %>
+                          <% sizes.to_a.sort.each do |size, files| %>
+                              <div class="row slide <%=dir%>_<%=size%>">
+                                <a class="path" name="<%=dir%>_<%=size%>"></a>
+                                <div class="col-sm-12">
+                                  <h4>
+                                    Resolution: <small><span class="label label-default"><%=size%>px</span></small>
+                                    <div class="pull-right">
+                                      <% if files[:data] > threshold %>
+                                          <span class="label label-danger text-uppercase">Failed</span>
+                                      <% else %>
+                                          <% if files[:data] < threshold and files[:data] != 0 %>
+                                              <span class="label label-warning text-uppercase">Warning</span>
+                                          <% else %>
+                                              <span class="label label-success text-uppercase">Passed</span>
+                                          <% end %>
+                                      <% end %>
+                                      <span class="label label-default text-uppercase"><%=files[:data]%>% Change</span>
+                                    </div>
+                                  </h4>
+                                  <br>
+                                </div>
+
+                                <% files[:variants].each do |variant| %>
+                                    <div class="col-sm-4">
+                                      <a class="thumbnail" data-toggle="modal" data-target="#imageModal" data-page-title="<%=variant[:url]%>" data-href="<%=variant[:filename]%>" title="<%=variant[:name]%>">
+                                        <img class="lazy" src="" data-src="<%=variant[:thumb]%>" alt="" />
+                                      </a>
+                                      <p class="text-center"><a href="<%=variant[:url]%>" target="_blank"><i class="fa fa-external-link" data-toggle="tooltip" data-placement="right" title="<%=variant[:name]%>"></i></a></p>
+                                    </div>
+                                <% end %>
+                                <div class="col-sm-4">
+                                  <% if files[:diff] %>
+                                      <a class="thumbnail" data-toggle="modal" data-target="#imageModal" data-page-title="<%=files[:variants][0][:url]%>" data-href="<%=files[:diff][:filename]%>">
+                                        <img class="lazy" src="" data-src="<%=files[:diff][:thumb]%>" alt="" />
+                                      </a>
+                                  <% end %>
+                                </div>
+                                <div class="col-sm-12">
+                                  <br>
+                                  <button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#compareModal" data-page-title="<%=files[:variants][0][:url]%>"><i class="ion ion-contrast"></i> Compare</button>
+                                </div>
+                              </div>
+                          <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-sm btn-default prev"><i class="ion ion-reply"></i> previous</button>
+                  <button type="button" class="btn btn-sm btn-default next"><i class="ion ion-forward"></i> next</button>
+                </div>
+              </div>
+            </div>
+            <!-- Sceenshot panels end -->
+
+          </div>
+
+
+        </div>
+      </section>
+      <!-- Detail section end -->
+
+    </div>
+
+    <!-- Footer section begin -->
+    <footer id="footerSection" class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> <%=version%>
+      </div>
+      <strong>Wraith</strong>
+    </footer>
+    <!-- Footer section end -->
+
+  </div>
+  <!-- Content wrapper end -->
+
+</div>
+
+<!-- Modal begin -->
+<div id="compareModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="compareModalLabel">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="compareModalLabel"><span>Title</span> <span class="label label-default">1280px</span></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-4">
+            <a href="#" class="thumbnail" target="_blank"><img class="firstImage" src="" alt=""/></a>
+          </div>
+          <div class="col-sm-4">
+            <a href="#" class="thumbnail" target="_blank"><img class="secondImage" src="" alt=""/></a>
+          </div>
+          <div class="col-sm-4">
+            <img class="diffImage img-thumbnail" src="" alt=""/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default prev"><i class="ion ion-reply"></i> previous</button>
+        <button type="button" class="btn btn-default next"><i class="ion ion-forward"></i> next</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->
+
+<!-- Modal begin -->
+<div id="imageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="imageModalLabel">Title</h4>
+      </div>
+      <div class="modal-body text-center">
+        <a href="#" class="thumbnail" target="_blank"><img class="firstImage" src="" alt=""/></a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal end -->
+
+</body>
+</html>
