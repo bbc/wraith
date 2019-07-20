@@ -86,7 +86,7 @@ class Wraith::SaveImages
         end
       rescue => e
         logger.error "#{e}\n  URL = #{url}"
-        create_invalid_image(filename, width, invalid_image_name)
+        create_invalid_image(filename, width)
       end
     end
   end
@@ -177,9 +177,9 @@ class Wraith::SaveImages
     wraith.resize or File.exist? filename
   end
 
-  def create_invalid_image(filename, width, invalid_image_name)
+  def create_invalid_image(filename, width)
     logger.warn "Using fallback image instead"
-    invalid = File.expand_path("../../assets/#{invalid_image_name}", File.dirname(__FILE__))
+    invalid = File.expand_path("../../assets/invalid.jg", File.dirname(__FILE__))
     FileUtils.cp invalid, filename
 
     set_image_width(filename, width)
