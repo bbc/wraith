@@ -76,7 +76,7 @@ class Wraith::SaveImages
   end
 
   def parallel_task(jobs)
-    Parallel.each(jobs, :in_threads => wraith.threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture|
+    Parallel.each(jobs, :in_threads => wraith.threads) do |_label, _path, width, url, filename, selector, global_before_capture, path_before_capture, invalid_image_name|
       begin
         if meta.engine == "chrome"
           capture_image_selenium(width, url, filename, selector, global_before_capture, path_before_capture)
@@ -143,7 +143,7 @@ class Wraith::SaveImages
           crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
           break
         rescue Net::ReadTimeout => e
-          logger.error "Got #{e} on attempt #{attempt} at screen size #{screensize}. URL = #{url}"
+          logger.error "Got #{e} on attempt #{attempt} at screen size #{screen_size}. URL = #{url}"
         end
       end
     end
