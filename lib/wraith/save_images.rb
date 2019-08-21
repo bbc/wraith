@@ -179,7 +179,7 @@ class Wraith::SaveImages
 
   def create_invalid_image(filename, width)
     logger.warn "Using fallback image instead"
-    invalid = File.expand_path("../../assets/invalid.jg", File.dirname(__FILE__))
+    invalid = File.expand_path("../../assets/invalid3.jpg", File.dirname(__FILE__))
     FileUtils.cp invalid, filename
 
     set_image_width(filename, width)
