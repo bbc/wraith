@@ -86,7 +86,7 @@ class Wraith::SaveImages
         end
       rescue => e
         logger.error "#{e}\n  URL = #{url}"
-        create_invalid_image(filename, width, invalid_image_name)
+        create_invalid_image(filename, width)
       end
     end
   end
@@ -143,7 +143,7 @@ class Wraith::SaveImages
           crop_selector(driver, selector, new_file_name) if selector && selector.length > 0
           break
         rescue Net::ReadTimeout => e
-          logger.error "Got #{e} on attempt #{attempt} at screen size #{screensize}. URL = #{url}"
+          logger.error "Got #{e} on attempt #{attempt} at screen size #{screen_size}. URL = #{url}"
         end
       end
     end
@@ -177,9 +177,9 @@ class Wraith::SaveImages
     wraith.resize or File.exist? filename
   end
 
-  def create_invalid_image(filename, width, invalid_image_name)
+  def create_invalid_image(filename, width)
     logger.warn "Using fallback image instead"
-    invalid = File.expand_path("../../assets/#{invalid_image_name}", File.dirname(__FILE__))
+    invalid = File.expand_path("../../assets/invalid3.jpg", File.dirname(__FILE__))
     FileUtils.cp invalid, filename
 
     set_image_width(filename, width)
