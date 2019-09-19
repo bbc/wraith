@@ -1,0 +1,7 @@
+imports: 'test_config--phantom.yaml'
+
+paths:
+  home:
+    path: '/'
+  uk_index:
+    some_other_key: 'blahblahblah'
