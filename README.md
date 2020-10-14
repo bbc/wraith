@@ -1,22 +1,22 @@
-![Wraith logo](https://raw.githubusercontent.com/BBC-News/wraith/master/assets/wraith-logo.png)
+![Wraith logo](https://raw.githubusercontent.com/bbc/wraith/master/assets/wraith-logo.png)
 
-[![build status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
+[![build status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/bbc/wraith)
 [![rubygems version](https://img.shields.io/gem/v/wraith.svg)](https://rubygems.org/gems/wraith)
-[![codeclimate report](https://codeclimate.com/github/BBC-News/wraith.png)](https://codeclimate.com/github/BBC-News/wraith)
+[![codeclimate report](https://codeclimate.com/github/BBC-News/wraith.png)](https://codeclimate.com/github/bbc/wraith)
 
 Wraith is a screenshot comparison tool, created by developers at BBC News.
 
-[Documentation](http://bbc-news.github.io/wraith/) • [Source](http://github.com/bbc-news/wraith) • [Responsive News Website](http://responsivenews.co.uk)
+[Documentation](http://bbc.github.io/wraith/) • [Source](http://github.com/bbc/wraith) • [Responsive News Website](http://responsivenews.co.uk)
 
 ## What is it?
 
 Wraith uses a headless browser to create screenshots of webpages on different environments (or at different moments in time) and then creates a diff of the two images; the affected areas are highlighted in blue.
 
-![Photo of BBC News with a diff](http://bbc-news.github.io/wraith/img/wraith.png)
+![Photo of BBC News with a diff](http://bbc.github.io/wraith/img/wraith.png)
 
 ## Documentation
 
-For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
+For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc.github.io/wraith/index.html).
 
 A brief overview of how Wraith works is provided below.
 
@@ -51,11 +51,11 @@ Wraith also requires at least one of these headless browsers:
 
 ## Contributing
 
-Please read [how to contribute to Wraith](https://github.com/BBC-News/wraith/blob/master/.github/CONTRIBUTING.md).
+Please read [how to contribute to Wraith](https://github.com/bbc/wraith/blob/master/.github/CONTRIBUTING.md).
 
 ## License
 
-Wraith is available to everyone under the terms of the Apache 2.0 open source license. [Take a look at Wraith's LICENSE file](https://github.com/BBC-News/wraith/blob/master/LICENSE).
+Wraith is available to everyone under the terms of the Apache 2.0 open source license. [Take a look at Wraith's LICENSE file](https://github.com/bbc/wraith/blob/master/LICENSE).
 
 ## Credits
 
