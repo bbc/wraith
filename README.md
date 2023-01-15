@@ -16,7 +16,7 @@ Wraith uses a headless browser to create screenshots of webpages on different en
 
 ## Documentation
 
-For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc-news.github.io/wraith/index.html).
+For instructions on how to install, set up and use Wraith and all of its features, [visit the Wraith documentation](http://bbc.github.io/wraith/index.html).
 
 A brief overview of how Wraith works is provided below.
 
