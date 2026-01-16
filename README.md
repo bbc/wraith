@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This repository is no longer maintained. It remains available for reference, but issues and pull requests are not monitored.
+
 ![Wraith logo](https://raw.githubusercontent.com/BBC-News/wraith/master/assets/wraith-logo.png)
 
 [![build status](https://secure.travis-ci.org/BBC-News/wraith.png?branch=master)](http://travis-ci.org/BBC-News/wraith)
