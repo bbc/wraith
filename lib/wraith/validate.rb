@@ -73,6 +73,6 @@ class Wraith::Validate
   end
 
   def docs_prompt
-    "See the docs at http://bbc-news.github.io/wraith/"
+    "See the docs at http://bbc.github.io/wraith/"
   end
 end
