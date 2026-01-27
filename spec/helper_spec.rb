@@ -28,4 +28,27 @@ describe "Wraith helpers classes and functions" do
     end
   end
 
+  describe "CaptureOptions" do
+    let(:capture_options) { CaptureOptions.new('', nil) }
+
+    describe "#casper?" do
+      it "returns options when options is a string" do
+        actual = capture_options.casper?('/test/path')
+        expected = '/test/path'
+        expect(actual).to eq expected
+      end
+
+      context "when options is a Hash" do
+        it "returns options['path']" do
+          actual = capture_options.casper?({'path' => '/test/path'})
+          expected = '/test/path'
+          expect(actual).to eq expected
+        end
+
+        it "raises a KeyError if options['path'] is missing" do
+          expect { capture_options.casper?({}) }.to raise_error(KeyError)
+        end
+      end
+    end
+  end
 end

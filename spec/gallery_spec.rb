@@ -28,4 +28,27 @@ describe Wraith do
       expect(dirs["home"][0][:diff][:thumb]).to eq "thumbnails/home/test_image-diff.png"
     end
   end
+
+  describe "#get_path" do
+    it "returns the path when the category is a string" do
+      actual = gallery.get_path('home')
+      expected = '/'
+      expect(actual).to eq expected
+    end
+
+    context "when category is a Hash" do
+      let(:config_name) { get_path_relative_to __FILE__, "./configs/test_config--hash-paths.yaml" }
+      let(:gallery) { Wraith::GalleryGenerator.new(config_name, false) }
+
+      it "returns category['path']" do
+        actual = gallery.get_path('home')
+        expected = '/'
+        expect(actual).to eq expected
+      end
+
+      it "raises a KeyError if category['path'] is missing" do
+        expect { gallery.get_path('uk_index') }.to raise_error(KeyError)
+      end
+    end
+  end
 end

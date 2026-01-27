@@ -47,6 +47,6 @@ class CaptureOptions
   end
 
   def casper?(options)
-    options["path"] ? options["path"] : options
+    options.is_a?(String) ? options : options.fetch("path")
   end
 end
