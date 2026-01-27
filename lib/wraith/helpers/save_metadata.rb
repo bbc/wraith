@@ -31,4 +31,9 @@ class SaveMetadata
   def engine
     wraith.engine
   end
+
+  def selenium_options
+   wraith.selenium_options
+ end
+ 
 end
