@@ -192,8 +192,10 @@ class Wraith::GalleryGenerator
   end
 
   def prompt_user_to_open_gallery(dest)
+    gallery_url = "file://#{Dir.pwd}/#{dest}"
     logger.info "\nView the gallery in your browser:"
-    logger.info "\t file://" + Dir.pwd + "/" + dest
+    logger.info "\t #{gallery_url}"
+    `open #{gallery_url}`
   end
 
   class ErbBinding < OpenStruct
