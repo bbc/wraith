@@ -1,0 +1,9 @@
+imports: 'test_config--phantom.yaml'
+
+paths:
+  home:
+    base_path: /old-home
+    compare_path: /new-home
+  uk_index:
+    base_path: /old-uk
+    compare_path: /new-uk

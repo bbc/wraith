@@ -28,4 +28,33 @@ describe Wraith do
       expect(dirs["home"][0][:diff][:thumb]).to eq "thumbnails/home/test_image-diff.png"
     end
   end
+
+  describe "#figure_out_url" do
+    it "returns an empty string if it can't find the domain" do
+      expect(gallery.figure_out_url("missing_domain", "home")).to eq ""
+    end
+
+    it "returns a full url" do
+      expected = "http://www.bbc.com/afrique/"
+      expect(gallery.figure_out_url("afrique", "home")).to eq expected
+    end
+
+    context "when base_path and compare_path are set" do
+      let(:config_name) do
+        get_path_relative_to __FILE__,
+                            "./configs/test_config--base_compare_paths.yaml"
+      end
+      let(:gallery) { Wraith::GalleryGenerator.new(config_name, false) }
+
+      it "uses the base path for the first domain" do
+        expected = "http://www.bbc.com/afrique/old-home"
+        expect(gallery.figure_out_url("afrique", "home")).to eq expected
+      end
+
+      it "uses the compare path for the second domain" do
+        expected = "http://www.bbc.com/russian/new-home"
+        expect(gallery.figure_out_url("russian", "home")).to eq expected
+      end
+    end
+  end
 end
