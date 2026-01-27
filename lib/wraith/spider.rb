@@ -1,7 +1,7 @@
 require "wraith"
 require "wraith/helpers/logger"
 require "yaml"
-require "anemone"
+require "medusa"
 require "uri"
 
 class Wraith::Spider
@@ -22,11 +22,11 @@ class Wraith::Spider
 
   def crawl
     logger.info "Crawling #{wraith.base_domain}"
-    Anemone.crawl(wraith.base_domain) do |anemone|
-      anemone.skip_links_like(/\.(#{EXT.join('|')})$/)
+    Medusa.crawl(wraith.base_domain) do |medusa|
+      mdusa.skip_links_like(/\.(#{EXT.join('|')})$/)
       # Add user specified skips
-      anemone.skip_links_like(wraith.spider_skips)
-      anemone.on_every_page do |page|
+      medusa.skip_links_like(wraith.spider_skips)
+      medusa.on_every_page do |page|
         logger.info "    #{page.url.path}"
         add_path(page.url.path)
       end
