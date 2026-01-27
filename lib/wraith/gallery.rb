@@ -141,7 +141,7 @@ class Wraith::GalleryGenerator
     dest = "#{@location}/gallery.html"
     directories = parse_directories(@location)
 
-    template = File.expand_path("gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
+    template = File.expand_path(Dir.pwd + "/gallery_template/#{wraith.gallery_template}.erb", File.dirname(__FILE__))
     generate_html(@location, directories, template, dest, with_path)
 
     report_gallery_status dest
